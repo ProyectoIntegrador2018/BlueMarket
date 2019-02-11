@@ -23,3 +23,10 @@ mix.browserSync({
 	open: false,
 	ghostMode: false
 });
+
+if (!mix.inProduction()) {
+	mix.webpackConfig({
+		devtool: 'source-map'
+	})
+	.sourceMaps();
+}
