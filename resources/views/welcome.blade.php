@@ -8,7 +8,10 @@
 
 		<!-- Fonts -->
 		<link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
-		<link href="{{ asset('css/app.css') }}" rel="stylesheet">
+		<link href="{{ mix('css/app.css') }}" rel="stylesheet">
+
+		<!-- Semantic UI -->
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
 
 		<!-- Styles -->
 		<style>
@@ -96,4 +99,7 @@
 			</div>
 		</div>
 	</body>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+	<script src="{{ mix('js/app.js') }}"></script>
 </html>
