@@ -8,6 +8,7 @@ node_modules/
 npm-debug.log
 yarn-error.log
 
+
 # Laravel 4 specific
 bootstrap/compiled.php
 app/storage/
@@ -139,8 +140,8 @@ typings/
 
 public/**/*.map
 public/mix-manifest.json
-public/js/
-public/css
+public/js/*
+public/css/*
 
 ### Windows ###
 # Windows thumbnail cache files
@@ -168,3 +169,7 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.gitignore.io/api/node,sass,macos,laravel,windows
+
+## Gitkeep
+!.gitkeep
+
