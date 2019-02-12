@@ -6,7 +6,7 @@ Descripción del proyecto
 
 * [Client Details](#client-details)
 * [Environment URLS](#environment-urls)
-* [Da Team](#team)
+* [Da Team](#da-team)
 * [Management resources](#management-resources)
 * [Setup your dev environment](#setup-dev-environment)
 * [Setup the project](#setup-the-project)
@@ -23,7 +23,7 @@ Descripción del proyecto
 
 ## Config
 
-
+https://github.com/php-censor/php-censor
 
 ### Client Details
 

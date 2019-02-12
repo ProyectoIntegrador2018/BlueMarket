@@ -1,6 +1,12 @@
 # Get started
 
 
+## Git branching model
+
+We will follow this branching model for Git, so please **read this document carefully and make sure you understand it**:
+
+- https://nvie.com/posts/a-successful-git-branching-model/
+
 ## Utils
 
 1. Install [Editorconfig](https://editorconfig.org/#download) for your text editor of choice (scroll down to find your editor). This will make code formatting easier across devices.
