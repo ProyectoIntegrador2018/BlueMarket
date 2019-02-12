@@ -9,7 +9,7 @@ Descripción del proyecto
 * [Da Team](#team)
 * [Management resources](#management-resources)
 * [Setup your dev environment](#setup-dev-environment)
-* [Setup the project](#setup)
+* [Setup the project](#setup-the-project)
 * [Running the stack for development](#running-the-stack-for-development)
 * [Stop the project](#stop-the-project)
 * [Restoring the database](#restoring-the-database)
@@ -18,7 +18,6 @@ Descripción del proyecto
 * [Checking code for potential issues](#checking-code-for-potential-issues)
 
 
-## Setup
 
 ## Running the app
 
@@ -60,11 +59,15 @@ You should ask for access to this tools if you don't have it already:
 
 ## Development
 
-### Setup Dev Environment
+## Setup
 
-See #install_instructions.md.
 
-### Setup
+
+### Setup dev environment
+
+See the [install instructions](install_instructions.md) to set up your dev environment.
+
+### Setup the project
 
 
 After installing please you can follow this simple steps:
@@ -86,6 +89,11 @@ $ plis run web bash
 ```
 % rails db:migrate
 ```
+
+### Getting started
+
+Check out some useful tools and links over at the [docs/get_started.md](docs/get_started.md)
+
 
 ### Running the stack for Development
 
