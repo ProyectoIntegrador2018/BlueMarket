@@ -37,7 +37,7 @@ https://github.com/php-censor/php-censor
 ### Environment URLS
 
 * **Production** - [TBD](TBD)
-* **Development** - [TBD](TBD)
+* **Staging** - [Heroku](https://sheltered-hamlet-63420.herokuapp.com)
 
 
 ### Da team
@@ -54,7 +54,7 @@ https://github.com/php-censor/php-censor
 You should ask for access to this tools if you don't have it already:
 
 * [Github repo](https://github.com/hecerinc/BlueMarket)
-* [Heroku](https://crowdfront-staging.herokuapp.com/)
+* [Heroku](https://sheltered-hamlet-63420.herokuapp.com)
 * [Documentation](https://drive.google.com/drive/folders/1SHiWZ7gc5goa6OwubEEn4jsSo00Yploz?usp=sharing)
 
 ## Development
