@@ -44,6 +44,14 @@ return [
             'path' => storage_path('logs/laravel.log'),
             'level' => 'debug',
         ],
+        'heroku' => [
+        	'driver' => 'stack',
+        	'channels' => ['heroku_single']
+        ],
+        'heroku_single' => [
+        	'driver' => 'errorlog',
+        	'level' => 'debug'
+        ],
 
         'daily' => [
             'driver' => 'daily',
