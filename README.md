@@ -11,7 +11,7 @@ Descripción del proyecto
 * [Setup your dev environment](#setup-dev-environment)
 * [Setup the project](#setup-the-project)
 * [Running the app](#running-the-app)
-* [Additional configuration](#config)
+* [Additional configuration](#configuration)
 * [License](#license)
 
 
@@ -78,7 +78,7 @@ $  composer install
 $  yarn install
 ```
 
-3. Make your `.env.` file
+3. Make your `.env` file
 
 ```bash
 $  cp .env.example .env # copy the env example file to a .env file
@@ -102,12 +102,12 @@ $  php artisan serve
 By default `artisan` (the Laravel toolkit) runs a server at port `8000`. So you can go in your browser to `localhost:8000`, and you should see the app running.
 
 
-### Getting started
+## Getting started
 
 Check out some useful tools and links over at the [docs/get_started.md](docs/get_started.md)
 
 
-## Config
+## Configuration
 
 TBD
 
