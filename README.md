@@ -1,6 +1,12 @@
 # BlueMarket
 
-Descripción del proyecto
+BlueMarket is an initiative at Tec de Monterrey for team collaboration across different classes and groups to produce unique projects that combine the strengths of multidisciplinary teams, each with their own expertise, and replicating a real-world team collaboration environment.
+
+The initiative is under the Novus project sponsorship for 2019.
+
+Check out the current version here: https://sheltered-hamlet-63420.herokuapp.com
+
+
 
 ## Table of contents
 
