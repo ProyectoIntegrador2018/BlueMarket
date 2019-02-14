@@ -8,7 +8,7 @@
 		"hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
 		"prod": "yarn run production",
 		"production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-		"frontend": "php artisan serve --port=8010 | yarn run watch",
+		"frontend": "php artisan serve --port=8010 | yarn run watch | node node_modules/browser-sync/dist/bin.js start --proxy localhost:8010 --files=\"public/**/*\"",
 		"heroku-postbuild": "yarn run production"
 	},
 	"devDependencies": {
@@ -23,3 +23,4 @@
 		"vue-template-compiler": "^2.6.5"
 	}
 }
+

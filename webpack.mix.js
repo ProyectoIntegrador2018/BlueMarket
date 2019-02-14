@@ -18,15 +18,10 @@ if (mix.inProduction()) {
 	mix.version(); // cache-busting in production
 }
 
-mix.browserSync({
-	proxy: "localhost:8010",
-	open: false,
-	ghostMode: false
-});
-
 if (!mix.inProduction()) {
 	mix.webpackConfig({
 		devtool: 'source-map'
 	})
 	.sourceMaps();
 }
+
