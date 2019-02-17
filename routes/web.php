@@ -24,3 +24,7 @@ Route::resource('projects', 'ProjectController')->only([
 Route::get('/projects', function () {
 	return view('projects');
 });
+Route::get('/auth', function() {
+	return view('auth');
+});
+
