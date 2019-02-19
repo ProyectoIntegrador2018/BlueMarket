@@ -25,7 +25,7 @@
                     Section A
                 </a>
                 <a class="item">
-                    Section C
+                    Section B
                 </a>
                 <a class="ui item">
                     Register
