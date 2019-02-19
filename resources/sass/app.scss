@@ -2,15 +2,16 @@ $color-primary: #2980b9;
 $color-dark: #333333;
 $color-white: #ffffff;
 
-.ui.secondary.pointing.menu{
+.ui.menu.menu.bluemarketheader {
 	background: $color-dark;
 	padding-top: 10px;
 	margin-bottom: 0px;
-	.item{
-		color: $color-white !important;
-	}
-	.active{
-		border-color: $color-white !important;
+	.item {
+		color: $color-white;
+		&.active {
+			color: white;
+			border-color: $color-white;
+		}
 	}
 }
 
@@ -45,11 +46,11 @@ $color-white: #ffffff;
 			display: grid;
 			
 			h1{
-				color: $color-white !important;
+				color: $color-white;
 				margin: auto;
 				width: fit-content;
-				font-size: 5vw;
-				overflow: hidden !important;
+				font-size: 5vmax;
+				overflow: hidden;
 			}
 	
 			.button{
@@ -75,19 +76,19 @@ $color-white: #ffffff;
 		border: none;
 	}
 
-	h1{
-		font-size: 1.75vmax !important;
+	h1.bluemarket-text{
+		font-size: 1.75vmax;
 	}
 
-	p{
-		font-size: 1.75vmax !important;
+	p.bluemarket-text{
+		font-size: 1.75vmax;
 	}
 
-	label{
-		font-size: 1.5vmax !important;
-		font-weight: inherit !important;
-		margin-top: 1vmax !important;
-		margin-bottom: 0.5vmax !important; 
+	label.bluemarket-text{
+		font-size: 1.5vmax;
+		font-weight: inherit;
+		margin-top: 1vmax;
+		margin-bottom: 0.5vmax; 
 	}
 
 	.send{
@@ -95,10 +96,10 @@ $color-white: #ffffff;
 		color: $color-white;
 	}
 
-	.image-container{
+	div.column.image-container{
 		justify-content: center;
     	align-items: flex-end;
-		display: grid !important;
+		display: grid;
 	}
 
 	.ui.small.circular.image{
@@ -124,25 +125,28 @@ $color-white: #ffffff;
 		}
 
 		h1.ui.header{
-			// font-size: x-large !important;
 			white-space: nowrap;
-			overflow: hidden !important;
+			overflow: hidden;
 		}
 	}
 
 	.home.info{
-		h1, p{
+		h1.bluemarket-text{
 			font-size: 1.5vmax;
 		}
 
-		label{
-			font-size: 1.5vmax !important;
+		p.bluemarket-text{
+			font-size: 1.5vmax;
 		}
 
-		.image-container{
+		label.bluemarket-text{
+			font-size: 1.5vmax;
+		}
+
+		.image-div.column.image-container{
 			justify-content: center;
 			align-items: center;
-			display: grid !important;
+			display: grid;
 		}
 
 		.ui.small.circular.image{
@@ -162,62 +166,60 @@ $color-white: #ffffff;
 }
 
 .progress {
-  position: relative;
-  list-style: none;
-  margin-bottom: 0%;
+	position: relative;
+	list-style: none;
+	margin-bottom: 0%;
 }
 
 .progress-item {
-  position: relative;
-  counter-increment: list;
-  &:before {
-    content: "";
-    position: absolute;
-    left: -1.5rem;
-    width: 1px;
-	border-left: 1px solid $color-primary;
-	height: 100%;
-  }
-  &:after {
-    content: counter(list);
-    position: absolute;
-    top: 0;
-    left: -2.5rem;
-    width: 30px;
-    height: 30px;
-    border-radius: 100%;
-    background: transparent;
-    color: $color-dark;
-    line-height: 2rem;
-	text-align: center;
-	justify-content: center;
-	border: 2px solid $color-primary;
-  }
-
-  .progress-title {
-	  margin: 0vh 2.5vw 0vh 2.5vw;
-  }
-
-  .progress-info {
-	  margin: 1vh 2.5vw 0vh 2.5vw;
-	  padding-bottom: 5vh;
-  }
-
-  //Hide border for Last Step
-  &:last-child {
-    &:before {
-	  border: none;
+	position: relative;
+	counter-increment: list;
+	&:before {
+		content: "";
+		position: absolute;
+		left: -1.5rem;
+		width: 1px;
+		border-left: 1px solid $color-primary;
+		height: 100%;
 	}
+  	&:after {
+		content: counter(list);
+		position: absolute;
+		top: 0;
+		left: -2.5rem;
+		width: 30px;
+		height: 30px;
+		border-radius: 100%;
+		background: transparent;
+		color: $color-dark;
+		line-height: 2rem;
+		text-align: center;
+		justify-content: center;
+		border: 2px solid $color-primary;
+  	}
+
+	.progress-title {
+		margin: 0vh 2.5vw 0vh 2.5vw;
+	}
+
 	.progress-info {
-		padding-bottom: 0vh;
+		margin: 1vh 2.5vw 0vh 2.5vw;
+		padding-bottom: 5vh;
 	}
-  }
 
-  //Active
-  &.progress-item {
-    &:after {
-      background: $color-primary;
-      color: $color-white;
-    }
-  }
+	&:last-child {
+		&:before {
+			border: none;
+		}
+		.progress-info {
+			padding-bottom: 0vh;
+		}
+	}
+
+  	&.progress-item {
+    	&:after {
+    		background: $color-primary;
+      		color: $color-white;
+    	}
+  	}
 }
