@@ -16,9 +16,22 @@
         <title>Bluemarket - @yield('title')</title>
     </head>
     <body>
-        @header 
-        @endheader
-
+        <div class="ui secondary pointing menu bluemarketheader" id="bluemarketheader">
+            <div class="right menu">
+                <a class="active item">
+                    Home
+                </a>
+                <a class="item">
+                    Section A
+                </a>
+                <a class="item">
+                    Section C
+                </a>
+                <a class="ui item">
+                    Register
+                </a>
+            </div> 
+        </div>
         <div class="container">
             @yield('content')
         </div>
