@@ -7,7 +7,7 @@
 @endsection
 
 @section('content')
-	<div class="ui container bluemarket centered-container" id="signin">
+	<div class="ui container bluemarket centered-container">
         <h1>Sign in</h1>
         <p>Sign in to unlock more features</p>
 		<div class="g-signin2" data-theme="light" data-onsuccess="onSignIn" data-longtitle="true"></div>
