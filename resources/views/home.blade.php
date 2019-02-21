@@ -7,7 +7,7 @@
         <div class="overlay">
             <div class="contents">
                 <h1 class="ui header">Welcome to Bluemarket</h1>
-                <button class="ui primary button bluemarket-button">View projects</button>
+                <a class="ui primary button" href="/projects"><div class="bluemarket-button">View projects</div></a>
             </div>
         </div>
     </div>

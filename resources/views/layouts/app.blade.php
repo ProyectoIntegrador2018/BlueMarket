@@ -19,19 +19,16 @@
     <body>
         <div class="ui secondary pointing menu bluemarketheader" id="bluemarketheader">
             <div class="right menu">
-                <a class="active item">
+                <a class="active item" href="/">
                     Home
                 </a>
-                <a class="item">
-                    Section A
+                <a class="item" href="/projects">
+                    Projects
                 </a>
-                <a class="item">
-                    Section B
+                <a class="ui item" href="/login">
+                    Login
                 </a>
-                <a class="ui item">
-                    Register
-                </a>
-            </div> 
+            </div>
         </div>
         <div class="container">
             @yield('content')
