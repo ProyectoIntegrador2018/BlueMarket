@@ -91,7 +91,7 @@
 			$('.signInInfo').fadeOut(function() {
 				$('#profileInformation').fadeIn();
 			})
-			$('#logoutBtn').html('Logout').click(signOut);
+			$('#loginBtn').html('Logout').click(signOut);
 			// document.getElementById('tokenInput').value = token;
 			// document.getElementById('gform').querySelector('p').innerHTML = 'Token ready';
 		}
