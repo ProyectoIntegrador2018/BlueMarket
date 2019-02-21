@@ -28,3 +28,16 @@ Route::get('/auth', function() {
 	return view('auth');
 });
 
+Route::post('/googleauth', function() {
+	$client = new Google_Client(['client_id' => "723110696630-74quqp3hlmjoc30f9tc4ji4v3qgvec40.apps.googleusercontent.com"]);
+	$token = request('id_token');
+	$payload = $client->verifyIdToken($token);
+	if($payload) {
+		dd($payload);
+		// $userid = $payload['sub'];
+	}
+	else {
+		dd('Invalid token');
+	}
+});
+
