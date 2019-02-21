@@ -22,7 +22,7 @@ $color-white: #ffffff;
 
 .home.view-projects{
 	background-size: cover;
-	background-image: url('../img/unsplash-stock01.jpg');
+	background-image: url('../img/unsplash-stock01-min.jpg');
 	background-position: center center;
 	height: 60vh;
 	display: flex;
@@ -44,7 +44,7 @@ $color-white: #ffffff;
 			align-items: center;
 			justify-content: center;
 			display: grid;
-			
+
 			h1{
 				color: $color-white;
 				margin: auto;
@@ -52,14 +52,14 @@ $color-white: #ffffff;
 				font-size: 5vmax;
 				overflow: hidden;
 			}
-	
+
 			.button{
 				justify-content: center;
 				align-items: center;
 				margin: auto;
 				width: inherit;
     			height: min-content;
-			}  
+			}
 		}
 	}
 }
@@ -87,7 +87,7 @@ $color-white: #ffffff;
 		font-size: 1.5vmax;
 		font-weight: inherit;
 		margin-top: 1vmax;
-		margin-bottom: 0.5vmax; 
+		margin-bottom: 0.5vmax;
 	}
 
 	.send{
@@ -118,7 +118,7 @@ $color-white: #ffffff;
 @media only screen and (max-width: 800px) {
 	.home.view-projects {
 		height: 40vh;
-		
+
 		button{
 			width: 50%;
 		}
@@ -182,7 +182,7 @@ $color-white: #ffffff;
 		border-left: 1px solid $color-primary;
 		height: 100%;
 	}
-	
+
   	&:after {
 		content: counter(list);
 		position: absolute;
@@ -229,6 +229,6 @@ $color-white: #ffffff;
 	.ui.container.bluemarket.centered-container{
 		width: 40%;
 		margin: 0 auto;
-		margin-top: 10vh; 
+		margin-top: 10vh;
 	}
 }
