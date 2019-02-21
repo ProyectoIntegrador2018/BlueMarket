@@ -25,7 +25,7 @@
                 <a class="item" href="/projects">
                     Projects
                 </a>
-                <a class="ui item" href="/login">
+                <a class="ui item" id="logoutBtn" href="/login">
                     Login
                 </a>
             </div>
