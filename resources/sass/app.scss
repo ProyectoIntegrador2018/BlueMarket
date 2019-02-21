@@ -1,4 +1,5 @@
 $color-primary: #2980b9;
+$color-secondary: #1C587F;
 $color-dark: #333333;
 $color-white: #ffffff;
 
@@ -230,5 +231,31 @@ $color-white: #ffffff;
 		width: 40%;
 		margin: 0 auto;
 		margin-top: 10vh;
+	}
+}
+
+.ui.four.stackable.cards{
+	.card.bluemarket-projectcard{
+		width: calc(25% - 2.0em);
+		margin-left: 1em;
+		margin-right: 1em;
+		margin-top: 1em;
+		margin-bottom: 1em;
+
+		.extra.content{
+			.ui.bluemarket-skill.label{
+				background-color: $color-primary;
+				color: $color-white;
+				margin-top: 1vh;
+				margin-bottom: 1vh;
+			}
+		}
+		.ui.bottom.attached.label{
+			position: relative;
+			color: $color-white;
+			background: $color-secondary;
+			text-transform: uppercase;
+			text-align: center;
+		}
 	}
 }

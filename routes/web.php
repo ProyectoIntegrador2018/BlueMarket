@@ -12,12 +12,16 @@
 */
 
 Route::get('/', function () {
-    return view('home');
+	return view('home');
 });
 
 Route::get('/login', function () {
-    return view('login');
+	return view('login');
 });
 Route::resource('projects', 'ProjectController')->only([
 	'index', 'show', 'create', 'store'
 ]);
+
+Route::get('/projects', function () {
+	return view('projects');
+});
