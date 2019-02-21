@@ -21,7 +21,6 @@ Route::get('/login', function () {
 Route::resource('projects', 'ProjectController')->only([
 	'index', 'show', 'create', 'store'
 ]);
-
 Route::get('/projects', function () {
 	return view('projects');
 });
