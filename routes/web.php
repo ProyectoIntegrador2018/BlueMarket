@@ -28,3 +28,7 @@ Route::resource('courses', 'CourseController');
 Route::get('/user/profile', 'CourseController@index');
 Route::get('/user/courses/associate/details', 'CourseController@getCourseDetails');
 Route::post('/user/courses/associate', 'CourseController@associate');
+
+Route::get('/projects/add', function () {
+	return view('registerProject');
+});
