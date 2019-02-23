@@ -29,6 +29,6 @@ Route::get('/user/profile', 'CourseController@index');
 Route::get('/user/courses/associate/details', 'CourseController@getCourseDetails');
 Route::post('/user/courses/associate', 'CourseController@associate');
 
-Route::get('/projects/add', function () {
+Route::get('/rp', function () { // TODO: move this to ProjectsController
 	return view('registerProject');
 });
