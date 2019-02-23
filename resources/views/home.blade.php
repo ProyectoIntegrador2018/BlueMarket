@@ -49,16 +49,16 @@
                 <h1 class="bluemarket-text">Contact us</h1>
                 <form class="ui form">
                 <div class="field">
-                    <label class="bluemarket-text">Name</label>
+                    <label>Name</label>
                     <input type="text" name="first-name" placeholder="First Name">
                 </div>
                 <div class="field">
-                    <label class="bluemarket-text">Email</label>
+                    <label>Email</label>
                     <input type="text" name="last-name" placeholder="Email">
                 </div>
                 <div class="field">
                     <div class="field">
-                    <label class="bluemarket-text">Message</label>
+                    <label>Message</label>
                     <textarea></textarea>
                     </div>
                 </div>

@@ -19,13 +19,13 @@
     <body>
         <div class="ui secondary pointing menu bluemarketheader" id="bluemarketheader">
             <div class="right menu">
-                <a class="active item" href="/">
+                <a class="item {{ Request::is('/') ? 'active' : '' }}" href="{{ url('/') }}">
                     Home
                 </a>
-                <a class="item" href="/projects">
+                <a class="item {{ Request::is('projects') ? 'active' : '' }}" href="{{ url('projects') }}">
                     Projects
                 </a>
-                <a class="ui item" id="loginBtn" href="/login">
+                <a class="item {{ Request::is('login') ? 'active' : '' }}" id="loginBtn" href="{{ url('login') }}">
                     Login
                 </a>
             </div>

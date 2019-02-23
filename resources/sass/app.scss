@@ -6,22 +6,26 @@ $color-white: #ffffff;
 .ui.menu.menu.bluemarketheader {
 	background: $color-dark;
 	padding-top: 10px;
-	margin-bottom: 0px;
-	.item {
+	margin: 0px;
+	.item.item {
 		color: $color-white;
 		&.active {
-			color: white;
-			border-color: $color-white;
+			color: $color-white;
+			border-color: $color-primary;
+		}
+		&:hover {
+			color: $color-primary;
+			border-color: $color-primary;
 		}
 	}
 }
 
-.ui.primary.button{
+.ui.primary.button {
 	background-color: $color-primary;
 	color: $color-white;
 }
 
-.home.view-projects{
+.home.view-projects {
 	background-size: cover;
 	background-image: url('../img/unsplash-stock01-min.jpg');
 	background-position: center center;
@@ -31,7 +35,7 @@ $color-white: #ffffff;
   	align-items: center;
 	justify-content: center;
 
-	.overlay{
+	.overlay {
 		background: rgba($color-dark, 0.7);
 		width: 100%;
 		height: 100%;
@@ -39,14 +43,14 @@ $color-white: #ffffff;
 		align-items: inherit;
 		justify-content: inherit;
 
-		.contents{
+		.contents {
 			height: 90%;
 			width: 70%;
 			align-items: center;
 			justify-content: center;
 			display: grid;
 
-			h1{
+			h1 {
 				color: $color-white;
 				margin: auto;
 				width: fit-content;
@@ -54,7 +58,7 @@ $color-white: #ffffff;
 				overflow: hidden;
 			}
 
-			.button{
+			.button {
 				justify-content: center;
 				align-items: center;
 				margin: auto;
@@ -65,44 +69,44 @@ $color-white: #ffffff;
 	}
 }
 
-.padded.content{
+.padded.content {
 	padding-left: 10%;
 	padding-right: 10%;
 	padding-top: 5%;
 }
 
-.home.info{
-	.ui.divider{
+.home.info {
+	.ui.divider {
 		border: none;
 	}
 
-	h1.bluemarket-text{
+	h1.bluemarket-text {
 		font-size: 1.75vmax;
 	}
 
-	p.bluemarket-text{
+	p.bluemarket-text {
 		font-size: 1.75vmax;
 	}
 
-	label.bluemarket-text{
+	label.bluemarket-text {
 		font-size: 1.5vmax;
 		font-weight: inherit;
 		margin-top: 1vmax;
 		margin-bottom: 0.5vmax;
 	}
 
-	.send{
+	.send {
 		background-color: $color-primary;
 		color: $color-white;
 	}
 
-	div.column.image-container{
+	div.column.image-container {
 		justify-content: center;
     	align-items: flex-end;
 		display: grid;
 	}
 
-	.ui.small.circular.image{
+	.ui.small.circular.image {
 		max-width:100%;
 		max-height:100%;
 		height: auto;
@@ -111,7 +115,7 @@ $color-white: #ffffff;
 		margin: 0%;
 	}
 
-	&.contact{
+	&.contact {
 		width: 100%;
 	}
 }
@@ -120,36 +124,36 @@ $color-white: #ffffff;
 	.home.view-projects {
 		height: 40vh;
 
-		button{
+		button {
 			width: 50%;
 		}
 
-		h1.ui.header{
+		h1.ui.header {
 			white-space: nowrap;
 			overflow: hidden;
 		}
 	}
 
-	.home.info{
-		h1.bluemarket-text{
+	.home.info {
+		h1.bluemarket-text {
 			font-size: 1.5vmax;
 		}
 
-		p.bluemarket-text{
+		p.bluemarket-text {
 			font-size: 1.5vmax;
 		}
 
-		label.bluemarket-text{
+		label.bluemarket-text {
 			font-size: 1.5vmax;
 		}
 
-		.image-div.column.image-container{
+		.image-div.column.image-container {
 			justify-content: center;
 			align-items: center;
 			display: grid;
 		}
 
-		.ui.small.circular.image{
+		.ui.small.circular.image {
 			max-width:100%;
 			max-height:100%;
 			height: auto;
@@ -158,7 +162,7 @@ $color-white: #ffffff;
 			margin: 0%;
 		}
 
-		.steps{
+		.steps {
 			justify-content: center;
 			align-content: center;
 		}
@@ -213,6 +217,7 @@ $color-white: #ffffff;
 		&:before {
 			border: none;
 		}
+
 		.progress-info {
 			padding-bottom: 0vh;
 		}
@@ -226,31 +231,31 @@ $color-white: #ffffff;
   	}
 }
 
-.container{
-	.ui.container.bluemarket.centered-container{
+.container {
+	.ui.container.bluemarket.centered-container {
 		width: 40%;
 		margin: 0 auto;
 		margin-top: 10vh;
 	}
 }
 
-.ui.four.stackable.cards{
-	.card.bluemarket-projectcard{
+.ui.four.stackable.cards {
+	.card.bluemarket-projectcard {
 		width: calc(25% - 2.0em);
 		margin-left: 1em;
 		margin-right: 1em;
 		margin-top: 1em;
 		margin-bottom: 1em;
 
-		.extra.content{
-			.ui.bluemarket-skill.label{
+		.extra.content {
+			.ui.bluemarket-skill.label {
 				background-color: $color-primary;
 				color: $color-white;
 				margin-top: 1vh;
 				margin-bottom: 1vh;
 			}
 		}
-		.ui.bottom.attached.label{
+		.ui.bottom.attached.label {
 			position: relative;
 			color: $color-white;
 			background: $color-secondary;
