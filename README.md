@@ -1,5 +1,9 @@
 # BlueMarket
 
+[![Maintainability](https://api.codeclimate.com/v1/badges/4891d04dc51996992762/maintainability)](https://codeclimate.com/github/ProyectoIntegrador2018/BlueMarket/maintainability)
+
+[![Test Coverage](https://api.codeclimate.com/v1/badges/4891d04dc51996992762/test_coverage)](https://codeclimate.com/github/ProyectoIntegrador2018/BlueMarket/test_coverage)
+
 BlueMarket is an initiative at Tec de Monterrey for team collaboration across different classes and groups to produce unique projects that combine the strengths of multidisciplinary teams, each with their own expertise, and replicating a real-world team collaboration environment.
 
 The initiative is under the Novus project sponsorship for 2019.
