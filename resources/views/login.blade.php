@@ -30,7 +30,6 @@
 	<script src="https://apis.google.com/js/platform.js" async defer></script>
 	<script>
 		$(function() {
-
 			// Test content blocking on firefox:
 			let $img = $('<img/>').attr("src", "https://apps.facebook.com/favicon.ico");
 			$img.on('load', function(e){
@@ -59,6 +58,7 @@
 				setTimeout(loadBtn, 1200);
 			});
 		}
+
 		function loadBtn() {
 			gapi.signin2.render('my-signin2', {
 				'width': 240,
@@ -69,6 +69,7 @@
 				'onfailure': onFailure
 			});
 		}
+
 		function onFailure(e) {
 			// Handle the error where user does not match domain
 			if(e.error) {
@@ -78,6 +79,7 @@
 				alert('Could not sign you in using this account. Please use your \@itesm.mx account');
 			}
 		}
+
 		function onSignIn(googleUser) {
 			var profile = googleUser.getBasicProfile();
 			console.log(profile);
