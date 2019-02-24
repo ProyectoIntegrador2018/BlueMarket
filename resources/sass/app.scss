@@ -32,7 +32,7 @@ $color-white: #ffffff;
 	height: 60vh;
 	display: flex;
 	display: -webkit-flex;
-  	align-items: center;
+	align-items: center;
 	justify-content: center;
 
 	.overlay {
@@ -63,7 +63,7 @@ $color-white: #ffffff;
 				align-items: center;
 				margin: auto;
 				width: inherit;
-    			height: min-content;
+				height: min-content;
 			}
 		}
 	}
@@ -102,7 +102,7 @@ $color-white: #ffffff;
 
 	div.column.image-container {
 		justify-content: center;
-    	align-items: flex-end;
+		align-items: flex-end;
 		display: grid;
 	}
 
@@ -188,7 +188,7 @@ $color-white: #ffffff;
 		height: 100%;
 	}
 
-  	&:after {
+	&:after {
 		content: counter(list);
 		position: absolute;
 		top: 0;
@@ -202,7 +202,7 @@ $color-white: #ffffff;
 		text-align: center;
 		justify-content: center;
 		border: 2px solid $color-primary;
-  	}
+	}
 
 	.progress-title {
 		margin: 0vh 2.5vw 0vh 2.5vw;
@@ -223,12 +223,12 @@ $color-white: #ffffff;
 		}
 	}
 
-  	&.progress-item {
-    	&:after {
-    		background: $color-primary;
-      		color: $color-white;
-    	}
-  	}
+	&.progress-item {
+		&:after {
+			background: $color-primary;
+			color: $color-white;
+		}
+	}
 }
 
 .container {
