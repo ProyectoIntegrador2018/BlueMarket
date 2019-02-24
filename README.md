@@ -69,7 +69,7 @@ After setting up your dev environment you can follow this simple steps:
 1. Clone this repository into your local machine
 
 ```bash
-$  git clone git@github.com:hecerinc/BlueMarket.git && cd BlueMarket
+$  git clone https://github.com/ProyectoIntegrador2018/BlueMarket.git && cd BlueMarket
 ```
 
 2. Fire up a terminal and run:
@@ -96,10 +96,16 @@ $  cp .env.example .env # copy the env example file to a .env file
 $  php artisan key:generate # this will save it automatically to your .env file
 ```
 
+5. Generate the static resources
+
+```bash
+$  yarn run prod
+```
+
 
 ### Running the app
 
-5. Run the project!
+6. Run the project!
 
 ```bash
 $  php artisan serve
