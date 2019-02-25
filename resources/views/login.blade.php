@@ -21,8 +21,9 @@
 		<div id="profileInformation" class="hidden">
 			<div class="profile-name">
 				<h2>Welcome <span class="name"></span>!</h2>
-				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad reiciendis delectus quibusdam, animi illo aliquid velit asperiores perspiciatis voluptas. Quas optio deleniti odio rem unde odit voluptate, earum aliquam fugiat!</p>
-				<a href="#" class="ui button primary" style="margin-top: 20px">Fill your profile now</a>
+				<p>Would you like to set up your profile now? Don't worry. You can always update it later.</p>
+				<a href="#" class="ui button primary">Set up profile</a>
+				<a href="{{ url('/') }}" class="ui button primary">Skip for now</a>
 			</div>
 		</div>
 	</div>

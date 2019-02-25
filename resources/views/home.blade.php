@@ -2,16 +2,17 @@
 
 @section('title', 'Welcome')
 
-@section('content')
-    <div class="home view-projects">
-        <div class="overlay">
-            <div class="contents">
-                <h1 class="ui header">Welcome to Bluemarket</h1>
-                <a class="ui primary button" href="/projects"><div class="bluemarket-button">View projects</div></a>
-            </div>
+@section('not-padded content')
+<div class="home view-projects">
+	<div class="overlay">
+        <div class="contents">
+            <h1 class="ui header">Welcome to Bluemarket</h1>
+            <a class="ui primary button" href="/projects"><div class="bluemarket-button">View projects</div></a>
         </div>
     </div>
-    <div class="padded content">
+</div>
+@endsection
+@section('content')
         <div class="home info">
             <div class="ui divider"></div>
                 <div class="ui two column padded grid">
@@ -66,5 +67,4 @@
                 </form>
             </div>
         </div>
-    </div>
 @endsection

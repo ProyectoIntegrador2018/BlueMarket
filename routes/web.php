@@ -18,12 +18,15 @@ Route::get('/', function () {
 Route::get('/login', function () {
 	return view('login');
 });
+
 Route::resource('projects', 'ProjectController')->only([
 	'index', 'show', 'create', 'store'
 ]);
+
 Route::get('/projects', function () {
 	return view('projects');
 });
+
 Route::get('/auth', function() {
 	return view('auth');
 });
@@ -41,3 +44,6 @@ Route::post('/googleauth', function() {
 	}
 });
 
+Route::get('/user/edit', function () {
+	return view('editUserProfile');
+});

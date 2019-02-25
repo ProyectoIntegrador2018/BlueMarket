@@ -12,23 +12,32 @@
 		<!-- Styles -->
 		<link href="{{ mix('css/app.css') }}" rel="stylesheet">
 
-	</head>
-	<body>
-		<div class="ui secondary pointing menu bluemarketheader" id="bluemarketheader">
-			<div class="right menu">
-				<a class="item {{ Request::is('/') ? 'active' : '' }}" href="{{ url('/') }}">
-					Home
-				</a>
-				<a class="item {{ Request::is('projects') ? 'active' : '' }}" href="{{ url('projects') }}">
-					Projects
-				</a>
-				<a class="item {{ Request::is('login') ? 'active' : '' }}" id="loginBtn" href="{{ url('login') }}">
-					Login
-				</a>
+        <title>Bluemarket - @yield('title')</title>
+    </head>
+    <body>
+        <div class="ui secondary pointing menu bluemarketheader" id="bluemarketheader">
+            <div class="right menu">
+                <a class="item {{ Request::is('/') ? 'active' : '' }}" href="{{ url('/') }}">
+                    Home
+                </a>
+                <a class="item {{ Request::is('projects') ? 'active' : '' }}" href="{{ url('projects') }}">
+                    Projects
+                </a>
+                <a class="item {{ Request::is('login') ? 'active' : '' }}" id="loginBtn" href="{{ url('login') }}">
+                    Login
+                </a>
+            </div>
+        </div>
+        <div class="container">
+			<div class="not-padded content">
+				@yield('not-padded content')
 			</div>
-		</div>
-		<div class="container">
-			@yield('content')
-		</div>
-	</body>
+			<div class="padded content">
+				<h1>@yield('header')</h1>
+				@yield('content')
+			</div>
+			<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+			@yield('scripts')
+    </body>
 </html>
