@@ -75,11 +75,10 @@
 
 					<!-- Success message -->
 					<div id="success" class="ui positive message">
-
-					<div class="header">
-						Thank you for your message.
-					</div>
-					<p>We'll get back at you as soon as possible.</p>
+						<div class="header">
+							Thank you for your message.
+						</div>
+						<p>We'll get back at you as soon as possible.</p>
 					</div>
 					<!-- Error message -->
 					<div id="errorMessage" class="ui error message">
