@@ -322,3 +322,17 @@ $color-white: #fff;
 	margin-top: 2em;
 	margin-bottom: 2em;
 }
+
+.userImageUploaderContainer {
+	display: inline-block;
+	align-content: center;
+	.ui.small.image#userImagePreview {
+		margin-bottom: 1vh;
+		width: 10rem;
+ 		height: 10rem;
+	}
+
+	button {
+		width: 100%;
+	}
+}

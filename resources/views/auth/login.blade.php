@@ -14,6 +14,14 @@
 			<p>Sign in to unlock more features</p>
 			<div id="my-signin2"></div>
 		</div>
+		<div id="profileInformation" class="hidden">
+			<div class="profile-name">
+				<h2>Welcome <span class="name"></span>!</h2>
+				<p>Would you like to set up your profile now? Don't worry. You can always update it later.</p>
+				<a href="#" class="ui button primary">Set up profile</a>
+				<a href="{{ url('/') }}" class="ui button primary">Skip for now</a>
+			</div>
+		</div>
 	</div>
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script src="https://apis.google.com/js/platform.js" async defer></script>
