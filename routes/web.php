@@ -37,3 +37,8 @@ Route::get('/marce', function () {
 Route::get('/user/edit', function () {
 	return view('editUserProfile');
 });
+
+Route::post('/contact', [
+	'uses' => 'ContactMessageController@store',
+	'as' => 'contact.store'
+]);
