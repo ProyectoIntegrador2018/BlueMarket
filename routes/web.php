@@ -15,6 +15,7 @@ Route::get('/', function () {
 	return view('home');
 });
 
+
 Route::get('/logout', 'LoginController@logout')->name('logout');
 Route::get('/login', 'LoginController@show')->name('login');
 Route::post('/login', 'LoginController@authenticate');
@@ -31,4 +32,8 @@ Route::post('/user/courses/associate', 'CourseController@associate');
 
 Route::get('/marce', function () {
 	return view('registerProject');
+
+	/* user */
+Route::get('/user/edit', function () {
+	return view('editUserProfile');
 });

@@ -11,7 +11,6 @@
 
 		<!-- Styles -->
 		<link href="{{ mix('css/app.css') }}" rel="stylesheet">
-
 	</head>
 	<body>
 		<div class="ui secondary pointing menu bluemarketheader" id="bluemarketheader">
