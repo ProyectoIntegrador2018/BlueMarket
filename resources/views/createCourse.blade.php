@@ -66,7 +66,10 @@
 	</div>
 	<!-- Register button -->
 	<button id="registerCourse" class="ui button primary">Register</button>
-
+	<!-- Generated course code -->
+	<div id="generatedCode">
+		<p>Generated course code: XHF9</p>
+	</div>
 </div>
 
 @endsection
