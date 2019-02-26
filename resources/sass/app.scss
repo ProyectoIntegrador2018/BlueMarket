@@ -326,10 +326,12 @@ $color-white: #fff;
 .userImageUploaderContainer {
 	display: inline-block;
 	align-content: center;
-	.ui.small.image#userImagePreview {
+	.ui.small.image.preview {
 		margin-bottom: 1vh;
-		width: 10rem;
- 		height: 10rem;
+		width: 15vmax;
+		height: 15vmax;
+		object-fit: cover;
+		object-position: center center;
 	}
 
 	button {

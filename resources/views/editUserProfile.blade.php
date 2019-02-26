@@ -10,7 +10,9 @@
 	<div id ="userImage" class="field">
 		<label for="userImage">Photo</label>
 		<div class="userImageUploaderContainer">
-			<img id="userImagePreview" src="https://lorempixel.com/400/400" alt="User image" class="ui small circular image"/>
+			<div class="imagePreviewContainer">
+				<img id="userImagePreview" src="https://lorempixel.com/400/400" alt="User image" class="ui small circular image preview"/>
+			</div>
 			<a href="#" class="imgUploader">
 				<button id="uploadImage" class="ui button primary">Upload image</button>
 			</a>
