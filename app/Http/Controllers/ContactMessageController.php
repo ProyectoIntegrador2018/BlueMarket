@@ -19,7 +19,7 @@ class ContactMessageController extends Controller
 		{
 			$message->from($request->email, $request->name);
 
-			$message->to('katiarriaga@gmail.com')->subject('Contact Us - BlueMarket');
+			$message->to('hello@bluemarket.com')->subject('Contact Us - BlueMarket');
 		});
 
 		$response = array(
