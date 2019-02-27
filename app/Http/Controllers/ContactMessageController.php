@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class ContactMessageController extends Controller
 {
-	public function store(Request $request)
+	public function post(Request $request)
 	{
 		$this->validate($request, [
 			'name' => 'required',
@@ -22,6 +22,11 @@ class ContactMessageController extends Controller
 			$message->to('katiarriaga@gmail.com')->subject('Contact Us - BlueMarket');
 		});
 
-		return redirect()->back()->with('flash_message', 'Thank you for your message.');
+		$response = array(
+        	'status' => 'success',
+        	'msg' => $request->message,
+      	);
+
+		return response()->json($response);//redirect()->back()->with('flash_message', 'Thank you for your message.');
 	}
 }
