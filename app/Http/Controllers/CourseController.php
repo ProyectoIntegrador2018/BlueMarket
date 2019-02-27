@@ -88,7 +88,7 @@ class CourseController extends Controller
      * Get a course details.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \App\Course
      */
     public function getCourseDetails(Request $request)
     {
@@ -100,7 +100,7 @@ class CourseController extends Controller
      * Associate a student with a course.
      *
      * @param  \App\Course  $course
-     * @return \Illuminate\Http\Response
+     * @return Bool
      */
     public function associate(Course $course, Student $student)
     {
