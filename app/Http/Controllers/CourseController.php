@@ -104,7 +104,19 @@ class CourseController extends Controller
      */
     public function associate(Course $course, Student $student)
     {
-		$student->courses()->attach($course->id)->withTimestamps();
-		return true;
+		$course = Course::find($course->id);
+		$student = Student::find($student->id);
+
+		if ($course == null || $student == null) {
+			return false;
+		}
+
+		$result = $student->courses()->attach($course->id);
+
+		if ($result == null) {
+			return false;
+		} else {
+			return true;
+		}
 	}
 }
