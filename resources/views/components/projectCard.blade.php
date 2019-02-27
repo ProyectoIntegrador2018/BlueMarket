@@ -4,7 +4,7 @@
 	</div>
 	<div class="content">
 		<div class="header">{{ $projectName }}</div>
-		<div class="meta">
+		<div class="category">
 			{{ $category }}
 		</div>
 		<div class="description">
