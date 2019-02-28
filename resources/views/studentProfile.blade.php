@@ -18,8 +18,8 @@
 				<button id="addCourse" class="ui primary button">Add course</button>
 			</div>
 			<div class="courses table">
-				<table id="currentCourses" class="ui striped table">
-					<thead>
+				<table id="currentCourses" class="ui striped table bluemarket-table">
+					<thead class="bluemarket-thead">
 						<tr>
 						<th>Course</th>
 						<th>Professor</th>
@@ -92,7 +92,7 @@
 @section( "scripts" )
 <script>
 	$(document).ready(function() {
-		// TODO: load course info in table
+		// TODO: ajax to load student's current courses
 		$( "#courseKeyInputContainer" ).removeClass( "error" );
 		$( "#courseKey" ).removeClass( "error" );
 
