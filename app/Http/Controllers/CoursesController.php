@@ -36,6 +36,8 @@ class CoursesController extends Controller
      */
     public function store(Request $request)
     {
+		// 1 client 2 supplier
+
         $attributes = request()->validate([
 			'name' => 'required|string',
 			'course_type' => ['required', 'integer', Rule::in([1, 2])],
