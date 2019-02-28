@@ -22,9 +22,13 @@
 				<a class="item {{ Request::is('projects') ? 'active' : '' }}" href="{{ url('projects') }}">
 					Projects
 				</a>
-				<a class="item {{ Request::is('login') ? 'active' : '' }}" id="loginBtn" href="{{ url('login') }}">
-					Login
-				</a>
+				@if(Auth::user())
+					<a class="item" href="{{ url('logout') }}">Logout</a>
+				@else
+					<a class="item {{ Request::is('login') ? 'active' : '' }}" id="loginBtn" href="{{ url('login') }}">
+						Login
+					</a>
+				@endif
 			</div>
 		</div>
 		<div class="container">
