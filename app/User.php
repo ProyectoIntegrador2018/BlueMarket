@@ -34,6 +34,6 @@ class User extends Authenticatable
      * @var array
      */
     public function courses() {
-		return $this->belongsToMany(Course::class)->withTimestamps();
+		return $this->belongsToMany(Course::class);
 	}
 }
