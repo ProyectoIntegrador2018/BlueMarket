@@ -35,7 +35,16 @@ class CoursesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $attributes = request()->validate([
+			'name' => 'required|string',
+			'course_type' => ['required', 'integer', Rule::in([1, 2])],
+			'student_cap' => 'nullable|integer|min:1',
+			'team_size' => 'nullable|integer|min:1',
+		]);
+
+		return $attributes;
+
+		$course = Course::create($attributes);
     }
 
     /**
