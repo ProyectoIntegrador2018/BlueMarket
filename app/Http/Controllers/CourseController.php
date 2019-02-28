@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Course;
-use App\Student;
+use App\User;
 use Illuminate\Http\Request;
 
 class CourseController extends Controller
@@ -13,9 +13,9 @@ class CourseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public static function index()
+    public function index()
     {
-		$user = Auth::user();
+        $user = Auth::user();
 		$courses = $user->courses;
         return view('user.studentProfile', compact('courses'));
     }
@@ -38,7 +38,29 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+		// 1 client 2 supplier
+
+        $attributes = request()->validate([
+			'courseName' => 'required|string',
+			'courseType' => ['required', 'integer', Rule::in([1, 2])],
+			'teamsOf' => 'required|integer|min:1',
+			'professors' => 'required',
+			'professors.*.id' => ['integer', Rule::in(User::where('role', 1)->get()->pluck('id'))],
+			'courseSemester' => 'required|string',
+			'courseSchedule' => 'required',
+			'courseHours' => 'required',
+		]);
+
+		/*$course = Course::create($attributes);
+
+		foreach ($request->teachers as $teacher) {
+			$result = $this->addTeacher($course, $teacher->id);
+
+			if (!$result) {
+				// return error here
+			}
+		}
+		*/
     }
 
     /**
@@ -84,9 +106,9 @@ class CourseController extends Controller
     public function destroy(Course $course)
     {
         //
-    }
+	}
 
-    /**
+	/**
      * Get a course details.
      *
      * @param  String $courseKey
@@ -136,5 +158,27 @@ class CourseController extends Controller
 		}
 
 		return back();
+	}
+
+	/**
+	 * Associate a course with a teacher
+	 *
+	 * @param \App\Course $course
+	 * @param integer $teacher_id
+	 * @return boolean
+	 */
+	private function addTeacher(Course $course, integer $teacher_id) {
+		if ($course == null || $teacher_id == null) {
+			return false;
+		}
+
+		$result = $course->teachers->attach($teacher_id);
+
+		if ($result) {
+			return true;
+		} else {
+			return false;
+		}
+
 	}
 }

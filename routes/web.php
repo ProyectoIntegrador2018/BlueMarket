@@ -23,4 +23,4 @@ Route::resource('projects', 'ProjectController')->only([
 	'index', 'show', 'create', 'store'
 ]);
 
-Route::resource('courses', 'CoursesController');
+Route::resource('courses', 'CourseController');
