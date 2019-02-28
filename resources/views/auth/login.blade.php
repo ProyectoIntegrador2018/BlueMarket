@@ -4,6 +4,7 @@
 
 @section('meta')
 	<meta name="google-signin-client_id" content="723110696630-74quqp3hlmjoc30f9tc4ji4v3qgvec40.apps.googleusercontent.com">
+	<meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 
 @section('content')
@@ -12,18 +13,39 @@
 			display: none;
 		}
 	</style>
+	<div class="ui padded content container centered-container" style="width: 60%">
+		<form method="POST" action="{{ route('login') }}" class="ui form">
+			@csrf
+			<input type="hidden" name="id_token" id="token">
+			<div class="form-group row">
+				<label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+
+				<div class="col-md-6">
+					<input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus>
+
+					@if ($errors->has('email'))
+						<span class="invalid-feedback" role="alert">
+							<strong>{{ $errors->first('email') }}</strong>
+						</span>
+					@endif
+				</div>
+
+			</div>
+
+			<div class="form-group row mb-0">
+				<div class="col-md-8 offset-md-4">
+					<button type="submit" class="ui button primary" style="margin-top: 20px;">
+						{{ __('Login') }}
+					</button>
+				</div>
+			</div>
+		</form>
+	</div>
 	<div class="ui container bluemarket centered-container">
 		<div class="signInInfo">
 			<h1>Sign in</h1>
 			<p>Sign in to unlock more features</p>
 			<div id="my-signin2"></div>
-		</div>
-		<div id="profileInformation" class="hidden">
-			<div class="profile-name">
-				<h2>Welcome <span class="name"></span>!</h2>
-				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad reiciendis delectus quibusdam, animi illo aliquid velit asperiores perspiciatis voluptas. Quas optio deleniti odio rem unde odit voluptate, earum aliquam fugiat!</p>
-				<a href="#" class="ui button primary" style="margin-top: 20px">Fill your profile now</a>
-			</div>
 		</div>
 	</div>
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -48,15 +70,23 @@
 				$('#my-signin2').html(msg);
 				return false;
 			}
-			let auth2;
+			// let auth2;
 			gapi.load('auth2', function() {
-				auth2 = gapi.auth2.init({
+				var auth2 = gapi.auth2.init({
 					hosted_domain: 'itesm.mx',
 					prompt: 'select_account'
 				});
-				// let options = new gapi.auth2.SigninOptionsBuilder();
-				// options.setPrompt('select_account');
-				setTimeout(loadBtn, 1200);
+				auth2.then(function() {
+					const hasUser = <?= Auth::user() === NULL ? 'false' : 'true' ?>;
+					if(auth2.isSignedIn.get() && !hasUser) {
+						auth2.signOut().then(function() {
+							loadBtn();
+						});
+					}
+					else {
+						setTimeout(loadBtn, 1200);
+					}
+				});
 			});
 		}
 		function loadBtn() {
@@ -80,20 +110,26 @@
 		}
 		function onSignIn(googleUser) {
 			var profile = googleUser.getBasicProfile();
-			console.log(profile);
-			console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-			console.log('Name: ' + profile.getName());
-			const name = profile.getName();
-			$('#profileInformation span.name').html(name);
-			console.log('Image URL: ' + profile.getImageUrl());
-			console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
 			let token = googleUser.getAuthResponse().id_token;
-			$('.signInInfo').fadeOut(function() {
-				$('#profileInformation').fadeIn();
-			})
-			$('#loginBtn').html('Logout').click(signOut);
-			// document.getElementById('tokenInput').value = token;
-			// document.getElementById('gform').querySelector('p').innerHTML = 'Token ready';
+			$('#my-signin2').fadeOut();
+			// Send the request now
+			$.ajax({
+				url: '/login',
+				method: 'POST',
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				},
+				data: {'id_token': token},
+				dataType: 'json',
+				success: function(data) {
+					if(data && data.success) {
+						window.location.href = "/";
+					}
+				},
+				error: function() {
+					console.log('something went wrong');
+				}
+			});
 		}
 
 		function signOut() {
