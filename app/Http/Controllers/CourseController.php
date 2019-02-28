@@ -17,7 +17,7 @@ class CourseController extends Controller
     {
 		$user = Auth::user();
 		$courses = $user->courses;
-        return view('user.studentProfile', $courses);
+        return view('user.studentProfile', compact('courses'));
     }
 
     /**
