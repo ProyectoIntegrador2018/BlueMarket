@@ -13,9 +13,10 @@ class CourseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public static function index()
     {
-        //
+		$user = Auth::user();
+        return $user->courses;
     }
 
     /**
@@ -87,13 +88,25 @@ class CourseController extends Controller
     /**
      * Get a course details.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  String $courseKey
      * @return \App\Course
      */
-    public function getCourseDetails(Request $request)
+    public function getCourseDetails(String $courseKey)
     {
-		$courseKey = $request->$courseKey;
-		return Course::where('course_key', $courseKey)->first();
+		$user = Auth::user();
+		$course = Course::where('course_key', $courseKey)->first();
+
+		if ($course == null) {
+			abort(404);
+		}
+
+		$exists = $user->courses()->contains($course->id);
+
+		if ($exists == false) {
+			return $course;
+		} else {
+			abort(400);
+		}
 	}
 
     /**
@@ -102,21 +115,25 @@ class CourseController extends Controller
      * @param  \App\Course  $course
      * @return Bool
      */
-    public function associate(Course $course, Student $student)
+    public function associate(Course $course)
     {
+		$user = Auth::user();
 		$course = Course::find($course->id);
-		$student = Student::find($student->id);
 
 		if ($course == null || $student == null) {
-			return false;
+			abort(400);
 		}
 
-		$result = $student->courses()->attach($course->id);
+		if ($user->role != 2) {
+			abort(401);
+		}
+
+		$result = $student->courses()->attach($course);
 
 		if ($result == null) {
-			return false;
-		} else {
-			return true;
+			abort(400);
 		}
+
+		return back();
 	}
 }

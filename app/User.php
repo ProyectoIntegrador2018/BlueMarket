@@ -26,5 +26,14 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password', 'remember_token',
-    ];
+	];
+
+    /**
+     * The courses that a user has as a professor or student.
+     *
+     * @var array
+     */
+    public function courses() {
+		return $this->belongsToMany(Course::class)->withTimestamps();
+	}
 }
