@@ -28,6 +28,7 @@
 			</div>
 		</div>
 		<div class="container">
+			<?php var_dump(Auth::user()) ?>
 			@yield('content')
 		</div>
 	</body>

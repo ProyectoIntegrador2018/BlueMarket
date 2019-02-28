@@ -7,11 +7,13 @@ use Illuminate\Http\Request;
 
 class ProjectController extends Controller
 {
-	public function index()
-	{
-		$projects = Project::all();
-		return view('projects.index', compact('projects'));
+	public function __construct() {
+		$this->middleware('auth');
 	}
+    public function index() {
+		$projects = Project::all();
+		return view('projects', compact('projects'));
+    }
 
 	public function show($id)
 	{
