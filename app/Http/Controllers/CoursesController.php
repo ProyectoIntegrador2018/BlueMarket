@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Course;
+use App\User;
 use Illuminate\Http\Request;
 
 class CoursesController extends Controller
@@ -40,11 +41,20 @@ class CoursesController extends Controller
 			'course_type' => ['required', 'integer', Rule::in([1, 2])],
 			'student_cap' => 'nullable|integer|min:1',
 			'team_size' => 'nullable|integer|min:1',
+			'teachers' => 'required',
+			'teachers.*.id' => ['integer', Rule::in(User::where('user_type', 2)->get()->pluck('id'))],
 		]);
 
-		return $attributes;
+		/*$course = Course::create($attributes);
 
-		$course = Course::create($attributes);
+		foreach ($request->teachers as $teacher) {
+			$result = $this->addTeacher($course, $teacher->id);
+
+			if (!$result) {
+				// return error here
+			}
+		}
+		*/
     }
 
     /**
@@ -90,5 +100,27 @@ class CoursesController extends Controller
     public function destroy(Course $course)
     {
         //
-    }
+	}
+
+	/**
+	 * Associate a course with a teacher
+	 *
+	 * @param \App\Course $course
+	 * @param integer $teacher_id
+	 * @return boolean
+	 */
+	private function addTeacher(Course $course, integer $teacher_id) {
+		if ($course == null || $teacher_id == null) {
+			return false;
+		}
+
+		$result = $course->teachers->attach($teacher_id);
+
+		if ($result) {
+			return true;
+		} else {
+			return false;
+		}
+
+	}
 }
