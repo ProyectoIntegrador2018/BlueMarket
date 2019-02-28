@@ -16,7 +16,8 @@ class CourseController extends Controller
     public static function index()
     {
 		$user = Auth::user();
-        return $user->courses;
+		$courses = $user->courses;
+        return view('user.studentProfile', $courses);
     }
 
     /**
