@@ -29,10 +29,10 @@ class User extends Authenticatable
 	];
 
 	public function teaches() {
-		return $this->belongsToMany('App\Course')->wherePivot('user_type', 2);
+		return $this->belongsToMany('App\Course')->wherePivot('role', 1);
 	}
 
 	public function enrolledIn() {
-		return $this->belongsToMany('App\Course')->wherePivot('user_type', 1);
+		return $this->belongsToMany('App\Course')->wherePivot('role', 2);
 	}
 }

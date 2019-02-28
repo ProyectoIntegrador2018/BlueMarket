@@ -39,12 +39,14 @@ class CoursesController extends Controller
 		// 1 client 2 supplier
 
         $attributes = request()->validate([
-			'name' => 'required|string',
-			'course_type' => ['required', 'integer', Rule::in([1, 2])],
-			'student_cap' => 'nullable|integer|min:1',
-			'team_size' => 'nullable|integer|min:1',
-			'teachers' => 'required',
-			'teachers.*.id' => ['integer', Rule::in(User::where('user_type', 2)->get()->pluck('id'))],
+			'courseName' => 'required|string',
+			'courseType' => ['required', 'integer', Rule::in([1, 2])],
+			'teamsOf' => 'required|integer|min:1',
+			'professors' => 'required',
+			'professors.*.id' => ['integer', Rule::in(User::where('role', 1)->get()->pluck('id'))],
+			'courseSemester' => 'required|string',
+			'courseSchedule' => 'required',
+			'courseHours' => 'required',
 		]);
 
 		/*$course = Course::create($attributes);

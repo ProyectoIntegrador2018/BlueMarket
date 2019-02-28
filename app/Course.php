@@ -9,10 +9,10 @@ class Course extends Model
 	protected $guarded = [];
 
 	public function teachers() {
-		return $this->belongsToMany('App\User')->wherePivot('user_type', 2);
+		return $this->belongsToMany('App\User')->wherePivot('role', 1);
 	}
 
 	public function students() {
-		return $this->belongsToMany('App\User')->wherePivot('user_type', 1);
+		return $this->belongsToMany('App\User')->wherePivot('role', 2);
 	}
 }

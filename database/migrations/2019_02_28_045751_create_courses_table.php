@@ -17,9 +17,9 @@ class CreateCoursesTable extends Migration
 			$table->increments('id');
 			$table->string('name');
 			$table->unsignedInteger('course_type');
-			$table->string('schedule')->nullable();
-			$table->unsignedInteger('student_cap')->nullable();
-			$table->unsignedInteger('team_size')->nullable();
+			$table->string('schedule');
+			$table->unsignedInteger('team_size');
+			$table->string('course_key')->nullable();
             $table->timestamps();
         });
     }
