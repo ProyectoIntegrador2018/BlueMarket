@@ -22,6 +22,12 @@ $factory->define(App\User::class, function (Faker $faker) {
 
 $factory->state(App\User::class, 'teacher', function ($faker) {
     return [
-        'user_type' => 2,
+        'role' => 1,
+    ];
+});
+
+$factory->state(App\User::class, 'student', function ($faker) {
+    return [
+        'role' => 2,
     ];
 });
