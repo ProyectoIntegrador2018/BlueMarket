@@ -167,6 +167,28 @@ $color-white: #ffffff;
 			align-content: center;
 		}
 	}
+
+	.ui.modal {
+		text-align: center;
+		font-size: 1.2em;
+
+		.header {
+			// Override of semantic-ui padding. Set as !important in framework.
+			padding-right: .75rem !important;
+		}
+
+		.content {
+			i.icon {
+				margin: 1vh;
+			}
+		}
+	}
+
+	table.ui.table.bluemarket-table {
+		thead.bluemarket-thead {
+			display: none;
+		}
+	}
 }
 
 .progress {
