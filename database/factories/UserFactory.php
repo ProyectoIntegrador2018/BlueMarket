@@ -19,3 +19,9 @@ $factory->define(App\User::class, function (Faker $faker) {
         'email' => $faker->unique()->safeEmail
     ];
 });
+
+$factory->state(App\User::class, 'teacher', function ($faker) {
+    return [
+        'user_type' => 2,
+    ];
+});
