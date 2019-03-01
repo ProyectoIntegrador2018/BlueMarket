@@ -38,6 +38,4 @@ Route::get('/user/edit', function () {
 	return view('editUserProfile');
 });
 
-Route::post('/contact', [
-	'uses' => 'ContactMessageController@post'
-]);
+Route::post('/contact', 'ContactMessageController@post');

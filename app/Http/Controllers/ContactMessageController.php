@@ -21,5 +21,11 @@ class ContactMessageController extends Controller
 
 			$message->to('hello@bluemarket.com')->subject('Contact Us - BlueMarket');
 		});
+
+		if (Mail::failures()) {
+			return ['status' => 'error'];
+		}
+
+		return ['status' => 'success'];
 	}
 }
