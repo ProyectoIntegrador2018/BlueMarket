@@ -307,6 +307,11 @@ $color-white: #ffffff;
 .inputDiv {
 	margin-bottom: 20px;
 }
-#generatedCode > p {
-	text-align: center;
+
+p#courseKey {
+	text-align: right;
+	font-size: 1.3vmax;
+	code {
+		font-weight: 800px;
+	}
 }
