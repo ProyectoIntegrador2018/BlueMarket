@@ -14,7 +14,7 @@
 			<input type="text" name="courseName" id="courseName" required>
 		</div>
 		<!-- Teacher(s) -->
-		<div class="field">
+		<div class="field" title="Are you giving this course with another professor?">
 			<label for="teachers">Teacher(s)</label>
 			<select class="ui fluid search dropdown" name="teachers" id="teachers" multiple required>
 				<option value="1">Mr. Monday</option>
@@ -27,46 +27,73 @@
 		<!-- Course semester -->
 		<div class="field">
 			<label for="courseSemester">Course semester</label>
-			<input type="text" name="courseSemester" id="courseSemester" placeholder="Spring/Fall/Summer/Winter and year Ex. Fall 2018" required>
+			<input type="text" name="courseSemester" id="courseSemester" placeholder="Spring/Summer/Fall/Winter and year.  Ex. Fall 2018" title="When is this course taking place?"required>
 		</div>
 		<!-- Course type -->
-		<div class="field">
+		<div class="field" title="A client course is looking to outsource specific tasks. A supplier course is looking for projects to team up with.">
 			<label for="courseType">Course type</label>
-			<select class="ui fluid search dropdown" name="courseType" id="courseType" required>
+			<select class="ui fluid search dropdown" name="courseType" id="courseType"  required>
 				<option value=""></option>
 				<option value="1">Client</option>
 				<option value="2">Supplier</option>
 			</select>
 		</div>
 		<!-- Course schedule -->
-		<div class="field">
-			<label for="couseSchedule">Course schedule</label>
-			<select class="ui fluid search dropdown" name="courseType" id="courseSchedule" multiple required>
-				<option value="monday">Monday</option>
-				<option value="tuesday">Tuesday</option>
-				<option value="wednesday">Wednesday</option>
-				<option value="thusday">Thursday</option>
-				<option value="friday">Friday</option>
-				<option value="saturday">Saturday</option>
-			</select>
-		</div>
-		<!-- Course hours -->
-		<div class="field">
-			<label for="courseHours">Starting time</label>
-			<input type="time" name="courseHours" id="courseHours" required>
+		<div class="ui grid courseSchedule">
+			<div class="eight wide column field">
+				<label for="courseSchedule">Course schedule</label>
+				<select class="ui fluid search dropdown" name="courseType" id="courseSchedule" multiple required>
+					<option value="monday">Monday</option>
+					<option value="tuesday">Tuesday</option>
+					<option value="wednesday">Wednesday</option>
+					<option value="thusday">Thursday</option>
+					<option value="friday">Friday</option>
+					<option value="saturday">Saturday</option>
+				</select>
+			</div>
+			<!-- Course hours -->
+			<div class="eight wide column field">
+				<label for="courseHours">Starting time</label>
+				<select class="ui fluid search dropdown" name="courseHours" id="courseHours" required>
+					<option value=""></option>
+					<option value="7:00">7:00</option>
+					<option value="7:30">7:30</option>
+					<option value="8:00">8:00</option>
+					<option value="8:30">8:30</option>
+					<option value="9:00">9:00</option>
+					<option value="9:30">9:30</option>
+					<option value="10:00">10:00</option>
+					<option value="10:30">10:30</option>
+					<option value="11:00">11:00</option>
+					<option value="11:30">11:30</option>
+					<option value="12:00">12:00</option>
+					<option value="12:30">12:30</option>
+					<option value="13:00">13:00</option>
+					<option value="13:30">13:30</option>
+					<option value="14:00">14:00</option>
+					<option value="14:30">14:30</option>
+					<option value="15:00">15:00</option>
+					<option value="15:30">15:30</option>
+					<option value="16:00">16:00</option>
+					<option value="16:30">16:30</option>
+					<option value="17:00">17:00</option>
+					<option value="17:30">17:30</option>
+					<option value="18:00">18:00</option>
+				</select>
+			</div>
 		</div>
 		<!-- Student team size -->
 		<div class="field">
-			<label for="teamsOf">Teams of</label>
-			<input type="text" name="teamsOf" id="teamsOf" min="1" required>
+			<label for="teamSize">Max. team size</label>
+			<input type="text" name="teamSize" id="teamSize" title="What is the maximum size of your students' teams?" required>
 		</div>
-		<!-- Affiliated courses -->
-		<div class="field">
-			<label for="affiliatedCourses">Affiliated courses</label>
-			<select class="ui fluid search dropdown" name="affiliatedCourses" id="affiliatedCourses" multiple>
+		<!-- Associated courses -->
+		<div class="field" title="Are you working with other courses?">
+			<label for="associatedCourses">Associated courses</label>
+			<select class="ui fluid search dropdown" name="associatedCourses" id="associatedCourses" multiple>
 				<option value="1">Random</option>
 				<option value="2">Courses</option>
-				<option value="3">To Affiliate</option>
+				<option value="3">To Associate</option>
 				<option value="4">With</option>
 			</select>
 		</div>
@@ -84,12 +111,10 @@
 
 @section('scripts')
 
+<script src="{{mix('js/inputValidation.js')}}"></script>
 <script>
-
 	$(document).ready(function(){
-		$('.ui.fluid.search.dropdown').dropdown();
-
-		var CSRF_TOKEN = $('meta[name="csrf-token"]').attr("content");
+		$(".ui.fluid.search.dropdown").dropdown();
 
 		$("#send").click(function(e){
 			e.preventDefault();
@@ -107,39 +132,25 @@
 	})
 
 	function validateForm(){
-		return validateText("courseName") && validateSelector("teachers") && validateText("courseSemester") && validateSelector("courseType") && validateSelector("courseType") && validateText("courseHours") && validateNumber("teamsOf") && validateSelector("affiliatedCourses");
+		return isAlfanumeric("courseName") &&
+		hasSelection("teachers") &&
+		isAlfanumeric("courseSemester")&&
+		hasSelection("courseType") &&
+		hasSelection("courseType") &&
+		hasSelection("courseSchedule") &&
+		hasSelection("courseHours") &&
+		isInteger("teamSize");
 	}
 
-	function validateText(id){
-		if($("input#" + id).val()){
-			console.log("Text " + id + " valid.");
-			return true;
+	$(window).on('load, resize', function resizeForm(){
+		if($(window).width() > 700) {
+			$("div.courseSchedule").addClass("ui grid")
+			$("div.courseSchedule>div").addClass("eight wide column")
 		} else {
-			console.log("Text " + id + " invalid.");
-			return false;
+			$("div.courseSchedule").removeClass("ui grid")
+			$("div.courseSchedule>div").removeClass("eight wide column")
 		}
-	}
-
-	function validateSelector(id){
-		console.log("Select " + id + " " + $("select#" + id).val().length);
-		if($("select#" + id).val().length){
-			console.log("Select " + id + " valid.");
-			return true;
-		} else {
-			console.log("Select " + id + " invalid.");
-			return false;
-		}
-	}
-
-	function validateNumber(id){
-		if($("input#" + id).val() > 0){
-			console.log("Number " + id + " valid.");
-			return true;
-		} else {
-			console.log("Number " + id + " invalid.");
-			return false;
-		}
-	}
+	})
 </script>
 
 @endsection
