@@ -6,7 +6,7 @@
 @section('content')
 <div class="padded content">
 	<h1>Register a course</h1>
-	<form class="ui form error" method="POST" action="/courses">
+	<form class="ui error form" method="POST" action="/courses">
 		@csrf
 		<!-- Course name -->
 		<div class="field">
@@ -90,12 +90,8 @@
 
 	$(document).ready(function(){
 		$('.ui.fluid.search.dropdown').dropdown();
-		// Initial class set up
-		$(".ui.form").removeClass("error");
-		$(".field.input").removeClass("error");
-		$("#success").addClass("hidden");
 
-		var CSRF_TOKEN = $( 'meta[name="csrf-token"]' ).attr("content");
+		var CSRF_TOKEN = $('meta[name="csrf-token"]').attr("content");
 
 		$("#send").click(function(e){
 			e.preventDefault();
@@ -107,8 +103,7 @@
 			} else {
 				console.log("Unsuccessful form.");
 				// There are input errors
-				$(".ui.form").addClass("error");
-				$(".field.input").addClass("error");
+				$(".ui.message").removeClass("hidden");
 			}
 
 			// Dedided that we are not going to make an ajax call here
