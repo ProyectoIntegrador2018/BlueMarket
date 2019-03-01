@@ -13,6 +13,7 @@ const mix = require('laravel-mix');
 
 mix.js('resources/js/app.js', 'public/js').sass('resources/sass/app.scss', 'public/css', { implementation: require('node-sass') });
 mix.copyDirectory('resources/img', 'public/img');
+mix.scripts(['resources/js/inputValidation.js'], 'public/js/inputValidation.js');
 
 if (mix.inProduction()) {
 	mix.version(); // cache-busting in production
