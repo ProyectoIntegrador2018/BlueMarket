@@ -1,4 +1,4 @@
-function isAlfanumeric(id){
+function isAlphanumeric(id){
 	var val = $("input#"+id).val();
 	var pattern = new RegExp("^[a-zA-Z0-9]+$");
 	console.log("Alfanumeric " + id + " " + val);
