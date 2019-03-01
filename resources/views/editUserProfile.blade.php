@@ -9,31 +9,31 @@
 	<div class="ui form error">
 		<!-- User image -->
 		<div id ="userImage" class="field">
-			<label id="userImage" for="userImage">Photo</label>
+			<label for="imgInput">Photo</label>
 			<div class="userImageUploaderContainer">
-				<div class="imagePreviewContainer">
+				<div class="imgUploader" class="imagePreviewContainer">
 					<img id="userImagePreview" src="https://lorempixel.com/400/400" alt="User image" class="ui small circular image preview"/>
 				</div>
 				<a href="#" class="imgUploader">
-					<button id="uploadImage" class="ui button primary">Upload image</button>
+					<button type="button" class="ui button primary">Upload image</button>
 				</a>
 			</div>
-			<input id="imgInput" type="file" name="userImage" style="display:none" accept="image/x-png,image/jpeg">
+			<input id="imgInput" type="file" name="userImage" style="display:none" accept="image/x-png,image/jpeg" onchange="updateImage(this)">
 		</div>
 		<!-- User name -->
-		<div id ="userName" class="field">
-			<label id="userName" for="userName">Name</label>
-			<input type="text" name="userName" placeholder="John Doe" value="Katie Arriaga">
+		<div class="field">
+			<label for="userName">Name</label>
+			<input id="userName" type="text" name="userName" placeholder="John Doe" value="Katie Arriaga">
 		</div>
 		<!-- User email -->
-		<div id="userEmail" class="field">
-			<label id="userEmail" for="userEmail">E-mail</label>
-			<input type="email" name="userEmail" placeholder="john@example.com" value="katie@example.com">
+		<div class="field">
+			<label for="userEmail">E-mail</label>
+			<input id="userEmail" type="email" name="userEmail" placeholder="john@example.com" value="katie@example.com">
 		</div>
 		<!-- Skillset -->
-		<div id="skillsets" class="field">
-			<label id="skillsets" for="skillsets">Skills</label>
-			<select class="ui fluid search dropdown" multiple="">
+		<div class="field">
+			<label for="skillsets">Skills</label>
+			<select id="skillsets" class="ui fluid search dropdown" multiple>
 				<option value="">Skills</option>
 				<option value="angular">Angular</option>
 				<option value="css">CSS</option>
@@ -61,49 +61,46 @@
 			<p>Please make sure to properly fill out all required fields.</p>
 		</div>
 		<!-- Save button -->
-		<button id="saveProfile" class="ui button primary">Save profile</button>
+		<button type="submit" id="saveProfile" class="ui button primary">Save profile</button>
 	</div>
 </div>
 
 @section('scripts')
 <script>
-	$('.ui.fluid.search.dropdown')
-  		.dropdown();
-	$('.imgUploader').click(function(event) {
+	$( ".ui.fluid.search.dropdown" ).dropdown();
+
+	$( ".imgUploader" ).click(function(event) {
 		event.preventDefault();
-		$('#imgInput').click();
+		$( "#imgInput" ).click();
 	});
 
-	function readURL(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
+	function validateImage(file) {
+		const maxImageSize = 1000000; // 1MB
 
-            reader.onload = function (e) {
-				var fileElement = document.getElementById("imgInput");
-				var fileExtension = "";
-				if (fileElement.value.lastIndexOf(".") > 0) {
-					fileExtension = fileElement.value.substring(fileElement.value.lastIndexOf(".") + 1, fileElement.value.length);
-				}
-				if (fileExtension.toLowerCase() == "png" || fileExtension.toLowerCase() == "jpeg" || fileExtension.toLowerCase() == "jpg") {
-                	$('#userImagePreview').attr('src', e.target.result);
-				}
-				else {
-					alert("You must select a JPG or PNG file for upload");
-					return false;
-				}
-            };
+		if ((file.type == "image/png" || file.type == "image/jpeg" || file.type == "image/jpg") && file.size <= maxImageSize) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
 
-			reader.onerror = function (e) {
-				alert(e.target.error.name);
-			};
+	function updateImage(imageInput) {
+		let reader  = new FileReader();
+		let file = imageInput.files[0];
+		let preview = $( "#userImagePreview" );
 
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
+		reader.addEventListener("load", function () {
+			if(validateImage(file)) {
+				$( "#userImagePreview" ).attr("src", reader.result);
+			}
+		});
 
-    $("#imgInput").change(function(){
-        readURL(this);
-    });
+		if (file) {
+			reader.readAsDataURL(file);
+		}
+	}
+
 </script>
 @endsection
 @endsection

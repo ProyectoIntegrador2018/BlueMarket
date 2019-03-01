@@ -274,6 +274,11 @@ $color-white: #fff;
 		margin-top: 1em;
 		margin-bottom: 1em;
 
+		.category {
+			margin-top: 0.5vh;
+			margin-bottom: 0.5vh;
+		}
+
 		.extra.content {
 			.ui.bluemarket-skill.label {
 				background-color: $color-primary;
@@ -289,6 +294,8 @@ $color-white: #fff;
 			text-transform: uppercase;
 			text-align: center;
 		}
+
+
 	}
 }
 
