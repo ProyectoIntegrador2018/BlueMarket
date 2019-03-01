@@ -7,6 +7,7 @@
 <div class="padded content">
 	<h1>Success! Your course was registered.</h1>
 	<div>
+		<p id="courseKey">Your course key is <code>823FAN</code>.</p>
 		<h2>Overview:</h2>
 		<p><strong>Course name:</strong> Cool course name</p>
 		<p><strong>Teacher(s):</strong></p>
@@ -21,7 +22,6 @@
 		<p><strong>Associated courses:</strong></p>
 		<ul>
 		</ul>
-		<p>Your course key is <strong>ABCDEF</strong>.</p>
 	</div>
 </div>
 
@@ -29,6 +29,7 @@
 	{{-- <!-- Esto es lo que iría con la respuesta del backend -->
 	<div>
 		<h2>Overview:</h2>
+		<p id="courseKey">Your course key is <code>{{ $courseKey }}</code>.</p>
 		<p>Course name: {{ $courseName }}</p>
 		<p><strong>Teacher(s):</strong></p>
 		<ul>
@@ -47,7 +48,6 @@
 			<li>{{ $course }}</li>
 		@endforeach
 		</ul>
-		<p>Your course key is <strong>{{ $courseKey }}</strong>.</p>
 	</div> --}}
 
 @endsection
