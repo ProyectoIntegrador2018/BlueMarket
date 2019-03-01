@@ -24,3 +24,6 @@ Route::resource('projects', 'ProjectController')->only([
 ]);
 
 Route::resource('courses', 'CourseController');
+Route::get('/course-create', function() {
+	return view('createCourse');
+});
