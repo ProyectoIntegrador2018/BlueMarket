@@ -13,7 +13,7 @@
 			<label for="courseName">Course name</label>
 			<input type="text" name="courseName" id="courseName" required>
 		</div>
-		<!-- Teachers -->
+		<!-- Teacher(s) -->
 		<div class="field">
 			<label for="teachers">Teacher(s)</label>
 			<select class="ui fluid search dropdown" name="teachers" id="teachers" multiple required>
@@ -30,7 +30,6 @@
 			<input type="text" name="courseSemester" id="courseSemester" placeholder="Spring/Fall/Summer/Winter and year Ex. Fall 2018" required>
 		</div>
 		<!-- Course type -->
-		<!-- 1-client, 2-supplier-->
 		<div class="field">
 			<label for="courseType">Course type</label>
 			<select class="ui fluid search dropdown" name="courseType" id="courseType" required>
@@ -56,7 +55,7 @@
 			<label for="courseHours">Starting time</label>
 			<input type="time" name="courseHours" id="courseHours" required>
 		</div>
-		<!-- Teams of -->
+		<!-- Student team size -->
 		<div class="field">
 			<label for="teamsOf">Teams of</label>
 			<input type="text" name="teamsOf" id="teamsOf" min="1" required>
@@ -83,9 +82,8 @@
 
 @endsection
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+@section('scripts')
+
 <script>
 
 	$(document).ready(function(){
@@ -97,49 +95,14 @@
 			e.preventDefault();
 
 			if(validateForm()){
+				// Input validation was successful
 				console.log("Successful form.");
-				// Validation was successful
 				$("form").submit();
 			} else {
-				console.log("Unsuccessful form.");
 				// There are input errors
+				console.log("Unsuccessful form.");
 				$(".ui.message").removeClass("hidden");
 			}
-
-			// Dedided that we are not going to make an ajax call here
-			// $.ajax({
-			// 	url: '/courses',
-			// 	type: 'POST',
-			// 	data: {
-			// 		_token: CSRF_TOKEN,
-			// 		courseName: $("input#courseName").val(),
-			// 		courseType: $("input#courseType").val(),
-			// 		teamsOf: $("input#teamsOf").val(),
-			// 		teachers: $("input#teachers").val(),
-			// 		courseSemester: $("input#courseSemester").val(),
-			// 		courseSchedule: $("input#courseSchedule").val(),
-			// 		courseHours: $("input#courseHours").val()
-			// 	},
-			// 	dataType: 'JSON',
-			// 	success: function(data) {
-			// 		console.log(data);
-			// 		if(data.status == "success") {
-			// 			$(".ui.form").removeClass("error");
-			// 			$(".field.input").removeClass("error");
-			// 			$("#success").removeClass("hidden");
-
-			// 			$("span#courseKey").val(data.courseKey);
-			// 		} else {
-			// 			// Error
-			// 			$("#error").addClass("hidden");
-			// 		}
-			// 	},
-			// 	error: function(data) {
-			// 		console.log(data);
-			// 		var json = data;
-
-			// 	}
-			// })
 		});
 	})
 
@@ -158,7 +121,7 @@
 	}
 
 	function validateSelector(id){
-		console.log($("select#" + id).val().length);
+		console.log("Select " + id + " " + $("select#" + id).val().length);
 		if($("select#" + id).val().length){
 			console.log("Select " + id + " valid.");
 			return true;
@@ -178,3 +141,5 @@
 		}
 	}
 </script>
+
+@endsection

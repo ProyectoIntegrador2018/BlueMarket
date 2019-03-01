@@ -33,9 +33,10 @@
 </div>
 
 
-	{{-- <div>
+	{{-- <!-- Esto es lo que iría con la respuesta del backend -->
+	<div>
 		<h2>Overview:</h2>
-	<p>Course name: {{ $courseName }}</p>
+		<p>Course name: {{ $courseName }}</p>
 		<p>Teacher(s):</p>
 		<ul>
 		@foreach (teachers as teacher)
@@ -58,6 +59,5 @@
 
 @endsection
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+@section('scripts')
+@endsection
