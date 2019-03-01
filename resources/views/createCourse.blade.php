@@ -14,7 +14,7 @@
 			<input type="text" name="courseName" id="courseName" required>
 		</div>
 		<!-- Teacher(s) -->
-		<div class="field" title="Are you giving this course with another professor?">
+		<div class="field" title="Are you giving this course with another teacher?">
 			<label for="teachers">Teacher(s)</label>
 			<select class="ui fluid search dropdown" name="teachers" id="teachers" multiple required>
 				<option value="1">Mr. Monday</option>
@@ -109,8 +109,9 @@
 
 @endsection
 
-@section('scripts')
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
 <script src="{{mix('js/inputValidation.js')}}"></script>
 <script>
 	$(document).ready(function(){
@@ -132,9 +133,9 @@
 	})
 
 	function validateForm(){
-		return isAlfanumeric("courseName") &&
+		return isAlphanumeric("courseName") &&
 		hasSelection("teachers") &&
-		isAlfanumeric("courseSemester")&&
+		isAlphanumeric("courseSemester")&&
 		hasSelection("courseType") &&
 		hasSelection("courseType") &&
 		hasSelection("courseSchedule") &&
@@ -152,5 +153,3 @@
 		}
 	})
 </script>
-
-@endsection

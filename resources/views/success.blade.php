@@ -17,7 +17,7 @@
 		<p><strong>Course type:</strong> Client</p>
 		<p><strong>Course schedule:</strong> Monday, Thursday</p>
 		<p><strong>Starting time:</strong> 10:30 AM</p>
-		<p><strong>Student team size (max.):</strong> 4</p>
+		<p><strong>Max. team size:</strong> 4</p>
 		<p><strong>Associated courses:</strong></p>
 		<ul>
 		</ul>
@@ -52,5 +52,3 @@
 
 @endsection
 
-@section('scripts')
-@endsection
