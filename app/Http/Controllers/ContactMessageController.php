@@ -21,12 +21,5 @@ class ContactMessageController extends Controller
 
 			$message->to('hello@bluemarket.com')->subject('Contact Us - BlueMarket');
 		});
-
-		$response = array(
-        	'status' => 'success',
-        	'msg' => $request->message,
-      	);
-
-		return response()->json($response);//redirect()->back()->with('flash_message', 'Thank you for your message.');
 	}
 }
