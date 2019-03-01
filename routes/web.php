@@ -27,3 +27,7 @@ Route::resource('courses', 'CourseController');
 Route::get('/course-create', function() {
 	return view('createCourse');
 });
+
+Route::get('/success', function() {
+	return view('success');
+});
