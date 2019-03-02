@@ -16,7 +16,7 @@
 				<button type="button" id="addCourse" class="ui primary button">Add course</button>
 			</div>
 			<div class="courses table">
-				<table id="currentCourses" class="ui striped table bluemarket-table">
+				<table id="currentCourses" class="ui striped table">
 					<thead class="bluemarket-thead">
 						<tr>
 							<th>Course</th>
@@ -53,8 +53,8 @@
 					<button type="button" class="ui cancel button">Cancel</button>
 					<button type="button" id="confirmAddCourse" class="ui primary button">Confirm</button>
 				</div>
-				</div>
-				<div class="ui coupled second modal">
+			</div>
+			<div class="ui coupled second modal">
 				<div class="header">Course successfully added</div>
 				<div class="content">
 					<i class="check huge green circle icon"></i>
@@ -152,7 +152,7 @@
 				// modify confirmation modal
 				$( "#courseAddedName" ).text(courseName);
 				// add row to table
-				let rowToAdd = "<tr><td>#{courseName}</td><td>#{courseTeachers}</td><td>#{courseSchedule}</td></tr>";
+				let rowToAdd = `<tr><td>${courseName}</td><td>${courseTeachers}</td><td>${courseSchedule}</td></tr>`;
 				$( "#currentCourses tbody tr:first" ).before(rowToAdd);
 				$( "#courseKey" ).val("");
 			},
@@ -166,9 +166,9 @@
 		$( "#courseKeyInputContainer" ).removeClass( "error" );
 		$( "#courseKey" ).removeClass( "error" );
 		$( ".coupled.modal" ).modal({
-            allowMultiple: false
-        });
-        $( ".second.modal" ).modal( "attach events", ".first.modal .button" );
+			allowMultiple: false
+		});
+		$( ".second.modal" ).modal( "attach events", ".first.modal .button" );
 		$( "#addCourse" ).click(function() {
 			$( "#courseKeyInputContainer" ).removeClass( "error" );
 			$( "#courseKey" ).removeClass( "error" );
@@ -184,8 +184,8 @@
 		$( "#confirmAddCourse" ).click(function() {
 			let courseKey = $( "#courseKey" ).val();
 			associateWithCourse(courseKey);
-        });
-    });
+		});
+	});
 </script>
 @endsection
 @endsection
