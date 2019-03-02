@@ -39,8 +39,8 @@
 			</select>
 		</div>
 		<!-- Course schedule -->
-		<div class="ui grid courseSchedule">
-			<div class="eight wide column field">
+		<div class="ui stackable two column grid">
+			<div class="column wide field">
 				<label for="courseSchedule">Course schedule</label>
 				<select class="ui fluid search dropdown" name="courseSchedule[]" id="courseSchedule" multiple required>
 					<option value="monday">Monday</option>
@@ -52,7 +52,7 @@
 				</select>
 			</div>
 			<!-- Course hours -->
-			<div class="eight wide column field">
+			<div class="column wide field">
 				<label for="courseHours">Starting time</label>
 				<select class="ui fluid search dropdown" name="courseHours" id="courseHours" required>
 					<option value=""></option>
@@ -140,15 +140,6 @@
 		isInteger("teamSize");
 	}
 
-	$(window).on('load, resize', function resizeForm(){
-		if($(window).width() > 700) {
-			$("div.courseSchedule").addClass("ui grid")
-			$("div.courseSchedule>div").addClass("eight wide column")
-		} else {
-			$("div.courseSchedule").removeClass("ui grid")
-			$("div.courseSchedule>div").removeClass("eight wide column")
-		}
-	})
 </script>
 
 @endsection
