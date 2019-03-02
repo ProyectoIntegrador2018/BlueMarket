@@ -308,10 +308,16 @@ $color-white: #ffffff;
 	margin-bottom: 20px;
 }
 
-p#courseKey {
+#courseKey {
 	text-align: right;
-	font-size: 1.3vmax;
+	font-size: 14px;
 	code {
-		font-weight: 800px;
+		display: inline-block;
+		margin-top: 5px;
+		font-size: 3rem;
+		background-color: #eee;
+		padding: 20px;
+		border-radius: 5px;
+
 	}
 }
