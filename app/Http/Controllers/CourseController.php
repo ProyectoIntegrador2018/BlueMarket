@@ -16,8 +16,15 @@ class CourseController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
+		$user = Auth::user();
+
+		//If user is not signed in, redirect to login.
+		if($user == null){
+			return redirect('/login');
+		}
+
 		$courses = $user->courses;
+
         return view('user.studentProfile', compact('courses'));
     }
 
@@ -124,22 +131,24 @@ class CourseController extends Controller
 	/**
      * Get a course details.
      *
-     * @param  String $courseKey
+     * @param  \Illuminate\Http\Request  $request
      * @return \App\Course
      */
-    public function getCourseDetails(String $courseKey)
+    public function getCourseDetails(Request $request)
     {
 		$user = Auth::user();
+		$courseKey = $request->courseKey;
 		$course = Course::where('course_key', $courseKey)->first();
 
 		if ($course == null) {
 			abort(404);
 		}
 
-		$exists = $user->courses()->contains($course->id);
+		// Check if course is already associated
+		$associatedCourse = $user->courses()->where('course_id', $course->id)->first();
 
-		if ($exists == false) {
-			return $course;
+		if (!$associatedCourse) {
+			return ['course' => $course, 'teachers' => $course->teachers];
 		} else {
 			abort(400);
 		}
@@ -148,13 +157,14 @@ class CourseController extends Controller
     /**
      * Associate a student with a course.
      *
-     * @param  \App\Course  $course
+     * @param  \Illuminate\Http\Request  $request
      * @return Bool
      */
-    public function associate(Course $course)
+    public function associate(Request $request)
     {
 		$user = Auth::user();
-		$course = Course::find($course->id);
+		$courseKey = $request->courseKey;
+		$course = Course::where('course_key', $courseKey)->first();
 
 		if ($course == null || $student == null) {
 			abort(400);
@@ -166,11 +176,7 @@ class CourseController extends Controller
 
 		$result = $student->courses()->attach($course);
 
-		if ($result == null) {
-			abort(400);
-		}
-
-		return back();
+		return ['course' => $course, 'teachers' => $course->teachers];
 	}
 
 	/**
