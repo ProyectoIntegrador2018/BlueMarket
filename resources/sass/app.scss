@@ -27,10 +27,10 @@ $color-white: #ffffff;
 		background-color: $color-primary;
 	}
 	&.cancel {
+		background-color: $color-cancel;
 		&:hover {
 			color: $color-white;
 		}
-		background-color: $color-cancel;
 	}
 }
 
@@ -186,10 +186,8 @@ $color-white: #ffffff;
 			padding-right: .75rem !important;
 		}
 
-		.content {
-			i.icon {
-				margin: 1vh;
-			}
+		.content i.icon {
+			margin: 1vh;
 		}
 	}
 
@@ -294,7 +292,7 @@ $color-white: #ffffff;
 	}
 }
 
-#currentCourses {
+.ui.table:first-child {
 	margin-top: 5vh;
 }
 
