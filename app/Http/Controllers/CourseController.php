@@ -11,6 +11,10 @@ use Illuminate\Validation\Rule;
 
 class CourseController extends Controller
 {
+	const COURSE_KEY = 'course_key';
+	const TEACHERS = 'teachers';
+	const REQUIRED = 'required';
+
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -36,7 +40,7 @@ class CourseController extends Controller
 	public function create()
 	{
 		$teachers = User::where('role', config('enum.user_roles')['teacher'])->select('id', 'name')->get();
-		return view('courses.create', compact('teachers'));
+		return view('courses.create', compact(self::TEACHERS));
 	}
 
 	/**
@@ -48,35 +52,31 @@ class CourseController extends Controller
 	public function store(Request $request)
 	{
 		$attributes = request()->validate([
-			'courseName' => 'required',
+			'courseName' => self::REQUIRED,
 			'courseType' => 'required|integer|min:1|max:2',
 			'teamSize' => 'required|integer|min:1',
-			'teachers' => 'required|array|min:1',
+			self::TEACHERS => 'required|array|min:1',
 			'teachers.*' => [
 				'integer',
 				Rule::in(User::where('role', config('enum.user_roles')['teacher'])->get()->pluck('id')),
 			],
-			'courseSemester' => 'required',
+			'courseSemester' => self::REQUIRED,
 			'courseSchedule' => 'required|array|min:1',
-			'courseHours' => 'required',
+			'courseHours' => self::REQUIRED,
 		]);
 
-		$schedule = $this->joinSchedule($attributes['courseSchedule'], $attributes['courseHours'], $attributes['courseSemester']);
+		$schedule = $this->joinSchedule($attributes['courseSchedule'], $attributes['courseHours'],
+					$attributes['courseSemester']);
 		$courseKey = $this->getCourseKey();
 
-		$course = Course::create([
-			'name' => $attributes['courseName'],
-			'course_type' => $attributes['courseType'],
-			'schedule' => $schedule,
-			'max_team_size' => $attributes['teamSize'],
-			'course_key' => $courseKey,
-		]);
+		$course = $this->createCourse($attributes['courseName'], $attributes['courseType'],
+					$schedule, $attributes['teamSize'], $courseKey);
 
 		if (!isset($course)) {
 			abort(500);
 		}
 
-		$course->teachers->attach($attributes['teachers']);
+		$course->teachers->attach($attributes[self::TEACHERS]);
 
 		return view('courses.details', compact('courseKey'));
 	}
@@ -136,7 +136,7 @@ class CourseController extends Controller
 	{
 		$user = Auth::user();
 		$courseKey = $request->courseKey;
-		$course = Course::where('course_key', $courseKey)->first();
+		$course = Course::where(self::COURSE_KEY, $courseKey)->first();
 
 		if ($course == null) {
 			abort(404);
@@ -146,7 +146,7 @@ class CourseController extends Controller
 		$associatedCourse = $user->enrolledIn()->where('course_id', $course->id)->first();
 
 		if (!$associatedCourse) {
-			return ['course' => $course, 'teachers' => $course->teachers];
+			return ['course' => $course, self::TEACHERS => $course->teachers];
 		} else {
 			abort(400);
 		}
@@ -162,7 +162,7 @@ class CourseController extends Controller
 	{
 		$user = Auth::user();
 		$courseKey = $request->courseKey;
-		$course = Course::where('course_key', $courseKey)->first();
+		$course = Course::where(self::COURSE_KEY, $courseKey)->first();
 
 		if ($course == null || $user == null) {
 			abort(400);
@@ -174,7 +174,7 @@ class CourseController extends Controller
 
 		$result = $user->EnrolledIn()->attach($course);
 
-		return ['course' => $course, 'teachers' => $course->teachers];
+		return ['course' => $course, self::TEACHERS => $course->teachers];
 	}
 
 	/**
@@ -226,8 +226,23 @@ class CourseController extends Controller
 		do {
 			$course_key = substr(md5(date(DATE_RFC2822)),-6);
 			$course_key = strtoupper($course_key);
-		} while (Course::where('course_key', $course_key)->first() != null);
+		} while (Course::where(self::COURSE_KEY, $course_key)->first() != null);
 
 		return $course_key;
+	}
+
+	/**
+	 * Create a new course entry with the given information
+	 *
+	 * @return string
+	 */
+	private function createCourse($name, $course_type, $schedule, $max_team_size, $course_key) {
+		return Course::create([
+			'name' => $name,
+			'course_type' => $course_type,
+			'schedule' => $schedule,
+			'max_team_size' => $max_team_size,
+			self::COURSE_KEY => $course_key,
+		]);
 	}
 }
