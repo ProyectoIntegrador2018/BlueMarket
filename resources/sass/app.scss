@@ -1,5 +1,6 @@
 $color-primary: #2980b9;
 $color-secondary: #1C587F;
+$color-cancel: #c0392b;
 $color-dark: #333333;
 $color-white: #ffffff;
 
@@ -20,9 +21,17 @@ $color-white: #ffffff;
 	}
 }
 
-.ui.primary.button {
-	background-color: $color-primary;
+.ui.button {
 	color: $color-white;
+	&.primary {
+		background-color: $color-primary;
+	}
+	&.cancel {
+		&:hover {
+			color: $color-white;
+		}
+		background-color: $color-cancel;
+	}
 }
 
 .home.view-projects {
@@ -284,13 +293,10 @@ $color-white: #ffffff;
 		}
 	}
 }
-<<<<<<< HEAD
-=======
 
-#studentCurrentCourses {
+#currentCourses {
 	margin-top: 5vh;
 }
-
 
 .ui.modal {
 	text-align: center;
@@ -300,4 +306,3 @@ $color-white: #ffffff;
 		margin: 1vh;
 	}
 }
->>>>>>> 115828f... Fixed style selectors
