@@ -17,9 +17,9 @@
 				<input id="courseKey" type="text" placeholder="Course key">
 				<button id="addCourse" class="ui primary button">Add course</button>
 			</div>
-			<div class="courses table">
+			<div id="studentCurrentCourses" class="courses table">
 				<table id="currentCourses" class="ui striped table bluemarket-table">
-					<thead class="bluemarket-thead">
+					<thead id="tableHeader" class="bluemarket-thead">
 						<tr>
 						<th>Course</th>
 						<th>Professor</th>
