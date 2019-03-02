@@ -17,11 +17,9 @@
 		<div class="field" title="Are you giving this course with another teacher?">
 			<label for="teachers">Teacher(s)</label>
 			<select class="ui fluid search dropdown" name="teachers[]" id="teachers" multiple required>
-				<option value="1">Mr. Monday</option>
-				<option value="2">Mrs. Tuesday</option>
-				<option value="3">Ms. Wednesday</option>
-				<option value="4">Mr. Thursday</option>
-				<option value="5">Mrs. Friday</option>
+				@foreach ($teachers as $teacher)
+				<option value={{ $teacher['id'] }}> {{ $teacher['name'] }} </option>
+				@endforeach
 			</select>
 		</div>
 		<!-- Course semester -->

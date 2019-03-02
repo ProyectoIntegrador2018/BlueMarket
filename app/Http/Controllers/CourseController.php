@@ -62,12 +62,14 @@ class CourseController extends Controller
 		]);
 
 		$schedule = $this->joinSchedule($attributes['courseSchedule'], $attributes['courseHours'], $attributes['courseSemester']);
+		$courseKey = $this->getCourseKey();
 
 		$course = Course::create([
 			'name' => $attributes['courseName'],
 			'course_type' => $attributes['courseType'],
 			'schedule' => $schedule,
-			'team_size' => $attributes['teamSize'],
+			'max_team_size' => $attributes['teamSize'],
+			'course_key' => $courseKey,
 		]);
 
 		if (!isset($course)) {
@@ -76,11 +78,7 @@ class CourseController extends Controller
 
 		$course->teachers->attach($attributes['teachers']);
 
-		$course_key = $this->getCourseKey();
-		$course->course_key = $course_key;
-		$course->save();
-
-		return view('courses.details', compact('course_key'));
+		return view('courses.details', compact('courseKey'));
 	}
 
 	/**
