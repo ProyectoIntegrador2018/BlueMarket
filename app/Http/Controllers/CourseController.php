@@ -9,13 +9,13 @@ use Illuminate\Validation\Rule;
 
 class CourseController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
+	/**
+	 * Display a listing of the resource.
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public static function index()
+	{
 		$user = Auth::user();
 
 		//If user is not signed in, redirect to login.
@@ -25,117 +25,83 @@ class CourseController extends Controller
 
 		$courses = $user->courses;
 
-        return view('user.studentProfile', compact('courses'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        $teachers = User::where('role', config('enum.user_roles')['teacher'])->select('id', 'name')->get();
-		return view('createCourse', compact('teachers'));
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-		$attributes = request()->validate([
-			'courseName' => 'required',
-			'courseType' => 'required|integer|min:1|max:2',
-			'teamSize' => 'required|integer|min:1',
-			'teachers' => 'required|array|min:1',
-			'teachers.*' => [
-				'integer',
-				Rule::in(User::where('role', config('enum.user_roles')['teacher'])->get()->pluck('id')),
-			],
-			'courseSemester' => 'required',
-			'courseSchedule' => 'required|array|min:1',
-			'courseHours' => 'required',
-		]);
-
-		$schedule = $this->joinSchedule($attributes['courseSchedule'], $attributes['courseHours'], $attributes['courseSemester']);
-
-		$course = Course::create([
-			'name' => $attributes['courseName'],
-			'course_type' => $attributes['courseType'],
-			'schedule' => $schedule,
-			'team_size' => $attributes['teamSize'],
-		]);
-
-		if (!isset($course)) {
-			abort(500);
-		}
-
-		$course->teachers->attach($attributes['teachers']);
-
-		$course_key = $this->getCourseKey();
-		$course->course_key = $course_key;
-		$course->save();
-
-		return view('success', compact('course_key'));
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Course  $course
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Course $course)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Course  $course
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Course $course)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Course  $course
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Course $course)
-    {
-
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Course  $course
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Course $course)
-    {
-        //
+		return view('user.studentProfile', compact('courses'));
 	}
 
 	/**
-     * Get a course details.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \App\Course
-     */
-    public function getCourseDetails(Request $request)
-    {
+	 * Show the form for creating a new resource.
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function create()
+	{
+		//
+	}
+
+	/**
+	 * Store a newly created resource in storage.
+	 *
+	 * @param  \Illuminate\Http\Request  $request
+	 * @return \Illuminate\Http\Response
+	 */
+	public function store(Request $request)
+	{
+		//
+	}
+
+	/**
+	 * Display the specified resource.
+	 *
+	 * @param  \App\Course  $course
+	 * @return \Illuminate\Http\Response
+	 */
+	public function show(Course $course)
+	{
+		//
+	}
+
+	/**
+	 * Show the form for editing the specified resource.
+	 *
+	 * @param  \App\Course  $course
+	 * @return \Illuminate\Http\Response
+	 */
+	public function edit(Course $course)
+	{
+		//
+	}
+
+	/**
+	 * Update the specified resource in storage.
+	 *
+	 * @param  \Illuminate\Http\Request  $request
+	 * @param  \App\Course  $course
+	 * @return \Illuminate\Http\Response
+	 */
+	public function update(Request $request, Course $course)
+	{
+		//
+	}
+
+	/**
+	 * Remove the specified resource from storage.
+	 *
+	 * @param  \App\Course  $course
+	 * @return \Illuminate\Http\Response
+	 */
+	public function destroy(Course $course)
+	{
+		//
+	}
+
+	/**
+	 * Get a course details.
+	 *
+	 * @param  \Illuminate\Http\Request  $request
+	 * @return \App\Course
+	 */
+	public function getCourseDetails(Request $request)
+	{
 		$user = Auth::user();
 		$courseKey = $request->courseKey;
 		$course = Course::where('course_key', $courseKey)->first();
@@ -154,14 +120,14 @@ class CourseController extends Controller
 		}
 	}
 
-    /**
-     * Associate a student with a course.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return Bool
-     */
-    public function associate(Request $request)
-    {
+	/**
+	 * Associate a student with a course.
+	 *
+	 * @param  \Illuminate\Http\Request  $request
+	 * @return Bool
+	 */
+	public function associate(Request $request)
+	{
 		$user = Auth::user();
 		$courseKey = $request->courseKey;
 		$course = Course::where('course_key', $courseKey)->first();
