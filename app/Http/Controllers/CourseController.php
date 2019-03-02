@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Course;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class CourseController extends Controller
 {
@@ -27,7 +28,8 @@ class CourseController extends Controller
      */
     public function create()
     {
-        //
+        $teachers = User::where('role', 1)->select('id', 'name')->get();
+		return view('createCourse', compact('teachers'));
     }
 
     /**
@@ -38,29 +40,37 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
-		// 1 client 2 supplier
-
-        $attributes = request()->validate([
-			'courseName' => 'required|string',
-			'courseType' => ['required', 'integer', Rule::in([1, 2])],
-			'teamsOf' => 'required|integer|min:1',
-			'professors' => 'required',
-			'professors.*.id' => ['integer', Rule::in(User::where('role', 1)->get()->pluck('id'))],
-			'courseSemester' => 'required|string',
-			'courseSchedule' => 'required',
+		$attributes = request()->validate([
+			'courseName' => 'required',
+			'courseType' => 'required|integer|min:1|max:2',
+			'teamSize' => 'required|integer|min:1',
+			'teachers' => 'required|array|min:1',
+			'teachers.*' => ['integer', Rule::in(User::where('role', 1)->get()->pluck('id'))],
+			'courseSemester' => 'required',
+			'courseSchedule' => 'required|array|min:1',
 			'courseHours' => 'required',
 		]);
 
-		/*$course = Course::create($attributes);
+		$schedule = $this->joinSchedule($attributes['courseSchedule'], $attributes['courseHours'], $attributes['courseSemester']);
 
-		foreach ($request->teachers as $teacher) {
-			$result = $this->addTeacher($course, $teacher->id);
+		$course = Course::create([
+			'name' => $attributes['courseName'],
+			'course_type' => $attributes['courseType'],
+			'schedule' => $schedule,
+			'team_size' => $attributes['teamSize'],
+		]);
 
-			if (!$result) {
-				// return error here
-			}
+		if (!isset($course)) {
+			abort(500);
 		}
-		*/
+
+		$course->teachers->attach($attributes['teachers']);
+
+		$course_key = $this->getCourseKey();
+		$course->course_key = $course_key;
+		$course->save();
+
+		return view('success', compact('course_key'));
     }
 
     /**
@@ -94,7 +104,7 @@ class CourseController extends Controller
      */
     public function update(Request $request, Course $course)
     {
-        //
+
     }
 
     /**
@@ -161,24 +171,56 @@ class CourseController extends Controller
 	}
 
 	/**
-	 * Associate a course with a teacher
+	 * Generate a descriptive schedule string for a course
 	 *
-	 * @param \App\Course $course
-	 * @param integer $teacher_id
-	 * @return boolean
+	 * @param array $courseSchedule
+	 * @param string $courseHours
+	 * @param string $courseSemester
+	 * @return string
 	 */
-	private function addTeacher(Course $course, integer $teacher_id) {
-		if ($course == null || $teacher_id == null) {
-			return false;
+	private function joinSchedule(array $courseSchedule, string $courseHours, string $courseSemester) {
+		$schedule = "";
+		foreach ($courseSchedule as $day) {
+			switch ($day) {
+				case "monday":
+					$schedule .= "Mo";
+					break;
+				case "tuesday":
+					$schedule .= "Tue";
+					break;
+				case "wednesday":
+					$schedule .= "Wed";
+					break;
+				case "thursday":
+					$schedule .= "Thu";
+					break;
+				case "friday":
+					$schedule .= "Fri";
+					break;
+				case "saturday":
+					$schedule .= "Sat";
+					break;
+				default:
+					break;
+			}
 		}
 
-		$result = $course->teachers->attach($teacher_id);
+		$schedule .= " {$courseHours}, {$courseSemester}";
+		return $schedule;
+	}
 
-		if ($result) {
-			return true;
-		} else {
-			return false;
-		}
+	/**
+	 * Generate a course key for a new course
+	 *
+	 * @return string
+	 */
+	private function getCourseKey() {
+		$course_key = "";
+		do {
+			$course_key = substr(md5(date(DATE_RFC2822)),-6);
+			$course_key = strtoupper($course_key);
+		} while (Course::where('course_key', $course_key)->first() != null);
 
+		return $course_key;
 	}
 }
