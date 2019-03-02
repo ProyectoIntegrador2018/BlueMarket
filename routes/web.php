@@ -23,6 +23,7 @@ Route::resource('projects', 'ProjectController')->only([
 	'index', 'show', 'create', 'store'
 ]);
 
+/* courses */
 Route::resource('courses', 'CourseController');
 Route::get('/create', function() {
 	return view('courses.create');
@@ -31,3 +32,6 @@ Route::get('/create', function() {
 Route::get('/details', function() {
 	return view('courses.details');
 });
+Route::get('/user/profile', 'CourseController@index');
+Route::get('/user/courses/associate/details', 'CourseController@getCourseDetails');
+Route::post('/user/courses/associate', 'CourseController@associate');

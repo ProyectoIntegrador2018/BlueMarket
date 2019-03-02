@@ -25,9 +25,7 @@ class CourseController extends Controller
 			return redirect('/login');
 		}
 
-		$courses = $user->courses;
-
-		return view('user.studentProfile', compact('courses'));
+		return view('user.studentProfile', ["courses" => $user->EnrolledIn]);
 	}
 
 	/**
@@ -113,7 +111,7 @@ class CourseController extends Controller
 		}
 
 		// Check if course is already associated
-		$associatedCourse = $user->courses()->where('course_id', $course->id)->first();
+		$associatedCourse = $user->enrolledIn()->where('course_id', $course->id)->first();
 
 		if (!$associatedCourse) {
 			return ['course' => $course, 'teachers' => $course->teachers];
@@ -134,7 +132,7 @@ class CourseController extends Controller
 		$courseKey = $request->courseKey;
 		$course = Course::where('course_key', $courseKey)->first();
 
-		if ($course == null || $student == null) {
+		if ($course == null || $user == null) {
 			abort(400);
 		}
 
@@ -142,7 +140,7 @@ class CourseController extends Controller
 			abort(401);
 		}
 
-		$result = $student->courses()->attach($course);
+		$result = $user->EnrolledIn()->attach($course);
 
 		return ['course' => $course, 'teachers' => $course->teachers];
 	}

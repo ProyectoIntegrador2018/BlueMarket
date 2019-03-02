@@ -1,6 +1,6 @@
 @extends( "layouts.app" )
 
-@section( "head" )
+@section( "meta" )
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 
@@ -89,9 +89,10 @@
 	</div>
 @section( "scripts" )
 <script>
+	console.log($('meta[name="csrf-token"]').attr( "content" ));
 	$.ajaxSetup({
-		headers: {
-			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		beforeSend: function(xhr) {
+			xhr.setRequestHeader('X-CSRF-TOKEN', $('meta[name="csrf-token"]').attr( "content" ));
 		}
 	});
 
@@ -153,7 +154,7 @@
 				$( "#courseAddedName" ).text(courseName);
 				// add row to table
 				let rowToAdd = `<tr><td>${courseName}</td><td>${courseTeachers}</td><td>${courseSchedule}</td></tr>`;
-				$( "#currentCourses tbody tr:first" ).before(rowToAdd);
+				$( "#currentCourses tbody" ).append(rowToAdd);
 				$( "#courseKey" ).val("");
 			},
 			error: function(data) {

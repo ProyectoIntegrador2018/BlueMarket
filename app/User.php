@@ -29,10 +29,10 @@ class User extends Authenticatable
 	];
 
 	public function teaches() {
-		return $this->belongsToMany('App\Course')->wherePivot('role', config('enum.user_roles')['teacher']);
+		return $this->belongsToMany('App\Course')->join('users as usrs', 'course_user.user_id', '=', 'usrs.id')->where('users.role', config('enum.user_roles')['teacher']);
 	}
 
 	public function enrolledIn() {
-		return $this->belongsToMany('App\Course')->wherePivot('role', config('enum.user_roles')['student']);
+		return $this->belongsToMany('App\Course')->join('users as usrs', 'course_user.user_id', '=', 'usrs.id')->where('usrs.role', config('enum.user_roles')['student']);
 	}
 }
