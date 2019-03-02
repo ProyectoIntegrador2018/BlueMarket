@@ -40,7 +40,8 @@ class CourseController extends Controller
 	public function create()
 	{
 		$teachers = User::where('role', config('enum.user_roles')['teacher'])->select('id', 'name')->get();
-		return view('courses.create', compact(self::TEACHERS));
+		$courses = Course::where('course_type', 2)->get();
+		return view('courses.create', compact(self::TEACHERS, 'courses'));
 	}
 
 	/**
@@ -63,6 +64,7 @@ class CourseController extends Controller
 			'courseSemester' => self::REQUIRED,
 			'courseSchedule' => 'required|array|min:1',
 			'courseHours' => self::REQUIRED,
+			'associatedCourses' => 'nullable|array|min:1',
 		]);
 
 		$course = $this->createCourse($attributes);
