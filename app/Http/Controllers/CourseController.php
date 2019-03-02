@@ -65,21 +65,12 @@ class CourseController extends Controller
 			'courseHours' => self::REQUIRED,
 		]);
 
-		$schedule = $this->joinSchedule($attributes['courseSchedule'], $attributes['courseHours'],
-					$attributes['courseSemester']);
-		$courseKey = $this->getCourseKey();
-
-		$course = $this->createCourse(
-					$attributes['courseName'],
-					$attributes['courseType'],
-					$schedule,
-					$attributes['teamSize'],
-					$courseKey
-				);
-
+		$course = $this->createCourse($attributes);
 		if (!isset($course)) {
 			abort(500);
 		}
+
+		$courseKey = $course->course_key;
 
 		$course->teachers->attach($attributes[self::TEACHERS]);
 
@@ -239,18 +230,25 @@ class CourseController extends Controller
 	}
 
 	/**
-	 * Create a new course entry with the given information
+	 * Create a course with the provided validated attributes
 	 *
-	 * @return string
+	 * @param array $attributes
+	 * @return \App\Course
 	 */
-	private function createCourse($name, $course_type, $schedule, $max_team_size, $course_key)
-	{
+	private function createCourse(array $attributes) {
+		$schedule = $this->joinSchedule(
+			$attributes['courseSchedule'],
+			$attributes['courseHours'],
+			$attributes['courseSemester']
+		);
+		$courseKey = $this->getCourseKey();
+
 		return Course::create([
-			'name' => $name,
-			'course_type' => $course_type,
+			'name' => $attributes['courseName'],
+			'course_type' => $attributes['courseType'],
 			'schedule' => $schedule,
-			'max_team_size' => $max_team_size,
-			self::COURSE_KEY => $course_key,
+			'max_team_size' => $attributes['teamSize'],
+			self::COURSE_KEY => $courseKey,
 		]);
 	}
 }
