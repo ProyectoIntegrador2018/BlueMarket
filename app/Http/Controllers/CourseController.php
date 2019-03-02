@@ -35,7 +35,8 @@ class CourseController extends Controller
 	 */
 	public function create()
 	{
-		//
+		$teachers = User::where('role', config('enum.user_roles')['teacher'])->select('id', 'name')->get();
+		return view('courses.create', compact('teachers'));
 	}
 
 	/**
@@ -46,7 +47,40 @@ class CourseController extends Controller
 	 */
 	public function store(Request $request)
 	{
-		//
+		$attributes = request()->validate([
+			'courseName' => 'required',
+			'courseType' => 'required|integer|min:1|max:2',
+			'teamSize' => 'required|integer|min:1',
+			'teachers' => 'required|array|min:1',
+			'teachers.*' => [
+				'integer',
+				Rule::in(User::where('role', config('enum.user_roles')['teacher'])->get()->pluck('id')),
+			],
+			'courseSemester' => 'required',
+			'courseSchedule' => 'required|array|min:1',
+			'courseHours' => 'required',
+		]);
+
+		$schedule = $this->joinSchedule($attributes['courseSchedule'], $attributes['courseHours'], $attributes['courseSemester']);
+
+		$course = Course::create([
+			'name' => $attributes['courseName'],
+			'course_type' => $attributes['courseType'],
+			'schedule' => $schedule,
+			'team_size' => $attributes['teamSize'],
+		]);
+
+		if (!isset($course)) {
+			abort(500);
+		}
+
+		$course->teachers->attach($attributes['teachers']);
+
+		$course_key = $this->getCourseKey();
+		$course->course_key = $course_key;
+		$course->save();
+
+		return view('courses.details', compact('course_key'));
 	}
 
 	/**
