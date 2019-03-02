@@ -235,7 +235,8 @@ class CourseController extends Controller
 	 * @param array $attributes
 	 * @return \App\Course
 	 */
-	private function createCourse(array $attributes) {
+	private function createCourse(array $attributes)
+	{
 		$schedule = $this->joinSchedule(
 			$attributes['courseSchedule'],
 			$attributes['courseHours'],
