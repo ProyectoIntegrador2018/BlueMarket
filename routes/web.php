@@ -24,10 +24,10 @@ Route::resource('projects', 'ProjectController')->only([
 ]);
 
 Route::resource('courses', 'CourseController');
-Route::get('/course-create', function() {
-	return view('createCourse');
+Route::get('/create', function() {
+	return view('courses.create');
 });
 
-Route::get('/success', function() {
-	return view('success');
+Route::get('/details', function() {
+	return view('courses.details');
 });
