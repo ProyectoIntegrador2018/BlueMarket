@@ -22,12 +22,12 @@ $factory->define(App\User::class, function (Faker $faker) {
 
 $factory->state(App\User::class, 'teacher', function ($faker) {
     return [
-        'role' => 1,
+        'role' => config('enum.user_roles')['teacher'],
     ];
 });
 
 $factory->state(App\User::class, 'student', function ($faker) {
     return [
-        'role' => 2,
+        'role' => config('enum.user_roles')['student'],
     ];
 });

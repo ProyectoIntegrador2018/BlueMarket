@@ -28,7 +28,7 @@ class CourseController extends Controller
      */
     public function create()
     {
-        $teachers = User::where('role', 1)->select('id', 'name')->get();
+        $teachers = User::where('role', config('enum.user_roles')['teacher'])->select('id', 'name')->get();
 		return view('createCourse', compact('teachers'));
     }
 
@@ -45,7 +45,10 @@ class CourseController extends Controller
 			'courseType' => 'required|integer|min:1|max:2',
 			'teamSize' => 'required|integer|min:1',
 			'teachers' => 'required|array|min:1',
-			'teachers.*' => ['integer', Rule::in(User::where('role', 1)->get()->pluck('id'))],
+			'teachers.*' => [
+				'integer',
+				Rule::in(User::where('role', config('enum.user_roles')['teacher'])->get()->pluck('id')),
+			],
 			'courseSemester' => 'required',
 			'courseSchedule' => 'required|array|min:1',
 			'courseHours' => 'required',
