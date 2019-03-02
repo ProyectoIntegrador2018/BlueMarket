@@ -89,7 +89,6 @@
 	</div>
 @section( "scripts" )
 <script>
-	console.log($('meta[name="csrf-token"]').attr( "content" ));
 	$.ajaxSetup({
 		beforeSend: function(xhr) {
 			xhr.setRequestHeader('X-CSRF-TOKEN', $('meta[name="csrf-token"]').attr( "content" ));
