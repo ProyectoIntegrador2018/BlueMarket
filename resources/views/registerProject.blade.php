@@ -1,64 +1,53 @@
+<!--
+	Falta:
+		1. Validar que imagen no pase de 1MB (ya está el código pero entoy teniendo problema para que funcione.)
+		2. DropDown que utiliza el AJAX call para que se conecte con los team members (Ana Karen)
+-->
+
 @extends('layouts.app')
 
 @section('title', 'Add Project')
 
 @section('content')
-<!-- Internal CSS stylesheet -->
-<style>
-	#uploadImage{
-		margin-top: 1em;
-		margin-bottom: 2em;
-	}
 
-	.hidden{
-		display: none;
-	}
-</style>
+@section('header', 'Register a new project')
+
 <div class="ui container" style="margin: 4% auto 8%">
 	<div class="ui grid centered">
 		<div class="ten wide column">
 			<div class="ui form error">
 				<!-- Alert Message -->
 				<div id="errorMessage" class="ui error message hidden">
-					<div class="header">Incomplete Information</div>
+					<div class="header">Register Error</div>
 					<p>All fields are required for registering a new project.</p>
 				</div>
 				<!-- Project Image -->
 				<div class="projectImg">
-					<img src="https://lorempixel.com/400/400" alt="Project Image" class="ui centered medium circular image"/>
+					<label for="projectImg">Project Image</label>
+					<div id="errorMessage" class="ui error message hidden">
+						<div class="header">Image Error</div>
+						<p>The image should not exceed 1 MB.</p>
+					</div>
+					<img src="https://lorempixel.com/400/400" alt="Project Image" class="ui medium image" name="projectImg" id="userImagePreview" />
 					<a href="#" class="imgUploader">
-						<button id="uploadImage" class="fluid ui button">Upload Image</button>
+						<button id="uploadImage" class="ui left floated button primary">Upload Image</button>
 					</a>
 					<input type="file" id="imgInput" style="display:none" multiple accept='image/*'>
 				</div>
 				<!-- Project Name -->
 				<div id ="projectName" class="field">
 					<label for="proyectName">Project Name</label>
-					<input type="text" name="projectName" placeholder="Enter your project's name...">
+					<input id="projectName2" type="text" name="projectName" placeholder="Enter your project's name...">
 				</div>
 				<!-- Team Name -->
 				<div id="teamName" class="field">
 					<label for="teamName">Team Name</label>
-					<input type="text" name="teamName" placeholder="Enter your team's name...">
+					<input id="teamName2" type="text" name="teamName" placeholder="Enter your team's name...">
 				</div>
 				<!-- Category -->
-					<!-- <div id="category" class="field">
-						<label>Category</label>
-						<div class="ui fluid search selection dropdown category">
-							<i class="dropdown icon"></i>
-							<input id ="category" type="hidden" name="country">
-							<div class="default text">Select a category of your project</div>
-							<div class="menu">
-								<div class="item" value="1">Category 1</div>
-								<div class="item" value="2">Category 2</div>
-								<div class="item" value="3">Category 3</div>
-								<div class="item" value="4">Category 4</div>
-							</div>
-						</div>
-					</div> -->
 				<div id ="category" class="field">
 					<label for="category">Category</label>
-					<select name="category" class="ui search dropdown" placeholder="Select your project's category">
+					<select name="category" class="ui search dropdown" placeholder="Select your project's category" id="category2">
 						<option style="color:grey;" value="0">Select your project's category</option>
 						<option value="1">Category 1</option>
 						<option value="2">Category 2</option>
@@ -70,7 +59,7 @@
 					<label for="skillsets">Required Skillsets</label>
 					<div class="ui search">
 						<div class="ui icon input">
-							<input name="skillsets" class="prompt" type="text" placeholder="Search and add skillsets...">
+							<input id="skillsets2" name="skillsets" class="prompt" type="text" placeholder="Search and add skillsets...">
 							<i class="search icon"></i>
 						</div>
 						<div class="results">
@@ -80,25 +69,25 @@
 				<!-- Milestones -->
 				<div id="milestones" class="field">
 					<label for="milestones">Public Milestones</label>
-					<input type="text" name="milestones" placeholder="e.g. Shipping">
+					<input id="milestones2" type="text" name="milestones" placeholder="Example: Shipping">
 				</div>
 				<!-- Short Description -->
 				<div id="shortDescription" class="field">
 					<label>Brief Description</label>
-					<textarea rows="2"></textarea>
+					<textarea id="shortDescription2" rows="2"></textarea>
 				</div>
 				<!-- Long Description -->
 				<div id="longDescription" class="field">
 					<label>Detailed Description</label>
-					<textarea></textarea>
+					<textarea id="longDescription2"></textarea>
 				</div>
 				<!-- Video Pitch -->
 				<div id="videoPitch" class="field">
-					<label>Video pitch</label>
-					<input type="text" name="milestones" placeholder="Example: https://youtube.com/watch?v=238028302">
+					<label>Pitch Video</label>
+					<input id="videoPitch2" type="text" name="milestones" placeholder="Example: https://youtube.com/watch?v=238028302">
 				</div>
 				<!-- Register Button -->
-				<button id="registerProject" class="ui right floated button">Register project</button>
+				<button id="registerProject" class="ui left floated button primary">Register project</button>
 			</div>
 		</div>
 	</div>
@@ -107,7 +96,7 @@
 @section('jquery')
 <!-- Internal jQuery -->
 <script>
-	/* Search for Skillsets */
+	/* Search for skillsets */
 	var skillsets = [
 		{ title: 'Skillset 1' },
 		{ title: 'Skillset 2' },
@@ -122,95 +111,94 @@
 		$('#imgInput').click();
 	});
 
-	/*
-	 Uploading Image function:
-	function readURL(input) {
-		  if (input.files && input.files[0]) {
-			  var reader = new FileReader();
+	/* Upload new image */
+	function readURL(input){
+		if (input.files && input.files[0]) {
+			var reader = new FileReader();
+			reader.onload = function (e) {
+				$('#userImagePreview').attr('src', e.target.result);
+			}
+			reader.readAsDataURL(input.files[0]);
+		}
+	}
+	$("#imgInput").change(function(){
+	    readURL(this);
+	});
 
-			  reader.onload = function (e) {
-				  $('#blah').attr('src', e.target.result);
-			  }
-
-			  reader.readAsDataURL(input.files[0]);
-		  }
-	  }
-	  $("#imgInp").change(function(){
-			  readURL(this);
-	   });
-
-	  HTML for funtcion above:
-	  <form id="form1" runat="server">
-			<input type='file' id="imgInp" />
-			<img id="blah" src="#" alt="your image" />
-		</form>
-
-		HTML AHORITA:
-		<div class="projectImg">
-			<img src="https://lorempixel.com/400/400" alt="Project Image" class="ui centered medium circular image"/>
-			<a href="#" class="imgUploader">
-				<button id="uploadImage" class="fluid ui button">Upload Image</button>
-			</a>
-			<input type="file" id="imgInput" style="display:none" multiple accept='image/*'>
-		</div>
-	  */
-
-
-	/* Register Button Click */
+	/* Register button click */
 	$('#registerProject').on('click', function(event){
-		//event.preventDefault();
+		event.preventDefault();
 		//Alert Message
 		let $errorMessage = $('#errorMessage');
-
+		// Image
+		/*let $fileSize = $('#imgInput')[0].files[0].size;
+		if($fileSize > 300){//1000000){
+			$errorMessage.removeClass('hidden');
+			//return false;
+		}*/
 		// Project Name
 		let $projectName = $('#projectName');
-		if($projectName.val() == ""){
+		let $projectName2 = $('#projectName2');
+		if($projectName2.val() == ""){
 			$projectName.addClass('field error');
 			$errorMessage.removeClass('hidden');
+			$("html, body").animate({scrollTop: 0}, "slow");
 		}
-
 		// Team Name
 		let $teamName = $('#teamName');
-		if($teamName.val() == ""){
+		let $teamName2 = $('#teamName2');
+		if($teamName2.val() == ""){
 			$teamName.addClass('field error');
 			$errorMessage.removeClass('hidden');
+			$("html, body").animate({scrollTop: 0}, "slow");
 		}
-
 		// Category Dropdown
-		let $category = $('category');
-		if($category.val() == 0){
+		let $category = $("#category");
+		let $category2 = $('#category2');
+		if($category2.val() == '0'){
 			$category.addClass('field error');
 			$errorMessage.removeClass('hidden');
+			$("html, body").animate({scrollTop: 0}, "slow");
 		}
-
 		// Skillsets
-
+		let $skillsets = $('#skillsets');
+		let $skillsets2 = $('#skillsets2');
+		if($skillsets2.val() == ""){
+			$skillsets.addClass('field error');
+			$errorMessage.removeClass('hidden');
+			$("html, body").animate({scrollTop: 0}, "slow");
+		}
 		// Public Milestones
 		let $milestones = $('#milestones');
-		if($milestones.val() == ""){
+		let $milestones2 = $('#milestones2');
+		if($milestones2.val() == ""){
 			$milestones.addClass('field error');
 			$errorMessage.removeClass('hidden');
+			$("html, body").animate({scrollTop: 0}, "slow");
 		}
-
 		// Short Description
 		let $shortDescription = $('#shortDescription');
-		if($shortDescription.val() == ""){
+		let $shortDescription2 = $('#shortDescription2');
+		if($shortDescription2.val() == ""){
 			$shortDescription.addClass('field error');
 			$errorMessage.removeClass('hidden');
+			$("html, body").animate({scrollTop: 0}, "slow");
 		}
-
 		// Long Description
 		let $longDescription = $('#longDescription');
-		if($longDescription.val() == ""){
+		let $longDescription2 = $('#longDescription2');
+		if($longDescription2.val() == ""){
 			$longDescription.addClass('field error');
 			$errorMessage.removeClass('hidden');
+			$("html, body").animate({scrollTop: 0}, "slow");
 		}
-
-		// Video Pitch
+		// Pitch Video
 		let $videoPitch = $('#videoPitch');
-		if($videoPitch.val() == ""){
+		let $videoPitch2 = $('#videoPitch2');
+		if($videoPitch2.val() == ""){
 			$videoPitch.addClass('field error');
 			$errorMessage.removeClass('hidden');
+			$("html, body").animate({scrollTop: 0}, "slow");
 		}
 	});
 </script>
