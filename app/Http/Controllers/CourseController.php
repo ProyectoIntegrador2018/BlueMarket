@@ -72,7 +72,7 @@ class CourseController extends Controller
 
 		$courseKey = $course->course_key;
 
-		$course->teachers->attach($attributes[self::TEACHERS]);
+		$course->teachers()->attach($attributes[self::TEACHERS]);
 
 		return view('courses.details', compact('courseKey'));
 	}
