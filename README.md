@@ -12,8 +12,8 @@ Check out the current version here: https://sheltered-hamlet-63420.herokuapp.com
 
 ## Table of contents
 
-* [Environment URLS](#environment-urls)
 * [Client Details](#client-details)
+* [Environment URLS](#environment-urls)
 * [Da Team](#da-team)
 * [Management tools](#management-tools)
 * [Setup your dev environment](#setup-dev-environment)
@@ -46,6 +46,10 @@ Check out the current version here: https://sheltered-hamlet-63420.herokuapp.com
 | Ana Karen Beltr&aacute;n | A01192508 at tec | Development - Backend |
 | Marcela Garza | A00815888 at tec | Development - Frontend |
 | H&eacute;ctor Rinc&oacute;n | A01088760 at tec | Development - Backend |
+| Katie Arriaga | katiearriaga at live.com | Development - Frontend, Product Owner |
+| Oscar Gonz&oacute;lez | oscardan.gonzalez at gmail.com | Development - Backend, Scrum Master |
+| Melissa Trevi&ntilde;o | mely.trevic at gmail.com | Development - Frontend, Configuration Manager |
+| Rub&eacute;n de la Pe&ntilde;a | ruben.dlpena at gmail.com | Development - Backend, Project Manager |
 
 ### Management tools
 
@@ -56,10 +60,10 @@ You should ask for access to this tools if you don't have it already:
 * [Documentation](https://drive.google.com/drive/folders/1SHiWZ7gc5goa6OwubEEn4jsSo00Yploz?usp=sharing)
 
 
-## Setup
+## Development
 
 
-### Setup dev environment
+### Setup your dev environment
 
 See the [install instructions](install_instructions.md) to set up your dev environment.
 
@@ -104,16 +108,32 @@ $  php artisan key:generate # this will save it automatically to your .env file
 $  yarn run prod
 ```
 
+6. Run the database migrations
+
+```
+$  php artisan migrate:fresh
+```
+
 
 ### Running the app
 
-6. Run the project!
+Run the project!
 
 ```bash
 $  php artisan serve
 ```
 
 By default `artisan` (the Laravel toolkit) runs a server at port `8000`. So you can go in your browser to `localhost:8000`, and you should see the app running.
+
+
+### Stopping the app
+
+In order to stop the project, just hit 'Ctrl + C' on the terminal where the 'artisan' server is running.
+
+
+### Deploying app to Heroku
+
+For more information about how to deploy this app, check out [docs/deployment.md](docs/deployment.md)
 
 
 ## Getting started
