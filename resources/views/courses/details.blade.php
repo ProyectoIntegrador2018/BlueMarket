@@ -7,7 +7,7 @@
 <div class="padded content">
 	<h1>{{ "HERE GOES THE COURSE NAME" }}</h1>
 	<div>
-		<p id="courseKey">Your course key is <br> <code>{{ isset($courseKey) ? $courseKey : "HELLO" }}</code></p>
+		<p class="coursekey">Your course key is <br> <code>{{ isset($courseKey) ? $courseKey : "HELLO" }}</code></p>
 		<h2>Overview:</h2>
 		<p><strong>Course name:</strong> Cool course name</p>
 		<p><strong>Teacher(s):</strong></p>

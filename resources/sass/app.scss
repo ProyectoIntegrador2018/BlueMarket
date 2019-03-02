@@ -304,11 +304,8 @@ $color-white: #ffffff;
 		margin: 1vh;
 	}
 }
-.inputDiv {
-	margin-bottom: 20px;
-}
 
-#courseKey {
+.coursekey {
 	text-align: right;
 	font-size: 14px;
 	code {
@@ -318,6 +315,5 @@ $color-white: #ffffff;
 		background-color: #eee;
 		padding: 20px;
 		border-radius: 5px;
-
 	}
 }
