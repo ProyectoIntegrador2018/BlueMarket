@@ -184,10 +184,8 @@ $color-white: #ffffff;
 		}
 	}
 
-	table.ui.table.bluemarket-table {
-		thead.bluemarket-thead {
-			display: none;
-		}
+	.ui.table.bluemarket-table .bluemarket-thead {
+		display: none;
 	}
 }
 
@@ -286,3 +284,20 @@ $color-white: #ffffff;
 		}
 	}
 }
+<<<<<<< HEAD
+=======
+
+#studentCurrentCourses {
+	margin-top: 5vh;
+}
+
+
+.ui.modal {
+	text-align: center;
+	font-size: 1.2em;
+
+	.content i.icon {
+		margin: 1vh;
+	}
+}
+>>>>>>> 115828f... Fixed style selectors
