@@ -16,7 +16,7 @@
 		<!-- Teacher(s) -->
 		<div class="field" title="Are you giving this course with another teacher?">
 			<label for="teachers">Teacher(s)</label>
-			<select class="ui fluid search dropdown" name="teachers" id="teachers" multiple required>
+			<select class="ui fluid search dropdown" name="teachers[]" id="teachers" multiple required>
 				<option value="1">Mr. Monday</option>
 				<option value="2">Mrs. Tuesday</option>
 				<option value="3">Ms. Wednesday</option>
@@ -42,7 +42,7 @@
 		<div class="ui grid courseSchedule">
 			<div class="eight wide column field">
 				<label for="courseSchedule">Course schedule</label>
-				<select class="ui fluid search dropdown" name="courseType" id="courseSchedule" multiple required>
+				<select class="ui fluid search dropdown" name="courseSchedule[]" id="courseSchedule" multiple required>
 					<option value="monday">Monday</option>
 					<option value="tuesday">Tuesday</option>
 					<option value="wednesday">Wednesday</option>
@@ -90,7 +90,7 @@
 		<!-- Associated courses -->
 		<div class="field" title="Are you working with other courses?">
 			<label for="associatedCourses">Associated courses</label>
-			<select class="ui fluid search dropdown" name="associatedCourses" id="associatedCourses" multiple>
+			<select class="ui fluid search dropdown" name="associatedCourses[]" id="associatedCourses" multiple>
 				<option value="1">Random</option>
 				<option value="2">Courses</option>
 				<option value="3">To Associate</option>
