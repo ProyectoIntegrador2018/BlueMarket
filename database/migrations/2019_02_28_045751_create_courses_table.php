@@ -18,8 +18,8 @@ class CreateCoursesTable extends Migration
 			$table->string('name');
 			$table->unsignedInteger('course_type');
 			$table->string('schedule');
-			$table->unsignedInteger('team_size');
-			$table->string('course_key')->nullable();
+			$table->unsignedInteger('max_team_size');
+			$table->string('course_key');
 			$table->timestamps();
 		});
 	}
