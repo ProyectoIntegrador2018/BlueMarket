@@ -69,8 +69,13 @@ class CourseController extends Controller
 					$attributes['courseSemester']);
 		$courseKey = $this->getCourseKey();
 
-		$course = $this->createCourse($attributes['courseName'], $attributes['courseType'],
-					$schedule, $attributes['teamSize'], $courseKey);
+		$course = $this->createCourse(
+					$attributes['courseName'],
+					$attributes['courseType'],
+					$schedule,
+					$attributes['teamSize'],
+					$courseKey
+				);
 
 		if (!isset($course)) {
 			abort(500);
@@ -185,7 +190,8 @@ class CourseController extends Controller
 	 * @param string $courseSemester
 	 * @return string
 	 */
-	private function joinSchedule(array $courseSchedule, string $courseHours, string $courseSemester) {
+	private function joinSchedule(array $courseSchedule, string $courseHours, string $courseSemester)
+	{
 		$schedule = "";
 		foreach ($courseSchedule as $day) {
 			switch ($day) {
@@ -221,7 +227,8 @@ class CourseController extends Controller
 	 *
 	 * @return string
 	 */
-	private function getCourseKey() {
+	private function getCourseKey()
+	{
 		$course_key = "";
 		do {
 			$course_key = substr(md5(date(DATE_RFC2822)),-6);
@@ -236,7 +243,8 @@ class CourseController extends Controller
 	 *
 	 * @return string
 	 */
-	private function createCourse($name, $course_type, $schedule, $max_team_size, $course_key) {
+	private function createCourse($name, $course_type, $schedule, $max_team_size, $course_key)
+	{
 		return Course::create([
 			'name' => $name,
 			'course_type' => $course_type,
