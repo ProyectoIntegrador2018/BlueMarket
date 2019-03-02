@@ -27,6 +27,7 @@ $color-white: #ffffff;
 		background-color: $color-primary;
 	}
 	&.cancel {
+		color: $color-white;
 		background-color: $color-cancel;
 		&:hover {
 			color: $color-white;
@@ -79,9 +80,7 @@ $color-white: #ffffff;
 }
 
 .padded.content {
-	padding-left: 10%;
-	padding-right: 10%;
-	padding-top: 5%;
+	padding: 5% 10%;
 }
 
 .home.info {
