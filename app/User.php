@@ -28,12 +28,11 @@ class User extends Authenticatable
         'password', 'remember_token',
 	];
 
-    /**
-     * The courses that a user has as a professor or student.
-     *
-     * @var array
-     */
-    public function courses() {
-		return $this->belongsToMany(Course::class);
+	public function teaches() {
+		return $this->belongsToMany('App\Course')->wherePivot('role', config('enum.user_roles')['teacher']);
+	}
+
+	public function enrolledIn() {
+		return $this->belongsToMany('App\Course')->wherePivot('role', config('enum.user_roles')['student']);
 	}
 }

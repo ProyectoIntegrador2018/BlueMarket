@@ -19,3 +19,15 @@ $factory->define(App\User::class, function (Faker $faker) {
         'email' => $faker->unique()->safeEmail
     ];
 });
+
+$factory->state(App\User::class, 'teacher', function ($faker) {
+    return [
+        'role' => config('enum.user_roles')['teacher'],
+    ];
+});
+
+$factory->state(App\User::class, 'student', function ($faker) {
+    return [
+        'role' => config('enum.user_roles')['student'],
+    ];
+});

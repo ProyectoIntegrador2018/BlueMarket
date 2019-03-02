@@ -22,3 +22,5 @@ Route::post('/login', 'LoginController@authenticate');
 Route::resource('projects', 'ProjectController')->only([
 	'index', 'show', 'create', 'store'
 ]);
+
+Route::resource('courses', 'CourseController');
