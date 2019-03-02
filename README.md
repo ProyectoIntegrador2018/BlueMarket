@@ -47,7 +47,7 @@ Check out the current version here: https://sheltered-hamlet-63420.herokuapp.com
 | Marcela Garza | A00815888 at tec | Development - Frontend |
 | H&eacute;ctor Rinc&oacute;n | A01088760 at tec | Development - Backend |
 | Katie Arriaga | katiearriaga at live.com | Development - Frontend, Product Owner |
-| Oscar Gonz&oacute;lez | oscardan.gonzalez at gmail.com | Development - Backend, Scrum Master |
+| Oscar Gonz&aacute;lez | oscardan.gonzalez at gmail.com | Development - Backend, Scrum Master |
 | Melissa Trevi&ntilde;o | mely.trevic at gmail.com | Development - Frontend, Configuration Manager |
 | Rub&eacute;n de la Pe&ntilde;a | ruben.dlpena at gmail.com | Development - Backend, Project Manager |
 
@@ -128,7 +128,7 @@ By default `artisan` (the Laravel toolkit) runs a server at port `8000`. So you 
 
 ### Stopping the app
 
-In order to stop the project, just hit 'Ctrl + C' on the terminal where the 'artisan' server is running.
+In order to stop the project, just hit `Ctrl + C` on the terminal where the `artisan` server is running.
 
 
 ### Deploying app to Heroku
