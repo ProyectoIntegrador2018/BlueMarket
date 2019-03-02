@@ -296,7 +296,6 @@ $color-white: #fff;
 	margin-top: 5vh;
 }
 
-
 .ui.modal {
 	text-align: center;
 	font-size: 1.2em;
@@ -305,6 +304,7 @@ $color-white: #fff;
 		margin: 1vh;
 	}
 }
+
 .coursekey {
 	text-align: right;
 	font-size: 14px;
@@ -316,4 +316,13 @@ $color-white: #fff;
 		padding: 20px;
 		border-radius: 5px;
 	}
+}
+
+#uploadImage{
+	margin-top: 1em;
+	margin-bottom: 2em;
+}
+
+.hidden{
+	display: none;
 }
