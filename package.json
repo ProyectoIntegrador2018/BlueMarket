@@ -8,7 +8,7 @@
 		"hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
 		"prod": "yarn run production",
 		"production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-		"frontend": "php artisan serve --port=8010 | yarn run watch | node node_modules/browser-sync/dist/bin.js start --proxy localhost:8010 --files=\"public/**/*\"",
+		"frontend": "php artisan serve --port=8010 | yarn run watch | node node_modules/browser-sync/dist/bin.js start --proxy localhost:8010 --files \"public/*\" \"resources/views/**/*.blade.php\"",
 		"heroku-postbuild": "yarn run production"
 	},
 	"devDependencies": {
@@ -19,8 +19,8 @@
 		"laravel-mix": "^4.0.7",
 		"node-sass": "^4.11.0",
 		"resolve-url-loader": "^2.3.1",
+		"sass-lint": "^1.12.1",
 		"sass-loader": "^7.1.0",
 		"vue-template-compiler": "^2.6.5"
 	}
 }
-

@@ -1,0 +1,126 @@
+<?xml version="1.0"?>
+<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="PHP_CodeSniffer" xsi:noNamespaceSchemaLocation="phpcs.xsd">
+	<description>The coding standard for PHP_CodeSniffer itself.</description>
+
+	<!-- Which files/dirs to check if no arguments are passed to command line -->
+	<file>app</file>
+	<file>routes</file>
+	<file>resources</file>
+
+	<!-- <exclude-pattern>vendor/*</exclude-pattern> -->
+
+	<arg name="basepath" value="."/>
+	<arg name="colors"/>
+	<arg name="report-width" value="auto" />
+	<arg name="parallel" value="75"/>
+	<arg value="snp"/>
+
+	<!-- Don't hide tokenizer exceptions -->
+	<rule ref="Internal.Tokenizer.Exception">
+		<type>error</type>
+	</rule>
+
+	<rule ref="Generic.WhiteSpace.DisallowSpaceIndent"/>
+	<rule ref="Generic.WhiteSpace.ArbitraryParenthesesSpacing"/>
+	<rule ref="Squiz.WhiteSpace.FunctionSpacing">
+		<properties>
+			<property name="spacing" value="1" />
+			<property name="spacingBeforeFirst" value="1" />
+			<property name="spacingAfterLast" value="0" />
+		</properties>
+	</rule>
+
+	<!-- Include some sniffs from other standards that don't conflict with PEAR -->
+	<rule ref="PEAR.Functions.FunctionCallSignature.SpaceAfterOpenBracket" />
+	<rule ref="PEAR.Functions.FunctionCallSignature.SpaceBeforeCloseBracket" />
+	<rule ref="Squiz.Arrays.ArrayBracketSpacing"/>
+	<rule ref="Squiz.Arrays.ArrayDeclaration.CloseBraceNewLine"/>
+	<rule ref="Squiz.ControlStructures.ControlSignature"/> <!-- TODO: remove the space after while () and for (). maybe do this via PERL -->
+	<rule ref="Squiz.ControlStructures.ElseIfDeclaration"/>
+	<rule ref="Squiz.ControlStructures.LowercaseDeclaration"/>
+	<rule ref="Squiz.ControlStructures.SwitchDeclaration"/>
+	<rule ref="Squiz.Commenting.DocCommentAlignment"/>
+	<rule ref="Squiz.Commenting.EmptyCatchComment"/>
+	<rule ref="Squiz.Commenting.LongConditionClosingComment"/>
+	<rule ref="Squiz.PHP.CommentedOutCode"/>
+	<rule ref="Squiz.Commenting.VariableComment"/>
+	<rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing"/>
+	<rule ref="Squiz.Scope.MethodScope"/>
+	<rule ref="Squiz.Scope.StaticThisUsage"/>
+	<rule ref="Squiz.Strings.ConcatenationSpacing"/>
+	<rule ref="Squiz.WhiteSpace.ControlStructureSpacing"/>
+	<rule ref="Squiz.WhiteSpace.OperatorSpacing"/>
+	<rule ref="Squiz.WhiteSpace.SuperfluousWhitespace"/>
+	<rule ref="Squiz.WhiteSpace.CastSpacing"/>
+	<rule ref="Squiz.WhiteSpace.LogicalOperatorSpacing"/>
+	<rule ref="Squiz.WhiteSpace.ObjectOperatorSpacing"/>
+	<rule ref="Squiz.WhiteSpace.ScopeClosingBrace"/>
+	<rule ref="Squiz.WhiteSpace.SemicolonSpacing"/>
+	<rule ref="Generic.Arrays.DisallowLongArraySyntax"/>
+	<rule ref="Generic.Commenting.Todo"/>
+	<rule ref="Generic.ControlStructures.InlineControlStructure"/>
+	<rule ref="Generic.Formatting.DisallowMultipleStatements"/>
+	<rule ref="Generic.NamingConventions.ConstructorName"/>
+	<rule ref="Generic.Functions.OpeningFunctionBraceKernighanRitchie"/>
+	<rule ref="Generic.PHP.DeprecatedFunctions"/>
+	<rule ref="Generic.PHP.LowerCaseKeyword"/>
+	<rule ref="Generic.PHP.DisallowShortOpenTag"/>
+	<rule ref="Generic.PHP.DisallowShortOpenTag.EchoFound">
+		<severity>0</severity>
+	</rule>
+	<rule ref="Generic.PHP.NoSilencedErrors"/>
+	<rule ref="Generic.Strings.UnnecessaryStringConcat"/>
+	<rule ref="Generic.WhiteSpace.IncrementDecrementSpacing"/> <!-- var++ <- no spaces before the increment operator -->
+	<rule ref="PSR2.Classes.PropertyDeclaration"/>
+	<rule ref="PSR2.Methods.MethodDeclaration"/>
+	<rule ref="PSR2.Files.EndFileNewline"/>
+	<rule ref="Zend.Files.ClosingTag"/> <!-- TODO: this might cause conflict with blade files -->
+
+	<!-- PEAR uses warnings for inline control structures, so switch back to errors -->
+	<rule ref="Generic.ControlStructures.InlineControlStructure">
+		<properties>
+			<property name="error" value="true"/>
+		</properties>
+	</rule>
+
+<!--
+	<rule ref="Squiz.Arrays.ArrayDeclaration.CloseBraceNewLine">
+		<severity>0</severity>
+	</rule>
+ -->
+	<!-- Check var names, but we don't want leading underscores for private vars -->
+	<rule ref="Squiz.NamingConventions.ValidVariableName"/>
+	<rule ref="Squiz.NamingConventions.ValidVariableName.PrivateNoUnderscore">
+		<severity>0</severity>
+	</rule>
+
+
+	<!-- Ban some functions -->
+	<rule ref="Generic.PHP.ForbiddenFunctions">
+		<properties>
+			<property name="forbiddenFunctions" type="array">
+				<element key="sizeof" value="count"/>
+				<element key="delete" value="unset"/>
+				<element key="print" value="echo"/>
+				<element key="is_null" value="null"/>
+				<element key="create_function" value="null"/>
+			</property>
+		</properties>
+	</rule>
+
+	<!-- Private methods MUST not be prefixed with an underscore -->
+	<rule ref="PSR2.Methods.MethodDeclaration">
+		<type>error</type>
+	</rule>
+
+	<!-- Private properties MUST not be prefixed with an underscore -->
+	<rule ref="PSR2.Classes.PropertyDeclaration">
+		<type>error</type>
+	</rule>
+
+	<!-- The testing bootstrap file uses string concats to stop IDEs seeing the class aliases -->
+	<rule ref="Generic.Strings.UnnecessaryStringConcat">
+		<exclude-pattern>tests/bootstrap.php</exclude-pattern>
+	</rule>
+
+</ruleset>
