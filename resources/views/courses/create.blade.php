@@ -92,7 +92,7 @@
 				@if(isset($courses))
 					@foreach($courses->all() as $course)
 						<option value={{ $course['id'] }}>
-						{{ $course['schedule'] }}
+						{{ $course['name'] }}
 						@foreach($course['teachers'] as $teacher)
 							{{ $loop->first ? '' : ', ' }}
 							{{ $teacher['name'] }}
