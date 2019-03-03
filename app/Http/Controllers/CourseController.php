@@ -15,8 +15,12 @@ class CourseController extends Controller
 	const TEACHERS = 'teachers';
 	const ASSOCIATED = 'associatedCourses';
 	const REQUIRED = 'required';
+	const ROLES = 'enum.user_roles';
+	const TEACHER = 'teacher';
+	const STUDENT = 'student';
 
-	public function __construct() {
+	public function __construct()
+	{
 		$this->middleware('auth');
 	}
 
@@ -27,7 +31,7 @@ class CourseController extends Controller
 	 */
 	public function index()
 	{
-		$this->checkIfAccessAllowed([config('enum.user_roles')['student']]);
+		$this->checkIfAccessAllowed([config(self::ROLES)[self::STUDENT]]);
 
 		return view('user.studentProfile', ["courses" => Auth::user()->EnrolledIn]);
 	}
@@ -39,9 +43,9 @@ class CourseController extends Controller
 	 */
 	public function create()
 	{
-		$this->checkIfAccessAllowed([config('enum.user_roles')['teacher']]);
+		$this->checkIfAccessAllowed([config(self::ROLES)[self::TEACHER]]);
 
-		$teachers = User::where('role', config('enum.user_roles')['teacher'])->select('id', 'name')->get();
+		$teachers = User::where('role', config(self::ROLES)[self::TEACHER])->select('id', 'name')->get();
 		$courses = Course::where('course_type', 2)->get();
 		return view('courses.create', compact(self::TEACHERS, 'courses'));
 	}
@@ -61,7 +65,7 @@ class CourseController extends Controller
 			self::TEACHERS => 'required|array|min:1',
 			'teachers.*' => [
 				'integer',
-				Rule::in(User::where('role', config('enum.user_roles')['teacher'])->get()->pluck('id')),
+				Rule::in(User::where('role', config(self::ROLES)[self::TEACHER])->get()->pluck('id')),
 			],
 			'courseSemester' => self::REQUIRED,
 			'courseSchedule' => 'required|array|min:1',
@@ -266,12 +270,14 @@ class CourseController extends Controller
 	 * @param array $roles
 	 * @return null
 	 */
-	private function checkIfAccessAllowed(array $roles) {
+	private function checkIfAccessAllowed(array $roles)
+	{
 		$user = Auth::user();
 
 		foreach ($roles as $role) {
-			if ($user->role == $role)
+			if ($user->role == $role) {
 				return null;
+			}
 		}
 		abort(404);
 	}
