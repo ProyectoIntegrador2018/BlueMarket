@@ -30,7 +30,7 @@
 		<!-- Course type -->
 		<div class="field" title="A client course is looking to outsource specific tasks. A supplier course is looking for projects to team up with.">
 			<label for="courseType">Course type</label>
-			<select class="ui fluid search dropdown" name="courseType" id="courseType"  required>
+			<select class="ui fluid search dropdown" name="courseType" id="courseType"  required  onchange="updateAssociatedCourses()">
 				<option value=""></option>
 				<option value="1">Client</option>
 				<option value="2">Supplier</option>
@@ -86,7 +86,7 @@
 			<input type="text" name="teamSize" id="teamSize" title="What is the maximum size of your students' teams?" required>
 		</div>
 		<!-- Associated courses -->
-		<div class="field" title="Are you collaborating with other courses?">
+		<div id="associatedCoursesField" class="field" title="Are you collaborating with other courses?">
 			<label for="associatedCourses">Associated courses</label>
 			<select class="ui fluid search dropdown" name="associatedCourses[]" id="associatedCourses" multiple>
 				@if(isset($courses))
@@ -119,6 +119,8 @@
 	$(document).ready(function(){
 		$(".ui.fluid.search.dropdown").dropdown();
 
+		$("#associatedCoursesField").css("display", "none");
+
 		$("#send").click(function(e){
 			e.preventDefault();
 
@@ -143,6 +145,16 @@
 		hasSelection("courseSchedule") &&
 		hasSelection("courseHours") &&
 		isInteger("teamSize");
+	}
+
+	function updateAssociatedCourses(){
+		console.log('changes course type');
+		// if course is not of type client
+		if($("#courseType option:selected").val() != 1){
+			$("#associatedCoursesField").css("display", "none");
+			return false;
+		}
+		$("#associatedCoursesField").css("display", "block");
 	}
 
 </script>
