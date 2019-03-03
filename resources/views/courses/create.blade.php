@@ -92,11 +92,11 @@
 				@if(isset($courses))
 					@foreach($courses->all() as $course)
 						<option value={{ $course['id'] }}>
-						{{ $course['name'] }}
+						{{ $course['name'] }} /
 						@foreach($course['teachers'] as $teacher)
 							{{ $loop->first ? '' : ', ' }}
 							{{ $teacher['name'] }}
-						@endforeach
+						@endforeach /
 						{{ $course['schedule'] }} </option>
 					@endforeach
 				@endif
