@@ -1,5 +1,18 @@
 <?php
 
+
+$env = env('APP_ENV', 'local');
+$isheroku = env('HEROKU', false);
+if($env == "production" && $isheroku) {
+	$dburl = env('CLEARDB_DATABASE_URL');
+	$dbconfig = parse_url($dburl);
+	$db_server = $dbconfig['host'];
+	$db_user = $dbconfig['user'];
+	$db_password = $dbconfig['pass'];
+	$db_name = substr($dbconfig["path"], 1);
+}
+
+
 return [
 
 	/*
@@ -42,11 +55,11 @@ return [
 
 		'mysql' => [
 			'driver' => 'mysql',
-			'host' => env('DB_HOST', '127.0.0.1'),
+			'host' => isset($db_server) ? $db_server : env('DB_HOST', '127.0.0.1'),
 			'port' => env('DB_PORT', '3306'),
-			'database' => env('DB_DATABASE', 'forge'),
-			'username' => env('DB_USERNAME', 'forge'),
-			'password' => env('DB_PASSWORD', ''),
+			'database' => isset($db_name) ? $db_name : env('DB_DATABASE', 'forge'),
+			'username' => isset($db_user) ? $db_user : env('DB_USERNAME', 'forge'),
+			'password' => isset($db_password) ? $db_password : env('DB_PASSWORD', ''),
 			'unix_socket' => env('DB_SOCKET', ''),
 			'charset' => 'utf8',
 			'collation' => 'utf8_unicode_ci',
