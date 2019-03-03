@@ -13,23 +13,23 @@ class CourseController extends Controller
 {
 	const COURSE_KEY = 'course_key';
 	const TEACHERS = 'teachers';
+	const ASSOCIATED = 'associatedCourses';
 	const REQUIRED = 'required';
+
+	public function __construct() {
+		$this->middleware('auth');
+	}
 
 	/**
 	 * Display a listing of the resource.
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public static function index()
+	public function index()
 	{
-		$user = Auth::user();
+		$this->checkIfAccessAllowed([config('enum.user_roles')['student']]);
 
-		//If user is not signed in, redirect to login.
-		if($user == null){
-			return redirect('/login');
-		}
-
-		return view('user.studentProfile', ["courses" => $user->EnrolledIn]);
+		return view('user.studentProfile', ["courses" => Auth::user()->EnrolledIn]);
 	}
 
 	/**
@@ -39,6 +39,8 @@ class CourseController extends Controller
 	 */
 	public function create()
 	{
+		$this->checkIfAccessAllowed([config('enum.user_roles')['teacher']]);
+
 		$teachers = User::where('role', config('enum.user_roles')['teacher'])->select('id', 'name')->get();
 		$courses = Course::where('course_type', 2)->get();
 		return view('courses.create', compact(self::TEACHERS, 'courses'));
@@ -64,7 +66,7 @@ class CourseController extends Controller
 			'courseSemester' => self::REQUIRED,
 			'courseSchedule' => 'required|array|min:1',
 			'courseHours' => self::REQUIRED,
-			'associatedCourses' => 'nullable|array|min:1',
+			self::ASSOCIATED => 'nullable|array|min:1',
 		]);
 
 		$course = $this->createCourse($attributes);
@@ -75,6 +77,9 @@ class CourseController extends Controller
 		$courseKey = $course->course_key;
 
 		$course->teachers()->attach($attributes[self::TEACHERS]);
+		if (isset($attributes[self::ASSOCIATED])) {
+			$course->suppliers()->attach($attributes[self::ASSOCIATED]);
+		}
 
 		return view('courses.details', compact('courseKey'));
 	}
@@ -253,5 +258,21 @@ class CourseController extends Controller
 			'max_team_size' => $attributes['teamSize'],
 			self::COURSE_KEY => $courseKey,
 		]);
+	}
+
+	/**
+	 * Check if user is authenticated and has one of the indicated roles
+	 *
+	 * @param array $roles
+	 * @return null
+	 */
+	private function checkIfAccessAllowed(array $roles) {
+		$user = Auth::user();
+
+		foreach ($roles as $role) {
+			if ($user->role == $role)
+				return null;
+		}
+		abort(404);
 	}
 }
