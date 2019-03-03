@@ -86,13 +86,20 @@
 			<input type="text" name="teamSize" id="teamSize" title="What is the maximum size of your students' teams?" required>
 		</div>
 		<!-- Associated courses -->
-		<div class="field" title="Are you working with other courses?">
+		<div class="field" title="Are you collaborating with other courses?">
 			<label for="associatedCourses">Associated courses</label>
 			<select class="ui fluid search dropdown" name="associatedCourses[]" id="associatedCourses" multiple>
-				<option value="1">Random</option>
-				<option value="2">Courses</option>
-				<option value="3">To Associate</option>
-				<option value="4">With</option>
+				@if(isset($courses))
+					@foreach($courses->all() as $course)
+						<option value={{ $course['id'] }}>
+						{{ $course['schedule'] }}
+						@foreach($course['teachers'] as $teacher)
+							{{ $loop->first ? '' : ', ' }}
+							{{ $teacher['name'] }}
+						@endforeach
+						{{ $course['schedule'] }} </option>
+					@endforeach
+				@endif
 			</select>
 		</div>
 		<!-- Error message -->
@@ -130,7 +137,7 @@
 	function validateForm(){
 		return isAlphanumeric("courseName") &&
 		hasSelection("teachers") &&
-		isAlphanumeric("courseSemester")&&
+		isAlphanumeric("courseSemester") &&
 		hasSelection("courseType") &&
 		hasSelection("courseType") &&
 		hasSelection("courseSchedule") &&
