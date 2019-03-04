@@ -44,11 +44,21 @@
 					<label for="teamName">Team Name</label>
 					<input id="teamName2" type="text" name="teamName" placeholder="Enter your team's name...">
 				</div>
+				<!-- Associated Courses -->
+				<div id ="courses" class="field">
+					<label for="courses">Associated Courses</label>
+					<select name="courses" class="ui search dropdown" placeholder="Select associated courses to this project..." id="courses2">
+						<option style="color:grey;" value="0">Select associated courses to this project...</option>
+						{{-- <option value="1">Category 1</option>
+						<option value="2">Category 2</option>
+						<option value="3">Category 3</option> --}}
+					</select>
+				</div>
 				<!-- Category -->
 				<div id ="category" class="field">
 					<label for="category">Category</label>
-					<select name="category" class="ui search dropdown" placeholder="Select your project's category" id="category2">
-						<option style="color:grey;" value="0">Select your project's category</option>
+					<select name="category" class="ui search dropdown" placeholder="Select your project's category..." id="category2">
+						<option style="color:grey;" value="0">Select your project's category...</option>
 						<option value="1">Category 1</option>
 						<option value="2">Category 2</option>
 						<option value="3">Category 3</option>
@@ -152,6 +162,14 @@
 			$errorMessage.removeClass('hidden');
 			$("html, body").animate({scrollTop: 0}, "slow");
 		}
+		// Associated Courses
+		let $courses = $("#courses");
+		let $courses2 = $('#courses2');
+		if($courses2.val() == '0'){
+			$courses.addClass('field error');
+			$errorMessage.removeClass('hidden');
+			$("html, body").animate({scrollTop: 0}, "slow");
+		}
 		// Category Dropdown
 		let $category = $("#category");
 		let $category2 = $('#category2');
@@ -200,6 +218,54 @@
 			$errorMessage.removeClass('hidden');
 			$("html, body").animate({scrollTop: 0}, "slow");
 		}
+	});
+
+	/* Ajax call to associated courses */
+	//manda el curso seleccionado
+	$('#courses2').on('click', function(event){
+		event.preventDefault();
+		var CSRF_TOKEN = $( 'meta[name="csrf-token"]' ).attr( "content" );
+		$( ".ui.form" ).removeClass( "error" );
+		$( ".field.input" ).removeClass( "error" );
+		$( "#success" ).addClass( "hidden" );
+	    $.ajax({
+	        /* the route pointing to the post function */
+	        url: '/',
+	        type: 'GET',
+	        /* send the csrf-token and the input to the controller */
+	        data: { /*data sent to server */
+				_token: CSRF_TOKEN,
+				name: $( "input#name" ).val(),
+				email: $( "input#email" ).val(),
+				message: $( "textarea#message" ).val()
+			},
+	        dataType: 'JSON',
+	        /* remind that 'data' is the response of the AjaxController */
+	        success: function (data) {
+	            console.log(data);
+				$( ".ui.form" ).removeClass( "error" );
+				$( ".field.input" ).removeClass( "error" );
+				$( "#success" ).removeClass( "hidden" );
+	        },
+			error: function(data) {
+				console.log(data);
+				var json = data.responseJSON;
+				$( ".ui.form" ).addClass( "error" );
+				$( "#success" ).addClass( "hidden" );
+				var errorInName = json.errors.name;
+				var errorInEmail = json.errors.email;
+				var errorInMessage = json.errors.message;
+				if(json.errors.name){
+					$( "div#name" ).addClass( "error" );
+				}
+				if(json.errors.email){
+					$( "div#email" ).addClass( "error" );
+				}
+				if(json.errors.message){
+					$( "div#message" ).addClass( "error" );
+				}
+			}
+	    });
 	});
 </script>
 @endsection
