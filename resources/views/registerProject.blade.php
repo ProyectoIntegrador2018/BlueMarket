@@ -1,15 +1,3 @@
-<!--
-	*** NO BORRAR COMENTARIOS HASTA QUE QUEDE LISTO LO QUE FALTA EN ESTE VIEW ***
-
-	Falta:
-		1. Validar que imagen no pase de 1MB (ya está el código pero estoy teniendo problema para que funcione.)
-		2. Que se puedan seleccionar más de un associated course.
-		3. Textarea semantic validation (short & long descriptions)
-		4. Image semantic validation
-		5. Image upload is not working now
-		6. Register Project button is not inside form
--->
-
 @extends('layouts.app')
 
 @section('title', 'Add Project')
@@ -18,306 +6,236 @@
 
 @section('header', 'Register a new project')
 
-<div class="ui container" style="margin: 4% auto 8%">
-	<div class="ui grid centered">
-		<div class="ten wide column">
-			<form class="ui form error segment" method="POST" action="/projects">
-				@csrf
-				{{--
-				<div id="errorMessage" class="ui error message hidden">
-					<div class="header">Register Error</div>
-					<p>All fields are required for registering a new project.</p>
-				</div> --}}
-				<!-- Project Image input -->
-				<div class="projectImg">
-					<label for="projectImg">Project Image</label>
-					<div id="errorMessage" class="ui error message hidden">
-						<div class="header">Image Error</div>
-						{{-- <p>The image should not exceed 1 MB.</p> --}}
-					</div>
-					<img src="https://lorempixel.com/400/400" alt="Project Image" class="ui medium image"  id="userImagePreview" />
-					<a href="#" class="imgUploader">
-						<button id="uploadImage" class="ui left floated button primary">Upload Image</button>
-					</a>
-					<input name="projectImg" type="file" id="imgInput" style="display:none" multiple accept='image/*'>
+<div class="padded content">
+	<form class="ui form" method="POST" action="/projects">
+		@csrf
+		<!-- Project Image -->
+		<div class="projectImage field">
+			<label for="projectImage">Project Image</label>
+			<div class="projectImageUploaderContainer">
+				<div class="imgUploader" class="imagePreviewContainer">
+					<img src="https://lorempixel.com/400/400" alt="Project Image" class="ui medium image" id="projectImagePreview"/>
 				</div>
-				<!-- Project Name input -->
-				<div id ="projectName" class="field">
-					<label for="proyectName">Project Name</label>
-					<input type="text" name="projectName" placeholder="Enter your project's name...">
-				</div>
-				<!-- Team Name input-->
-				<div id="teamName" class="field">
-					<label for="teamName">Team Name</label>
-					<input type="text" name="teamName" placeholder="Enter your team's name...">
-				</div>
-				<!-- Associated Courses dropdown-->
-				<div id ="courses" class="field">
-					<label for="courses">Associated Courses</label>
-					<select name="courses" multiple="" class="ui search dropdown" placeholder="Select associated courses to this project...">
-						<option value="">Select associated courses to this project...</option>
-						@if(isset($courses))
-							@foreach($courses->all() as $course)
-								<option value={{ $course['id'] }}>
-								{{ $course['name'] }} </option>
-							@endforeach
-						@endif
-					</select>
-				</div>
-				<!-- Category dropdown-->
-				<div id ="category" class="field">
-					<label for="category">Category</label>
-					<select name="category" class="ui search dropdown" placeholder="Select your project's category...">
-						<option value="">Select your project's category...</option>
-						@if(isset($categories))
-							@foreach($categories->all() as $category)
-								<option value={{ $category['id'] }}>
-								{{ $category['name'] }} </option>
-							@endforeach
-						@endif
-					</select>
-				</div>
-				<!-- Skillset search-->
-				<div id="skillsets" class="field">
-				    <label for="skillsets">Skillsets</label>
-				    <select name="skillsets" multiple="" class="ui fluid dropdown">
-					    <option value="">Search and add skillsets...</option>
-					    @if(isset($skillsets))
-					    	@foreach($skillsets->all() as $skillset)
-					    		<option value={{ $skillset['id'] }}>
-					    		{{ $skillset['name'] }} </option>
-					    	@endforeach
-					    @endif
-				    </select>
-				  </div>
-				{{-- <div id="skillsets" class="field">
-					<label for="skillsets">Required Skillsets</label>
-					<div class="ui search">
-						<div class="ui icon input">
-							<input name="skillsets" class="prompt" type="text" placeholder="Search and add skillsets...">
-							<i class="search icon"></i>
-						</div>
-						<div class="results">
-						</div>
-					</div>
-				</div> --}}
-				<!-- Milestones input-->
-				<div id="milestones" class="field">
-					<label for="milestones">Public Milestones</label>
-					<input type="text" name="milestones" placeholder="Example: Shipping">
-				</div>
-				<!-- Short Description textarea-->
-				<div id="shortDescription" class="field">
-					<label>Brief Description</label>
-					<textarea rows="2"></textarea>
-				</div>
-				<!-- Long Description textarea-->
-				<div id="longDescription" class="field">
-					<label>Detailed Description</label>
-					<textarea></textarea>
-				</div>
-				<!-- Video Pitch input-->
-				<div id="videoPitch" class="field">
-					<label for="videoPitch">Pitch Video</label>
-					<input type="text" name="videoPitch" placeholder="Example: https://youtube.com/watch?v=238028302">
-				</div>
-				<!-- Register Button -->
-				{{-- <button type="submit" id="registerProject" class="ui left floated button primary">Register project</button> --}}
-				<button id="registerButton" type="submit" class="ui left floated primary submit button">Register Project</button>
-				<!-- Error Message -->
-				<div class="ui error message"></div>
-			</form>
+				<a href="#" class="imgUploader">
+					<button id="uploadImageButton"type="button" class="ui button primary">Upload Image</button>
+				</a>
+			</div>
+			<input id="imgInput" name="projectImage" type="file" style="display:none" accept="image/x-png,image/jpeg,image/png" onchange="updateImage(this)">
 		</div>
-	</div>
+		<!-- Project Name -->
+		<div class="field">
+			<label for="projectName">Project Name</label>
+			<input type="text" name="projectName" placeholder="Project Name">
+		</div>
+		<!-- Team Name -->
+		<div class="field">
+			<label for="teamName">Team Name</label>
+			<input type="text" name="teamName" placeholder="Team Name">
+		</div>
+		<!-- Associated Course -->
+		<div class="field">
+			<label for="courses">Associated Course</label>
+			<select name="courses" class="ui search dropdown">
+				<option value="">Web Development Class</option>
+				@if(isset($courses))
+					@foreach($courses->all() as $course)
+						<option value={{ $course['id'] }}>
+						{{ $course['name'] }} </option>
+					@endforeach
+				@endif
+			</select>
+		</div>
+		<!-- Category -->
+		<div class="field">
+			<label for="category">Category</label>
+			<select name="category" class="ui search dropdown">
+				<option value="">Finance</option>
+				@if(isset($categories))
+					@foreach($categories->all() as $category)
+						<option value={{ $category['id'] }}>
+						{{ $category['name'] }} </option>
+					@endforeach
+				@endif
+			</select>
+		</div>
+		<!-- Skillset -->
+		<div class="field">
+		    <label for="skillsets">Skillsets</label>
+		    <select name="skillsets" multiple="" class="ui fluid dropdown">
+			    <option value="">Java, HTML</option>
+			    @if(isset($skillsets))
+			    	@foreach($skillsets->all() as $skillset)
+			    		<option value={{ $skillset['id'] }}>
+			    		{{ $skillset['name'] }} </option>
+			    	@endforeach
+			    @endif
+		    </select>
+		  </div>
+		<!-- Milestone -->
+		<div class="field">
+			<label for="milestone">Public Milestone</label>
+			<input type="text" name="milestone" placeholder="Design">
+		</div>
+		<!-- Short Description -->
+		<div class="field">
+			<label for="shortDescription">Brief Description</label>
+			<textarea name="shortDescription" rows="2" placeholder="The project is a web page for personal financial organization"></textarea>
+		</div>
+		<!-- Long Description -->
+		<div class="field">
+			<label for="longDescription">Detailed Description</label>
+			<textarea name="longDescription" placeholder="The project consists of a single page application where users can sign up or login. It includes..."></textarea>
+		</div>
+		<!-- Video Pitch -->
+		<div class="field">
+			<label for="videoPitch">Pitch Video</label>
+			<input type="text" name="videoPitch" placeholder="https://youtube.com/watch?v=238028302">
+		</div>
+		<!-- Register Button -->
+		<button id="registerButton" type="submit" class="ui primary submit button">Register Project</button>
+		<!-- Error Message -->
+		<div class="ui error message"></div>
+	</form>
 </div>
 
-@section('jquery')
+@section('scripts')
 <script>
-	// /* Search for skillsets */
-	// var skillsets = [
-	// 	{ title: 'Skillset 1' },
-	// 	{ title: 'Skillset 2' },
-	// 	{ title: 'Skillset 3' },
-	// 	{ title: 'Skillset 4' },
-	// 	{ title: 'Skillset 5' },
-	// ];
-	// $('.ui.search').search({source: skillsets});
-	// $('.ui.search.category.dropdown').dropdown({useLabels: false});
-	// $('.imgUploader').click(function(event) {
-	// 	event.preventDefault();
-	// 	$('#imgInput').click();
-	// });
-
 	/* Upload new image */
-	function readURL(input){
-		if (input.files && input.files[0]) {
-			var reader = new FileReader();
-			reader.onload = function (e) {
-				$('#userImagePreview').attr('src', e.target.result);
-			}
-			reader.readAsDataURL(input.files[0]);
-		}
-	}
-	$("#imgInput").change(function(){
-	    readURL(this);
+	$( ".imgUploader" ).click(function(event) {
+		event.preventDefault();
+		$( "#imgInput" ).click();
 	});
 
-	/* Register button click */
-	// $('#registerButton').on('click', function(event){
-	// 	event.preventDefault();
-		$('.ui.form')
-		  	.form({
-		    	fields: {
-		    		//project image
-		     		projectName: {
-		        		identifier: 'projectName',
-		        		rules: [
-		          			{
-		            			type   : 'empty',
-		            			prompt : 'Please enter a project name'
-		          			}
-		        		]
-		      		},
-		      		teamName: {
-		        		identifier: 'teamName',
-		        		rules: [
-		          			{
-					            type   : 'empty',
-					            prompt : 'Please enter a team name'
-		          			}
-		        		]
-		      		},
-		      		courses: {
-			      		identifier: 'courses',
-			      		rules: [
-		      		    	{
-			      		    	type   : 'minCount[1]',
-			      		      	prompt : 'Please select at least one associated course'
-		      		    	}
-		      		  	]
-		      		},
-		      		category: {
-			      		identifier: 'category',
-			      		rules: [
-		      		    	{
-			      		    	type   : 'empty',
-			      		      	prompt : 'Please select a category'
-		      		    	}
-		      		  	]
-		      		},
-		      		skillsets: {
-		      			identifier: 'skillsets',
-		        		rules: [
-		        			{
-					            type   : 'minCount[1]',
-					            prompt : 'Please select at least one skillset required'
-		          			}
-		        		]
-		      		},
-		      		milestones: {
-				        identifier: 'milestones',
-				        rules: [
-		          			{
-					        	type   : 'empty',
-					            prompt : 'Please enter current milestone'
-		          			}
-		        		]
-		      		},
-				    //short description semantic validation
-				    //long description semantic validation
-				    videoPitch: {
-				        identifier: 'videoPitch',
-				        rules: [
-		          			{
-					            type   : 'empty',
-					            prompt : 'Please enter link to pitch video'
-		          			}
-		        		]
-		      		},
-		    	}
-		  	})
-		;
-		// //Alert Message
-		// let $errorMessage = $('#errorMessage');
-		// // Image
-		// /*let $fileSize = $('#imgInput')[0].files[0].size;
-		// if($fileSize > 300){//1000000){
-		// 	$errorMessage.removeClass('hidden');
-		// 	//return false;
-		// }*/
-		// // Project Name
-		// let $projectName = $('#projectName');
-		// let $projectName2 = $('#projectName2');
-		// if($projectName2.val() == ""){
-		// 	$projectName.addClass('field error');
-		// 	$errorMessage.removeClass('hidden');
-		// 	$("html, body").animate({scrollTop: 0}, "slow");
-		// }
-		// // Team Name
-		// let $teamName = $('#teamName');
-		// let $teamName2 = $('#teamName2');
-		// if($teamName2.val() == ""){
-		// 	$teamName.addClass('field error');
-		// 	$errorMessage.removeClass('hidden');
-		// 	$("html, body").animate({scrollTop: 0}, "slow");
-		// }
-		// // Associated Courses
-		// let $courses = $("#courses");
-		// let $courses2 = $('#courses2');
-		// if($courses2.val() == '0'){
-		// 	$courses.addClass('field error');
-		// 	$errorMessage.removeClass('hidden');
-		// 	$("html, body").animate({scrollTop: 0}, "slow");
-		// }
-		// // Category Dropdown
-		// let $category = $("#category");
-		// let $category2 = $('#category2');
-		// if($category2.val() == '0'){
-		// 	$category.addClass('field error');
-		// 	$errorMessage.removeClass('hidden');
-		// 	$("html, body").animate({scrollTop: 0}, "slow");
-		// }
-		// // Skillsets
-		// let $skillsets = $('#skillsets');
-		// let $skillsets2 = $('#skillsets2');
-		// if($skillsets2.val() == ""){
-		// 	$skillsets.addClass('field error');
-		// 	$errorMessage.removeClass('hidden');
-		// 	$("html, body").animate({scrollTop: 0}, "slow");
-		// }
-		// // Public Milestones
-		// let $milestones = $('#milestones');
-		// let $milestones2 = $('#milestones2');
-		// if($milestones2.val() == ""){
-		// 	$milestones.addClass('field error');
-		// 	$errorMessage.removeClass('hidden');
-		// 	$("html, body").animate({scrollTop: 0}, "slow");
-		// }
-		// // Short Description
-		// let $shortDescription = $('#shortDescription');
-		// let $shortDescription2 = $('#shortDescription2');
-		// if($shortDescription2.val() == ""){
-		// 	$shortDescription.addClass('field error');
-		// 	$errorMessage.removeClass('hidden');
-		// 	$("html, body").animate({scrollTop: 0}, "slow");
-		// }
-		// // Long Description
-		// let $longDescription = $('#longDescription');
-		// let $longDescription2 = $('#longDescription2');
-		// if($longDescription2.val() == ""){
-		// 	$longDescription.addClass('field error');
-		// 	$errorMessage.removeClass('hidden');
-		// 	$("html, body").animate({scrollTop: 0}, "slow");
-		// }
-		// // Pitch Video
-		// let $videoPitch = $('#videoPitch');
-		// let $videoPitch2 = $('#videoPitch2');
-		// if($videoPitch2.val() == ""){
-		// 	$videoPitch.addClass('field error');
-		// 	$errorMessage.removeClass('hidden');
-		// 	$("html, body").animate({scrollTop: 0}, "slow");
-		// }
-	//});
+	function validateImage(file) {
+		const maxImageSize = 1000000; // 1MB
+		if ((file.type == "image/png" || file.type == "image/jpg") && file.size <= maxImageSize) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	function updateImage(imageInput) {
+		let reader  = new FileReader();
+		let file = imageInput.files[0];
+		let preview = $( "#projectImagePreview" );
+		reader.addEventListener("load", function () {
+			if(validateImage(file)) {
+				$( "#projectImagePreview" ).attr("src", reader.result);
+			}
+		});
+		if (file) {
+			reader.readAsDataURL(file);
+		}
+	}
+
+	/* Register button validation */
+	$('.ui.dropdown').dropdown();
+	$('.ui.form').form({
+    	fields: {
+    		projectImage: {
+        		identifier: 'projectImage',
+        		rules: [
+          			{
+            			type   : 'empty',
+            			prompt : 'Please enter a project image'
+          			}
+        		]
+      		},
+     		projectName: {
+        		identifier: 'projectName',
+        		rules: [
+          			{
+            			type   : 'empty',
+            			prompt : 'Please enter a project name'
+          			}
+        		]
+      		},
+      		teamName: {
+        		identifier: 'teamName',
+        		rules: [
+          			{
+			            type   : 'empty',
+			            prompt : 'Please enter a team name'
+          			}
+        		]
+      		},
+      		courses: {
+	      		identifier: 'courses',
+	      		rules: [
+      		    	{
+	      		    	type   : 'minCount[1]',
+	      		      	prompt : 'Please select an associated course'
+      		    	}
+      		  	]
+      		},
+      		category: {
+	      		identifier: 'category',
+	      		rules: [
+      		    	{
+	      		    	type   : 'empty',
+	      		      	prompt : 'Please select a category'
+      		    	}
+      		  	]
+      		},
+      		skillsets: {
+      			identifier: 'skillsets',
+        		rules: [
+        			{
+			            type   : 'minCount[1]',
+			            prompt : 'Please select at least one skillset'
+          			}
+        		]
+      		},
+      		milestone: {
+		        identifier: 'milestone',
+		        rules: [
+          			{
+			        	type   : 'empty',
+			            prompt : 'Please enter current milestone'
+          			}
+        		]
+      		},
+      		shortDescription: {
+		        identifier: 'shortDescription',
+		        rules: [
+          			{
+			        	type   : 'empty',
+			            prompt : 'Please enter a brief project description'
+          			}
+        		]
+      		},
+      		longDescription: {
+		        identifier: 'longDescription',
+		        rules: [
+          			{
+			        	type   : 'empty',
+			            prompt : 'Please enter a detailed project description'
+          			}
+        		]
+      		},
+      		videoPitch: {
+      		    identifier: 'videoPitch',
+      		    rules: [
+      		    	{
+      		        	type   : 'empty',
+			            prompt : 'Please enter a link to pitch video'
+      		        },
+      		        {
+      		        	type   : 'regExp',
+      		        	value   : '/^((http(s)?:\\/\\/)?)(www\\.)?((youtube\\.com\\/)|(youtu.be\\/))[\\S]+$/',
+      		            prompt : 'Please enter a valid youtube url'
+      		        }
+      		    ]
+      		}
+    	},
+    	onFailure: function(){
+    		return false;
+    	},
+    	onSuccess: function(){
+    	}
+  	});
 </script>
 @endsection
 @endsection
