@@ -75,7 +75,6 @@ class LoginController extends Controller {
 				$user->name = $payload['name'];
 				$user->google_id = $payload['sub'];
 				$user->save();
-				$view = view("auth.success", ["user" => Auth::user()])->render();
 			}
 
 			Auth::login($user);
