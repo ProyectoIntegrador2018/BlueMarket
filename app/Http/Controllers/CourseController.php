@@ -38,8 +38,7 @@ class CourseController extends Controller {
 				return view('user.studentProfile', ["courses" => $user->EnrolledIn]);
 			case config(self::ROLES)[self::TEACHER]:
 				$courses = $user->teaches;
-				//return view('courses.list', compact('courses'));
-				return $courses;
+				return view('courses.list', compact('courses'));
 			default:
 				abort(404);
 		}
@@ -85,18 +84,15 @@ class CourseController extends Controller {
 			abort(500);
 		}
 
-		$courseKey = $course->course_key;
-
 		$course->teachers()->attach($attributes[self::TEACHERS]);
 		if (isset($attributes[self::ASSOCIATED])) {
 			$course->suppliers()->attach($attributes[self::ASSOCIATED]);
 		}
 
-		/*$teachers = $course->teachers->map(function ($user) {
+		$teachers = $course->teachers->map(function ($user) {
 			return $user->only(['id', 'name', 'email']);
 		});
-		return view('course.details', compact('course', self::TEACHERS));*/
-		return view('courses.details', compact('courseKey'));
+		return view('course.details', compact('course', self::TEACHERS));
 	}
 
 	/**
@@ -107,11 +103,10 @@ class CourseController extends Controller {
 	 */
 	public function show(Course $course)
 	{
-		/*$teachers = $course->teachers->map(function ($user) {
+		$teachers = $course->teachers->map(function ($user) {
 			return $user->only(['id', 'name', 'email']);
 		});
-		return view('course.details', compact('course', self::TEACHERS));*/
-		return $course;
+		return view('course.details', compact('course', self::TEACHERS));
 	}
 
 	/**
