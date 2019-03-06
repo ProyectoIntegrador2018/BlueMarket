@@ -9,15 +9,17 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
-class CourseController extends Controller {
-
-	const COURSE_KEY = 'course_key';
-	const TEACHERS = 'teachers';
+class CourseController extends Controller
+{
 	const ASSOCIATED = 'associatedCourses';
 	const REQUIRED = 'required';
 	const ROLES = 'enum.user_roles';
+	const TEACHERS = 'teachers';
 	const TEACHER = 'teacher';
 	const STUDENT = 'student';
+	const COURSES = 'courses';
+	const COURSE = 'course';
+	const COURSE_KEY = 'course_key';
 
 	public function __construct() {
 		$this->middleware('auth');
@@ -35,10 +37,10 @@ class CourseController extends Controller {
 		$user = Auth::user();
 		switch ($user->role) {
 			case config(self::ROLES)[self::STUDENT]:
-				return view('user.studentProfile', ["courses" => $user->EnrolledIn]);
+				return view('user.studentProfile', [self::COURSES => $user->EnrolledIn]);
 			case config(self::ROLES)[self::TEACHER]:
 				$courses = $user->teaches;
-				return view('courses.list', compact('courses'));
+				return view('courses.list', compact(self::COURSES));
 			default:
 				abort(404);
 		}
@@ -54,7 +56,7 @@ class CourseController extends Controller {
 
 		$teachers = User::where('role', config(self::ROLES)[self::TEACHER])->select('id', 'name')->get();
 		$courses = Course::where('course_type', 2)->get();
-		return view('courses.create', compact(self::TEACHERS, 'courses'));
+		return view('courses.create', compact(self::TEACHERS, self::COURSES));
 	}
 
 	/**
@@ -80,9 +82,6 @@ class CourseController extends Controller {
 		]);
 
 		$course = $this->createCourse($attributes);
-		if (!isset($course)) {
-			abort(500);
-		}
 
 		$course->teachers()->attach($attributes[self::TEACHERS]);
 		if (isset($attributes[self::ASSOCIATED])) {
@@ -92,7 +91,7 @@ class CourseController extends Controller {
 		$teachers = $course->teachers->map(function ($user) {
 			return $user->only(['id', 'name', 'email']);
 		});
-		return view('course.details', compact('course', self::TEACHERS));
+		return view('course.details', compact(self::COURSE, self::TEACHERS));
 	}
 
 	/**
@@ -106,7 +105,7 @@ class CourseController extends Controller {
 		$teachers = $course->teachers->map(function ($user) {
 			return $user->only(['id', 'name', 'email']);
 		});
-		return view('course.details', compact('course', self::TEACHERS));
+		return view('course.details', compact(self::COURSE, self::TEACHERS));
 	}
 
 	/**
@@ -159,7 +158,7 @@ class CourseController extends Controller {
 		$associatedCourse = $user->enrolledIn()->where('course_id', $course->id)->first();
 
 		if (!$associatedCourse) {
-			return ['course' => $course, self::TEACHERS => $course->teachers];
+			return [self::COURSE => $course, self::TEACHERS => $course->teachers];
 		} else {
 			abort(400);
 		}
@@ -186,7 +185,7 @@ class CourseController extends Controller {
 
 		$result = $user->EnrolledIn()->attach($course);
 
-		return ['course' => $course, self::TEACHERS => $course->teachers];
+		return [self::COURSE => $course, self::TEACHERS => $course->teachers];
 	}
 
 	/**
@@ -224,8 +223,7 @@ class CourseController extends Controller {
 			}
 		}
 
-		$schedule .= " {$courseHours}, {$courseSemester}";
-		return $schedule;
+		return $schedule . " {$courseHours}, {$courseSemester}";
 	}
 
 	/**
@@ -257,13 +255,18 @@ class CourseController extends Controller {
 		);
 		$courseKey = $this->getCourseKey();
 
-		return Course::create([
+		$course = Course::create([
 			'name' => $attributes['courseName'],
 			'course_type' => $attributes['courseType'],
 			'schedule' => $schedule,
 			'max_team_size' => $attributes['teamSize'],
 			self::COURSE_KEY => $courseKey,
 		]);
+
+		if (!isset($course)) {
+			abort(500);
+		}
+		return $course;
 	}
 
 	/**

@@ -39,11 +39,15 @@ class User extends Authenticatable
 	}
 
 	public function teaches() {
-		return $this->belongsToMany('App\Course')->join('users as usrs', 'course_user.user_id', '=', 'usrs.id')->where('users.role', config(self::ROLES)['teacher']);
+		return $this->belongsToMany('App\Course')
+			->join('users as usrs', 'course_user.user_id', '=', 'usrs.id')
+			->where('users.role', config(self::ROLES)['teacher']);
 	}
 
 	public function enrolledIn() {
-		return $this->belongsToMany('App\Course')->join('users as usrs', 'course_user.user_id', '=', 'usrs.id')->where('usrs.role', config(self::ROLES)['student']);
+		return $this->belongsToMany('App\Course')
+			->join('users as usrs', 'course_user.user_id', '=', 'usrs.id')
+			->where('usrs.role', config(self::ROLES)['student']);
 	}
 
 	public function teamsLed() {
