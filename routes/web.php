@@ -15,10 +15,10 @@ Route::get('/', function () {
 	return view('home');
 });
 
-
 Route::get('/logout', 'LoginController@logout')->name('logout');
 Route::get('/login', 'LoginController@show')->name('login');
 Route::post('/login', 'LoginController@authenticate');
+Route::view('/login/welcome', 'auth.success');
 
 Route::resource('projects', 'ProjectController')->only([
 	'index', 'show', 'create', 'store'

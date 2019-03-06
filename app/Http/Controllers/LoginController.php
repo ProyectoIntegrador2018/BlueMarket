@@ -56,6 +56,7 @@ class LoginController extends Controller {
 			abort(400, 'No token');
 		}
 
+		$new = false;
 		$payload = $client->verifyIdToken($token);
 		if($payload) {
 			if($payload['hd'] !== 'itesm.mx') { // Take this out into an conf var
@@ -67,17 +68,21 @@ class LoginController extends Controller {
 
 			if(empty($user)) {
 				// Create the user in the db
+				$new = true;
 				$user = new User();
 				$user->email = $payload['email'];
 				$user->picture_url = $payload['picture'];
 				$user->name = $payload['name'];
 				$user->google_id = $payload['sub'];
 				$user->save();
+				$view = view("auth.success", ["user" => Auth::user()])->render();
 			}
 
 			Auth::login($user);
-			return ['success' => 'success', 'response' => 'OK'];
 			// return redirect()->intended('/'); // NOSONAR
+			//$view = view("/", ["user" => Auth::user()])->render();
+
+			return ["success" => "OK", "new" => $new];
 		}
 		else {
 			abort(403, 'Invalid ID token');
