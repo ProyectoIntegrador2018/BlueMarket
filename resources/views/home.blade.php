@@ -78,7 +78,7 @@
 						<div class="header">
 							Thank you for your message.
 						</div>
-						<p>We'll get back at you as soon as possible.</p>
+						<p>We'll get back to you as soon as possible.</p>
 					</div>
 					<!-- Error message -->
 					<div id="errorMessage" class="ui error message">
