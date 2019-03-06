@@ -15,8 +15,7 @@ class ContactMessageController extends Controller
 			'message' => 'required'
 		]);
 
-		Mail::raw($request->message, function($message) use($request)
-		{
+		Mail::raw($request->message, function ($message) use ($request) {
 			$message->from($request->email, $request->name);
 
 			$message->to('hello@bluemarket.com')->subject('Contact Us - BlueMarket');

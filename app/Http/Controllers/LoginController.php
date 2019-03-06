@@ -47,6 +47,17 @@ class LoginController extends Controller {
 		return redirect('/');
 	}
 
+	private function createUserInDB($payload) {
+		$user = new User();
+		$user->email = $payload['email'];
+		$user->picture_url = $payload['picture'];
+		$user->name = $payload['name'];
+		$user->google_id = $payload['sub'];
+		$user->save();
+
+		return $user;
+	}
+
 	public function authenticate(Request $request) {
 		// TODO: change this to an ENV var? maybe a config var?
 		$client = new Google_Client(['client_id' => "723110696630-74quqp3hlmjoc30f9tc4ji4v3qgvec40.apps.googleusercontent.com"]);
@@ -69,12 +80,7 @@ class LoginController extends Controller {
 			if(empty($user)) {
 				// Create the user in the db
 				$new = true;
-				$user = new User();
-				$user->email = $payload['email'];
-				$user->picture_url = $payload['picture'];
-				$user->name = $payload['name'];
-				$user->google_id = $payload['sub'];
-				$user->save();
+				$user = $this->createUserInDB($payload);
 			}
 
 			Auth::login($user);
@@ -83,8 +89,6 @@ class LoginController extends Controller {
 
 			return ["success" => "OK", "new" => $new];
 		}
-		else {
-			abort(403, 'Invalid ID token');
-		}
+		abort(403, 'Invalid ID token');
 	}
 }
