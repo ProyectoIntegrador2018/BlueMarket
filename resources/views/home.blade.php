@@ -131,7 +131,7 @@
 			email    : "email",
 			message	 : "empty"
 		},
-        onFailure: function() {
+		onFailure: function() {
 			// onFailure needs to exist to prevent form from sending request
 			console.log('failed submission');
 		},
@@ -153,8 +153,7 @@
 		$( ".ui.form" ).removeClass( "error" );
 		$( ".field.input" ).removeClass( "error" );
 		$( "#success" ).addClass( "hidden" );
-    });
+	});
 </script>
 @endsection
 @endsection
-

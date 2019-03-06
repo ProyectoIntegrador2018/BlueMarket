@@ -10,7 +10,7 @@
 		<!-- User image -->
 		<div id ="userImage" class="field">
 			<label for="imgInput">Photo</label>
-			<div class="userImageUploaderContainer">
+			<div class="user-image-uploader-container">
 				<div class="imgUploader" class="imagePreviewContainer">
 					<img id="userImagePreview" src="https://lorempixel.com/400/400" alt="User image" class="ui small circular image preview"/>
 				</div>
