@@ -39,7 +39,7 @@ class CourseController extends Controller {
 			case config(self::ROLES)[self::TEACHER]:
 				$courses = $user->teaches;
 				//return view('courses.list', compact('courses'));
-				abort(404);
+				return $courses;
 			default:
 				abort(404);
 		}
@@ -92,6 +92,10 @@ class CourseController extends Controller {
 			$course->suppliers()->attach($attributes[self::ASSOCIATED]);
 		}
 
+		/*$teachers = $course->teachers->map(function ($user) {
+			return $user->only(['id', 'name', 'email']);
+		});
+		return view('course.details', compact('course', self::TEACHERS));*/
 		return view('courses.details', compact('courseKey'));
 	}
 
@@ -101,8 +105,13 @@ class CourseController extends Controller {
 	 * @param  \App\Course  $course
 	 * @return \Illuminate\Http\Response
 	 */
-	public function show(Course $course) {
-		//
+	public function show(Course $course)
+	{
+		/*$teachers = $course->teachers->map(function ($user) {
+			return $user->only(['id', 'name', 'email']);
+		});
+		return view('course.details', compact('course', self::TEACHERS));*/
+		return $course;
 	}
 
 	/**
