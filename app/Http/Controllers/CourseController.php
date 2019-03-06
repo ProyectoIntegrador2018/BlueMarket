@@ -28,10 +28,21 @@ class CourseController extends Controller {
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function index() {
-		$this->checkIfAccessAllowed([config(self::ROLES)[self::STUDENT]]);
+	public function index()
+	{
+		$this->checkIfAccessAllowed([config(self::ROLES)[self::STUDENT], config(self::ROLES)[self::TEACHER]]);
 
-		return view('user.studentProfile', ["courses" => Auth::user()->EnrolledIn]);
+		$user = Auth::user();
+		switch ($user->role) {
+			case config(self::ROLES)[self::STUDENT]:
+				return view('user.studentProfile', ["courses" => $user->EnrolledIn]);
+			case config(self::ROLES)[self::TEACHER]:
+				$courses = $user->teaches;
+				//return view('courses.list', compact('courses'));
+				abort(404);
+			default:
+				abort(404);
+		}
 	}
 
 	/**
