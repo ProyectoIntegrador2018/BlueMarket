@@ -77,12 +77,7 @@
 	function validateImage(file) {
 		const maxImageSize = 1000000; // 1MB
 
-		if ((file.type == "image/png" || file.type == "image/jpeg" || file.type == "image/jpg") && file.size <= maxImageSize) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return ((file.type == "image/png" || file.type == "image/x-png" || file.type == "image/jpeg") && file.size <= maxImageSize);
 	}
 
 	function updateImage(imageInput) {
