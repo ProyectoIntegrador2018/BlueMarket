@@ -38,16 +38,19 @@ class LoginController extends Controller {
 		$this->middleware('guest')->except('logout');
 	}
 
-	public function show() {
+	public function show()
+	{
 		return view('auth.login');
 	}
 
-	public function logout() {
+	public function logout()
+	{
 		Auth::logout();
 		return redirect('/');
 	}
 
-	private function createUserInDB($payload) {
+	private function createUserInDB($payload)
+	{
 		$user = new User();
 		$user->email = $payload['email'];
 		$user->picture_url = $payload['picture'];
@@ -58,7 +61,8 @@ class LoginController extends Controller {
 		return $user;
 	}
 
-	public function authenticate(Request $request) {
+	public function authenticate(Request $request)
+	{
 		// TODO: change this to an ENV var? maybe a config var?
 		$client = new Google_Client(['client_id' => "723110696630-74quqp3hlmjoc30f9tc4ji4v3qgvec40.apps.googleusercontent.com"]);
 		$token = $request->id_token;

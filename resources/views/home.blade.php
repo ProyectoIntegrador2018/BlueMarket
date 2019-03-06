@@ -91,69 +91,69 @@
 		</div>
 	</div>
 @section('scripts')
-<script>
-	function sendEmail() {
-		$( ".ui.form" ).removeClass( "error" );
-		$( ".field.input" ).removeClass( "error" );
-		$( "#success" ).addClass( "hidden" );
-		/* semantic modifies error messages by default
-			we need to change it back for error handling */
-		$( "#errorMessage" ).html( "<div class=\"header\">Whoops! Something went wrong.</div>" );
+	<script>
+		function sendEmail() {
+			$( ".ui.form" ).removeClass( "error" );
+			$( ".field.input" ).removeClass( "error" );
+			$( "#success" ).addClass( "hidden" );
+			/* semantic modifies error messages by default
+				we need to change it back for error handling */
+			$( "#errorMessage" ).html( "<div class=\"header\">Whoops! Something went wrong.</div>" );
 
-		let CSRF_TOKEN = $( 'meta[name="csrf-token"]' ).attr( "content" );
+			let CSRF_TOKEN = $( 'meta[name="csrf-token"]' ).attr( "content" );
 
-		$.ajax({
-			url: "/contact",
-			type: "POST",
-			data: {
-				_token: CSRF_TOKEN,
-				name: $( "#name" ).val(),
-				email: $( "#email" ).val(),
-				message: $( "#message" ).val()
+			$.ajax({
+				url: "/contact",
+				type: "POST",
+				data: {
+					_token: CSRF_TOKEN,
+					name: $( "#name" ).val(),
+					email: $( "#email" ).val(),
+					message: $( "#message" ).val()
+				},
+				dataType: 'JSON',
+				success: function (data) {
+					$( ".ui.form" ).removeClass( "error" );
+					$( ".field.input" ).removeClass( "error" );
+					$( "#success" ).removeClass( "hidden" );
+				},
+				error: function (data) {
+					$( ".ui.form" ).addClass( "error" );
+					$( "#success" ).addClass( "hidden" );
+				}
+			});
+		}
+
+		// semantic form validation
+		$( ".ui.form" ).form({
+			fields: {
+				name     : "empty",
+				email    : "email",
+				message	 : "empty"
 			},
-			dataType: 'JSON',
-			success: function (data) {
-				$( ".ui.form" ).removeClass( "error" );
-				$( ".field.input" ).removeClass( "error" );
-				$( "#success" ).removeClass( "hidden" );
+			onFailure: function() {
+				// onFailure needs to exist to prevent form from sending request
+				console.log('failed submission');
 			},
-			error: function (data) {
-				$( ".ui.form" ).addClass( "error" );
-				$( "#success" ).addClass( "hidden" );
+			onSuccess: function() {
+				sendEmail();
 			}
 		});
-	}
 
-	// semantic form validation
-	$( ".ui.form" ).form({
-		fields: {
-			name     : "empty",
-			email    : "email",
-			message	 : "empty"
-		},
-		onFailure: function() {
-			// onFailure needs to exist to prevent form from sending request
-			console.log('failed submission');
-		},
-		onSuccess: function() {
-			sendEmail();
-		}
-	});
+		$( "#send" ).on("click", function(){
+			$( ".ui.form" ).removeClass( "error" );
+			$( ".field.input" ).removeClass( "error" );
+			$( "#success" ).addClass( "hidden" );
+			// call semantic form validation
+			$( ".ui.form" ).form("validate form");
+		});
 
-	$( "#send" ).on("click", function(){
-		$( ".ui.form" ).removeClass( "error" );
-		$( ".field.input" ).removeClass( "error" );
-		$( "#success" ).addClass( "hidden" );
-		// call semantic form validation
-		$( ".ui.form" ).form("validate form");
-	});
-
-	$(document).ready(function(){
-		// initial class set up
-		$( ".ui.form" ).removeClass( "error" );
-		$( ".field.input" ).removeClass( "error" );
-		$( "#success" ).addClass( "hidden" );
-	});
-</script>
+		$(document).ready(function(){
+			// initial class set up
+			$( ".ui.form" ).removeClass( "error" );
+			$( ".field.input" ).removeClass( "error" );
+			$( "#success" ).addClass( "hidden" );
+		});
+	</script>
 @endsection
 @endsection
