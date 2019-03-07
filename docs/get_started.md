@@ -36,4 +36,3 @@ We will follow this branching model for Git, so please **read this document care
 If you like videos, you can watch this series (or parts of it) to know how Laravel works and how to build an app. It's super easy to follow and Jeffrey Way is one of the original developers of the framework.
 
 - https://laracasts.com/series/laravel-from-scratch-2018/
-

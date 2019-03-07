@@ -73,4 +73,3 @@ You can launch the app in your browser automatically using the following command
 ```bash
 $ heroku open
 ```
-

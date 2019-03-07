@@ -28,4 +28,3 @@ if (!mix.inProduction()) {
 	})
 	.sourceMaps();
 }
-
