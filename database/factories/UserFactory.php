@@ -14,20 +14,20 @@ use Faker\Generator as Faker;
 */
 
 $factory->define(App\User::class, function (Faker $faker) {
-    return [
-        'name' => $faker->name,
-        'email' => $faker->unique()->safeEmail
-    ];
+	return [
+		'name' => $faker->name,
+		'email' => $faker->unique()->safeEmail
+	];
 });
 
 $factory->state(App\User::class, 'teacher', function ($faker) {
-    return [
-        'role' => config('enum.user_roles')['teacher'],
-    ];
+	return [
+		'role' => config('enum.user_roles')['teacher'],
+	];
 });
 
 $factory->state(App\User::class, 'student', function ($faker) {
-    return [
-        'role' => config('enum.user_roles')['student'],
-    ];
+	return [
+		'role' => config('enum.user_roles')['student'],
+	];
 });
