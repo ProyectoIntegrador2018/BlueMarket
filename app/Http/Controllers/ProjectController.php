@@ -10,10 +10,10 @@ class ProjectController extends Controller
 	public function __construct() {
 		$this->middleware('auth');
 	}
-    public function index() {
+	public function index() {
 		$projects = Project::all();
 		return view('projects', compact('projects'));
-    }
+	}
 
 	public function show($id)
 	{
