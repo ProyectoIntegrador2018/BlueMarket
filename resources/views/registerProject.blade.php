@@ -27,11 +27,11 @@
 			<label for="projectName">Project Name</label>
 			<input type="text" name="projectName" placeholder="Project Name">
 		</div>
-		<!-- Team Name -->
-		<div class="field">
+		<!-- Team Name...se va cambiar a dropdown 'associated team'-->
+{{-- 		<div class="field">
 			<label for="teamName">Team Name</label>
 			<input type="text" name="teamName" placeholder="Team Name">
-		</div>
+		</div> --}}
 		<!-- Associated Course -->
 		<div class="field">
 			<label for="courses">Associated Course</label>
