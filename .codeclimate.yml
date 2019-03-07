@@ -1,0 +1,57 @@
+version: "2" # required to adjust maintainability checks
+checks:
+  argument-count:
+    config:
+      threshold: 5
+  file-lines:
+    enabled: false
+  method-lines:
+    config:
+      threshold: 35
+  return-statements:
+    config:
+      threshold: 5
+plugins:
+  phpcodesniffer:
+    enabled: true
+    config:
+      standard: "phpcs.xml"
+      encoding: utf-8
+  sass-lint:
+    enabled: true
+    config:
+      file: .sasslintrc
+  editorconfig:
+    enabled: true
+    config:
+      editorconfig: .editorconfig
+  sonar-php:
+    enabled: true
+exclude_patterns:
+  - "**/*.jpg"
+  - "**/*.jpeg"
+  - "**/*.png"
+  - "**/*.gif"
+  - "storage/"
+  - "config/"
+  - "db/"
+  - "dist/"
+  - "features/"
+  - "**/node_modules/"
+  - "script/"
+  - "**/spec/"
+  - "**/test/"
+  - "**/tests/"
+  - "Tests/"
+  - "**/vendor/"
+  - "**/*_test.go"
+  - "**/*.yml"
+  - "**/*.yaml"
+  - "**/*.d.ts"
+  - "**/*.lock"
+  - "public/css/"
+  - "public/svg/"
+  - "public/js/"
+  - "public/img/"
+  - "public/images/"
+  - "analysis.out"
