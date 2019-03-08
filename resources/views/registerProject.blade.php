@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
-@section('title', 'Add Project')
+@section('title','Add Project')
 
 @section('content')
 
-@section('header', 'Register a new project')
+@section('header','Register a new project')
 
 <div class="padded content">
 	<form class="ui form" method="POST" action="/projects">
@@ -17,7 +17,7 @@
 					<img src="https://lorempixel.com/400/400" alt="Project Image" class="ui medium image" id="projectImagePreview"/>
 				</div>
 				<a href="#" class="imgUploader">
-					<button id="uploadImageButton"type="button" class="ui button primary">Upload Image</button>
+					<button class="uploadImageButton"type="button" class="ui button primary">Upload Image</button>
 				</a>
 			</div>
 			<input id="imgInput" name="projectImage" type="file" style="display:none" accept="image/x-png,image/jpeg,image/png" onchange="updateImage(this)">
@@ -39,8 +39,8 @@
 				<option value="">Web Development Class</option>
 				@if(isset($courses))
 					@foreach($courses->all() as $course)
-						<option value={{ $course['id'] }}>
-						{{ $course['name'] }} </option>
+						<option value={{$course['id']}}>
+						{{$course['name']}}</option>
 					@endforeach
 				@endif
 			</select>
@@ -65,8 +65,8 @@
 			    <option value="">Java, HTML</option>
 			    @if(isset($skillsets))
 			    	@foreach($skillsets->all() as $skillset)
-			    		<option value={{ $skillset['id'] }}>
-			    		{{ $skillset['name'] }} </option>
+			    		<option value={{$skillset['id']}}>
+			    		{{$skillset['name']}} </option>
 			    	@endforeach
 			    @endif
 		    </select>
@@ -101,31 +101,31 @@
 @section('scripts')
 <script>
 	/* Upload new image */
-	$( ".imgUploader" ).click(function(event) {
+	$(".imgUploader").click(function(event){
 		event.preventDefault();
-		$( "#imgInput" ).click();
+		$("#imgInput").click();
 	});
 
-	function validateImage(file) {
-		const maxImageSize = 1000000; // 1MB
-		if ((file.type == "image/png" || file.type == "image/jpg") && file.size <= maxImageSize) {
+	function validateImage(file){
+		const maxImageSize=1000000; // 1MB
+		if ((file.type=="image/png"||file.type=="image/jpg")&&file.size<=maxImageSize){
 			return true;
 		}
-		else {
+		else{
 			return false;
 		}
 	}
 
-	function updateImage(imageInput) {
-		let reader  = new FileReader();
-		let file = imageInput.files[0];
-		let preview = $( "#projectImagePreview" );
-		reader.addEventListener("load", function () {
-			if(validateImage(file)) {
-				$( "#projectImagePreview" ).attr("src", reader.result);
+	function updateImage(imageInput){
+		let reader=new FileReader();
+		let file=imageInput.files[0];
+		let preview=$("#projectImagePreview");
+		reader.addEventListener("load",function(){
+			if(validateImage(file)){
+				$("#projectImagePreview").attr("src",reader.result);
 			}
 		});
-		if (file) {
+		if(file){
 			reader.readAsDataURL(file);
 		}
 	}
@@ -133,107 +133,97 @@
 	/* Register button validation */
 	$('.ui.dropdown').dropdown();
 	$('.ui.form').form({
-    	fields: {
-    		projectImage: {
-        		identifier: 'projectImage',
-        		rules: [
-          			{
-            			type   : 'empty',
-            			prompt : 'Please enter a project image'
+    	fields:{
+    		projectImage:{
+        		identifier:'projectImage',
+        		rules:[{
+            			type:'empty',
+            			prompt:'Please enter a project image'
           			}
-        		]
+          		]
       		},
-     		projectName: {
-        		identifier: 'projectName',
-        		rules: [
-          			{
-            			type   : 'empty',
-            			prompt : 'Please enter a project name'
+     		projectName:{
+        		identifier:'projectName',
+        		rules:[{
+            			type:'empty',
+            			prompt:'Please enter a project name'
           			}
-        		]
+          		]
       		},
-      		teamName: {
-        		identifier: 'teamName',
-        		rules: [
-          			{
-			            type   : 'empty',
-			            prompt : 'Please enter a team name'
+      		teamName:{
+        		identifier:'teamName',
+        		rules:[{
+			            type:'empty',
+			            prompt:'Please enter a team name'
           			}
-        		]
+          		]
       		},
-      		courses: {
-	      		identifier: 'courses',
-	      		rules: [
-      		    	{
-	      		    	type   : 'minCount[1]',
-	      		      	prompt : 'Please select an associated course'
+      		courses:{
+	      		identifier:'courses',
+	      		rules:[{
+	      		    	type:'minCount[1]',
+	      		      	prompt:'Please select an associated course'
       		    	}
-      		  	]
+      		    ]
       		},
-      		category: {
-	      		identifier: 'category',
-	      		rules: [
-      		    	{
-	      		    	type   : 'empty',
-	      		      	prompt : 'Please select a category'
-      		    	}
-      		  	]
-      		},
-      		skillsets: {
-      			identifier: 'skillsets',
-        		rules: [
-        			{
-			            type   : 'minCount[1]',
-			            prompt : 'Please select at least one skillset'
+      		category:{
+	      		identifier:'category',
+	      		rules:[{
+	      		    	type:'empty',
+	      		      	prompt:'Please select a category'
+	      		    }
+	      		]
+	      	},
+      		skillsets:{
+      			identifier:'skillsets',
+        		rules:[{
+			            type:'minCount[1]',
+			            prompt:'Please select at least one skillset'
           			}
-        		]
+          		]
       		},
-      		milestone: {
-		        identifier: 'milestone',
-		        rules: [
-          			{
-			        	type   : 'empty',
-			            prompt : 'Please enter current milestone'
+      		milestone:{
+		        identifier:'milestone',
+		        rules:[{
+			        	type:'empty',
+			            prompt:'Please enter current milestone'
           			}
-        		]
+          		]
       		},
-      		shortDescription: {
-		        identifier: 'shortDescription',
-		        rules: [
-          			{
-			        	type   : 'empty',
-			            prompt : 'Please enter a brief project description'
+      		shortDescription:{
+		        identifier:'shortDescription',
+		        rules:[{
+			        	type:'empty',
+			            prompt:'Please enter a brief project description'
           			}
-        		]
+          		]
       		},
-      		longDescription: {
-		        identifier: 'longDescription',
-		        rules: [
-          			{
-			        	type   : 'empty',
-			            prompt : 'Please enter a detailed project description'
+      		longDescription:{
+		        identifier:'longDescription',
+		        rules:[{
+			        	type:'empty',
+			            prompt:'Please enter a detailed project description'
           			}
-        		]
+          		]
       		},
-      		videoPitch: {
-      		    identifier: 'videoPitch',
-      		    rules: [
-      		    	{
-      		        	type   : 'empty',
-			            prompt : 'Please enter a link to pitch video'
-      		        },
+      		videoPitch:{
+      		    identifier:'videoPitch',
+      		    rules:[{
+      		        	type:'empty',
+			            prompt:'Please enter a link to pitch video'
+      		    	},
       		        {
-      		        	type   : 'regExp',
-      		        	value   : '/^((http(s)?:\\/\\/)?)(www\\.)?((youtube\\.com\\/)|(youtu.be\\/))[\\S]+$/',
-      		            prompt : 'Please enter a valid youtube url'
+      		        	type:'regExp',
+      		        	value:'/^((http(s)?:\\/\\/)?)(www\\.)?((youtube\\.com\\/)|(youtu.be\\/))[\\S]+$/',
+      		            prompt:'Please enter a valid youtube url'
       		        }
       		    ]
       		}
     	},
-    	onFailure: function(){
+    	onFailure:function(){
     		return false;
     	},
-    	onSuccess: function(){
+    	onSuccess:function(){
     	}
   	});
 </script>
