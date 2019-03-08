@@ -92,7 +92,7 @@
 					@endforeach
 				@endif
 			</select>
-		  </div>
+		</div>
 		<!-- Milestone -->
 		<div class="field">
 			<label for="milestone">Public Milestone</label>
