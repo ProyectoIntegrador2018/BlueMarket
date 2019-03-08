@@ -7,25 +7,25 @@
 @section('header','Register a new project')
 
 <div class="padded content">
-	<form class="ui form" method="POST" action="/projects">
+	<form class="ui form"method="POST"action="/projects">
 		@csrf
 		<!-- Project Image -->
 		<div class="projectImage field">
 			<label for="projectImage">Project Image</label>
 			<div class="projectImageUploaderContainer">
-				<div class="imgUploader" class="imagePreviewContainer">
-					<img src="https://lorempixel.com/400/400" alt="Project Image" class="ui medium image" id="projectImagePreview"/>
+				<div class="imgUploader"class="imagePreviewContainer">
+					<img src="https://lorempixel.com/400/400"alt="Project Image"class="ui medium image" id="projectImagePreview"/>
 				</div>
-				<a href="#" class="imgUploader">
-					<button class="uploadImageButton"type="button" class="ui button primary">Upload Image</button>
+				<a href="#"class="imgUploader">
+					<button class="upload-image-Button"type="button"class="ui button primary">Upload Image</button>
 				</a>
 			</div>
-			<input id="imgInput" name="projectImage" type="file" style="display:none" accept="image/x-png,image/jpeg,image/png" onchange="updateImage(this)">
+			<input id="imgInput"name="projectImage"type="file"style="display:none"accept="image/x-png,image/jpeg,image/png"onchange="updateImage(this)">
 		</div>
 		<!-- Project Name -->
 		<div class="field">
 			<label for="projectName">Project Name</label>
-			<input type="text" name="projectName" placeholder="Project Name">
+			<input type="text"name="projectName"placeholder="Project Name">
 		</div>
 		<!-- Team Name...se va cambiar a dropdown 'associated team'-->
 {{-- 		<div class="field">
@@ -35,10 +35,10 @@
 		<!-- Associated Course -->
 		<div class="field">
 			<label for="courses">Associated Course</label>
-			<select name="courses" class="ui search dropdown">
+			<select name="courses"class="ui search dropdown">
 				<option value="">Web Development Class</option>
 				@if(isset($courses))
-					@foreach($courses->all() as $course)
+					@foreach($courses->all()as$course)
 						<option value={{$course['id']}}>
 						{{$course['name']}}</option>
 					@endforeach
@@ -48,12 +48,11 @@
 		<!-- Category -->
 		<div class="field">
 			<label for="category">Category</label>
-			<select name="category" class="ui search dropdown">
+			<select name="category"class="ui search dropdown">
 				<option value="">Finance</option>
 				@if(isset($categories))
-					@foreach($categories->all() as $category)
-						<option value={{ $category['id'] }}>
-						{{ $category['name'] }} </option>
+					@foreach($categories->all()as$category)
+						<option value={{$category['id']}}>{{$category['name']}}</option>
 					@endforeach
 				@endif
 			</select>
@@ -61,12 +60,12 @@
 		<!-- Skillset -->
 		<div class="field">
 		    <label for="skillsets">Skillsets</label>
-		    <select name="skillsets" multiple="" class="ui fluid dropdown">
+		    <select name="skillsets"multiple=""class="ui fluid dropdown">
 			    <option value="">Java, HTML</option>
 			    @if(isset($skillsets))
 			    	@foreach($skillsets->all() as $skillset)
 			    		<option value={{$skillset['id']}}>
-			    		{{$skillset['name']}} </option>
+			    		{{$skillset['name']}}</option>
 			    	@endforeach
 			    @endif
 		    </select>
@@ -74,25 +73,25 @@
 		<!-- Milestone -->
 		<div class="field">
 			<label for="milestone">Public Milestone</label>
-			<input type="text" name="milestone" placeholder="Design">
+			<input type="text"name="milestone"placeholder="Design">
 		</div>
 		<!-- Short Description -->
 		<div class="field">
 			<label for="shortDescription">Brief Description</label>
-			<textarea name="shortDescription" rows="2" placeholder="The project is a web page for personal financial organization"></textarea>
+			<textarea name="shortDescription"rows="2"placeholder="The project is a web page for personal financial organization"></textarea>
 		</div>
 		<!-- Long Description -->
 		<div class="field">
 			<label for="longDescription">Detailed Description</label>
-			<textarea name="longDescription" placeholder="The project consists of a single page application where users can sign up or login. It includes..."></textarea>
+			<textarea name="longDescription"placeholder="The project consists of a single page application where users can sign up or login. It includes..."></textarea>
 		</div>
 		<!-- Video Pitch -->
 		<div class="field">
 			<label for="videoPitch">Pitch Video</label>
-			<input type="text" name="videoPitch" placeholder="https://youtube.com/watch?v=238028302">
+			<input type="text"name="videoPitch"placeholder="https://youtube.com/watch?v=238028302">
 		</div>
 		<!-- Register Button -->
-		<button id="registerButton" type="submit" class="ui primary submit button">Register Project</button>
+		<button id="registerButton"type="submit"class="ui primary submit button">Register Project</button>
 		<!-- Error Message -->
 		<div class="ui error message"></div>
 	</form>
@@ -108,7 +107,7 @@
 
 	function validateImage(file){
 		const maxImageSize=1000000; // 1MB
-		if ((file.type=="image/png"||file.type=="image/jpg")&&file.size<=maxImageSize){
+		if((file.type=="image/png"||file.type=="image/jpg")&&file.size<=maxImageSize){
 			return true;
 		}
 		else{
