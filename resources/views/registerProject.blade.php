@@ -14,7 +14,7 @@
 			<label for="projectImage">Project Image</label>
 			<div class="projectImageUploaderContainer">
 				<div class="imgUploader"class="imagePreviewContainer">
-					<img src="https://lorempixel.com/400/400"alt="Project Image"class="ui medium image" id="projectImagePreview"/>
+					<img src="https://lorempixel.com/400/400"alt="Project Image"class="ui medium image"id="projectImagePreview"/>
 				</div>
 				<a href="#"class="imgUploader">
 					<button class="upload-image-Button"type="button"class="ui button primary">Upload Image</button>
@@ -27,11 +27,25 @@
 			<label for="projectName">Project Name</label>
 			<input type="text"name="projectName"placeholder="Project Name">
 		</div>
-		<!-- Team Name...se va cambiar a dropdown 'associated team'-->
-{{-- 		<div class="field">
-			<label for="teamName">Team Name</label>
-			<input type="text" name="teamName" placeholder="Team Name">
-		</div> --}}
+		<!-- Associated Team -->
+		<div class="field">
+			<label for="teamName">Associated Team</label>
+			<div class="two fields">
+	  			<div class="field">
+	    			<select name="teamName"class="ui search dropdown">
+	    				<option value="">XDevelopers</option>
+	    				@if(isset($teams))
+	    					@foreach($teams->all()as$teams)
+	    						<option value={{$team['id']}}>{{$category['name']}}</option>
+	    					@endforeach
+	    				@endif
+	    			</select>
+	  			</div>
+	 			<div class="field">
+	    			<!-- falta field de create team -->
+	  			</div>
+			</div>
+		</div>
 		<!-- Associated Course -->
 		<div class="field">
 			<label for="courses">Associated Course</label>
@@ -153,7 +167,7 @@
         		identifier:'teamName',
         		rules:[{
 			            type:'empty',
-			            prompt:'Please enter a team name'
+			            prompt:'Please select a team name'
           			}
           		]
       		},
