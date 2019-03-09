@@ -81,11 +81,12 @@
 	}
 
 	function onFailure(e) {
-		// Handle the error where user does not match domain
+		// Handle errors
 		if(e.error) {
 			showError(errorMessageGeneric);
 		}
 		if(e.type && e.type === "tokenFailed") {
+			// Error where user does not match domain
 			showError(errorMessageItesmAccount);
 		}
 	}
