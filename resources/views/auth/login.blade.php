@@ -20,7 +20,6 @@
 	</div>
 </div>
 @section('scripts')
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 <script>
 	const errorMessageGeneric = "Please contact us for support.";
@@ -84,10 +83,10 @@
 	function onFailure(e) {
 		// Handle the error where user does not match domain
 		if(e.error) {
-			showError(errorMessageItesmAccount);
+			showError(errorMessageGeneric);
 		}
 		if(e.type && e.type === "tokenFailed") {
-			showError(errorMessageGeneric);
+			showError(errorMessageItesmAccount);
 		}
 	}
 

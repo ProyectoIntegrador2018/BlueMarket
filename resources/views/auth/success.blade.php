@@ -2,11 +2,6 @@
 
 @section('title', 'Welcome')
 
-@section('head')
-	<meta name="google-signin-client_id" content="723110696630-74quqp3hlmjoc30f9tc4ji4v3qgvec40.apps.googleusercontent.com">
-	<meta name="csrf-token" content="{{ csrf_token() }}">
-@endsection
-
 @section('content')
 	<div class="ui container bluemarket centered-container">
 		@if(Auth::user())
