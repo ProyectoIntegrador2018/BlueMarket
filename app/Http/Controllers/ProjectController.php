@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Project;
+use App\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -24,7 +25,11 @@ class ProjectController extends Controller {
 
 	public function create()
 	{
-		return view('registerProject', ['courses' => Auth::user()->EnrolledIn]);
+		return view('registerProject', [
+			'courses' => Auth::user()->EnrolledIn,
+			'categories' => Tag::where('type', 2)->get(),
+			'skillsets' => Tag::where('type', 1)->get()
+		]);
 	}
 
 	public function store(Request $request) {

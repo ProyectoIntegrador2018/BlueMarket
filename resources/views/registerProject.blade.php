@@ -83,7 +83,7 @@
 		<!-- Skillset -->
 		<div class="field">
 			<label for="skillsets">Skillsets</label>
-			<select name="skillsets" multiple="" class="ui fluid dropdown">
+			<select name="skillsets" multiple="" class="ui search dropdown">
 				<option value="">Java, HTML</option>
 				@if(isset($skillsets))
 					@foreach($skillsets -> all() as $skillset)
