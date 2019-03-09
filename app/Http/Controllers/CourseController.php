@@ -38,7 +38,6 @@ class CourseController extends Controller
 			default:
 				abort(404);
 				break;
-
 		}
 	}
 
