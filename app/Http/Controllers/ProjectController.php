@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 class ProjectController extends Controller {
 
@@ -20,8 +22,9 @@ class ProjectController extends Controller {
 		return view('projects.show', ['project' => Project::findOrFail($id)]);
 	}
 
-	public function create() {
-		return view('projects.create');
+	public function create()
+	{
+		return view('registerProject', ['courses' => Auth::user()->EnrolledIn]);
 	}
 
 	public function store(Request $request) {
