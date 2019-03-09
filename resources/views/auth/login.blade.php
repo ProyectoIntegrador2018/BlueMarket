@@ -94,7 +94,7 @@
 	function onSignIn(googleUser) {
 		var profile = googleUser.getBasicProfile();
 		let token = googleUser.getAuthResponse().id_token;
-		// $('#my-signin2').fadeOut();
+		$('#my-signin2').fadeOut();
 		// Send the request now
 		$.ajax({
 			url: '/login',
