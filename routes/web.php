@@ -32,6 +32,7 @@ Route::post('/user/courses/associate', 'CourseController@associate');
 
 Route::get('/marce', function () {
 	return view('registerProject');
+});
 
 	/* user */
 Route::get('/user/edit', function () {
