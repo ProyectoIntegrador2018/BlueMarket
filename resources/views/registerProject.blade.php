@@ -12,6 +12,18 @@
 	}
 </style>
 <div class="padded content">
+
+	@if($errors->any())
+		<div class="ui error message">
+			<ul>
+				@foreach ($errors->all() as $error)
+					<li>{{ $error }}</li>
+				@endforeach
+			</ul>
+		</div>
+	@endif
+
+
 	<form class="ui form" method="POST" action="/projects">
 		@csrf
 		<!-- Project Image -->
@@ -83,7 +95,7 @@
 		<!-- Skillset -->
 		<div class="field">
 			<label for="skillsets">Skillsets</label>
-			<select name="skillsets" multiple="" class="ui search dropdown">
+			<select name="skillsets" multiple="" class="ui fluid dropdown">
 				<option value="">Java, HTML</option>
 				@if(isset($skillsets))
 					@foreach($skillsets -> all() as $skillset)
@@ -242,6 +254,7 @@
 			return false;
 		},
 		onSuccess:function() {
+			$("form").submit();
 		}
 	});
 	/* Associated Team Validation */

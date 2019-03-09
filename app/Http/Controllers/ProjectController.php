@@ -34,14 +34,29 @@ class ProjectController extends Controller {
 
 	public function store(Request $request) {
 		$attributes = request()->validate([
-			'name' => ['required'],
-			'video' => ['present'],
-			'long_description' => ['present'],
-			'short_description' => ['present'],
-			'photo' => ['present']
+			'projectName' => ['required'],
+			'videoPitch' => ['present'],
+			'longDescription' => ['present'],
+			'shortDescription'=> ['present'],
+			'projectImage'=> ['present']
 		]);
 
-		$project = Project::create($attributes);
-		return view('projects.show', ['project' => $project]);
+		$project = $this->saveRecord($attributes);
+		if (!isset($project)) {
+			abort(500);
+		}
+
+		return view('projects', ['project' => $project]);
+	}
+
+	private function saveRecord(array $attributes)
+	{
+		return Project::create([
+			'name' => $attributes['projectName'],
+			'video' => $attributes['videoPitch'],
+			'long_description' => $attributes['longDescription'],
+			'short_description' => $attributes['shortDescription'],
+			'photo' => $attributes['projectImage']
+		]);
 	}
 }
