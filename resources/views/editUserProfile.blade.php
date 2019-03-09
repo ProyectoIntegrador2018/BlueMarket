@@ -75,7 +75,7 @@
 	});
 
 	function validateImage(file) {
-		const maxImageSize = 1000000; // 1MB
+		const maxImageSize = 1048576; // 1MiB
 
 		return ((file.type == "image/png" || file.type == "image/x-png" || file.type == "image/jpeg") && file.size <= maxImageSize);
 	}

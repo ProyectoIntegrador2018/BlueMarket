@@ -127,9 +127,9 @@
 		// semantic form validation
 		$( ".ui.form" ).form({
 			fields: {
-				name     : "empty",
-				email    : "email",
-				message	 : "empty"
+				name: "empty",
+				email: "email",
+				message: "empty"
 			},
 			onFailure: function() {
 				// onFailure needs to exist to prevent form from sending request
