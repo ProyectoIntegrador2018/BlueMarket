@@ -41,10 +41,10 @@
 
 	<rule ref="Squiz.ControlStructures.ElseIfDeclaration"/>
 	<rule ref="Squiz.ControlStructures.LowercaseDeclaration"/>
-	<rule ref="Squiz.ControlStructures.SwitchDeclaration"/>
+	<!-- <rule ref="Squiz.ControlStructures.SwitchDeclaration"/> -->
 	<rule ref="Squiz.Commenting.DocCommentAlignment"/>
 	<rule ref="Squiz.Commenting.EmptyCatchComment"/>
-	<rule ref="Squiz.Commenting.LongConditionClosingComment"/>
+	<!-- <rule ref="Squiz.Commenting.LongConditionClosingComment"/> -->
 	<rule ref="Squiz.PHP.CommentedOutCode"/>
 	<rule ref="Squiz.Commenting.VariableComment"/>
 	<rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing"/>
