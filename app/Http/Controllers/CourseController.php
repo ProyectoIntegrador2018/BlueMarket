@@ -30,11 +30,15 @@ class CourseController extends Controller
 		switch ($user->role) {
 			case config(self::ROLES)['student']:
 				return view('user.studentProfile', ['courses' => $user->EnrolledIn]);
+
 			case config(self::ROLES)['teacher']:
 				$courses = $user->teaches;
 				return view('courses.list', compact('courses'));
+
 			default:
 				abort(404);
+				break;
+
 		}
 	}
 
@@ -216,7 +220,7 @@ class CourseController extends Controller
 			}
 		}
 
-		return $schedule . " {$courseHours}, {$courseSemester}";
+		return $schedule." {$courseHours}, {$courseSemester}";
 	}
 
 	/**
