@@ -6,6 +6,8 @@ use App\User;
 
 class UserController extends Controller
 {
+	const ROLES = 'enum.user_roles';
+
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +15,7 @@ class UserController extends Controller
      */
     public function index()
     {
-		$users = User::all();
+		$users = User::where('role', config(self::ROLES)['sys_admin'])->get();
 		return $users;
     }
 
@@ -36,6 +38,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
 		$user = User::create($request->all());
+		$user->role = config(self::ROLES)['sys_admin'];
 		$id = $user->id;
 
 		return view('admin.users.show', ['user' => User::findOrFail($id)]);
@@ -50,6 +53,11 @@ class UserController extends Controller
     public function show(User $user)
     {
 		$id = $user->id;
+
+		if ($user->role != config(self::ROLES)['sys_admin']) {
+			abort(400);
+		}
+
         return view('admin.users.show', ['user' => User::findOrFail($id)]);
     }
 
