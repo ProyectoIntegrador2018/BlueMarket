@@ -40,3 +40,6 @@ Route::get('/user/edit', function () {
 });
 
 Route::post('/contact', 'ContactMessageController@post');
+
+/* teams */
+Route::resource('teams', 'TeamController');

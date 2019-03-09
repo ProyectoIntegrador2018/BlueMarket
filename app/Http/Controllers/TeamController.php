@@ -3,17 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Team;
+use App\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 
 class TeamController extends Controller
 {
+	const ROLES = 'enum.user_roles';
+
+	public function __construct() {
+		$this->middleware('auth');
+	}
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index() {
         //
     }
 
@@ -22,9 +30,12 @@ class TeamController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
+    public function create() {
+		$students = User::where('role', config(self::ROLES)['student'])
+			->where('id', '!=', Auth::user()->id)
+			->select('id', 'name')->get();
+		return $students;
+		//return view('teams.create', compact('students'));
     }
 
     /**
@@ -35,7 +46,20 @@ class TeamController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $attributes = request()->validate([
+			'name' => 'required',
+			'photo' => 'nullable',
+		]);
+
+		$attributes['leader_id'] = Auth::user()->id;
+
+		return $attributes;
+		/*$team = Team::create($attributes);
+		if (!isset($team)) {
+			abort(500);
+		}
+		return view('teams.details', compact('team'));
+		*/
     }
 
     /**
@@ -44,9 +68,8 @@ class TeamController extends Controller
      * @param  \App\Team  $team
      * @return \Illuminate\Http\Response
      */
-    public function show(Team $team)
-    {
-        //
+    public function show(Team $team) {
+        // return view('teams.details', compact('team'));
     }
 
     /**
@@ -55,8 +78,7 @@ class TeamController extends Controller
      * @param  \App\Team  $team
      * @return \Illuminate\Http\Response
      */
-    public function edit(Team $team)
-    {
+    public function edit(Team $team) {
         //
     }
 
@@ -67,8 +89,7 @@ class TeamController extends Controller
      * @param  \App\Team  $team
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Team $team)
-    {
+    public function update(Request $request, Team $team) {
         //
     }
 
@@ -78,8 +99,7 @@ class TeamController extends Controller
      * @param  \App\Team  $team
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Team $team)
-    {
+    public function destroy(Team $team) {
         //
     }
 }
