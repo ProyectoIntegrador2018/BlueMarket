@@ -11,10 +11,11 @@ class ContactMessageController extends Controller
 	public function post(Request $request) {
 		$this->validate(
 			$request, [
-			'name' => 'required',
-			'email' => 'required|email',
-			'message' => 'required'
-		]);
+				'name' => 'required',
+				'email' => 'required|email',
+				'message' => 'required'
+			]
+		);
 
 		// sanitizing input
 		$name = filter_var($request->name, FILTER_SANITIZE_STRING);
