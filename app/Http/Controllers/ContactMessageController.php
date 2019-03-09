@@ -15,7 +15,9 @@ class ContactMessageController extends Controller
 			'message' => 'required'
 		]);
 
-		// sanitizing message body
+		// sanitizing input
+		$name = filter_var($request->name, FILTER_SANITIZE_STRING);
+		$email = filter_var($request->email, FILTER_SANITIZE_EMAIL);
 		$body = filter_var($request->message, FILTER_SANITIZE_STRING);
 
 		Mail::raw($body, function ($message) use ($request) {
