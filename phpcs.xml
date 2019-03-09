@@ -9,10 +9,9 @@
 
 	<!-- <exclude-pattern>vendor/*</exclude-pattern> -->
 
-	<arg name="basepath" value="."/>
 	<arg name="colors"/>
 	<arg name="report-width" value="auto" />
-	<arg name="parallel" value="75"/>
+	<!-- <arg name="parallel" value="75"/> -->
 	<arg value="snp"/>
 
 	<!-- Don't hide tokenizer exceptions -->
@@ -21,7 +20,7 @@
 	</rule>
 
 	<rule ref="Generic.WhiteSpace.DisallowSpaceIndent"/>
-	<rule ref="Generic.WhiteSpace.ArbitraryParenthesesSpacing"/>
+	<!-- <rule ref="Generic.WhiteSpace.ArbitraryParenthesesSpacing"/> -->
 	<rule ref="Squiz.WhiteSpace.FunctionSpacing">
 		<properties>
 			<property name="spacing" value="1" />
@@ -35,7 +34,11 @@
 	<rule ref="PEAR.Functions.FunctionCallSignature.SpaceBeforeCloseBracket" />
 	<rule ref="Squiz.Arrays.ArrayBracketSpacing"/>
 	<rule ref="Squiz.Arrays.ArrayDeclaration.CloseBraceNewLine"/>
-	<rule ref="Squiz.ControlStructures.ControlSignature"/> <!-- TODO: remove the space after while () and for (). maybe do this via PERL -->
+	<!-- <rule ref="Squiz.ControlStructures.ControlSignature"/> -->
+	<rule ref="Squiz.ControlStructures.ControlSignature.SpaceAfterKeyword">
+		<severity>0</severity>
+	</rule>
+
 	<rule ref="Squiz.ControlStructures.ElseIfDeclaration"/>
 	<rule ref="Squiz.ControlStructures.LowercaseDeclaration"/>
 	<rule ref="Squiz.ControlStructures.SwitchDeclaration"/>
@@ -70,7 +73,8 @@
 	</rule>
 	<rule ref="Generic.PHP.NoSilencedErrors"/>
 	<rule ref="Generic.Strings.UnnecessaryStringConcat"/>
-	<rule ref="Generic.WhiteSpace.IncrementDecrementSpacing"/> <!-- var++ <- no spaces before the increment operator -->
+	<!-- <rule ref="Generic.WhiteSpace.IncrementDecrementSpacing"/>  -->
+	<!-- var++ <- no spaces before the increment operator -->
 	<rule ref="PSR2.Classes.PropertyDeclaration"/>
 	<rule ref="PSR2.Methods.MethodDeclaration"/>
 	<rule ref="PSR2.Files.EndFileNewline"/>
@@ -91,6 +95,9 @@
 	<!-- Check var names, but we don't want leading underscores for private vars -->
 	<rule ref="Squiz.NamingConventions.ValidVariableName"/>
 	<rule ref="Squiz.NamingConventions.ValidVariableName.PrivateNoUnderscore">
+		<severity>0</severity>
+	</rule>
+	<rule ref="Squiz.NamingConventions.ValidVariableName.NotCamelCaps">
 		<severity>0</severity>
 	</rule>
 
