@@ -34,7 +34,7 @@ Route::get('/marce', function () {
 	return view('registerProject');
 });
 
-	/* user */
+/* dummy routes */
 Route::get('/user/edit', function () {
 	return view('editUserProfile');
 });
