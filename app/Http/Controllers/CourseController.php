@@ -11,15 +11,7 @@ use Illuminate\Validation\Rule;
 
 class CourseController extends Controller
 {
-	const ASSOCIATED = 'associatedCourses';
-	const REQUIRED = 'required';
 	const ROLES = 'enum.user_roles';
-	const TEACHERS = 'teachers';
-	const TEACHER = 'teacher';
-	const STUDENT = 'student';
-	const COURSES = 'courses';
-	const COURSE = 'course';
-	const COURSE_KEY = 'course_key';
 
 	public function __construct() {
 		$this->middleware('auth');
@@ -32,15 +24,15 @@ class CourseController extends Controller
 	 */
 	public function index()
 	{
-		$this->checkIfAccessAllowed([config(self::ROLES)[self::STUDENT], config(self::ROLES)[self::TEACHER]]);
+		$this->checkIfAccessAllowed([config(self::ROLES)['student'], config(self::ROLES)['teacher']]);
 
 		$user = Auth::user();
 		switch ($user->role) {
-			case config(self::ROLES)[self::STUDENT]:
-				return view('user.studentProfile', [self::COURSES => $user->EnrolledIn]);
-			case config(self::ROLES)[self::TEACHER]:
+			case config(self::ROLES)['student']:
+				return view('user.studentProfile', ['courses' => $user->EnrolledIn]);
+			case config(self::ROLES)['teacher']:
 				$courses = $user->teaches;
-				return view('courses.list', compact(self::COURSES));
+				return view('courses.list', compact('courses'));
 			default:
 				abort(404);
 		}
@@ -51,12 +43,13 @@ class CourseController extends Controller
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function create() {
-		$this->checkIfAccessAllowed([config(self::ROLES)[self::TEACHER]]);
+	public function create()
+	{
+		$this->checkIfAccessAllowed([config(self::ROLES)['teacher']]);
 
-		$teachers = User::where('role', config(self::ROLES)[self::TEACHER])->select('id', 'name')->get();
+		$teachers = User::where('role', config(self::ROLES)['teacher'])->select('id', 'name')->get();
 		$courses = Course::where('course_type', 2)->get();
-		return view('courses.create', compact(self::TEACHERS, self::COURSES));
+		return view('courses.create', compact('teachers', 'courses'));
 	}
 
 	/**
@@ -67,31 +60,31 @@ class CourseController extends Controller
 	 */
 	public function store(Request $request) {
 		$attributes = request()->validate([
-			'courseName' => self::REQUIRED,
+			'courseName' => 'required',
 			'courseType' => 'required|integer|min:1|max:2',
 			'teamSize' => 'required|integer|min:1',
-			self::TEACHERS => 'required|array|min:1',
+			'teachers' => 'required|array|min:1',
 			'teachers.*' => [
 				'integer',
-				Rule::in(User::where('role', config(self::ROLES)[self::TEACHER])->get()->pluck('id')),
+				Rule::in(User::where('role', config(self::ROLES)['teacher'])->get()->pluck('id')),
 			],
-			'courseSemester' => self::REQUIRED,
+			'courseSemester' => 'required',
 			'courseSchedule' => 'required|array|min:1',
-			'courseHours' => self::REQUIRED,
-			self::ASSOCIATED => 'nullable|array|min:1',
+			'courseHours' => 'required',
+			'associatedCourses' => 'nullable|array|min:1',
 		]);
 
 		$course = $this->createCourse($attributes);
 
-		$course->teachers()->attach($attributes[self::TEACHERS]);
-		if (isset($attributes[self::ASSOCIATED])) {
-			$course->suppliers()->attach($attributes[self::ASSOCIATED]);
+		$course->teachers()->attach($attributes['teachers']);
+		if (isset($attributes['associatedCourses'])) {
+			$course->suppliers()->attach($attributes['associatedCourses']);
 		}
 
 		$teachers = $course->teachers->map(function ($user) {
 			return $user->only(['id', 'name', 'email']);
 		});
-		return view('course.details', compact(self::COURSE, self::TEACHERS));
+		return view('course.details', compact('course', 'teachers'));
 	}
 
 	/**
@@ -105,7 +98,7 @@ class CourseController extends Controller
 		$teachers = $course->teachers->map(function ($user) {
 			return $user->only(['id', 'name', 'email']);
 		});
-		return view('course.details', compact(self::COURSE, self::TEACHERS));
+		return view('course.details', compact('course', 'teachers'));
 	}
 
 	/**
@@ -148,7 +141,7 @@ class CourseController extends Controller
 	public function getCourseDetails(Request $request) {
 		$user = Auth::user();
 		$courseKey = $request->courseKey;
-		$course = Course::where(self::COURSE_KEY, $courseKey)->first();
+		$course = Course::where('course_key', $courseKey)->first();
 
 		if ($course == null) {
 			abort(404);
@@ -158,7 +151,7 @@ class CourseController extends Controller
 		$associatedCourse = $user->enrolledIn()->where('course_id', $course->id)->first();
 
 		if (!$associatedCourse) {
-			return [self::COURSE => $course, self::TEACHERS => $course->teachers];
+			return ['course' => $course, 'teachers' => $course->teachers];
 		} else {
 			abort(400);
 		}
@@ -173,7 +166,7 @@ class CourseController extends Controller
 	public function associate(Request $request) {
 		$user = Auth::user();
 		$courseKey = $request->courseKey;
-		$course = Course::where(self::COURSE_KEY, $courseKey)->first();
+		$course = Course::where('course_key', $courseKey)->first();
 
 		if ($course == null || $user == null) {
 			abort(400);
@@ -185,7 +178,7 @@ class CourseController extends Controller
 
 		$result = $user->EnrolledIn()->attach($course);
 
-		return [self::COURSE => $course, self::TEACHERS => $course->teachers];
+		return ['course' => $course, 'teachers' => $course->teachers];
 	}
 
 	/**
@@ -236,7 +229,7 @@ class CourseController extends Controller
 		do {
 			$course_key = substr(md5(date(DATE_RFC2822)),-6);
 			$course_key = strtoupper($course_key);
-		} while (Course::where(self::COURSE_KEY, $course_key)->first() != null);
+		} while (Course::where('course_key', $course_key)->first() != null);
 
 		return $course_key;
 	}
@@ -260,7 +253,7 @@ class CourseController extends Controller
 			'course_type' => $attributes['courseType'],
 			'schedule' => $schedule,
 			'max_team_size' => $attributes['teamSize'],
-			self::COURSE_KEY => $courseKey,
+			'course_key' => $courseKey,
 		]);
 
 		if (!isset($course)) {
