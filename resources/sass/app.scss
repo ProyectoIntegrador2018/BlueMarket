@@ -338,18 +338,21 @@ $color-white: #fff;
 	margin-bottom: 2em;
 }
 
-.user-image-uploader-container {
+.image-container {
 	display: inline-block;
 	align-content: center;
-	.ui.small.image.preview {
-		margin-bottom: 1vh;
-		width: 15vmax;
-		height: 15vmax;
-		object-fit: cover;
-		object-position: center center;
+	.preview-container {
+		margin-bottom: 2vh;
+
+		.ui.small.image.preview {
+			width: 10vmax;
+			height: 10vmax;
+			object-fit: cover;
+			object-position: center center;
+		}
 	}
 
-	button {
+ 	button {
 		width: 100%;
 	}
 }

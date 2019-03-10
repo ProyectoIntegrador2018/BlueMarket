@@ -17,3 +17,8 @@ function isInteger(id){
 	console.log($("Number " + id + " " + $("input#" + id).val()));
 	return num > 0 && pattern.test(num);
 }
+
+function validateImage(file) {
+	const maxImageSize = 1048576; // 1MiB
+	return ((file.type == "image/png" || file.type == "image/x-png" || file.type == "image/jpeg") && file.size <= maxImageSize);
+}

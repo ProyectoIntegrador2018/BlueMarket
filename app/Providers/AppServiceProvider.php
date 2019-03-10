@@ -15,6 +15,7 @@ class AppServiceProvider extends ServiceProvider {
 	public function boot() {
 		// Aliasing components
 		Blade::component('components.projectCard', 'projectCard');
+		Blade::component('components.teams.form', 'form');
 	}
 
 	/**
