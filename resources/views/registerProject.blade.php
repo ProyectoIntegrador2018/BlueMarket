@@ -95,7 +95,7 @@
 		<!-- Skillset -->
 		<div class="field">
 			<label for="skillsets">Skillsets</label>
-			<select name="skillsets" multiple="" class="ui fluid dropdown">
+			<select name="skillsets[]" multiple="" class="ui fluid dropdown">
 				<option value="">Java, HTML</option>
 				@if(isset($skillsets))
 					@foreach($skillsets -> all() as $skillset)
@@ -205,7 +205,7 @@
 				]
 			},
 			skillsets:{
-				identifier:'skillsets',
+				identifier:'skillsets[]',
 				rules:[{
 						type:'minCount[1]',
 						prompt:'Please select at least one skillset'

@@ -6,7 +6,7 @@ use App\Project;
 use App\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Validation\Rule;
 
 class ProjectController extends Controller {
 
@@ -38,12 +38,25 @@ class ProjectController extends Controller {
 			'videoPitch' => ['present'],
 			'longDescription' => ['present'],
 			'shortDescription'=> ['present'],
-			'projectImage'=> ['present']
+			'projectImage'=> ['present'],
+			'category'=>['present', Rule::in(Tag::where('type', 2)->pluck('id'))],
+			'skillsets' => 'present|array|min:1',
+			'skillsets.*' => [
+				'integer',
+				Rule::in(Tag::where('type', 1)->pluck('id')),
+			]
 		]);
 
 		$project = $this->saveRecord($attributes);
 		if (!isset($project)) {
 			abort(500);
+		}
+
+		if (isset($attributes['skillsets'])) {
+			$project->tags()->attach($attributes['skillsets']);
+		}
+		if (isset($attributes['category'])) {
+			$project->tags()->attach($attributes['category']);
 		}
 
 		return view('projects', ['project' => $project]);
