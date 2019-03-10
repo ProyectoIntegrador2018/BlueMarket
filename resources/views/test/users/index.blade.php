@@ -37,7 +37,7 @@
 							</form> --}}
 
 							<div class="table-responsive">
-								<table class="ui celled table">
+								<table class="ui single line selectable table">
 									<thead>
 										<tr>
 											<th>Name</th>
@@ -58,19 +58,19 @@
 												<a href="{{ url('/users/' . $item->id) }}" title="View User">
 													@switch($item->role)
 														@case(1)
-														<span>Student</span>
+														<span class="tag student">Student</span>
 														@break
 
 														@case(2)
-														<span>Teacher</span>
+														<span class="tag teacher">Teacher</span>
 														@break
 
 														@case(3)
-														<span>Administrator</span>
+														<span class="tag admin">Administrator</span>
 														@break
 
 														@default
-														<span>Student</span>
+														<span class="tag student">Student</span>
 													@endswitch
 												</a>
 											</td>
