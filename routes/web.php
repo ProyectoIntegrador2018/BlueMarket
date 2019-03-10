@@ -43,3 +43,9 @@ Route::resource('teams', 'TeamController');
 Route::get('/user/edit', function () {
 	return view('editUserProfile');
 });
+Route::get('/teams/create', function () {
+	return view('teams/create');
+});
+Route::get('/teams/details', function () {
+	return view('teams/details');
+});
