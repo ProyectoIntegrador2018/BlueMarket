@@ -21,19 +21,28 @@
 
 	<rule ref="Generic.WhiteSpace.DisallowSpaceIndent"/>
 	<!-- <rule ref="Generic.WhiteSpace.ArbitraryParenthesesSpacing"/> -->
-	<rule ref="Squiz.WhiteSpace.FunctionSpacing">
+<!-- 	<rule ref="Squiz.WhiteSpace.FunctionSpacing">
 		<properties>
 			<property name="spacing" value="1" />
 			<property name="spacingBeforeFirst" value="1" />
 			<property name="spacingAfterLast" value="0" />
 		</properties>
-	</rule>
+	</rule> -->
 
 	<!-- Include some sniffs from other standards that don't conflict with PEAR -->
 	<rule ref="PEAR.Functions.FunctionCallSignature.SpaceAfterOpenBracket" />
 	<rule ref="PEAR.Functions.FunctionCallSignature.SpaceBeforeCloseBracket" />
+	<rule ref="PEAR.Functions.FunctionCallSignature.CloseBracketLine">
+		<severity>0</severity>
+	</rule>
+	<rule ref="PEAR.Functions.FunctionCallSignature.ContentAfterOpenBracket">
+		<severity>0</severity>
+	</rule>
+	<rule ref="PEAR.Functions.FunctionCallSignature.Indent">
+		<severity>0</severity>
+	</rule>
 	<rule ref="Squiz.Arrays.ArrayBracketSpacing"/>
-	<rule ref="Squiz.Arrays.ArrayDeclaration.CloseBraceNewLine"/>
+	<!-- <rule ref="Squiz.Arrays.ArrayDeclaration.CloseBraceNewLine"/> -->
 	<!-- <rule ref="Squiz.ControlStructures.ControlSignature"/> -->
 	<rule ref="Squiz.ControlStructures.ControlSignature.SpaceAfterKeyword">
 		<severity>0</severity>
@@ -48,6 +57,12 @@
 	<rule ref="Squiz.PHP.CommentedOutCode"/>
 	<rule ref="Squiz.Commenting.VariableComment"/>
 	<rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing"/>
+	<rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing.SpaceBeforeEquals">
+		<severity>0</severity>
+	</rule>
+	<rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing.SpaceAfterDefault">
+		<severity>0</severity>
+	</rule>
 	<rule ref="Squiz.Scope.MethodScope"/>
 	<rule ref="Squiz.Scope.StaticThisUsage"/>
 	<rule ref="Squiz.Strings.ConcatenationSpacing"/>
@@ -56,7 +71,7 @@
 	<rule ref="Squiz.WhiteSpace.SuperfluousWhitespace"/>
 	<rule ref="Squiz.WhiteSpace.CastSpacing"/>
 	<rule ref="Squiz.WhiteSpace.LogicalOperatorSpacing"/>
-	<rule ref="Squiz.WhiteSpace.ObjectOperatorSpacing"/>
+	<!-- <rule ref="Squiz.WhiteSpace.ObjectOperatorSpacing"/> -->
 	<rule ref="Squiz.WhiteSpace.ScopeClosingBrace"/>
 	<rule ref="Squiz.WhiteSpace.SemicolonSpacing"/>
 	<rule ref="Generic.Arrays.DisallowLongArraySyntax"/>

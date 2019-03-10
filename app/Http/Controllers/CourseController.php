@@ -9,8 +9,8 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
-class CourseController extends Controller
-{
+class CourseController extends Controller {
+
 	const COURSE_KEY = 'course_key';
 	const TEACHERS = 'teachers';
 	const ASSOCIATED = 'associatedCourses';
@@ -19,8 +19,7 @@ class CourseController extends Controller
 	const TEACHER = 'teacher';
 	const STUDENT = 'student';
 
-	public function __construct()
-	{
+	public function __construct() {
 		$this->middleware('auth');
 	}
 
@@ -29,8 +28,7 @@ class CourseController extends Controller
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function index()
-	{
+	public function index() {
 		$this->checkIfAccessAllowed([config(self::ROLES)[self::STUDENT]]);
 
 		return view('user.studentProfile', ["courses" => Auth::user()->EnrolledIn]);
@@ -41,8 +39,7 @@ class CourseController extends Controller
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function create()
-	{
+	public function create() {
 		$this->checkIfAccessAllowed([config(self::ROLES)[self::TEACHER]]);
 
 		$teachers = User::where('role', config(self::ROLES)[self::TEACHER])->select('id', 'name')->get();
@@ -56,8 +53,7 @@ class CourseController extends Controller
 	 * @param  \Illuminate\Http\Request  $request
 	 * @return \Illuminate\Http\Response
 	 */
-	public function store(Request $request)
-	{
+	public function store(Request $request) {
 		$attributes = request()->validate([
 			'courseName' => self::REQUIRED,
 			'courseType' => 'required|integer|min:1|max:2',
@@ -94,8 +90,7 @@ class CourseController extends Controller
 	 * @param  \App\Course  $course
 	 * @return \Illuminate\Http\Response
 	 */
-	public function show(Course $course)
-	{
+	public function show(Course $course) {
 		//
 	}
 
@@ -105,8 +100,7 @@ class CourseController extends Controller
 	 * @param  \App\Course  $course
 	 * @return \Illuminate\Http\Response
 	 */
-	public function edit(Course $course)
-	{
+	public function edit(Course $course) {
 		//
 	}
 
@@ -117,8 +111,7 @@ class CourseController extends Controller
 	 * @param  \App\Course  $course
 	 * @return \Illuminate\Http\Response
 	 */
-	public function update(Request $request, Course $course)
-	{
+	public function update(Request $request, Course $course) {
 		//
 	}
 
@@ -128,8 +121,7 @@ class CourseController extends Controller
 	 * @param  \App\Course  $course
 	 * @return \Illuminate\Http\Response
 	 */
-	public function destroy(Course $course)
-	{
+	public function destroy(Course $course) {
 		//
 	}
 
@@ -139,8 +131,7 @@ class CourseController extends Controller
 	 * @param  \Illuminate\Http\Request  $request
 	 * @return \App\Course
 	 */
-	public function getCourseDetails(Request $request)
-	{
+	public function getCourseDetails(Request $request) {
 		$user = Auth::user();
 		$courseKey = $request->courseKey;
 		$course = Course::where(self::COURSE_KEY, $courseKey)->first();
@@ -165,8 +156,7 @@ class CourseController extends Controller
 	 * @param  \Illuminate\Http\Request  $request
 	 * @return Bool
 	 */
-	public function associate(Request $request)
-	{
+	public function associate(Request $request) {
 		$user = Auth::user();
 		$courseKey = $request->courseKey;
 		$course = Course::where(self::COURSE_KEY, $courseKey)->first();
@@ -192,8 +182,7 @@ class CourseController extends Controller
 	 * @param string $courseSemester
 	 * @return string
 	 */
-	private function joinSchedule(array $courseSchedule, string $courseHours, string $courseSemester)
-	{
+	private function joinSchedule(array $courseSchedule, string $courseHours, string $courseSemester) {
 		$schedule = "";
 		foreach ($courseSchedule as $day) {
 			switch ($day) {
@@ -229,8 +218,7 @@ class CourseController extends Controller
 	 *
 	 * @return string
 	 */
-	private function getCourseKey()
-	{
+	private function getCourseKey() {
 		$course_key = "";
 		do {
 			$course_key = substr(md5(date(DATE_RFC2822)),-6);
@@ -246,8 +234,7 @@ class CourseController extends Controller
 	 * @param array $attributes
 	 * @return \App\Course
 	 */
-	private function createCourse(array $attributes)
-	{
+	private function createCourse(array $attributes) {
 		$schedule = $this->joinSchedule(
 			$attributes['courseSchedule'],
 			$attributes['courseHours'],
@@ -270,8 +257,7 @@ class CourseController extends Controller
 	 * @param array $roles
 	 * @return null
 	 */
-	private function checkIfAccessAllowed(array $roles)
-	{
+	private function checkIfAccessAllowed(array $roles) {
 		$user = Auth::user();
 
 		foreach ($roles as $role) {
@@ -279,6 +265,7 @@ class CourseController extends Controller
 				return null;
 			}
 		}
+
 		abort(404);
 	}
 }

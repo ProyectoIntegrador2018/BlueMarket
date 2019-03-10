@@ -8,8 +8,7 @@ use Google_Client;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
-class LoginController extends Controller
-{
+class LoginController extends Controller {
 	/*
 	|--------------------------------------------------------------------------
 	| Login Controller
@@ -35,15 +34,14 @@ class LoginController extends Controller
 	 *
 	 * @return void
 	 */
-	public function __construct()
-	{
+	public function __construct() {
 		$this->middleware('guest')->except('logout');
 	}
-
 
 	public function show() {
 		return view('auth.login');
 	}
+
 	public function logout() {
 		Auth::logout();
 		return redirect('/');
@@ -53,16 +51,20 @@ class LoginController extends Controller
 		// TODO: change this to an ENV var? maybe a config var?
 		$client = new Google_Client(['client_id' => "723110696630-74quqp3hlmjoc30f9tc4ji4v3qgvec40.apps.googleusercontent.com"]);
 		$token = $request->id_token;
+
 		if(empty($token)) {
 			abort(400, 'No token');
 		}
+
 		$payload = $client->verifyIdToken($token);
 		if($payload) {
 			if($payload['hd'] !== 'itesm.mx') { // Take this out into an conf var
 				abort(500, 'Not an itesm.mx user');
 				// TODO: ERROR fix
 			}
+
 			$user = User::where("email", $payload['email'])->first();
+
 			if(empty($user)) {
 				// Create the user in the db
 				$user = new User();
@@ -72,13 +74,13 @@ class LoginController extends Controller
 				$user->google_id = $payload['sub'];
 				$user->save();
 			}
+
 			Auth::login($user);
 			return ['success' => 'success', 'response' => 'OK'];
-			// return redirect()->intended('/');
+			// return redirect()->intended('/'); // NOSONAR
 		}
 		else {
 			abort(403, 'Invalid ID token');
 		}
 	}
-
 }

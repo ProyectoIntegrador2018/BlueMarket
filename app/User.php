@@ -28,13 +28,11 @@ class User extends Authenticatable
 		'password', 'remember_token',
 	];
 
-	public function teaches()
-	{
+	public function teaches() {
 		return $this->belongsToMany('App\Course')->join('users as usrs', 'course_user.user_id', '=', 'usrs.id')->where('users.role', config('enum.user_roles')['teacher']);
 	}
 
-	public function enrolledIn()
-	{
+	public function enrolledIn() {
 		return $this->belongsToMany('App\Course')->join('users as usrs', 'course_user.user_id', '=', 'usrs.id')->where('usrs.role', config('enum.user_roles')['student']);
 	}
 }
