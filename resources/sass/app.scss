@@ -137,6 +137,29 @@ $color-white: #fff;
 	}
 }
 
+.team-info {
+	margin-bottom: 30px;
+	display: flex;
+	flex-wrap: wrap;
+
+	.image-container {
+		width: 18%;
+		margin-right: 2%;
+	}
+
+	.team-people {
+		width: 80%;
+		float: right;
+		vertical-align: top;
+		.team-members {
+			.ui.avatar.image {
+				margin: 5px 10px;
+				margin-left: 0px;
+			}
+		}
+	}
+}
+
 @media only screen and (max-width: 800px) {
 	.home.view-projects {
 		height: 40vh;
@@ -201,6 +224,21 @@ $color-white: #fff;
 
 	.ui.table.bluemarket-table .bluemarket-thead {
 		display: none;
+	}
+
+	.team-info {
+
+		.image-container {
+			display: block;
+			width: 100%;
+		}
+
+		.team-people {
+			display: block;
+			margin-top: 30px;
+			float: left;
+			width: 100%;
+		}
 	}
 }
 
@@ -356,3 +394,4 @@ $color-white: #fff;
 		width: 100%;
 	}
 }
+
