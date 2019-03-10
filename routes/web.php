@@ -30,6 +30,11 @@ Route::get('/user/profile', 'CourseController@index');
 Route::get('/user/courses/associate/details', 'CourseController@getCourseDetails');
 Route::post('/user/courses/associate', 'CourseController@associate');
 
+Route::get('/marce', function () {
+	return view('registerProject');
+});
+
+
 /* dummy routes */
 Route::get('/user/edit', function () {
 	return view('editUserProfile');
