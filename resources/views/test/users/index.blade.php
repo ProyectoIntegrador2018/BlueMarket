@@ -5,19 +5,27 @@
 
 @section('content')
 	<div class="padded content">
+		<h1>Users</h1>
 		<div class="container">
 			<div class="row">
 				{{-- @include('admin.sidebar') --}}
 
 				<div class="col-md-9">
 					<div class="card">
-						<div class="card-header">Users</div>
 						<div class="card-body">
-							<a href="{{ url('/users/create') }}" class="btn btn-success btn-sm" title="Add New user">
-								<i class="fa fa-plus" aria-hidden="true"></i> Add New
+							<a href="{{ url('/users/create') }}">
+								<button class="ui primary button" title="Add New User">New</button>
 							</a>
 
-							<form method="GET" action="{{ url('/users') }}" accept-charset="UTF-8" class="form-inline my-2 my-lg-0 float-right" role="search">
+							<div class="ui search">
+								<div class="ui icon input">
+									<input class="prompt" type="text" placeholder="Search users" value="{{ request('search') }}">
+									<i class="search icon"></i>
+								</div>
+								<div class="results"></div>
+							</div>
+
+							{{-- <form method="GET" action="{{ url('/users') }}" accept-charset="UTF-8" class="form-inline my-2 my-lg-0 float-right" role="search">
 								<div class="input-group">
 									<input type="text" class="form-control" name="search" placeholder="Search..." value="{{ request('search') }}">
 									<span class="input-group-append">
@@ -26,31 +34,51 @@
 										</button>
 									</span>
 								</div>
-							</form>
+							</form> --}}
 
-							<br/>
-							<br/>
 							<div class="table-responsive">
-								<table class="table">
+								<table class="ui celled table">
 									<thead>
 										<tr>
-											<th>#</th><th>Name</th><th>Email</th><th>Role</th><th>Actions</th>
+											<th>Name</th>
+											<th>Role</th>
+											<th>Email</th>
 										</tr>
 									</thead>
 									<tbody>
 									@foreach($users as $item)
 										<tr>
-											<td>{{ $loop->iteration }}</td>
-											<td>{{ $item->name }}</td><td>{{ $item->email }}</td><td>{{ $item->role }}</td>
-											<td>
-												<a href="{{ url('/users/' . $item->id) }}" title="View user"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
-												<a href="{{ url('/users/' . $item->id . '/edit') }}" title="Edit user"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
+											<td class="selectable">
+												<a href="{{ url('/users/' . $item->id) }}" title="View User">
+													{{ $item->name }}
+												</a>
+											</td>
 
-												<form method="POST" action="{{ url('/users' . '/' . $item->id) }}" accept-charset="UTF-8" style="display:inline">
-													{{ method_field('DELETE') }}
-													{{ csrf_field() }}
-													<button type="submit" class="btn btn-danger btn-sm" title="Delete user" onclick="return confirm(&quot;Confirm delete?&quot;)"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
-												</form>
+											<td class="selectable">
+												<a href="{{ url('/users/' . $item->id) }}" title="View User">
+													@switch($item->role)
+														@case(1)
+														<span>Student</span>
+														@break
+
+														@case(2)
+														<span>Teacher</span>
+														@break
+
+														@case(3)
+														<span>Administrator</span>
+														@break
+
+														@default
+														<span>Student</span>
+													@endswitch
+												</a>
+											</td>
+
+											<td class="selectable">
+												<a href="{{ url('/users/' . $item->id) }}" title="View User">
+													{{ $item->email }}
+												</a>
 											</td>
 										</tr>
 									@endforeach
@@ -58,7 +86,6 @@
 								</table>
 								<div class="pagination-wrapper"> {!! $users->appends(['search' => Request::get('search')])->render() !!} </div>
 							</div>
-
 						</div>
 					</div>
 				</div>
