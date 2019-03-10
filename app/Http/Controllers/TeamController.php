@@ -33,9 +33,9 @@ class TeamController extends Controller
     public function create() {
 		$students = User::where('role', config(self::ROLES)['student'])
 			->where('id', '!=', Auth::user()->id)
-			->select('id', 'name')->get();
-		return $students;
-		//return view('teams.create', compact('students'));
+            ->select('id', 'name')->get();
+
+        return view('teams.create', compact('students'));
     }
 
     /**
@@ -49,17 +49,16 @@ class TeamController extends Controller
         $attributes = request()->validate([
 			'name' => 'required',
 			'photo' => 'nullable',
-		]);
+        ]);
 
 		$attributes['leader_id'] = Auth::user()->id;
 
-		return $attributes;
-		/*$team = Team::create($attributes);
+		$team = Team::create($attributes);
 		if (!isset($team)) {
 			abort(500);
-		}
+        }
+
 		return view('teams.details', compact('team'));
-		*/
     }
 
     /**
@@ -69,7 +68,7 @@ class TeamController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Team $team) {
-        // return view('teams.details', compact('team'));
+        return view('teams.details', compact('team'));
     }
 
     /**

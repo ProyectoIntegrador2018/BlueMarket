@@ -35,4 +35,8 @@ class User extends Authenticatable
 	public function enrolledIn() {
 		return $this->belongsToMany('App\Course')->join('users as usrs', 'course_user.user_id', '=', 'usrs.id')->where('usrs.role', config('enum.user_roles')['student']);
 	}
+
+	public function teamsLed() {
+		return $this->hasMany('App\Team', 'leader_id');
+	}
 }
