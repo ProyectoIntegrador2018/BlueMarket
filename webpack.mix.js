@@ -17,6 +17,7 @@ mix.js('resources/js/app.js', 'public/js')
 
 mix.copyDirectory('resources/img', 'public/img');
 mix.scripts(['resources/js/inputValidation.js'], 'public/js/inputValidation.js');
+mix.scripts(['resources/js/teams.js'], 'public/js/teams.js');
 
 if (mix.inProduction()) {
 	mix.version(); // cache-busting in production
