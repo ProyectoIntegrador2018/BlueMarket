@@ -400,6 +400,10 @@ span.tag {
 		background-color: darkslateblue;
 		color: white;
 	}
+	&.admin {
+		background-color: lightsalmon;
+		color: black;
+	}
 }
 
 table.table.userInfo {
