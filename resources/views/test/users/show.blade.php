@@ -12,7 +12,7 @@
 				<div class="col-md-9">
 
 					<div class="userInfo">
-						<img class="ui avatar image" src="{{ $user->picture_url }}" alt="User profile picture">
+						<img class="ui avatar image" src="<?= $user->picture_url ?>" alt="User profile picture">
 						<h1> {{ $user->name }} </h1>
 						<div>
 							@switch($user->role)
@@ -40,7 +40,7 @@
 								<tbody>
 									<tr>
 										<th>User ID</th>
-										<td>{{ $user->id }}</td>
+										<td> {{ $user->id }} </td>
 									</tr>
 									<tr>
 										<th>Email</th>
