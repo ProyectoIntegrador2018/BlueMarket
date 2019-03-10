@@ -34,13 +34,12 @@ Route::get('/marce', function () {
 	return view('registerProject');
 });
 
+Route::post('/contact', 'ContactMessageController@post');
+
+/* teams */
+Route::resource('teams', 'TeamController');
 
 /* dummy routes */
 Route::get('/user/edit', function () {
 	return view('editUserProfile');
 });
-
-Route::post('/contact', 'ContactMessageController@post');
-
-/* teams */
-Route::resource('teams', 'TeamController');
