@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Team extends Model
 {
 	/**
-	 * The attributes that are guarded.
+	 * The attributes that cannot be mass assigned.
 	 *
 	 * @var array
 	 */

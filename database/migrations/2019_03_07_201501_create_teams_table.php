@@ -11,14 +11,14 @@ class CreateTeamsTable extends Migration
 	 *
 	 * @return void
 	 */
-	public function up()
-	{
+	public function up() {
 		Schema::create('teams', function (Blueprint $table) {
 			$table->increments('id');
 			$table->string('name');
 			$table->text('photo')->nullable();
 			$table->unsignedInteger('leader_id');
-            $table->foreign('leader_id')->references('id')->on('users');
+
+			$table->foreign('leader_id')->references('id')->on('users');
 			$table->timestamps();
 		});
 	}
@@ -28,8 +28,7 @@ class CreateTeamsTable extends Migration
 	 *
 	 * @return void
 	 */
-	public function down()
-	{
+	public function down() {
 		Schema::dropIfExists('teams');
 	}
 }

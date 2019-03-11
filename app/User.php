@@ -10,6 +10,8 @@ class User extends Authenticatable
 {
 	use Notifiable;
 
+	const ROLES = 'enum.user_roles';
+
 	/**
 	 * The attributes that are mass assignable.
 	 *
@@ -27,6 +29,14 @@ class User extends Authenticatable
 	protected $hidden = [
 		'password', 'remember_token',
 	];
+
+	static function students() {
+		return self::where('role', config(self::ROLES)['student'])->get();
+	}
+
+	static function teachers() {
+		return self::where('role', config(self::ROLES)['teacher'])->get();
+	}
 
 	public function teaches() {
 		return $this->belongsToMany('App\Course')->join('users as usrs', 'course_user.user_id', '=', 'usrs.id')->where('users.role', config('enum.user_roles')['teacher']);

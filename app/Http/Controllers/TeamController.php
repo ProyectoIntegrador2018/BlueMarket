@@ -31,9 +31,7 @@ class TeamController extends Controller
 	 * @return \Illuminate\Http\Response
 	 */
 	public function create() {
-		$students = User::where('role', config(self::ROLES)['student'])
-			->where('id', '!=', Auth::user()->id)
-			->select('id', 'name')->get();
+		$students = User::students()->where('id', '!=', Auth::user()->id);
 
 		return view('teams.create', compact('students'));
 	}
@@ -53,7 +51,7 @@ class TeamController extends Controller
 		$attributes['leader_id'] = Auth::user()->id;
 
 		$team = Team::create($attributes);
-		if (!isset($team)) {
+		if (!$team->exists) {
 			abort(500);
 		}
 
