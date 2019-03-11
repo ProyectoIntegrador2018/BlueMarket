@@ -22,8 +22,7 @@ class UserController extends Controller
 
 		if (isset($searchQuery) && !empty($searchQuery)) {
 			$users = User::where('name', 'like', "%{$searchQuery}%")->latest()->simplePaginate(paginationSize);
-		}
-		else {
+		} else {
 			$users = User::where('role', config(self::ROLES)['sys_admin'])->latest()->simplePaginate(paginationSize);
 		}
 
