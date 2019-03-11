@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Team;
 use App\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 
@@ -45,10 +46,9 @@ class TeamController extends Controller
 	public function store(Request $request) {
 		$attributes = request()->validate([
 			'teamName' => 'required',
-			'teamImage' => 'nullable',
 		]);
 
-		$team = $this->createTeam($attributes);
+		$team = $this->createTeam($attributes, $request->file('teamImage'));
 		if (!$team->exists) {
 			abort(500);
 		}
@@ -65,7 +65,14 @@ class TeamController extends Controller
 	 * @return \Illuminate\Http\Response
 	 */
 	public function show(Team $team) {
-		return view('teams.details', compact('team'));
+		// Temporary stock image
+		$avatar = 'https://avatars1.githubusercontent.com/u/42351872?s=200&v=4';
+
+		if ($team->img_url) {
+			$avatar = Storage::url($team->img_url);
+		}
+
+		return view('teams.details', compact('team', 'avatar'));
 	}
 
 	/**
@@ -105,11 +112,19 @@ class TeamController extends Controller
 	 * @param array $attributes
 	 * @return \App\Course
 	 */
-	private function createTeam(array $attributes) {
-		return Team::create([
+	private function createTeam(array $attributes, $image) {
+		$team = Team::create([
 			'name' => $attributes['teamName'],
 			'img_url' => $attributes['teamImage'],
 			'leader_id' => Auth::user()->id,
 		]);
+
+		if ($image) {
+			$path = Storage::putFile('teams/avatars', $image);
+			$team->img_url = $path;
+			$team->save();
+		}
+
+		return $team;
 	}
 }
