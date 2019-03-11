@@ -30,20 +30,20 @@ class User extends Authenticatable
 		'password', 'remember_token',
 	];
 
-	static function students() {
+	public static function students() {
 		return self::where('role', config(self::ROLES)['student'])->get();
 	}
 
-	static function teachers() {
+	public static function teachers() {
 		return self::where('role', config(self::ROLES)['teacher'])->get();
 	}
 
 	public function teaches() {
-		return $this->belongsToMany('App\Course')->join('users as usrs', 'course_user.user_id', '=', 'usrs.id')->where('users.role', config('enum.user_roles')['teacher']);
+		return $this->belongsToMany('App\Course')->join('users as usrs', 'course_user.user_id', '=', 'usrs.id')->where('users.role', config(self::ROLES)['teacher']);
 	}
 
 	public function enrolledIn() {
-		return $this->belongsToMany('App\Course')->join('users as usrs', 'course_user.user_id', '=', 'usrs.id')->where('usrs.role', config('enum.user_roles')['student']);
+		return $this->belongsToMany('App\Course')->join('users as usrs', 'course_user.user_id', '=', 'usrs.id')->where('usrs.role', config(self::ROLES)['student']);
 	}
 
 	public function teamsLed() {
