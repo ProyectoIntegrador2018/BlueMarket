@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
@@ -11,18 +13,28 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\View
      */
-    public function index()
+    public function index(Request $request)
     {
-		$users = User::where('role', config(self::ROLES)['sys_admin'])->get();
-		return $users;
+		$searchQuery = $request->get('search');
+		$paginationSize = $request->get('paginationSize');
+
+		if (isset($searchQuery) && !empty($searchQuery)) {
+			$users = User::where('name', 'like', "%{$searchQuery}%")->latest()->simplePaginate(paginationSize);
+		}
+		else {
+			$users = User::where('role', config(self::ROLES)['sys_admin'])->latest()->simplePaginate(paginationSize);
+		}
+
+		return view('admin.users.index', ['users' => $users]);
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View
      */
     public function create()
     {
@@ -33,58 +45,66 @@ class UserController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function store(Request $request)
     {
-		$user = User::create($request->all());
-		$user->role = config(self::ROLES)['sys_admin'];
-		$id = $user->id;
+		$validatedAttributes = request()->validate([
+			'name' => 'required|string',
+			'email' => 'required|string',
+			'role' => 'required|integer',
+			'picture_url' => 'required|string'
+		]);
 
-		return view('admin.users.show', ['user' => User::findOrFail($id)]);
+		$user = User::create($validatedAttributes);
+		if (!isset($user)) {
+			abort(500);
+		}
+
+		return redirect('users')->with('flash_message', 'User added!');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
+     * @param  int  $id
+     * @return \Illuminate\View
      */
-    public function show(User $user)
+    public function show(int $id)
     {
-		$id = $user->id;
-
 		if ($user->role != config(self::ROLES)['sys_admin']) {
 			abort(400);
 		}
 
-        return view('admin.users.show', ['user' => User::findOrFail($id)]);
+		$user = User::find($id);
+        return view('admin.users.show', ['user' => $user]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
+     * @param  int  $id
+     * @return \Illuminate\View
      */
-    public function edit(User $user)
+    public function edit(int $id)
     {
-        $id = $user->id;
-        return view('admin.users.edit', ['user' => User::findOrFail($id)]);
+		$user = User::find($id);
+        return view('admin.users.edit', ['user' => $user]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
+     * @param  int $id
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, int $id)
     {
+		$user = User::findOrFail($id);
 		$user->update($request->all());
-		$id = $user->id;
-		return view('admin.users.show', ['user' => User::findOrFail($id)]);
+
+		return redirect('users')->with('flash_message', 'User updated!');
     }
 
     /**
