@@ -5,7 +5,6 @@ namespace App\Http;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel {
-<<<<<<< HEAD
 	/**
 	 * The application's global HTTP middleware stack.
 	 *
@@ -19,26 +18,10 @@ class Kernel extends HttpKernel {
 		\App\Http\Middleware\TrimStrings::class,
 		\Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
 		\App\Http\Middleware\TrustProxies::class,
-	];
-=======
-    /**
-     * The application's global HTTP middleware stack.
-     *
-     * These middleware are run during every request to your application.
-     *
-     * @var array
-     */
-    protected $middleware = [
-        \App\Http\Middleware\CheckForMaintenanceMode::class,
-        \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
-        \App\Http\Middleware\TrimStrings::class,
-        \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
-		\App\Http\Middleware\TrustProxies::class,
 
 		//custom middleware for https redirect
-        \App\Http\Middleware\HttpsMiddleware::class
-    ];
->>>>>>> Added middleware to use https on production environment
+		\App\Http\Middleware\HttpsMiddleware::class,
+	];
 
 	/**
 	 * The application's route middleware groups.
