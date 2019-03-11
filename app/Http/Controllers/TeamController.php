@@ -44,13 +44,11 @@ class TeamController extends Controller
 	 */
 	public function store(Request $request) {
 		$attributes = request()->validate([
-			'name' => 'required',
-			'photo' => 'nullable',
+			'teamName' => 'required',
+			'teamImage' => 'nullable',
 		]);
 
-		$attributes['leader_id'] = Auth::user()->id;
-
-		$team = Team::create($attributes);
+		$team = $this->createTeam($attributes);
 		if (!$team->exists) {
 			abort(500);
 		}
@@ -99,5 +97,19 @@ class TeamController extends Controller
 	 */
 	public function destroy(Team $team) {
 		//
+	}
+
+	/**
+	 * Create a team with the provided validated attributes
+	 *
+	 * @param array $attributes
+	 * @return \App\Course
+	 */
+	private function createTeam(array $attributes) {
+		return Team::create([
+			'name' => $attributes['teamName'],
+			'image' => $attributes['teamImage'],
+			'leader_id' => Auth::user()->id,
+		]);
 	}
 }

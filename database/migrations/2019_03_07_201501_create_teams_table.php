@@ -15,7 +15,7 @@ class CreateTeamsTable extends Migration
 		Schema::create('teams', function (Blueprint $table) {
 			$table->increments('id');
 			$table->string('name');
-			$table->text('photo')->nullable();
+			$table->text('image')->nullable();
 			$table->unsignedInteger('leader_id');
 
 			$table->foreign('leader_id')->references('id')->on('users');
