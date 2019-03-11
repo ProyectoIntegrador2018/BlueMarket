@@ -16,8 +16,7 @@ class UserController extends Controller
 	 * @param  \Illuminate\Http\Request  $request
 	 * @return \Illuminate\View
 	 */
-	public function index(Request $request)
-	{
+	public function index(Request $request) {
 		$searchQuery = $request->get('search');
 		$paginationSize = $request->get('paginationSize');
 
@@ -36,8 +35,7 @@ class UserController extends Controller
 	 *
 	 * @return \Illuminate\View
 	 */
-	public function create()
-	{
+	public function create() {
 		return view('admin.users.create');
 	}
 
@@ -47,8 +45,7 @@ class UserController extends Controller
 	 * @param  \Illuminate\Http\Request  $request
 	 * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
 	 */
-	public function store(Request $request)
-	{
+	public function store(Request $request) {
 		$validatedAttributes = request()->validate([
 			'name' => 'required|string',
 			'email' => 'required|string',
@@ -70,8 +67,7 @@ class UserController extends Controller
 	 * @param  int  $id
 	 * @return \Illuminate\View
 	 */
-	public function show(int $id)
-	{
+	public function show(int $id) {
 		if ($user->role != config(self::ROLES)['sys_admin']) {
 			abort(400);
 		}
@@ -86,8 +82,7 @@ class UserController extends Controller
 	 * @param  int  $id
 	 * @return \Illuminate\View
 	 */
-	public function edit(int $id)
-	{
+	public function edit(int $id) {
 		$user = User::find($id);
 		return view('admin.users.edit', ['user' => $user]);
 	}
@@ -99,8 +94,7 @@ class UserController extends Controller
 	 * @param  int $id
 	 * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
 	 */
-	public function update(Request $request, int $id)
-	{
+	public function update(Request $request, int $id) {
 		$user = User::findOrFail($id);
 		$user->update($request->all());
 
@@ -113,8 +107,7 @@ class UserController extends Controller
 	 * @param  \App\User  $user
 	 * @return \Illuminate\Http\Response
 	 */
-	public function destroy(User $user)
-	{
+	public function destroy(User $user) {
 		abort(401);
 	}
 }
