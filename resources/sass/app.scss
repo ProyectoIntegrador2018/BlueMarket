@@ -141,6 +141,7 @@ $color-white: #fff;
 	margin-bottom: 30px;
 	display: flex;
 	flex-wrap: wrap;
+	justify-content: center;
 
 	.image-container {
 		width: 18%;
@@ -149,7 +150,6 @@ $color-white: #fff;
 
 	.team-people {
 		width: 80%;
-		float: right;
 		vertical-align: top;
 		.team-members {
 			.ui.avatar.image {
@@ -227,14 +227,11 @@ $color-white: #fff;
 	}
 
 	.team-info {
-
 		.image-container {
-			display: block;
 			width: 100%;
 		}
 
 		.team-people {
-			display: block;
 			margin-top: 30px;
 			float: left;
 			width: 100%;

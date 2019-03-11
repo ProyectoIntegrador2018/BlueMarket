@@ -1,3 +1,6 @@
+let reader = new FileReader();
+
+// front-end input validation
 $(".ui.form").form({
 	fields: {
 		teamName: ["empty", "maxLength[30]"]
@@ -12,21 +15,31 @@ $(".ui.form").form({
 	}
 });
 
+// click on image uploader
 $(".image-uploader").click(function (event) {
 	event.preventDefault();
 	$("#teamImage").click();
 });
 
-function updateImage(imageInput) {
-	let reader = new FileReader();
+function updateImagePreview(imageInput) {
+	const maxImageSize = 1048576; // 1MiB
+	const acceptedTypes = new Set(["image/png", "image/x-png", "image/jpeg"]);
 	let file = imageInput.files[0];
-	let preview = $("#preview");
-	reader.addEventListener("load", function () {
-		if (validateImage(file)) {
-			$("#preview").attr("src", reader.result);
-		}
-	});
-	if (file) {
-		reader.readAsDataURL(file);
+	// validate file
+	if (!file || !isValidImage(file, maxImageSize, acceptedTypes)) {
+		alert("Please upload a .png or .jpg file.");
+		reader.abort();
+		return;
 	}
+
+	// update preview when completed successfully
+	reader.addEventListener("load", function () {
+		$("#preview").attr("src", reader.result);
+	});
+
+	reader.readAsDataURL(file);
+}
+
+function loadImage(imageInput) {
+	reader.addEventListener("loadstart", updateImagePreview(imageInput));
 }
