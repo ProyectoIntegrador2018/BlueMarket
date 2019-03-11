@@ -4,16 +4,14 @@
 		<div class="image-uploader preview-container">
 			<img id="preview" src="{{ isset($image) ? $image : 'https://avatars1.githubusercontent.com/u/42351872?s=200&v=4' }}" alt="Team image" class="ui small image preview"/>
 		</div>
-		<a href="#" class="image-uploader">
-			<button type="button" class="ui button primary">Upload image</button>
-		</a>
+		<button type="button" class="ui button primary image-uploader">Upload image</button>
 	</div>
-	<input id="teamImage" type="file" name="teamImage" accept="image/x-png,image/jpeg" onchange="updateImage(this)" style="display: none">
+	<input id="teamImage" type="file" name="teamImage" accept="image/png,image/jpeg,image/x-png" onchange="loadImage(this)" style="display: none"/>
 </div>
 <!-- Team name -->
 <div class="field">
 	<label for="teamName">Team name</label>
-	<input type="text" name="teamName" id="teamName" value="{{ isset($teamName) ? $teamName : '' }}">
+	<input type="text" name="teamName" id="teamName" value="{{ isset($teamName) ? $teamName : '' }}"/>
 </div>
 <!-- Error message -->
 <div id="errorMessage" class="ui error message">

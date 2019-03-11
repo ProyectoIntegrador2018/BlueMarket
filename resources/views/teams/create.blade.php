@@ -15,6 +15,6 @@
 	</form>
 </div>
 @section('scripts')
-<script src="/js/teams.js"></script>
+<script src="{{ mix('js/teams.js') }}"></script>
 @endsection
 @endsection
