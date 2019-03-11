@@ -9,7 +9,7 @@
 	<input id="teamImage" type="file" name="teamImage" accept="image/png,image/jpeg,image/x-png" onchange="loadImage(this)" style="display: none"/>
 </div>
 <!-- Team name -->
-<div class="field">
+<div class="field {{ $errors->has('name') ? 'error': '' }}">
 	<label for="teamName">Team name</label>
 	<input type="text" name="teamName" id="teamName" value="{{ isset($teamName) ? $teamName : '' }}"/>
 </div>
