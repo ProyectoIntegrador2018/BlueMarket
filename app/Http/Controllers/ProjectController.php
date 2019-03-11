@@ -10,18 +10,13 @@ use Illuminate\Validation\Rule;
 
 class ProjectController extends Controller
 {
-	const PROJECTS = 'projects';
-	const SKILLSETS = 'skillsets';
-	const PRESENT = 'present';
-	const CATEGORY = 'category';
-
 	public function __construct() {
 		$this->middleware('auth');
 	}
 
 	public function index() {
 		$projects = Project::all();
-		return view(self::PROJECTS, compact(self::PROJECTS));
+		return view('projects', compact('projects'));
 	}
 
 	public function show($id) {
@@ -33,7 +28,7 @@ class ProjectController extends Controller
 			'registerProject', [
 				'courses' => Auth::user()->EnrolledIn,
 				'categories' => Tag::where('type', 2)->get(),
-				self::SKILLSETS => Tag::where('type', 1)->get()
+				'skillsets' => Tag::where('type', 1)->get()
 			]
 		);
 	}
@@ -41,15 +36,17 @@ class ProjectController extends Controller
 	public function store(Request $request) {
 		$attributes = request()->validate([
 			'projectName' => ['required'],
-			'videoPitch' => [self::PRESENT],
-			'longDescription' => [self::PRESENT],
-			'shortDescription' => [self::PRESENT],
-			'projectImage' => [self::PRESENT],
-			self::CATEGORY => [
-				self::PRESENT,
+			'videoPitch' => ['present'],
+			'longDescription' => ['present'],
+			'shortDescription' => ['present'],
+			'projectImage' => ['present'],
+			'category' => [
+				'present',
+				// verify category to be valid (exists as a category tag record)
 				Rule::in(Tag::where('type', 2)->pluck('id'))
 			],
-			self::SKILLSETS => 'present|array|min:1',
+			'skillsets' => 'present|array|min:1',
+			// verify each elm in skillsets[] to exist as a skill tag record
 			'skillsets.*' => [
 				'integer',
 				Rule::in(Tag::where('type', 1)->pluck('id')),
@@ -57,19 +54,14 @@ class ProjectController extends Controller
 		]);
 
 		$project = $this->saveRecord($attributes);
-		if (!isset($project)) {
+		if (!$project->exists) {
 			abort(500);
 		}
 
-		if (isset($attributes[self::SKILLSETS])) {
-			$project->tags()->attach($attributes[self::SKILLSETS]);
-		}
+		$project->tags()->attach($attributes['skillsets']);
+		$project->tags()->attach($attributes['category']);
 
-		if (isset($attributes[self::CATEGORY])) {
-			$project->tags()->attach($attributes[self::CATEGORY]);
-		}
-
-		return view(self::PROJECTS, ['project' => $project]);
+		return view('projects', ['project' => $project]);
 	}
 
 	private function saveRecord(array $attributes) {
