@@ -108,7 +108,7 @@ class TeamController extends Controller
 	private function createTeam(array $attributes) {
 		return Team::create([
 			'name' => $attributes['teamName'],
-			'image' => $attributes['teamImage'],
+			'img_url' => $attributes['teamImage'],
 			'leader_id' => Auth::user()->id,
 		]);
 	}
