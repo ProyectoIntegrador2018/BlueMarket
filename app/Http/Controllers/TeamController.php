@@ -55,6 +55,8 @@ class TeamController extends Controller
 			abort(500);
 		}
 
+		$team->members()->attach($team->leader_id);
+
 		return view('teams.details', compact('team'));
 	}
 

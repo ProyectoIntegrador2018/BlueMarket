@@ -16,4 +16,8 @@ class Team extends Model
 	public function leader() {
 		return $this->belongsTo('App\User', 'leader_id');
 	}
+
+	public function members() {
+		return $this->belongsToMany('App\User', 'team_user', 'team_id', 'user_id');
+	}
 }
