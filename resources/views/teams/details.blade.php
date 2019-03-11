@@ -7,7 +7,7 @@
 	<h1>{{ $team->name }}</h1>
 	<div class="team-info">
 		<div class="image-container">
-			<img id="avatar" src="{{ $team->photo }}" alt="Team avatar" class="ui small image"/>
+			<img id="avatar" src="<?= $team->img_url ?>" alt="Team avatar" class="ui small image"/>
 		</div>
 		<div class="team-people">
 			<h2>People</h2>
@@ -16,7 +16,7 @@
 					@foreach($team->members as $member)
 						<!-- TODO: add route to user profile -->
 						<a href="https://www.google.com">
-							<img class="ui avatar image" src="{{ $member->avatar }}"/>
+							<img class="ui avatar image" src="<?= $member->picture_url ?>"/>
 						</a>
 					@endforeach
 				@endif
