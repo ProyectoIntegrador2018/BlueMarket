@@ -12,8 +12,7 @@ class Project extends Model
 	 * @var array
 	 */
 	protected $guarded = [];
-
 	public function tags() {
-		return $this->belongsToMany('App\Tag');
+		return $this->belongsToMany('App\Tag', 'tag_project', 'project_id', 'tag_id');
 	}
 }
