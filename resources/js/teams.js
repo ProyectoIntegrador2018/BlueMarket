@@ -22,24 +22,23 @@ $(".image-uploader").click(function (event) {
 });
 
 function updateImagePreview(imageInput) {
-	const maxImageSize = 1048576; // 1MiB
-	const acceptedTypes = new Set(["image/png", "image/x-png", "image/jpeg"]);
 	let file = imageInput.files[0];
-	// validate file
-	if (!file || !isValidImage(file, maxImageSize, acceptedTypes)) {
-		alert("Please upload a .png or .jpg file.");
-		reader.abort();
-		return;
-	}
+	reader.addEventListener("loadstart", function () {
+		const maxImageSize = 1048576; // 1MiB
+		// validate file
+		if (!file || !isValidImage(file, maxImageSize)) {
+			alert("Please upload a .png or .jpg file.");
+			reader.abort();
+			return;
+		}
+	});
 
 	// update preview when completed successfully
 	reader.addEventListener("load", function () {
 		$("#preview").attr("src", reader.result);
+		console.log('this is the result');
+		console.log(reader.result);
 	});
 
 	reader.readAsDataURL(file);
-}
-
-function loadImage(imageInput) {
-	reader.addEventListener("loadstart", updateImagePreview(imageInput));
 }
