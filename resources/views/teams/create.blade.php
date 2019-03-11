@@ -8,8 +8,8 @@
 	<h1>Create team</h1>
 	<form class="ui form" method="POST" action="/route">
 		@csrf
-		@form
-		@endform
+		@teamsform
+		@endteamsform
 		<!-- Submit button -->
 		<button id="send" type="submit" class="ui button primary">Create team</button>
 	</form>
