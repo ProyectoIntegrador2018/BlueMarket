@@ -6,7 +6,7 @@
 @section('content')
 <div class="padded content">
 	<h1>Create team</h1>
-	<form class="ui form {{ $errors->any() ? 'error': '' }}" method="POST" action="/teams">
+	<form class="ui form {{ $errors->any() ? 'error': '' }}" method="POST" action="/teams" enctype="multipart/form-data">
 		@csrf
 		@teamsform
 		@endteamsform

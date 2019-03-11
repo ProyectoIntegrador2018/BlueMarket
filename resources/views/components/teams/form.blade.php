@@ -6,7 +6,7 @@
 		</div>
 		<button type="button" class="ui button primary image-uploader">Upload image</button>
 	</div>
-	<input id="teamImage" type="file" name="teamImage" accept="image/png,image/jpeg,image/x-png" onchange="loadImage(this)" style="display: none"/>
+	<input id="teamImage" type="file" name="teamImage" accept="image/png,image/jpeg,image/x-png" onchange="updateImagePreview(this)" style="display: none"/>
 </div>
 <!-- Team name -->
 <div class="field {{ $errors->has('name') ? 'error': '' }}">

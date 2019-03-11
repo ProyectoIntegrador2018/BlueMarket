@@ -18,6 +18,7 @@ function isInteger(id){
 	return num > 0 && pattern.test(num);
 }
 
-function isValidImage(file, maxImageSize, acceptedTypes) {
+function isValidImage(file, maxImageSize) {
+	const acceptedTypes = new Set(["image/png", "image/x-png", "image/jpeg"]);
 	return acceptedTypes.has(file.type) && file.size <= maxImageSize;
 }
