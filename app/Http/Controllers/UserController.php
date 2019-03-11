@@ -20,8 +20,12 @@ class UserController extends Controller
 		$searchQuery = $request->get('search');
 		$paginationSize = $request->get('paginationSize');
 
+		if (!isset($paginationSize)) {
+			$paginationSize = 25;
+		}
+
 		if (isset($searchQuery) && !empty($searchQuery)) {
-			$users = User::where('name', 'like', "%{$searchQuery}%")->latest()->simplePaginate(paginationSize);
+			$users = User::where('name', 'like', "%{$searchQuery}%")->orWhere('email', 'like', "%{$searchQuery}%")->latest()->simplePaginate(paginationSize);
 		} else {
 			$users = User::where('role', config(self::ROLES)['sys_admin'])->latest()->simplePaginate(paginationSize);
 		}
@@ -48,8 +52,7 @@ class UserController extends Controller
 		$validatedAttributes = request()->validate([
 			'name' => 'required|string',
 			'email' => 'required|string',
-			'role' => 'required|integer',
-			'picture_url' => 'required|string'
+			'role' => 'required|integer'
 		]);
 
 		$user = User::create($validatedAttributes);
@@ -98,15 +101,5 @@ class UserController extends Controller
 		$user->update($request->all());
 
 		return redirect('users')->with('flash_message', 'User updated!');
-	}
-
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  \App\User  $user
-	 * @return \Illuminate\Http\Response
-	 */
-	public function destroy(User $user) {
-		abort(401);
 	}
 }
