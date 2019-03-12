@@ -53,7 +53,7 @@
 						<option value="">Existing team</option>
 						@if(isset($teams))
 							@foreach($teams -> all() as $teams)
-								<option value={{$team['id']}}>{{$category['name']}}</option>
+								<option value={{$team['id']}}>{{$label['name']}}</option>
 							@endforeach
 						@endif
 					</select>
@@ -80,14 +80,14 @@
 				@endif
 			</select>
 		</div>
-		<!-- Category -->
+		<!-- Labels -->
 		<div class="field">
-			<label for="category">Category</label>
-			<select name="category" class="ui search dropdown">
+			<label for="label">Labels</label>
+			<select name="label[]" multiple="" class="ui fluid dropdown">
 				<option value="">Finance</option>
-				@if(isset($categories))
-					@foreach($categories -> all() as $category)
-						<option value={{$category['id']}}>{{$category['name']}}</option>
+				@if(isset($labels))
+					@foreach($labels -> all() as $label)
+						<option value={{$label['id']}}>{{$label['name']}}</option>
 					@endforeach
 				@endif
 			</select>
@@ -196,11 +196,11 @@
 					}
 				]
 			},
-			category:{
-				identifier:'category',
+			label:{
+				identifier:'label[]',
 				rules:[{
-						type:'empty',
-						prompt:'Please select a category'
+						type:'minCount[1]',
+						prompt:'Please select at least one label'
 					}
 				]
 			},

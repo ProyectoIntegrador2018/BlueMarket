@@ -27,7 +27,7 @@ class ProjectController extends Controller
 		return view(
 			'registerProject', [
 				'courses' => Auth::user()->EnrolledIn,
-				'categories' => Tag::where('type', 2)->get(),
+				'labels' => Tag::where('type', 2)->get(),
 				'skillsets' => Tag::where('type', 1)->get()
 			]
 		);
@@ -40,10 +40,11 @@ class ProjectController extends Controller
 			'longDescription' => ['present'],
 			'shortDescription' => ['present'],
 			'projectImage' => ['present'],
-			'category' => [
-				'present',
-				// verify category to be valid (exists as a category tag record)
-				Rule::in(Tag::where('type', 2)->pluck('id'))
+			'label' => 'present|array|min:1',
+			// verify each elm in label[] to exist as a label tag record
+			'label.*' => [
+				'integer',
+				Rule::in(Tag::where('type', 2)->pluck('id')),
 			],
 			'skillsets' => 'present|array|min:1',
 			// verify each elm in skillsets[] to exist as a skill tag record
@@ -59,7 +60,7 @@ class ProjectController extends Controller
 		}
 
 		$project->tags()->attach($attributes['skillsets']);
-		$project->tags()->attach($attributes['category']);
+		$project->tags()->attach($attributes['label']);
 
 		return view('projects', ['project' => $project]);
 	}
