@@ -32,7 +32,7 @@ class TeamController extends Controller
 	 * @return \Illuminate\Http\Response
 	 */
 	public function create() {
-		$students = User::students()->where('id', '!=', Auth::user()->id);
+		$students = User::students()->where('id', '!=', Auth::id());
 
 		return view('teams.create', compact('students'));
 	}
@@ -116,8 +116,8 @@ class TeamController extends Controller
 
 		$team = Team::create([
 			'name' => $attributes['teamName'],
-			'leader_id' => Auth::user()->id,
-			'img_url' => isset($path) ? Storage::url($path) : null,
+			'img_url' => $attributes['teamImage'],
+			'leader_id' => Auth::id()
 		]);
 
 		return $team;
