@@ -85,7 +85,7 @@
 	// click on image uploader
 	$(".image-uploader").click(function (event) {
 		event.preventDefault();
-		$("#teamImage").click();
+		$("#avatar").click();
 	});
 
 	function updateImagePreview(imageInput) {
