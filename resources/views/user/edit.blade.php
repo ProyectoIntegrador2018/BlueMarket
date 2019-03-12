@@ -1,39 +1,34 @@
 
 @extends('layouts.app')
 
-@section('title', 'John Doe')
+@section('title', 'Update profile')
 
 @section('content')
 <div class="padded content">
-	<h1>John Doe</h1>
-	<div class="ui form error">
-		<!-- User image -->
-		<div id ="userImage" class="field">
-			<label for="imgInput">Photo</label>
-			<div class="user-image-uploader-container">
-				<div class="imgUploader" class="imagePreviewContainer">
-					<img id="userImagePreview" src="https://lorempixel.com/400/400" alt="User image" class="ui small circular image preview"/>
+	<h1>Update profile</h1>
+	<!-- TODO: add action route -->
+	<form class="ui form" {{ $errors->any() ? 'error': '' }}" method="POST" enctype="multipart/form-data">
+		<!-- User avatar -->
+		<div class="field">
+			<label for="avatar">Avatar</label>
+			<div class="image-container">
+				<div class="image-uploader preview-container">
+					<img id="preview" src="<?= Auth::user()->picture_url ?>" alt="User avatar" class="ui small circular image preview"/>
 				</div>
-				<a href="#" class="imgUploader">
-					<button type="button" class="ui button primary">Upload image</button>
-				</a>
+				<button type="button" class="ui button primary image-uploader">Upload image</button>
 			</div>
-			<input id="imgInput" type="file" name="userImage" style="display:none" accept="image/x-png,image/jpeg" onchange="updateImage(this)">
+			<input id="avatar" type="file" name="avatar" accept="image/png,image/jpeg,image/x-png" onchange="updateImagePreview(this)" style="display: none"/>
 		</div>
 		<!-- User name -->
 		<div class="field">
-			<label for="userName">Name</label>
-			<input id="userName" type="text" name="userName" placeholder="John Doe" value="Katie Arriaga">
-		</div>
-		<!-- User email -->
-		<div class="field">
-			<label for="userEmail">E-mail</label>
-			<input id="userEmail" type="email" name="userEmail" placeholder="john@example.com" value="katie@example.com">
+			<label for="name">Name</label>
+			<input type="text" name="name" value="{{ Auth::user()->name }}">
 		</div>
 		<!-- Skillset -->
+		<!-- TODO: receive all skills from backend and pre-select those that the user already has -->
 		<div class="field">
-			<label for="skillsets">Skills</label>
-			<select id="skillsets" class="ui fluid search dropdown" multiple>
+			<label for="skills">Skills</label>
+			<select id="skills" name="skills[]" class="ui fluid search dropdown" multiple>
 				<option value="">Skills</option>
 				<option value="angular">Angular</option>
 				<option value="css">CSS</option>
@@ -62,40 +57,57 @@
 		</div>
 		<!-- Save button -->
 		<button type="submit" id="saveProfile" class="ui button primary">Save profile</button>
-	</div>
+	</form>
 </div>
 
 @section('scripts')
 <script>
 	$( ".ui.fluid.search.dropdown" ).dropdown();
 
-	$( ".imgUploader" ).click(function(event) {
-		event.preventDefault();
-		$( "#imgInput" ).click();
+	let reader = new FileReader();
+
+	// front-end input validation
+	$(".ui.form").form({
+		fields: {
+			name: ["empty", "maxLength[30]"]
+		},
+		onFailure: function () {
+			// onFailure needs to exist to prevent form from sending request
+			console.log("failed submission");
+			return false;
+		},
+		onSuccess: function () {
+			console.log("ok submission");
+		}
 	});
 
-	function validateImage(file) {
-		const maxImageSize = 1048576; // 1MiB
+	// click on image uploader
+	$(".image-uploader").click(function (event) {
+		event.preventDefault();
+		$("#teamImage").click();
+	});
 
-		return ((file.type == "image/png" || file.type == "image/x-png" || file.type == "image/jpeg") && file.size <= maxImageSize);
-	}
-
-	function updateImage(imageInput) {
-		let reader  = new FileReader();
+	function updateImagePreview(imageInput) {
 		let file = imageInput.files[0];
-		let preview = $( "#userImagePreview" );
-
-		reader.addEventListener("load", function () {
-			if(validateImage(file)) {
-				$( "#userImagePreview" ).attr("src", reader.result);
+		reader.addEventListener("loadstart", function () {
+			const maxImageSize = 1048576; // 1MiB
+			// validate file
+			if (!file || !isValidImage(file, maxImageSize)) {
+				alert("Please upload a .png or .jpg file.");
+				reader.abort();
+				return;
 			}
 		});
 
-		if (file) {
-			reader.readAsDataURL(file);
-		}
-	}
+		// update preview when completed successfully
+		reader.addEventListener("load", function () {
+			$("#preview").attr("src", reader.result);
+			console.log('this is the result');
+			console.log(reader.result);
+		});
 
+		reader.readAsDataURL(file);
+	}
 </script>
 @endsection
 @endsection
