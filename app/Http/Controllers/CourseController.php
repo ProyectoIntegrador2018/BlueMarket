@@ -83,10 +83,7 @@ class CourseController extends Controller
 			$course->suppliers()->attach($attributes['associatedCourses']);
 		}
 
-		$teachers = $course->teachers->map(function ($user) {
-			return $user->only(['id', 'name', 'email']);
-		});
-		return view('course.details', compact('course', 'teachers'));
+		return view('course.details', compact('course'));
 	}
 
 	/**
@@ -96,10 +93,7 @@ class CourseController extends Controller
 	 * @return \Illuminate\Http\Response
 	 */
 	public function show(Course $course) {
-		$teachers = $course->teachers->map(function ($user) {
-			return $user->only(['id', 'name', 'email']);
-		});
-		return view('course.details', compact('course', 'teachers'));
+		return view('course.details', compact('course'));
 	}
 
 	/**
