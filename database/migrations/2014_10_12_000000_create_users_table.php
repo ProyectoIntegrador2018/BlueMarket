@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
 			$table->string('name');
 			$table->string('google_id')->unique()->nullable(); // required to implement several providers
 			$table->string('email')->unique();
-			$table->integer('role')->unsigned()->default(2);
+			$table->integer('role')->unsigned()->default(3); // default: student
 			$table->string('picture_url')->nullable();
 			$table->rememberToken();
 			$table->timestamp('last_logon')->useCurrent();

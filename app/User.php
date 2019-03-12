@@ -61,4 +61,7 @@ class User extends Authenticatable
 	public function skillset() {
 		return $this->belongsToMany('App\Tag', 'skill_user', 'user_id', 'tag_id');
 	}
+	public function isAdmin() {
+		return $this->role === config('enum.user_roles')['admin']; // Admin
+	}
 }
