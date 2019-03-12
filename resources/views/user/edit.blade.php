@@ -9,7 +9,7 @@
 	<!-- TODO: add action route -->
 	<form class="ui form" {{ $errors->any() ? 'error': '' }}" method="POST" enctype="multipart/form-data">
 		<!-- User avatar -->
-		<div class="field">
+		<div class="field {{ $errors->has('picture_url') ? 'error': '' }}">
 			<label for="avatar">Avatar</label>
 			<div class="image-container">
 				<div class="image-uploader preview-container">
@@ -20,13 +20,14 @@
 			<input id="avatar" type="file" name="avatar" accept="image/png,image/jpeg,image/x-png" onchange="updateImagePreview(this)" style="display: none"/>
 		</div>
 		<!-- User name -->
-		<div class="field">
+		<div class="field {{ $errors->has('name') ? 'error': '' }}">
 			<label for="name">Name</label>
 			<input type="text" name="name" value="{{ Auth::user()->name }}">
 		</div>
 		<!-- Skillset -->
 		<!-- TODO: receive all skills from backend and pre-select those that the user already has -->
-		<div class="field">
+		<!-- TODO: confirm name for back-end error validation for this field -->
+		<div class="field {{ $errors->has('tags') ? 'error': '' }}">
 			<label for="skills">Skills</label>
 			<select id="skills" name="skills[]" class="ui fluid search dropdown" multiple>
 				<option value="">Skills</option>
@@ -51,7 +52,7 @@
 			</select>
 		</div>
 		<!-- Error message -->
-		<div id="errorMessage" class="ui error message hidden">
+		<div id="errorMessage" class="ui error message">
 			<div class="header">Whoops! Something went wrong.</div>
 			<p>Please make sure to properly fill out all required fields.</p>
 		</div>
@@ -93,7 +94,7 @@
 			const maxImageSize = 1048576; // 1MiB
 			// validate file
 			if (!file || !isValidImage(file, maxImageSize)) {
-				alert("Please upload a .png or .jpg file.");
+				alert("Please upload a .png or .jpeg file.");
 				reader.abort();
 				return;
 			}
