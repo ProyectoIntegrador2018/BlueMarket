@@ -113,17 +113,13 @@ class TeamController extends Controller
 	 * @return \App\Course
 	 */
 	private function createTeam(array $attributes, $image) {
+		$path = isset($image) ? Storage::putFile('teams/avatars', $image) : null;
+
 		$team = Team::create([
 			'name' => $attributes['teamName'],
-			'img_url' => $attributes['teamImage'],
 			'leader_id' => Auth::user()->id,
+			'img_url' => $path,
 		]);
-
-		if ($image) {
-			$path = Storage::putFile('teams/avatars', $image);
-			$team->img_url = $path;
-			$team->save();
-		}
 
 		return $team;
 	}
