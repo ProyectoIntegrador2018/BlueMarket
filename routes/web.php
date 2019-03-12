@@ -11,15 +11,18 @@
 |
 */
 
+/* home */
 Route::get('/', function () {
 	return view('home');
 });
 
+/* login/logout */
 Route::get('/logout', 'LoginController@logout')->name('logout');
 Route::get('/login', 'LoginController@show')->name('login');
 Route::post('/login', 'LoginController@authenticate');
 Route::view('/login/welcome', 'auth.success');
 
+/* projects */
 Route::resource('projects', 'ProjectController')->only([
 	'index', 'show', 'create', 'store'
 ]);
@@ -30,10 +33,7 @@ Route::get('/user/profile', 'CourseController@index');
 Route::get('/user/courses/associate/details', 'CourseController@getCourseDetails');
 Route::post('/user/courses/associate', 'CourseController@associate');
 
-Route::get('/marce', function () {
-	return view('registerProject');
-});
-
+/* contact */
 Route::post('/contact', 'ContactMessageController@post');
 
 /* teams */
