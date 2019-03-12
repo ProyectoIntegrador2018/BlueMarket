@@ -138,18 +138,12 @@ class CourseController extends Controller
 		$courseKey = $request->courseKey;
 		$course = Course::where('course_key', $courseKey)->first();
 
-		if ($course == null) {
-			abort(404);
-		}
+		abort_if($course === null, 404);
 
 		// Check if course is already associated
 		$associatedCourse = $user->enrolledIn()->where('course_id', $course->id)->first();
 
-		if (!$associatedCourse) {
-			return ['course' => $course, 'teachers' => $course->teachers];
-		} else {
-			abort(400);
-		}
+		abort_if(!$associatedCourse, 400);
 	}
 
 	/**
@@ -163,13 +157,8 @@ class CourseController extends Controller
 		$courseKey = $request->courseKey;
 		$course = Course::where('course_key', $courseKey)->first();
 
-		if ($course == null || $user == null) {
-			abort(400);
-		}
-
-		if ($user->role != config(self::ROLES)['student']) {
-			abort(401);
-		}
+		abort_if($course == null || $user == null, 400);
+		abort_if($user->role != 2, 401);
 
 		$result = $user->EnrolledIn()->attach($course);
 
