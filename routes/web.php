@@ -41,5 +41,5 @@ Route::resource('teams', 'TeamController');
 
 /* dummy routes */
 Route::get('/user/edit', function () {
-	return view('editUserProfile');
+	return view('user.edit');
 });
