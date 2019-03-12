@@ -83,7 +83,7 @@
 		<!-- Category -->
 		<div class="field">
 			<label for="category">Category</label>
-			<select name="category" class="ui search dropdown">
+			<select name="category[]" multiple="" class="ui fluid dropdown">
 				<option value="">Finance</option>
 				@if(isset($categories))
 					@foreach($categories -> all() as $category)
@@ -197,10 +197,10 @@
 				]
 			},
 			category:{
-				identifier:'category',
+				identifier:'category[]',
 				rules:[{
-						type:'empty',
-						prompt:'Please select a category'
+						type:'minCount[1]',
+						prompt:'Please select at least one category'
 					}
 				]
 			},

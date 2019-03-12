@@ -40,10 +40,11 @@ class ProjectController extends Controller
 			'longDescription' => ['present'],
 			'shortDescription' => ['present'],
 			'projectImage' => ['present'],
-			'category' => [
-				'present',
-				// verify category to be valid (exists as a category tag record)
-				Rule::in(Tag::where('type', 2)->pluck('id'))
+			'category' => 'present|array|min:1',
+			// verify each elm in category[] to exist as a category tag record
+			'category.*' => [
+				'integer',
+				Rule::in(Tag::where('type', 2)->pluck('id')),
 			],
 			'skillsets' => 'present|array|min:1',
 			// verify each elm in skillsets[] to exist as a skill tag record
