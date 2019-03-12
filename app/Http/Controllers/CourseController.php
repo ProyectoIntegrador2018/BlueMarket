@@ -22,8 +22,7 @@ class CourseController extends Controller
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function index()
-	{
+	public function index() {
 		$this->checkIfAccessAllowed([config(self::ROLES)['student'], config(self::ROLES)['teacher']]);
 
 		$user = Auth::user();
@@ -46,8 +45,7 @@ class CourseController extends Controller
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function create()
-	{
+	public function create() {
 		$this->checkIfAccessAllowed([config(self::ROLES)['teacher']]);
 
 		$teachers = User::where('role', config(self::ROLES)['teacher'])->select('id', 'name')->get();
@@ -69,6 +67,7 @@ class CourseController extends Controller
 			'teachers' => 'required|array|min:1',
 			'teachers.*' => [
 				'integer',
+				// Validate ids belong to teacher users
 				Rule::in(User::where('role', config(self::ROLES)['teacher'])->get()->pluck('id')),
 			],
 			'courseSemester' => 'required',
@@ -96,8 +95,7 @@ class CourseController extends Controller
 	 * @param  \App\Course  $course
 	 * @return \Illuminate\Http\Response
 	 */
-	public function show(Course $course)
-	{
+	public function show(Course $course) {
 		$teachers = $course->teachers->map(function ($user) {
 			return $user->only(['id', 'name', 'email']);
 		});
@@ -175,7 +173,7 @@ class CourseController extends Controller
 			abort(400);
 		}
 
-		if ($user->role != 2) {
+		if ($user->role != config(self::ROLES)['student']) {
 			abort(401);
 		}
 
@@ -259,7 +257,7 @@ class CourseController extends Controller
 			'course_key' => $courseKey,
 		]);
 
-		if (!isset($course)) {
+		if (!$course->exists) {
 			abort(500);
 		}
 		return $course;
