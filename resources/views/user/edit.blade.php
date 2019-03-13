@@ -7,13 +7,13 @@
 <div class="padded content">
 	<h1>Update profile</h1>
 	<!-- TODO: add action route -->
-	<form class="ui form" {{ $errors->any() ? 'error': '' }}" method="POST" enctype="multipart/form-data">
+	<form class="ui form {{ $errors->any() ? 'error': '' }}" method="POST" enctype="multipart/form-data">
 		<!-- User avatar -->
 		<div class="field {{ $errors->has('picture_url') ? 'error': '' }}">
 			<label for="avatar">Avatar</label>
 			<div class="image-container">
 				<div class="image-uploader preview-container">
-					<img id="preview" src="<?= Auth::user()->picture_url ?>" alt="User avatar" class="ui small circular image preview"/>
+					<img id="preview" src="<?= $user->picture_url ?>" alt="User avatar" class="ui small circular image preview"/>
 				</div>
 				<button type="button" class="ui button primary image-uploader">Upload image</button>
 			</div>
@@ -22,13 +22,13 @@
 		<!-- User name -->
 		<div class="field {{ $errors->has('name') ? 'error': '' }}">
 			<label for="name">Name</label>
-			<input type="text" name="name" value="{{ Auth::user()->name }}">
+			<input type="text" name="name" value="{{ $user->name }}">
 		</div>
 		<!-- Skillset -->
 		<div class="field {{ $errors->has('tags') ? 'error': '' }}">
 			<label for="skills">Skills</label>
 			@php
-				foreach(Auth::user()->skillset as $user_skill) {
+				foreach($user->skillset as $user_skill) {
 					$user_skills_id[] = $user_skill->tag_id;
 				}
 			@endphp
@@ -56,8 +56,6 @@
 <script>
 	$( ".ui.fluid.search.dropdown" ).dropdown();
 
-	let reader = new FileReader();
-
 	// front-end input validation
 	$(".ui.form").form({
 		fields: {
@@ -65,11 +63,7 @@
 		},
 		onFailure: function () {
 			// onFailure needs to exist to prevent form from sending request
-			console.log("failed submission");
 			return false;
-		},
-		onSuccess: function () {
-			console.log("ok submission");
 		}
 	});
 
@@ -80,24 +74,21 @@
 	});
 
 	function updateImagePreview(imageInput) {
-		let file = imageInput.files[0];
-		reader.addEventListener("loadstart", function () {
-			const maxImageSize = 1048576; // 1MiB
-			// validate file
-			if (!file || !isValidImage(file, maxImageSize)) {
-				alert("Please upload a .png or .jpeg file.");
-				reader.abort();
-				return;
-			}
-		});
+		const reader = new FileReader();
+
+		const file = imageInput.files[0];
+		const maxImageSize = 1024*1024*1; // 1MiB
+
+		// validate file
+		if (!file || !isValidImage(file, maxImageSize)) {
+			alert("Please upload a .png or .jpeg file.");
+			return false;
+		}
 
 		// update preview when completed successfully
 		reader.addEventListener("load", function () {
 			$("#preview").attr("src", reader.result);
-			console.log('this is the result');
-			console.log(reader.result);
 		});
-
 		reader.readAsDataURL(file);
 	}
 </script>
