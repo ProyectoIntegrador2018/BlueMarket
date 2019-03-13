@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 
 class UserController extends Controller {
@@ -14,7 +16,10 @@ class UserController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function edit() {
-		return view('user.edit', ['skills' => Tag::where('type', 1)->get());
+		return view('user.edit', [
+			'skills' => Tag::where('type', 1)->get(),
+			'user' => Auth::user()
+		]);
 	}
 
 	/**
@@ -24,35 +29,36 @@ class UserController extends Controller {
 	 * @param  \App\User  $user
 	 * @return \Illuminate\Http\Response
 	 */
-	public function update(Request $request, User $user) {
+	public function update(Request $request) {
 		$attributes = request()->validate([
-			'name' => ['required'],
-			'skills' => 'required|array|min:1',
-			// verify each elm in skills[] to exist as a skill tag record
-			'skills.*' => [
-				'integer',
-				Rule::in(Tag::where('type', 1)->pluck('id')),
-			]
+			'name' => ['present']
 		]);
 
 		$user = Auth::user();
 		$user->name = $attributes['name'];
 		$user->save();
 
-		$this->updateImg($request->file('teamImage'));
+		// Update the picture of the user
+		if (isset($request->avatar)) {
+			$this->updateImg($request->file('avatar'));
+		}
 
 		// Update skillset of the user
 		$user->skillset()->detach();
-		$user->skillset()->attach($attributes['skills']);
+		if (isset($request->skills)) {
+			$user->skillset()->attach($request->skills);
+		}
 
-		// Session::flash('message', 'Successfully updated user!');
-		return view('welcome'); // TO-DO: where should we redirect to?
+		return redirect()->back()->with([
+			'skills' => Tag::where('type', 1)->get(),
+			'user' => Auth::user()
+		]);
 	}
 
 	private function updateImg($image) {
-		$path = isset($image) ? Storage::putFile('user/avatars', $image) : null;
+		$path = isset($image) ? Storage::putFile('user/avatars', $image) : Auth::user()->picture_url;
 		$user = Auth::user();
-		$user->picture_url => $path;
+		$user->picture_url = $path;
 		$user->save();
 	}
 }

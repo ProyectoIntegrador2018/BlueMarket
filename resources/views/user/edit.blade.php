@@ -7,7 +7,9 @@
 <div class="padded content">
 	<h1>Update profile</h1>
 	<!-- TODO: add action route -->
-	<form class="ui form {{ $errors->any() ? 'error': '' }}" method="POST" enctype="multipart/form-data">
+	<form class="ui form {{ $errors->any() ? 'error': '' }}" method="POST" action="{{url('/users/1')}}" enctype="multipart/form-data">
+		{{ method_field('PATCH')}}
+		{{ csrf_field() }}
 		<!-- User avatar -->
 		<div class="field {{ $errors->has('picture_url') ? 'error': '' }}">
 			<label for="avatar">Avatar</label>
@@ -28,8 +30,9 @@
 		<div class="field {{ $errors->has('tags') ? 'error': '' }}">
 			<label for="skills">Skills</label>
 			@php
+				$user_skills_id = array();
 				foreach($user->skillset as $user_skill) {
-					$user_skills_id[] = $user_skill->tag_id;
+					$user_skills_id[] = $user_skill->id;
 				}
 			@endphp
 			<select id="skills" name="skills[]" class="ui fluid search dropdown" multiple>
