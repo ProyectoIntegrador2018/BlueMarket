@@ -1,0 +1,81 @@
+body {
+	font-family: 'Segoe UI', sans-serif;
+	background-color: #f2f3f8;
+}
+
+$dark: #434349;
+h1, h2, h3, h4, h5, h6 {
+	font-family: 'Nunito', 'Segoe UI', sans-serif;
+	color: $dark;
+}
+h1, h2, h3, h4, h5, h6, strong, th {
+	font-weight: 600;
+}
+h1 {
+	font-size: 2rem;
+}
+a, a:hover {
+	text-decoration: none;
+}
+ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+nav.mainNav {
+	box-shadow: 0 5px 10px rgba(#000, .05);
+	.user-avatar {
+		font-size: .9rem;
+		.user-avatar-img {
+			object-fit: cover;
+			object-position: center center;
+			border-radius: 50%;
+			width: 30px;
+			height: 30px;
+			margin-left: 6px;
+		}
+	}
+}
+.Sidebar {
+	// flex: 2;
+	width: 230px;
+	background-color: #242939;
+	position: fixed;
+	height: 100vh;
+	padding: 1rem;
+	a {
+		color: #c0c4d1;
+		display: block;
+		&:hover {
+			color: #fff;
+		}
+	}
+	hr {
+		margin: 1rem 0;
+		border: 0 none;
+		border-bottom: 1px solid rgba(#fff,.2)
+	}
+	// width: 100%;
+}
+main.contentPane {
+	// flex: 0 0 230px;
+	margin-left: 230px;
+	> .container-fluid {
+		padding: 25px;
+		padding-bottom: 4%;
+	}
+}
+.card {
+	border: 0 none;
+	border-radius: 6px;
+	box-shadow: 0px 0px 13px 0px rgba(82,63,105,0.05);
+}
+table.table {
+	font-size: .9rem;
+	color: #646c9a;
+	th {
+		font-size: .8rem;
+		text-transform: uppercase;
+		color: #858796;
+	}
+}
