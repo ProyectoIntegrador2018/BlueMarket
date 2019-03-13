@@ -27,8 +27,6 @@ class UserController extends Controller {
 	public function update(Request $request, User $user) {
 		$attributes = request()->validate([
 			'name' => ['required'],
-			'email' => ['required'],
-			'avatar' => ['required'],
 			'skills' => 'required|array|min:1',
 			// verify each elm in skills[] to exist as a skill tag record
 			'skills.*' => [
@@ -39,9 +37,9 @@ class UserController extends Controller {
 
 		$user = Auth::user();
 		$user->name = $attributes['name'];
-		$user->email = $attributes['email'];
-		$user->picture_url = $attributes['avatar']; // TO-DO: how are we storing img files
 		$user->save();
+
+		$this->updateImg($request->file('teamImage'));
 
 		// Update skillset of the user
 		$user->skillset()->detach();
@@ -49,5 +47,12 @@ class UserController extends Controller {
 
 		// Session::flash('message', 'Successfully updated user!');
 		return view('welcome'); // TO-DO: where should we redirect to?
+	}
+
+	private function updateImg($image) {
+		$path = isset($image) ? Storage::putFile('user/avatars', $image) : null;
+		$user = Auth::user();
+		$user->picture_url => $path;
+		$user->save();
 	}
 }
