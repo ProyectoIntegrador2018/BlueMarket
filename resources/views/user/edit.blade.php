@@ -25,30 +25,21 @@
 			<input type="text" name="name" value="{{ Auth::user()->name }}">
 		</div>
 		<!-- Skillset -->
-		<!-- TODO: receive all skills from backend and pre-select those that the user already has -->
-		<!-- TODO: confirm name for back-end error validation for this field -->
 		<div class="field {{ $errors->has('tags') ? 'error': '' }}">
 			<label for="skills">Skills</label>
+			@php
+				foreach(Auth::user()->skillset as $user_skill) {
+					$user_skills_id[] = $user_skill->tag_id;
+				}
+			@endphp
 			<select id="skills" name="skills[]" class="ui fluid search dropdown" multiple>
-				<option value="">Skills</option>
-				<option value="angular">Angular</option>
-				<option value="css">CSS</option>
-				<option value="design">Graphic Design</option>
-				<option value="ember">Ember</option>
-				<option value="html">HTML</option>
-				<option value="ia">Information Architecture</option>
-				<option value="javascript">Javascript</option>
-				<option value="mech">Mechanical Engineering</option>
-				<option value="meteor">Meteor</option>
-				<option value="node">NodeJS</option>
-				<option value="plumbing">Plumbing</option>
-				<option value="python">Python</option>
-				<option value="rails">Rails</option>
-				<option value="react">React</option>
-				<option value="repair">Kitchen Repair</option>
-				<option value="ruby">Ruby</option>
-				<option value="ui">UI Design</option>
-				<option value="ux">User Experience</option>
+				@foreach($skills as $skill)
+					@if(in_array($skill->id, $user_skills_id))
+						<option value={{ $skill->id }} selected>{{ $skill->name }}</option>
+					@else
+						<option value={{ $skill->id }}>{{ $skill->name }}</option>
+					@endif
+				@endforeach
 			</select>
 		</div>
 		<!-- Error message -->
