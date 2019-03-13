@@ -16,7 +16,8 @@ class ProjectController extends Controller
 
 	public function index() {
 		$projects = Project::all();
-		return view('projects', compact('projects'));
+		$tags = Tag::all();
+		return view('projects', compact('tags', 'projects'));
 	}
 
 	public function show($id) {
