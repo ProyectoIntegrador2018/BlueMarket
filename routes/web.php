@@ -41,3 +41,10 @@ Route::post('/contact', 'ContactMessageController@post');
 
 /* teams */
 Route::resource('teams', 'TeamController');
+
+
+/* Admin routes
+--------------------------------------------- */
+Route::namespace('Admin')->prefix('admin')->group(function() {
+	Route::resource('users', 'UsersController');
+});
