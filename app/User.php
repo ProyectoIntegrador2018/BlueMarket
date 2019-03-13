@@ -54,7 +54,7 @@ class User extends Authenticatable
 		return $this->belongsToMany('App\Team', 'team_user', 'user_id', 'team_id');
 	}
 
-	public function skills() {
+	public function skillset() {
 		return $this->belongsToMany('App\Tag', 'skill_user', 'user_id', 'tag_id');
 	}
 }
