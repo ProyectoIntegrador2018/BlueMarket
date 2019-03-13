@@ -1,6 +1,11 @@
+@extends('layouts.app')
+
+@section('content')
+
 <div class="padded content">
 	<form class="ui form">
 		<!-- Project Name -->
+		<p><strong>{{$project->name}}</strong></p>
 		<!-- Project Image -->
 		<div class="projectImage field">
 			{{-- <label for="projectImage">Project Image</label> --}}
@@ -8,36 +13,34 @@
 		</div>
 		<!-- Category -->
 		<div class="ui left aligned container">
-			<p>Category: </p>
+			<p><strong>Tags: </strong>{{$project->tags()->pluck('name')}}</p>
 		</div>
 		<!-- Skillset -->
 		<div class="ui left aligned container">
-			<p>Skillset: </p>
-		</div>
-		<!-- Public Milestone -->
-		<div class="ui left aligned container">
-			<p>Public Milestone: </p>
+			<p><strong>Required Skillset: </strong></p>
 		</div>
 		<!-- Associated Course -->
 		<div class="ui left aligned container">
-			<p>Associated Course: </p>
+			<p><strong>Associated Course: </strong> </p>
 		</div>
 		<!-- Associated Team -->
 		<div class="ui left aligned container">
-			<p>Associated Team: </p>
+			<p><strong>Associated Team: </strong></p>
 		</div>
 		<!-- Short Description -->
 		<div class="ui left aligned container">
-			<p>Brief Description: </p>
+			<p><strong>Brief Description: </strong>{{$project->short_description}}</p>
 		</div>
 		<!-- Long Description -->
 		<div class="ui left aligned container">
-			<p>Detailed Description: </p>
+			<p><strong>Detailed Description: </strong>{{$project->long_description}}</p>
 		</div>
 		<!-- Video Pitch -->
 		<div class="ui left aligned container">
-			<p>Video Pitch: </p>
-			<iframe width="560" height="315" src="https://www.youtube.com/embed/xvwBtODV0ms" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+			<p><strong>Video Pitch: </strong></p>
+			<iframe width="560" height="315" src="{{$project->video}}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 		</div>
 	</form>
 </div>
+
+@endsection
