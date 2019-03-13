@@ -43,6 +43,7 @@
 											<th>Name</th>
 											<th>Role</th>
 											<th>Email</th>
+											<th>Action</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -56,6 +57,7 @@
 
 											<td class="selectable">
 												<a href="{{ url('/users/' . $item->id) }}" title="View User">
+													<!-- Aquí tengo que confirmar cómo me van a pasar el rol -->
 													@switch($item->role)
 														@case(1)
 														<span class="tag student">Student</span>
@@ -78,6 +80,14 @@
 											<td class="selectable">
 												<a href="{{ url('/users/' . $item->id) }}" title="View User">
 													{{ $item->email }}
+												</a>
+											</td>
+
+											<td>
+												<a href="{{ url('/users/' . $item->id . '/edit') }}" title="Edit user">
+													<button class="ui primary basic button btn btn-primary btn-sm">
+													<i class="fa fa-pencil-square-o" aria-hidden="true"></i>Edit
+													</button>
 												</a>
 											</td>
 										</tr>
