@@ -38,7 +38,15 @@ Route::get('/user/profile', 'CourseController@index');
 Route::get('/user/courses/associate/details', 'CourseController@getCourseDetails');
 Route::post('/user/courses/associate', 'CourseController@associate');
 
-/* contact */
+/* dummy routes */
+Route::get('/user/edit', function () {
+	return view('editUserProfile');
+});
+
+Route::get('/marce', function () {
+	return view('projects.details');
+});
+
 Route::post('/contact', 'ContactMessageController@post');
 
 /* teams */
