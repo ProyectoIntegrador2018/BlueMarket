@@ -15,20 +15,20 @@
 		<div class="ui left aligned container">
 			<p><strong>Tags</strong></p> {{-- {{$project->tags()->pluck('name')}}</p> --}}
 			<div class="ui label">Tag1</div>{{-- {{ $skill }}</div> --}}
- 			<div class="ui label">Tag2</div>
- 			<div class="ui label">Tag3</div>
- 			<div class="ui label">Tag4</div>
+			<div class="ui label">Tag2</div>
+			<div class="ui label">Tag3</div>
+			<div class="ui label">Tag4</div>
 		</div>
 		<!-- Skillset -->
 		<div class="ui left aligned container">
 			<p><strong>Required Skillset</strong></p>
-{{-- 			@foreach($skillset as $skill)
- --}}				<div class="ui label">Skill1</div>{{-- {{ $skill }}</div> --}}
- 					<div class="ui label">Skill2</div>
- 					<div class="ui label">Skill3</div>
- 					<div class="ui label">Skill4</div>
-{{-- 			@endforeach
- --}}		</div>
+			{{-- @foreach($skillset as $skill) --}}
+				<div class="ui label">Skill1</div>{{-- {{ $skill }}</div> --}}
+					<div class="ui label">Skill2</div>
+					<div class="ui label">Skill3</div>
+					<div class="ui label">Skill4</div>
+			{{-- @endforeach --}}
+		</div>
 		<!-- Associated Course -->
 		<div class="ui left aligned container">
 			<p><strong>Associated Course</strong> </p>

@@ -47,6 +47,10 @@ Route::get('/marce', function () {
 	return view('projects.details');
 });
 
+Route::get('/marceCreate', function () {
+	return view('projects.create');
+});
+
 Route::post('/contact', 'ContactMessageController@post');
 
 /* teams */

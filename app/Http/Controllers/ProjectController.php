@@ -26,7 +26,7 @@ class ProjectController extends Controller
 
 	public function create() {
 		return view(
-			'registerProject', [
+			'projects.create', [
 				'courses' => Auth::user()->EnrolledIn,
 				'labels' => Tag::where('type', 2)->get(),
 				'skillsets' => Tag::where('type', 1)->get()
