@@ -310,12 +310,15 @@ $color-white: #fff;
 }
 
 .ui.four.stackable.cards {
-	.card.bluemarket-projectcard {
-		width: calc(25% - 2.0em);
-		margin-left: 1em;
-		margin-right: 1em;
-		margin-top: 1em;
-		margin-bottom: 1em;
+	margin: 0 auto;
+	margin-top: 10px;
+
+	a.item {
+		all:unset;
+	}
+
+	.ui.card.projectcard {
+		margin: 5px 3px;
 
 		.category {
 			margin-top: 0.5vh;
@@ -336,9 +339,8 @@ $color-white: #fff;
 			background: $color-secondary;
 			text-transform: uppercase;
 			text-align: center;
+			width: auto;
 		}
-
-
 	}
 }
 

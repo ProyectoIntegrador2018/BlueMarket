@@ -18,7 +18,7 @@
 			<label for="tags">Tags</label>
 			<select id="searchTags" name="tags" class="ui fluid search dropdown searchTags" multiple onchange="filterProjects()">
 				@foreach ($tags as $tag)
-					<option value={{$tag->id}}>{{$tag->name}}</option>
+					<option value={{ $tag->id }}>{{ $tag->name }}</option>
 				@endforeach
 			</select>
 		</div>
@@ -27,7 +27,7 @@
 	<!-- Project Cards -->
 	<div class="ui four stackable cards">
 		@foreach ($projects as $project)
-			@projectCard(['projectImage' => $project['photo'], 'projectName' => $project['name'], 'projectShortDescription' => $project['short_description'], 'skillset' => $project->skills, 'labels' => $project->labels, 'publicMilestone' => 'shipping'])
+			@projectCard(['id'=> $project['id'],'projectImage' => $project['photo'], 'projectName' => $project['name'], 'projectShortDescription' => $project['short_description'], 'skillset' => $project->skills, 'labels' => $project->labels, 'publicMilestone' => 'shipping'])
 			@endprojectCard
 		@endforeach
 	</div>
@@ -84,24 +84,26 @@
 				projectLabels =	projectLabels.concat(`<div class="ui label pill">${label.name}</div>`);
 			}
 
-			let projectCardContent =	`<div class="card bluemarket-projectcard">
-											<div class="image">
-											<img src=${project.photo}>
+			let projectCardContent =	`<a class="item" href="${window.location.href}/${project.id}">
+											<div class="ui card projectcard">
+												<div class="image">
+												<img src=${project.photo}>
+												</div>
+												<div class="content">
+												<div class="header">${project.name}</div>
+													<div class="description">${project.short_description}</div>
+												</div>
+												<div class="extra content">
+													<p class="ui sub header">Required skills</p>
+													${projectSkills}
+												</div>
+												<div class="extra content">
+													<p class="ui sub header">Labels</p>
+													${projectLabels}
+												</div>
+												<div class="ui bottom attached label content">SHIPPING</div>
 											</div>
-											<div class="content">
-											<div class="header">${project.name}</div>
-												<div class="description">${project.short_description}</div>
-											</div>
-											<div class="extra content">
-												<p class="ui sub header">Required skills</p>
-												${projectSkills}
-											</div>
-											<div class="extra content">
-												<p class="ui sub header">Labels</p>
-												${projectLabels}
-											</div>
-											<div class="ui bottom attached label content">SHIPPING</div>
-										</div>`;
+										</a>`;
 			projectCardList = projectCardList.concat(projectCardContent);
 		}
 		$(".ui.four.stackable.cards").html(projectCardList);
