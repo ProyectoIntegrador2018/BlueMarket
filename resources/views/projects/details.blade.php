@@ -5,45 +5,38 @@
 <div class="padded content">
 	<div>
 		<!-- Project Name -->
-		<p><strong>Cool Project{{-- {{$project->name}} --}}</strong></p>
+		<h1 class="ui left aligned container">{{ $project->name }}</h1>
 		<!-- Video Pitch -->
 		<div class="ui left aligned container">
-			<iframe width="560" height="315" src="https://www.youtube.com/embed/Cz979ejKB_U" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-			{{-- src="{{$project->video}}" --}}
+			<iframe width="560" height="315" src="{{ $project->video }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="display: block;margin: 5% auto;"></iframe>
 		</div>
 		<!-- Short Description -->
 		<div class="ui left aligned container">
-			<p><strong>Brief Description</strong></p>{{-- {{$project->short_description}}</p> --}}
-			<p>This project...</p>
+			<p><strong>Pitch</strong></p>
+			<p>{{ $project->short_description }}</p>
 		</div>
 		<!-- Long Description -->
 		<div class="ui left aligned container">
-			<p><strong>Detailed Description</strong></p>{{-- {{$project->long_description}}</p> --}}
-			<p>This project...It includes...</p>
+			<p><strong>Details</strong></p>
+			<p>{{ $project->long_description }}</p>
 		</div>
 		<!-- Category -->
 		<div class="ui left aligned container">
-			<p><strong>Tags</strong></p> {{-- {{$project->tags()->pluck('name')}}</p> --}}
-			{{-- @foreach($skillset as $skill) --}}
-			<div class="ui label pill">Tag1</div>{{-- {{ $skill }}</div> --}}
-			<div class="ui label pill">Tag2</div>
-			<div class="ui label pill">Tag3</div>
-			<div class="ui label pill">Tag4</div>
-			{{-- @endforeach --}}
+			<p><strong>Labels</strong></p>
+			@foreach($project->labels as $label)
+				<div class="ui label pill">{{ $label->name }}</div>
+			@endforeach
 		</div>
 		<!-- Skillset -->
 		<div class="ui left aligned container">
 			<p><strong>Required Skillset</strong></p>
-			{{-- @foreach($skillset as $skill) --}}
-				<div class="ui label pill">Skill1</div>{{-- {{ $skill }}</div> --}}
-					<div class="ui label pill">Skill2</div>
-					<div class="ui label pill">Skill3</div>
-					<div class="ui label pill">Skill4</div>
-			{{-- @endforeach --}}
+			@foreach($project->skills as $skill)
+				<div class="ui label pill">{{ $skill->name }}</div>
+			@endforeach
 		</div>
 		<!-- Associated Course -->
 		<div class="ui left aligned container">
-			<p><strong>Associated Course</strong> </p>
+			<p><strong>Associated Course</strong></p>
 			<p>Computer Graphics</p>
 		</div>
 		<!-- Associated Team -->
