@@ -65,7 +65,7 @@
 				<option value="">Web Development Class</option>
 				@if(isset($courses))
 					@foreach($courses->all() as $course)
-						<option value={{$course['id']}}>{{$course['name']}}</option>
+						<option value={{ $course->id }}>{{ $course->name }}</option>
 					@endforeach
 				@endif
 			</select>
@@ -77,7 +77,7 @@
 				<option value="">Finance</option>
 				@if(isset($labels))
 					@foreach($labels -> all() as $label)
-						<option value={{$label['id']}}>{{$label['name']}}</option>
+						<option value={{ $label->id }}>{{ $course->name }}</option>
 					@endforeach
 				@endif
 			</select>
@@ -89,7 +89,7 @@
 				<option value="">Java, HTML</option>
 				@if(isset($skillsets))
 					@foreach($skillsets->all() as $skillset)
-						<option value={{$skillset['id']}}>{{$skillset['name']}}</option>
+						<option value={{ $skillset->id }}>{{ $skillset->name }}</option>
 					@endforeach
 				@endif
 			</select>
