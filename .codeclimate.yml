@@ -27,6 +27,9 @@ plugins:
       editorconfig: .editorconfig
   sonar-php:
     enabled: true
+    checks:
+      php:S1192: # disable "Define a constant instead of duplicating this literal" check
+        enabled: false
 exclude_patterns:
   - "**/*.jpg"
   - "**/*.jpeg"
