@@ -27,6 +27,11 @@ Route::resource('projects', 'ProjectController')->only([
 	'index', 'show', 'create', 'store'
 ]);
 
+/* users */
+Route::resource('users', 'UserController')->only([
+	'edit', 'update'
+]);
+
 /* courses */
 Route::resource('courses', 'CourseController');
 Route::get('/user/profile', 'CourseController@index');
@@ -38,8 +43,3 @@ Route::post('/contact', 'ContactMessageController@post');
 
 /* teams */
 Route::resource('teams', 'TeamController');
-
-/* dummy routes */
-Route::get('/user/edit', function () {
-	return view('user.edit');
-});
