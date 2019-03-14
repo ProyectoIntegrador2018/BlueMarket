@@ -48,7 +48,7 @@
 </div>
 <style>
 	.container {
-	  margin-bottom: 25px;
+		margin-bottom: 25px;
 	}
 </style>
 @endsection
