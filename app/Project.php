@@ -26,4 +26,9 @@ class Project extends Model
 	public function labels() {
 		return $this->belongsToMany('App\Tag', 'tag_project', 'project_id', 'tag_id')->where('tags.type', 2);
 	}
+
+	// Get the course the project belongs to
+	public function course() {
+		return $this->belongsTo('App\Course');
+	}
 }

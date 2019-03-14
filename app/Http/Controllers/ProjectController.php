@@ -37,17 +37,18 @@ class ProjectController extends Controller
 	public function store(Request $request) {
 		$attributes = request()->validate([
 			'projectName' => ['required'],
-			'videoPitch' => ['present'],
-			'longDescription' => ['present'],
-			'shortDescription' => ['present'],
-			'projectImage' => ['present'],
-			'label' => 'present|array|min:1',
+			'videoPitch' => ['required'],
+			'longDescription' => ['required'],
+			'shortDescription' => ['required'],
+			'courses' => ['required'],
+			'projectImage' => ['required'],
+			'label' => 'required|array|min:1',
 			// verify each elm in label[] to exist as a label tag record
 			'label.*' => [
 				'integer',
 				Rule::in(Tag::where('type', 2)->pluck('id')),
 			],
-			'skillsets' => 'present|array|min:1',
+			'skillsets' => 'required|array|min:1',
 			// verify each elm in skillsets[] to exist as a skill tag record
 			'skillsets.*' => [
 				'integer',
@@ -72,6 +73,7 @@ class ProjectController extends Controller
 			'video' => $attributes['videoPitch'],
 			'long_description' => $attributes['longDescription'],
 			'short_description' => $attributes['shortDescription'],
+			'course_id' => $attributes['courses'],
 			'photo' => $attributes['projectImage']
 		]);
 	}
