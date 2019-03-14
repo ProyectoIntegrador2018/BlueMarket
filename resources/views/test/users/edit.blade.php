@@ -5,33 +5,30 @@
 
 @section('content')
 	<div class="padded content">
-		<div class="container">
-			<div class="row">
-				{{-- @include('admin.sidebar') --}}
+		{{-- @include('admin.sidebar') --}}
 
-				@if ($errors->any())
-				<ul class="alert alert-danger">
-					@foreach ($errors->all() as $error)
-						<li>{{ $error }}</li>
-					@endforeach
-				</ul>
-				@endif
+		<h1>Edit user</h1>
+		<br />
 
-				<form method="POST" action="{{ url('/users/' . $user->id) }}" accept-charset="UTF-8" class="ui form form-horizontal" enctype="multipart/form-data">
-					{{ method_field('PATCH') }}
-					{{ csrf_field() }}
+		@if ($errors->any())
+		<ul class="alert alert-danger">
+			@foreach ($errors->all() as $error)
+				<li>{{ $error }}</li>
+			@endforeach
+		</ul>
+		@endif
 
-					@include ('test.users.form', ['formMode' => 'edit'])
+		<form method="POST" action="{{ url('/users/' . $user->id) }}" accept-charset="UTF-8" class="ui form form-horizontal" enctype="multipart/form-data">
+			{{ method_field('PATCH') }}
+			{{ csrf_field() }}
 
-				</form>
+			<!-- Fields are loaded from form file -->
+			@include ('test.users.form')
+			<input class="ui primary button" type="submit" value="Update">
+		</form>
 
-				<a href="{{ url('/users/' . $user->id) }}" title="Back">
-					<button class="ui white button btn btn-warning btn-sm">
-						<i class="fa fa-arrow-left" aria-hidden="true"></i>Back
-					</button>
-				</a>
-
-			</div>
-		</div>
+		<a href="{{ url('/users') }}" title="Back">
+			<button class="ui button">Back</button>
+		</a>
 	</div>
 @endsection
