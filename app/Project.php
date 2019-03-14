@@ -12,9 +12,21 @@ class Project extends Model
 	 * @var array
 	 */
 	protected $guarded = [];
+<<<<<<< HEAD
 	// Get all the tags of a project (skills + labels)
+=======
+
+>>>>>>> Added tags to project cards and search functionslity to project cards.
 	public function tags() {
-		return $this->belongsToMany('App\Tag', 'tag_project', 'project_id', 'tag_id');
+		return $this->belongsToMany('App\Tag', 'tag_project', 'project_id', 'tag_id')->join('tags as tgs', 'tag_project.tag_id', '=', 'tgs.id');
+	}
+
+	public function labels() {
+		return $this->belongsToMany('App\Tag', 'tag_project', 'project_id', 'tag_id')->join('tags as tgs', 'tag_project.tag_id', '=', 'tgs.id')->where('tgs.type', 2);
+	}
+
+	public function skills() {
+		return $this->belongsToMany('App\Tag', 'tag_project', 'project_id', 'tag_id')->join('tags as tgs', 'tag_project.tag_id', '=', 'tgs.id')->where('tgs.type', 1);
 	}
 
 	// Get the skills a project is looking for (required skills)

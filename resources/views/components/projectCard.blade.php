@@ -11,13 +11,13 @@
 	<div class="extra content">
 		<p class="ui sub header">Required skills</p>
 		@foreach($skillset as $skill)
-			<div class="ui bluemarket-skill label">{{ $skill }}</div>
+			<div class="ui bluemarket-skill label">{{ $skill->name }}</div>
 		@endforeach
 	</div>
 	<div class="extra content">
 		<p class="ui sub header">Labels</p>
 		@foreach($labels as $label)
-			<div class="ui bluemarket-skill label">{{ $label }}</div>
+			<div class="ui bluemarket-skill label">{{ $label->name }}</div>
 		@endforeach
 	</div>
 	<div class="ui bottom attached label content">{{ $publicMilestone }}</div>
