@@ -16,6 +16,9 @@
 		<!-- Search by Tag -->
 		<div class="field">
 			<label for="tags">Tags</label>
+{{-- 			@foreach($project->tags as $tag)
+				<div class="ui bluemarket-skill label">{{$tag->name}}</div>
+			@endforeach --}}
 			<select name="tags" class="ui fluid search dropdown searchTags" multiple="">
 				<option value="">web-dev, fun, teamwork</option>
 				<option value="1">tag1</option>

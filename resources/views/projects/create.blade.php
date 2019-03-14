@@ -10,6 +10,11 @@
 		text-align: center;
 		color: #C7C7C7;
 	}
+
+	.imgUploader {
+		margin-bottom: 20px;
+	}
+
 </style>
 <div class="padded content">
 	<form class="ui form" method="POST" action="/projects">
@@ -21,9 +26,7 @@
 				<div class="imgUploader" class="imagePreviewContainer">
 					<img src="https://lorempixel.com/400/400" alt="Project Image" class="ui medium image" id="projectImagePreview"/>
 				</div>
-				<a href="#" class="imgUploader">
-					<button class="upload-image-button ui button primary" type="button">Upload Image</button>
-				</a>
+				<button class="imgUploader upload-image-button ui button primary" type="button" href="#">Upload Image</button>
 			</div>
 			<input id="imgInput" name="projectImage" type="file" style="display:none" accept="image/x-png,image/jpeg,image/png" onchange="updateImage(this)">
 		</div>
@@ -61,7 +64,7 @@
 			<select name="courses" class="ui search dropdown">
 				<option value="">Web Development Class</option>
 				@if(isset($courses))
-					@foreach($courses -> all() as $course)
+					@foreach($courses->all() as $course)
 						<option value={{$course['id']}}>
 						{{$course['name']}}</option>
 					@endforeach
@@ -96,17 +99,17 @@
 		<!-- Milestone -->
 		<div class="field">
 			<label for="milestone">Public Milestone</label>
-			<input type="text" name="milestone" placeholder="Design">
+			<input type="text" name="milestone" placeholder="Ex. Design">
 		</div>
 		<!-- Short Description -->
 		<div class="field">
 			<label for="shortDescription">Brief Description</label>
-			<textarea name="shortDescription" rows="2" placeholder="The project is a web page for personal financial organization"></textarea>
+			<textarea name="shortDescription" rows="2" placeholder="Ex. The project is a web page for personal financial organization"></textarea>
 		</div>
 		<!-- Long Description -->
 		<div class="field">
 			<label for="longDescription">Detailed Description</label>
-			<textarea name="longDescription" placeholder="The project consists of a single page application where users can sign up or login. It includes..."></textarea>
+			<textarea name="longDescription" placeholder="Ex. The project consists of a single page application where users can sign up or login. It includes..."></textarea>
 		</div>
 		<!-- Video Pitch -->
 		<div class="field">
