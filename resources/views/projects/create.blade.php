@@ -17,10 +17,10 @@
 
 </style>
 <div class="padded content">
-	<form class="ui form" method="POST" action="/projects">
+	<form class="ui form {{ $errors->any() ? 'error': '' }}" method="POST" action="/projects">
 		@csrf
 		<!-- Project Image -->
-		<div class="projectImage field">
+		<div class="projectImage field {{ $errors->has('projectImage') ? 'error': '' }}">
 			<label for="projectImage">Project Image</label>
 			<div class="projectImageUploaderContainer">
 				<div class="imgUploader" class="imagePreviewContainer">
@@ -31,7 +31,7 @@
 			<input id="imgInput" name="projectImage" type="file" style="display:none" accept="image/x-png,image/jpeg,image/png" onchange="updateImage(this)">
 		</div>
 		<!-- Project Name -->
-		<div class="field">
+		<div class="field {{ $errors->has('projectName') ? 'error': '' }}">
 			<label for="projectName">Project Name</label>
 			<input type="text" name="projectName" placeholder="Project Name">
 		</div>
@@ -43,7 +43,7 @@
 					<select name="teamName" class="ui search dropdown">
 						<option value="">Existing team</option>
 						@if(isset($teams))
-							@foreach($teams -> all() as $teams)
+							@foreach($teams->all() as $teams)
 								<option value={{$team['id']}}>{{$category['name']}}</option>
 							@endforeach
 						@endif
@@ -59,60 +59,58 @@
 			</div>
 		</div> --}}
 		<!-- Associated Course -->
-		<div class="field">
+		<div class="field {{ $errors->has('courses') ? 'error': '' }}">
 			<label for="courses">Associated Course</label>
 			<select name="courses" class="ui search dropdown">
 				<option value="">Web Development Class</option>
 				@if(isset($courses))
 					@foreach($courses->all() as $course)
-						<option value={{$course['id']}}>
-						{{$course['name']}}</option>
+						<option value={{$course['id']}}>{{$course['name']}}</option>
 					@endforeach
 				@endif
 			</select>
 		</div>
-		<!-- Category -->
-		<div class="field">
-			<label for="category">Category</label>
-			<select name="category" class="ui search dropdown">
+		<!-- Labels -->
+		<div class="field {{ $errors->has('label') ? 'error': '' }}">
+			<label for="label">Labels</label>
+			<select name="label" class="ui search dropdown">
 				<option value="">Finance</option>
-				@if(isset($categories))
-					@foreach($categories -> all() as $category)
-						<option value={{$category['id']}}>{{$category['name']}}</option>
+				@if(isset($labels))
+					@foreach($labels -> all() as $label)
+						<option value={{$label['id']}}>{{$label['name']}}</option>
 					@endforeach
 				@endif
 			</select>
 		</div>
 		<!-- Skillset -->
-		<div class="field">
+		<div class="field {{ $errors->has('skillsets') ? 'error': '' }}">
 			<label for="skillsets">Skillsets</label>
 			<select name="skillsets" multiple="" class="ui fluid dropdown">
 				<option value="">Java, HTML</option>
 				@if(isset($skillsets))
-					@foreach($skillsets -> all() as $skillset)
-						<option value={{$skillset['id']}}>
-						{{$skillset['name']}}</option>
+					@foreach($skillsets->all() as $skillset)
+						<option value={{$skillset['id']}}>{{$skillset['name']}}</option>
 					@endforeach
 				@endif
 			</select>
 		</div>
 		<!-- Milestone -->
-		<div class="field">
+		<div class="field {{ $errors->has('milestone') ? 'error': '' }}">
 			<label for="milestone">Public Milestone</label>
 			<input type="text" name="milestone" placeholder="Ex. Design">
 		</div>
 		<!-- Short Description -->
-		<div class="field">
+		<div class="field {{ $errors->has('shortDescription') ? 'error': '' }}">
 			<label for="shortDescription">Brief Description</label>
 			<textarea name="shortDescription" rows="2" placeholder="Ex. The project is a web page for personal financial organization"></textarea>
 		</div>
 		<!-- Long Description -->
-		<div class="field">
+		<div class="field {{ $errors->has('longDescription') ? 'error': '' }}">
 			<label for="longDescription">Detailed Description</label>
 			<textarea name="longDescription" placeholder="Ex. The project consists of a single page application where users can sign up or login. It includes..."></textarea>
 		</div>
 		<!-- Video Pitch -->
-		<div class="field">
+		<div class="field {{ $errors->has('videoPitch') ? 'error': '' }}">
 			<label for="videoPitch">Pitch Video</label>
 			<input type="text" name="videoPitch" placeholder="https://youtube.com/watch?v=238028302">
 		</div>
@@ -187,11 +185,11 @@
 					}
 				]
 			},
-			category:{
-				identifier:'category',
+			label:{
+				identifier:'label',
 				rules:[{
 						type:'empty',
-						prompt:'Please select a category'
+						prompt:'Please select a label'
 					}
 				]
 			},

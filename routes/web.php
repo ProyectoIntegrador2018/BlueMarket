@@ -43,11 +43,11 @@ Route::get('/user/edit', function () {
 	return view('editUserProfile');
 });
 
-Route::get('/marce', function () {
+Route::get('/details', function () {
 	return view('projects.details');
 });
 
-Route::get('/marceCreate', function () {
+Route::get('/create', function () {
 	return view('projects.create');
 });
 

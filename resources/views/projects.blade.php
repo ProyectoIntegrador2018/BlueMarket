@@ -11,7 +11,7 @@
 		<!-- Search by Name -->
 		<div class="field">
 			<label for="searchName">Name</label>
-			<input id="searchName" type="text" name="searchName" placeholder="A cool project">
+			<input id="searchName" type="text" name="searchName" placeholder="e.g. A cool project">
 		</div>
 		<!-- Search by Tag -->
 		<div class="field">
@@ -20,47 +20,78 @@
 				<div class="ui bluemarket-skill label">{{$tag->name}}</div>
 			@endforeach --}}
 			<select name="tags" class="ui fluid search dropdown searchTags" multiple="">
-				<option value="">web-dev, fun, teamwork</option>
+				<option value="">e.g. web-dev, fun, teamwork</option>
 				<option value="1">tag1</option>
 				<option value="2">tag2</option>
 				<option value="3">tag3</option>
 			</select>
 		</div>
-		<button id="searchButton" type="submit" class="ui primary submit button" onclick="filter()">Search</button>
+		<button id="searchButton" type="button" class="ui primary submit button" onclick="filterProjects()">Search</button>
 	</form>
 	<!-- Project Cards -->
 	<div class="ui four stackable cards">
-		@for ($i = 0; $i < 10; $i++)
-			@projectCard(['projectImage' => 'https://source.unsplash.com/400x300/?project', 'projectName' => 'A cool project', 'category' => 'Videogames', 'projectShortDescription' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.', 'skillset' => ['Skill 0', 'Skill 1', 'Skill 2'], 'publicMilestone' => 'shipping'])
+		@foreach ($projects as $project)
+			@projectCard(['projectImage' => $project['photo'], 'projectName' => $project['name'], 'projectShortDescription' => $project['short_description'], 'skillset' => ['Skill 0', 'Skill 1', 'Skill 2'], 'labels' => ['Label 0', 'Label 1', 'Label 2'], 'publicMilestone' => 'shipping'])
 			@endprojectCard
-		@endfor
+		@endforeach
 	</div>
 </div>
 @endsection
 @section('scripts')
 <script>
 	$('.ui.dropdown').dropdown();
-	let projects = {!! $projects !!}; //need to get from database
-	function filter(){
-		let name = "ProjectName"; //need to get from database
-		let regexName = new RegExp(name, 'i');
-		let searchTags = ["webDev", "anotherOne"]; //need to get from database
+	let projects = {!! $projects !!};
+	function filterProjects(){
+		let searchBar = $("#searchName").val();
+		let regexName = new RegExp(searchBar, 'i');
+		// let searchTags = ["webDev", "anotherOne"]; //need to get from database
+		// let searchTagsSorted = searchTags.sort();
+		// let regexTags = new RegExp(searchTagsSorted.join(","), 'i');
 
-		let searchTagsSorted = searchTags.sort();
-		let regexTags = new RegExp(searchTagsSorted.join(","), 'i');
-
-		let result = $.grep(project, function(project){
+		let result = $.grep(projects, function(project){
+			console.log(project.name);
 			if(regexName.test(project.name)){
-				let tags = project.tags.msp(function(tag){
-					return tag.name;
-				});
-				let projectTags = tags.sort();
-				let stringFromProjectTags = projectTags.join(",");
-				if(regexTags.test(stringFromProjectTags)){
-					return project;
-				}
+				// let tags = project.tags.map(function(tag){
+				// 	return tag.name;
+				// });
+				// let projectTags = tags.sort();
+				// let stringFromProjectTags = projectTags.join(",");
+				// if(regexTags.test(stringFromProjectTags)){
+				// 	return project;
+				// }
+				return project;
 			}
 		});
+		console.log(result);
+		let projectCardList = "";
+		for (index in result) {
+			let project = result[index];
+			// console.log(result[project]);
+			let projectCardContent = `<div class="card bluemarket-projectcard">
+										<div class="image">
+										   <img src=${project.photo}>
+										</div>
+									   <div class="content">
+									   		<div class="header">${project.name}</div>
+									   		<div class="description">${project.short_description}</div>
+									   </div>
+									   <div class="extra content">
+									   		<p class="ui sub header">Required skills</p>
+									   		<div class="ui label pill">Skill1</div>
+									   		<div class="ui label pill">Skill2</div>
+									   		<div class="ui label pill">Skill3</div>
+									   </div>
+									   <div class="extra content">
+									   		<p class="ui sub header">Labels</p>
+									   		<div class="ui label pill">Tag1</div>
+									   		<div class="ui label pill">Tag2</div>
+									   		<div class="ui label pill">Tag3</div>
+									   </div>
+									   <div class="ui bottom attached label content">SHIPPING</div>
+									   </div>`;
+			projectCardList = projectCardList.concat(projectCardContent);
+		}
+		$(".ui.four.stackable.cards").html(projectCardList);
 	}
 </script>
 @endsection

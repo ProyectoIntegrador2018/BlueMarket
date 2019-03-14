@@ -4,9 +4,6 @@
 	</div>
 	<div class="content">
 		<div class="header">{{ $projectName }}</div>
-		<div class="category">
-			{{ $category }}
-		</div>
 		<div class="description">
 			{{ $projectShortDescription }}
 		</div>
@@ -15,6 +12,12 @@
 		<p class="ui sub header">Required skills</p>
 		@foreach($skillset as $skill)
 			<div class="ui bluemarket-skill label">{{ $skill }}</div>
+		@endforeach
+	</div>
+	<div class="extra content">
+		<p class="ui sub header">Labels</p>
+		@foreach($labels as $label)
+			<div class="ui bluemarket-skill label">{{ $label }}</div>
 		@endforeach
 	</div>
 	<div class="ui bottom attached label content">{{ $publicMilestone }}</div>
