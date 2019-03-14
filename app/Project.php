@@ -14,7 +14,7 @@ class Project extends Model
 	protected $guarded = [];
 	// Get all the tags of a project (skills + labels)
 	public function tags() {
-		return $this->belongsToMany('App\Tag', 'tag_project', 'project_id', 'tag_id')->join('tags as tgs', 'tag_project.tag_id', '=', 'tgs.id');
+		return $this->belongsToMany('App\Tag', 'tag_project', 'project_id', 'tag_id');
 	}
 
 	// Get the skills a project is looking for (required skills)
