@@ -56,9 +56,9 @@ class UserController extends Controller {
 	}
 
 	private function updateImg($image) {
-		$path = isset($image) ? Storage::putFile('user/avatars', $image) : Auth::user()->picture_url;
+		$path = isset($image) ? Storage::putFile('public', $image) : Auth::user()->picture_url;
 		$user = Auth::user();
-		$user->picture_url = $path;
+		$user->picture_url = Storage::url($path);
 		$user->save();
 	}
 }

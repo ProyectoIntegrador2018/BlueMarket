@@ -43,8 +43,3 @@ Route::post('/contact', 'ContactMessageController@post');
 
 /* teams */
 Route::resource('teams', 'TeamController');
-
-/* dummy routes */
-// Route::get('/user/edit', function () {
-// 	return view('user.edit');
-// });
