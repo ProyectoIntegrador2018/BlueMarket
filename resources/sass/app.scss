@@ -391,3 +391,10 @@ $color-white: #fff;
 		width: 100%;
 	}
 }
+
+.ui.label.pill {
+	background-color: $color-primary;
+	color: $color-white;
+	margin-top: 1vh;
+	margin-bottom: 1vh;
+}
