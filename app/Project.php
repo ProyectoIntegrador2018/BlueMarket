@@ -12,7 +12,18 @@ class Project extends Model
 	 * @var array
 	 */
 	protected $guarded = [];
+	// Get all the tags of a project (skills + labels)
 	public function tags() {
 		return $this->belongsToMany('App\Tag', 'tag_project', 'project_id', 'tag_id');
+	}
+
+	// Get the skills a project is looking for (required skills)
+	public function skills() {
+		return $this->belongsToMany('App\Tag', 'tag_project', 'project_id', 'tag_id')->where('tags.type', 1);
+	}
+
+	// Get the labels a project has
+	public function labels() {
+		return $this->belongsToMany('App\Tag', 'tag_project', 'project_id', 'tag_id')->where('tags.type', 2);
 	}
 }
