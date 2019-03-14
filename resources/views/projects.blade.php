@@ -27,7 +27,7 @@
 	<!-- Project Cards -->
 	<div class="ui four stackable cards">
 		@foreach ($projects as $project)
-			@projectCard(['id'=> $project['id'],'projectImage' => $project['photo'], 'projectName' => $project['name'], 'projectShortDescription' => $project['short_description'], 'skillset' => $project->skills, 'labels' => $project->labels, 'publicMilestone' => 'shipping'])
+			@projectCard(['id'=> $project->id,'projectImage' => $project->photo, 'projectName' => $project->name, 'projectShortDescription' => $project->short_description, 'skillset' => $project->skills, 'labels' => $project->labels, 'publicMilestone' => 'shipping'])
 			@endprojectCard
 		@endforeach
 	</div>
