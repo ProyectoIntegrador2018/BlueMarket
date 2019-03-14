@@ -11,7 +11,7 @@
 		{{ method_field('PATCH')}}
 		{{ csrf_field() }}
 		<!-- User avatar -->
-		<div class="field {{ $errors->has('picture_url') ? 'error': '' }}">
+		<div class="field {{ $errors->has('avatar') ? 'error': '' }}">
 			<label for="avatar">Avatar</label>
 			<div class="image-container">
 				<div class="image-uploader preview-container">
@@ -27,7 +27,7 @@
 			<input type="text" name="name" value="{{ $user->name }}">
 		</div>
 		<!-- Skillset -->
-		<div class="field {{ $errors->has('tags') ? 'error': '' }}">
+		<div class="field {{ $errors->has('skills') ? 'error': '' }}">
 			<label for="skills">Skills</label>
 			@php
 				$user_skills_id = array();
