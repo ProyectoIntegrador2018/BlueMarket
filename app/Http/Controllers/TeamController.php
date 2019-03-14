@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Intervention\Image\ImageManagerStatic as Image;
+use Illuminate\Support\Facades\Storage;
+
 
 class TeamController extends Controller
 {
@@ -49,6 +52,9 @@ class TeamController extends Controller
 		]);
 
 		$team = $this->createTeam($attributes, $request->file('teamImage'));
+
+		$this->save_resized_image($request);
+
 		if (!$team->exists) {
 			abort(500);
 		}
@@ -56,6 +62,18 @@ class TeamController extends Controller
 		$team->members()->attach($team->leader_id);
 
 		return view('teams.details', compact('team'));
+	}
+
+	private function save_resized_image($req) {
+		if($req->hasFile('teamImage')) {
+			$ext = $req->teamImage->extension();
+			$path = $req->teamImage->store('teams/avatars');
+			$nameindex = strrpos($path, ".");
+			$name = substr($path, 0, $nameindex);
+			$resized_name = $name."_400x400.".$ext;
+			$resized_img = Image::make($req->teamImage)->fit(400);
+			Storage::put($resized_name, $resized_img->encode($ext));
+		}
 	}
 
 	/**
