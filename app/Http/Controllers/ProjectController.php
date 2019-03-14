@@ -40,6 +40,7 @@ class ProjectController extends Controller
 			'videoPitch' => ['present'],
 			'longDescription' => ['present'],
 			'shortDescription' => ['present'],
+			'courses' => ['present'],
 			'projectImage' => ['present'],
 			'label' => 'present|array|min:1',
 			// verify each elm in label[] to exist as a label tag record
@@ -72,6 +73,7 @@ class ProjectController extends Controller
 			'video' => $attributes['videoPitch'],
 			'long_description' => $attributes['longDescription'],
 			'short_description' => $attributes['shortDescription'],
+			'course_id' => $attributes['courses'],
 			'photo' => $attributes['projectImage']
 		]);
 	}

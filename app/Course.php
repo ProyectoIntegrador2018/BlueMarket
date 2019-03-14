@@ -29,4 +29,8 @@ class Course extends Model {
 		return $this->belongsToMany('App\Course', 'client_supplier_course', 'client_id', 'supplier_id');
 	}
 
+	// Get all the projects of a course
+	public function projects() {
+		return $this->hasMany('App\Project');
+	}
 }
