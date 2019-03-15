@@ -11,12 +11,12 @@
 		<!-- Search by Name -->
 		<div class="field">
 			<label for="searchName">Name</label>
-			<input id="searchName" type="text" name="searchName" placeholder="e.g. A cool project" onkeyup="filterProjects()">
+			<input id="searchName" type="text" name="searchName" placeholder="e.g. A cool project">
 		</div>
 		<!-- Search by Tag -->
 		<div class="field">
 			<label for="tags">Tags</label>
-			<select id="searchTags" name="tags" class="ui fluid search dropdown searchTags" multiple onchange="filterProjects()">
+			<select id="searchTags" name="tags" class="ui fluid search dropdown searchTags" multiple>
 				@foreach ($tags as $tag)
 					<option value={{ $tag->id }}>{{ $tag->name }}</option>
 				@endforeach
@@ -36,77 +36,5 @@
 @section('scripts')
 <script>
 	$('.ui.dropdown').dropdown();
-
-	let projects = {!! $projects !!};
-
-	function filterProjects(){
-		let searchBar = $("#searchName").val();
-		let regexName = new RegExp(searchBar, 'i');
-		let searchTags = [];
-		$('#searchTags > option:selected').each(function() {
-			searchTags.push($(this).text());
-		});
-		let searchTagsSorted = searchTags.sort();
-		let searchTagsString = '.*' + searchTagsSorted.join(",.*");
-		let regexTags = new RegExp(searchTagsString, 'i');
-		console.log(regexTags);
-
-		let result = $.grep(projects, function(project){
-			if(regexName.test(project.name)){
-				let projectTags = project.labels.concat(project.skills);
-				let tags = projectTags.map(function(tag){
-					return tag.name;
-				});
-				let projectTagsSorted = tags.sort();
-				let stringFromProjectTags = projectTagsSorted.join(",");
-				console.log(stringFromProjectTags);
-				if(regexTags.test(stringFromProjectTags)){
-					return project;
-				}
-			}
-		});
-
-		let projectCardList = "";
-
-		for (index in result) {
-			let project = result[index];
-			console.log(project);
-
-			let projectSkills = "";
-			for(skillIndex in project.skills) {
-				let skill = project.skills[skillIndex];
-				projectSkills =	projectSkills.concat(`<div class="ui label pill">${skill.name}</div>`);
-			}
-
-			let projectLabels = "";
-			for(labelIndex in project.labels) {
-				let label = project.labels[labelIndex];
-				projectLabels =	projectLabels.concat(`<div class="ui label pill">${label.name}</div>`);
-			}
-
-			let projectCardContent =	`<a class="item" href="${window.location.href}/${project.id}">
-											<div class="ui card projectcard">
-												<div class="image">
-												<img src=${project.photo}>
-												</div>
-												<div class="content">
-												<div class="header">${project.name}</div>
-													<div class="description">${project.short_description}</div>
-												</div>
-												<div class="extra content">
-													<p class="ui sub header">Required skills</p>
-													${projectSkills}
-												</div>
-												<div class="extra content">
-													<p class="ui sub header">Labels</p>
-													${projectLabels}
-												</div>
-												<div class="ui bottom attached label content">SHIPPING</div>
-											</div>
-										</a>`;
-			projectCardList = projectCardList.concat(projectCardContent);
-		}
-		$(".ui.four.stackable.cards").html(projectCardList);
-	}
 </script>
 @endsection
