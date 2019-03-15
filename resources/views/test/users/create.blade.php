@@ -18,10 +18,10 @@
 		</ul>
 		@endif
 
-		<form method="POST" action="{{ url('/users') }}" accept-charset="UTF-8" class=" ui form form-horizontal" enctype="multipart/form-data">
-			{{ csrf_field() }}
+		<form method="POST" action="{{ url('/users') }}" accept-charset="UTF-8" class="ui error form form-horizontal" enctype="multipart/form-data">
+			@csrf
 
-			@include ('test.users.form')
+			@include('test.users.form')
 			<input class="ui primary button" type="submit" value="Create">
 		</form>
 
