@@ -7,27 +7,31 @@
 	<div class="padded content">
 		{{-- @include('admin.sidebar') --}}
 
-		<div class="userInfo">
-			<img class="ui avatar image" src="<?= $user->picture_url ?>" alt="User profile picture">
-			<h1> {{ $user->name }} </h1>
-			<div>
-				<!-- Aquí tengo que confirmar cómo me van a pasar el rol -->
-				@switch($user->role)
-					@case(1)
-					<span class="tag teacher">Teacher</span>
-					@break
+		<div class="ui items userInfo">
+			<div class="item">
+				<img class="ui tiny circular avatar image" src="<?= $user->picture_url ?>" alt="User profile picture">
+				<div class="middle aligned content userInfo">
+					<h1> {{ $user->name }} </h1>
+					<div>
+						<!-- Confirmar con backend -->
+						@switch($user->role)
+							@case(1)
+							<span class="tag teacher">Teacher</span>
+							@break
 
-					@case(2)
-					<span class="tag student">Student</span>
-					@break
+							@case(2)
+							<span class="tag student">Student</span>
+							@break
 
-					@case(3)
-					<span class="tag admin">Administrator</span>
-					@break
+							@case(3)
+							<span class="tag admin">Administrator</span>
+							@break
 
-					@default
-					<span class="tag admin">Administator</span>
-				@endswitch
+							@default
+							<span class="tag admin">Administator</span>
+						@endswitch
+					</div>
+				</div>
 			</div>
 
 			<br>
