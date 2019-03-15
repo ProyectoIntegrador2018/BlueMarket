@@ -404,8 +404,8 @@ span.tag {
 		color: white;
 	}
 	&.admin {
-		background-color: lightsalmon;
-		color: black;
+		background-color: #e95035;
+		color: white;
 	}
 }
 
@@ -427,10 +427,19 @@ table.table.userInfo {
 
 .detail-container {
 	margin-top: 25px;
-div.ui.search {
+}
+form.search {
 	display: inline-block;
-	padding: 20px 20px 20px 0px;
-	.prompt {
-		border-radius: 5px !important;
+	padding: 20px 0px;
+	div.ui.search {
+		.prompt {
+			border-radius: 5px !important;
+		}
 	}
+
+}
+
+div.userInfo {
+	display: inline-block;
+	padding: 0px 40px;
 }
