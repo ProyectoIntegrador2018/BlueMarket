@@ -7,8 +7,8 @@
 		<!-- Project Name -->
 		<h1 class="ui left aligned container">{{ $project->name }}</h1>
 		<!-- Video Pitch -->
-		<div class="ui left aligned container">
-			<iframe width="560" height="315" src="{{ $project->video }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="display: block;margin: 5% auto;"></iframe>
+		<div class="ui embed container" data-source="youtube" data-id="O6Xo21L0ybE">
+			<iframe src="{{ $project->video }}" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 		</div>
 		<!-- Short Description -->
 		<div class="ui left aligned container">
