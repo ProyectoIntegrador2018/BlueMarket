@@ -33,36 +33,13 @@
 		<!-- Project Name -->
 		<div class="field {{ $errors->has('projectName') ? 'error': '' }}">
 			<label for="projectName">Project Name</label>
-			<input type="text" name="projectName" placeholder="Project Name">
+			<input type="text" name="projectName" placeholder="e.g. Best Project">
 		</div>
-		<!-- Associated Team -->
-		{{-- <div class="field">
-			<label for="teamName">Associated Team</label>
-			<div class="fields">
-				<div class="seven wide field">
-					<select name="teamName" class="ui search dropdown">
-						<option value="">Existing team</option>
-						@if(isset($teams))
-							@foreach($teams->all() as $teams)
-								<option value={{$team['id']}}>{{$category['name']}}</option>
-							@endforeach
-						@endif
-					</select>
-				</div>
-				<div class="two wide field">
-					<br>
-					<p id="or">or</p>
-				</div>
-				<div class="seven wide field">
-					<input type="text" name="createTame" placeholder="New Team Name">
-				</div>
-			</div>
-		</div> --}}
 		<!-- Associated Course -->
 		<div class="field {{ $errors->has('courses') ? 'error': '' }}">
 			<label for="courses">Associated Course</label>
 			<select name="courses" class="ui search dropdown">
-				<option value="">Web Development Class</option>
+				<option value="">e.g. Web Development Class</option>
 				@if(isset($courses))
 					@foreach($courses->all() as $course)
 						<option value={{ $course->id }}>{{ $course->name }}</option>
@@ -73,11 +50,11 @@
 		<!-- Labels -->
 		<div class="field {{ $errors->has('label') ? 'error': '' }}">
 			<label for="label">Labels</label>
-			<select name="label" class="ui search dropdown">
-				<option value="">Finance</option>
+			<select name="label" multiple class="ui search dropdown">
+				<option value="">e.g. Finance</option>
 				@if(isset($labels))
 					@foreach($labels -> all() as $label)
-						<option value={{ $label->id }}>{{ $course->name }}</option>
+						<option value={{ $label->id }}>{{ $label->name }}</option>
 					@endforeach
 				@endif
 			</select>
@@ -85,8 +62,8 @@
 		<!-- Skillset -->
 		<div class="field {{ $errors->has('skillsets') ? 'error': '' }}">
 			<label for="skillsets">Skillsets</label>
-			<select name="skillsets" multiple="" class="ui fluid dropdown">
-				<option value="">Java, HTML</option>
+			<select name="skillsets" multiple class="ui fluid dropdown">
+				<option value="">e.g. Java, HTML</option>
 				@if(isset($skillsets))
 					@foreach($skillsets->all() as $skillset)
 						<option value={{ $skillset->id }}>{{ $skillset->name }}</option>
@@ -96,23 +73,23 @@
 		</div>
 		<!-- Milestone -->
 		<div class="field {{ $errors->has('milestone') ? 'error': '' }}">
-			<label for="milestone">Public Milestone</label>
-			<input type="text" name="milestone" placeholder="Ex. Design">
+			<label for="milestone">sPublic Milestone</label>
+			<input type="text" name="milestone" placeholder="e.g. Design">
 		</div>
 		<!-- Short Description -->
 		<div class="field {{ $errors->has('shortDescription') ? 'error': '' }}">
 			<label for="shortDescription">Brief Description</label>
-			<textarea name="shortDescription" rows="2" placeholder="Ex. The project is a web page for personal financial organization"></textarea>
+			<textarea name="shortDescription" rows="2" placeholder="e.g. The project is a web page for personal financial organization"></textarea>
 		</div>
 		<!-- Long Description -->
 		<div class="field {{ $errors->has('longDescription') ? 'error': '' }}">
 			<label for="longDescription">Detailed Description</label>
-			<textarea name="longDescription" placeholder="Ex. The project consists of a single page application where users can sign up or login. It includes..."></textarea>
+			<textarea name="longDescription" placeholder="e.g. The project consists of a single page application where users can sign up or login. It includes..."></textarea>
 		</div>
 		<!-- Video Pitch -->
 		<div class="field {{ $errors->has('videoPitch') ? 'error': '' }}">
 			<label for="videoPitch">Pitch Video</label>
-			<input type="text" name="videoPitch" placeholder="https://youtube.com/watch?v=238028302">
+			<input type="text" name="videoPitch" placeholder="e.g. https://youtube.com/watch?v=238028302">
 		</div>
 		<!-- Register Button -->
 		<button id="registerButton" type="submit" class="ui primary submit button">Register Project</button>
