@@ -17,29 +17,30 @@
 
 </style>
 <div class="padded content">
+	<h1>Create new project</h1>
 	<form class="ui form {{ $errors->any() ? 'error': '' }}" method="POST" action="/projects">
 		@csrf
 		<!-- Project Image -->
 		<div class="projectImage field {{ $errors->has('projectImage') ? 'error': '' }}">
-			<label for="projectImage">Project Image</label>
+			<label for="projectImage">Project image</label>
 			<div class="projectImageUploaderContainer">
 				<div class="imgUploader" class="imagePreviewContainer">
-					<img src="https://lorempixel.com/400/400" alt="Project Image" class="ui medium image" id="projectImagePreview"/>
+					<img src="https://lorempixel.com/400/400" alt="Project image" class="ui medium image" id="projectImagePreview"/>
 				</div>
-				<button class="imgUploader upload-image-button ui button primary" type="button" href="#">Upload Image</button>
+				<button class="imgUploader upload-image-button ui button primary" type="button">Upload image</button>
 			</div>
 			<input id="imgInput" name="projectImage" type="file" style="display:none" accept="image/x-png,image/jpeg,image/png" onchange="updateImage(this)">
 		</div>
-		<!-- Project Name -->
+		<!-- Project name -->
 		<div class="field {{ $errors->has('projectName') ? 'error': '' }}">
-			<label for="projectName">Project Name</label>
+			<label for="projectName">Project name</label>
 			<input type="text" name="projectName" placeholder="e.g. Best Project">
 		</div>
-		<!-- Associated Course -->
+		<!-- Associated course -->
 		<div class="field {{ $errors->has('courses') ? 'error': '' }}">
-			<label for="courses">Associated Course</label>
+			<label for="courses">Associated course</label>
 			<select name="courses" class="ui search dropdown">
-				<option value="">e.g. Web Development Class</option>
+				<option value="">e.g. Web development class</option>
 				@if(isset($courses))
 					@foreach($courses->all() as $course)
 						<option value={{ $course->id }}>{{ $course->name }}</option>
@@ -61,7 +62,7 @@
 		</div>
 		<!-- Skillset -->
 		<div class="field {{ $errors->has('skillsets') ? 'error': '' }}">
-			<label for="skillsets">Skillsets</label>
+			<label for="skillsets">Skillset</label>
 			<select name="skillsets" multiple class="ui fluid dropdown">
 				<option value="">e.g. Java, HTML</option>
 				@if(isset($skillsets))
@@ -73,27 +74,27 @@
 		</div>
 		<!-- Milestone -->
 		<div class="field {{ $errors->has('milestone') ? 'error': '' }}">
-			<label for="milestone">sPublic Milestone</label>
+			<label for="milestone">Public milestone</label>
 			<input type="text" name="milestone" placeholder="e.g. Design">
 		</div>
-		<!-- Short Description -->
+		<!-- Short description -->
 		<div class="field {{ $errors->has('shortDescription') ? 'error': '' }}">
-			<label for="shortDescription">Brief Description</label>
+			<label for="shortDescription">Brief description</label>
 			<textarea name="shortDescription" rows="2" placeholder="e.g. The project is a web page for personal financial organization"></textarea>
 		</div>
-		<!-- Long Description -->
+		<!-- Long description -->
 		<div class="field {{ $errors->has('longDescription') ? 'error': '' }}">
-			<label for="longDescription">Detailed Description</label>
+			<label for="longDescription">Detailed description</label>
 			<textarea name="longDescription" placeholder="e.g. The project consists of a single page application where users can sign up or login. It includes..."></textarea>
 		</div>
-		<!-- Video Pitch -->
+		<!-- Pitch video -->
 		<div class="field {{ $errors->has('videoPitch') ? 'error': '' }}">
-			<label for="videoPitch">Pitch Video</label>
+			<label for="videoPitch">Pitch video</label>
 			<input type="text" name="videoPitch" placeholder="e.g. https://youtube.com/watch?v=238028302">
 		</div>
-		<!-- Register Button -->
-		<button id="registerButton" type="submit" class="ui primary submit button">Register Project</button>
-		<!-- Error Message -->
+		<!-- Register button -->
+		<button id="registerButton" type="submit" class="ui primary submit button">Register project</button>
+		<!-- Error message -->
 		<div class="ui error message"></div>
 	</form>
 </div>
