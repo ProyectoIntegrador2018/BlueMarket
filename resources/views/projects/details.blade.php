@@ -4,18 +4,18 @@
 
 <div class="padded content">
 	<div>
-		<!-- Project Name -->
+		<!-- Project name -->
 		<h1 class="ui left aligned container">{{ $project->name }}</h1>
-		<!-- Video Pitch -->
+		<!-- Pitch video -->
 		<div class="ui embed container">
 			<iframe src="{{ $project->video }}" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 		</div>
-		<!-- Short Description -->
+		<!-- Short description -->
 		<div class="ui left aligned container">
-			<p><strong>Pitch</strong></p>
+			<p><strong>Description</strong></p>
 			<p>{{ $project->short_description }}</p>
 		</div>
-		<!-- Long Description -->
+		<!-- Long description -->
 		<div class="ui left aligned container">
 			<p><strong>Details</strong></p>
 			<p>{{ $project->long_description }}</p>
@@ -29,20 +29,20 @@
 		</div>
 		<!-- Skillset -->
 		<div class="ui left aligned container">
-			<p><strong>Required Skillset</strong></p>
+			<p><strong>Required skillset</strong></p>
 			@foreach($project->skills as $skill)
 				<div class="ui label pill">{{ $skill->name }}</div>
 			@endforeach
 		</div>
-		<!-- Associated Course -->
+		<!-- Associated course -->
 		<div class="ui left aligned container">
-			<p><strong>Associated Course</strong></p>
-			<p>Computer Graphics</p>
+			<p><strong>Associated course</strong></p>
+			<p>e.g. Computer Graphics</p>
 		</div>
-		<!-- Associated Team -->
+		<!-- Associated team -->
 		<div class="ui left aligned container">
-			<p><strong>Associated Team</strong></p>
-			<p>Best Team Ever</p>
+			<p><strong>Associated team</strong></p>
+			<p>e.g. Best Team Ever</p>
 		</div>
 	</div>
 </div>
