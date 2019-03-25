@@ -22,13 +22,13 @@
 			</ul>
 		</div>
 	@endif
-	<form class="ui form {{ $errors->any() ? 'error': '' }}" method="POST" action="/projects">
+	<form class="ui form {{ $errors->any() ? 'error': '' }}" method="post" enctype="multipart/form-data" action="/projects">
 		@csrf
 		<!-- Project Image -->
 		<div class="projectImage field {{ $errors->has('projectImage') ? 'error': '' }}">
 			<label for="projectImage">Project image</label>
 			<div class="projectImageUploaderContainer">
-				<div class="imgUploader" class="imagePreviewContainer">
+				<div class="imgUploader imagePreviewContainer">
 					{{-- <img src="https://lorempixel.com/400/400" alt="Project image" class="ui medium image" id="projectImagePreview"/> --}}
 				</div>
 				<button class="imgUploader upload-image-button ui button primary" type="button">Upload image</button>
@@ -39,12 +39,12 @@
 		<!-- Project name -->
 		<div class="field {{ $errors->has('projectName') ? 'error': '' }}">
 			<label for="projectName">Project name</label>
-			<input type="text" name="projectName" placeholder="e.g. Best Project">
+			<input type="text" name="projectName" placeholder="e.g. Best Project" value="{{ old('projectName') }}">
 		</div>
 		<!-- Associated course -->
 		<div class="field {{ $errors->has('courses') ? 'error': '' }}">
 			<label for="course">Associated course</label>
-			<select name="course" id="course" class="ui search dropdown">
+			<select name="course" id="course" class="ui search dropdown" value="{{ old('course') }}">
 				<option value="">e.g. Web development class</option>
 				@if(isset($courses))
 					@foreach($courses->all() as $course)
@@ -58,7 +58,7 @@
 			<label for="teamName">Associated Team</label>
 			<div class="fields">
 				<div class="seven wide field">
-					<select name="teamId" class="ui search dropdown" value="">
+					<select name="teamId" class="ui search dropdown {{ $errors->has('teamId') || $errors->has('bothTeams') ? 'error': '' }}" value="{{ old('teamId') }}">
 						<option value="">Associate an existing team</option>
 						@if(isset($teams))
 							@foreach($teams->all() as $team)
@@ -70,15 +70,15 @@
 				<div class="two wide field">
 					<p style="font-weight: bold; font-size: 2rem; color: black; text-align: center;">OR</p>
 				</div>
-				<div class="seven wide field">
-					<input type="text" name="createTeam" placeholder="New team name">
+				<div class="seven wide field {{ $errors->has('bothTeams') ? 'error': '' }}">
+					<input type="text" name="createTeam" placeholder="Create a new team" value="{{ old('createTeam') }}">
 				</div>
 			</div>
 		</div>
 		<!-- Labels -->
 		<div class="field {{ $errors->has('label') ? 'error': '' }}">
 			<label for="label">Labels</label>
-			<select name="labels[]" id="label" multiple class="ui search dropdown">
+			<select name="labels[]" id="labels" multiple class="ui search dropdown">
 				<option value="">e.g. Finance</option>
 				@if(isset($labels))
 					@foreach($labels->all() as $label)
@@ -90,7 +90,7 @@
 		<!-- Skillset -->
 		<div class="field {{ $errors->has('skillsets') ? 'error': '' }}">
 			<label for="skillsets">Skillset</label>
-			<select name="skillsets" multiple class="ui search dropdown">
+			<select id="skillsets" name="skillsets[]" multiple class="ui fluid dropdown" value="{{ old('skillsets[]') }}">
 				<option value="">e.g. Java, HTML</option>
 				@if(isset($skillsets))
 					@foreach($skillsets->all() as $skillset)
@@ -102,22 +102,22 @@
 		<!-- Milestone -->
 		<div class="field {{ $errors->has('milestone') ? 'error': '' }}">
 			<label for="milestone">Public milestone</label>
-			<input type="text" name="milestone" placeholder="e.g. Design">
+			<input type="text" name="milestone" value="{{ old('milestone') }}" placeholder="e.g. Design">
 		</div>
 		<!-- Short description -->
 		<div class="field {{ $errors->has('shortDescription') ? 'error': '' }}">
 			<label for="shortDescription">Brief description</label>
-			<textarea name="shortDescription" rows="2" placeholder="e.g. The project is a web page for personal financial organization"></textarea>
+			<textarea name="shortDescription" rows="2" placeholder="e.g. The project is a web page for personal financial organization">{{ old('shortDescription') }}</textarea>
 		</div>
 		<!-- Long description -->
 		<div class="field {{ $errors->has('longDescription') ? 'error': '' }}">
 			<label for="longDescription">Detailed description</label>
-			<textarea name="longDescription" placeholder="e.g. The project consists of a single page application where users can sign up or login. It includes..."></textarea>
+			<textarea name="longDescription" placeholder="e.g. The project consists of a single page application where users can sign up or login. It includes...">{{ old('longDescription') }}</textarea>
 		</div>
 		<!-- Pitch video -->
 		<div class="field {{ $errors->has('videoPitch') ? 'error': '' }}">
 			<label for="videoPitch">Pitch video</label>
-			<input type="text" name="videoPitch" placeholder="e.g. https://youtube.com/watch?v=238028302">
+			<input type="text" name="videoPitch"  value="{{ old('videoPitch') }}" placeholder="e.g. https://youtube.com/watch?v=238028302">
 		</div>
 		<!-- Register button -->
 		<button id="registerButton" type="submit" class="ui primary submit button">Register project</button>
@@ -140,7 +140,8 @@
 		$('input[name=projectName]').val('Some project title');
 		$("select[name=courses]").val('1');
 		$('input[name=createTeam]').val('Some team name');
-		$('#label').dropdown('set selected', ['1','2','3']);
+		let labels = $("#labels option").slice(1,4).toArray().map(t => t.value);
+		$('#labels').dropdown('set selected', labels);
 		let skillsets = $('#skillsets option').slice(1,5).toArray().map(t => t.value);
 		$('#skillsets').dropdown('set selected', skillsets);
 		$('input[name=milestone]').val('Some milestone');
@@ -160,8 +161,8 @@
 		});
 		reader.readAsDataURL(file);
 	}
-	/* Register button validation` */
-	$('.ui.dropdown').dropdown();
+	/* Register button validation */
+	$('.ui.dropdown').dropdown({ clearable: true });
 	$('.ui.form').form({
 		fields: {
 			projectImage: {
@@ -248,7 +249,21 @@
 		onSuccess:function() {
 		}
 	});
-	/* Associated Team Validation */
+
+	// TODO: Associated Team Validation
+
+	@if(old('labels') !== null)
+		let labels = '{!! json_encode(old("labels")) !!}';
+		labels = JSON.parse(labels);
+		$('#labels').dropdown('set selected', labels);
+	@endif
+
+	@if(old('skillsets') !== null)
+		let skillsets = '{!! json_encode(old("skillsets")) !!}';
+		skillsets = JSON.parse(skillsets);
+		$('#skillsets').dropdown('set selected', skillsets);
+	@endif
+
 
 
 </script>
