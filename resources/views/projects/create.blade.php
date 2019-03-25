@@ -133,13 +133,8 @@
 		$("#imgInput").click();
 	});
 	function validateImage(file) {
-		const maxImageSize = 1000000; // 1MB
-		if((file.type == "image/png" || file.type == "image/jpg") && file.size <= maxImageSize) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		const maxImageSize=1MiB; // 1MB
+		return (file.type == "image/png" || file.type == "image/jpg") && file.size <= maxImageSize;
 	}
 	function fillDummy() {
 		$('input[name=projectName]').val('Some project title');
@@ -170,21 +165,19 @@
 	$('.ui.dropdown').dropdown();
 	$('.ui.form').form({
 		fields: {
-			// projectImage: {
-			// 	identifier:'projectImage',
-			// 	rules:[{
-			// 			type:'empty',
-			// 			prompt:'Please enter a project image'
-			// 		}
-			// 	]
-			// },
+			projectImage: {
+				identifier:'projectImage',
+				rules:[{
+						type:'empty',
+						prompt:'Please enter a project image'
+				}]
+			},
 			projectName:{
 				identifier:'projectName',
 				rules:[{
 						type:'empty',
 						prompt:'Please enter a project name'
-					}
-				]
+				}]
 			},
 			// teamName:{
 			// 	identifier:'teamName',
@@ -194,14 +187,13 @@
 			// 		}
 			// 	]
 			// },
-			// courses:{
-			// 	identifier:'courses',
-			// 	rules:[{
-			// 			type:'minCount[1]',
-			// 			prompt:'Please select an associated course'
-			// 		}
-			// 	]
-			// },
+			courses:{
+				identifier:'courses',
+				rules:[{
+						type:'minCount[1]',
+						prompt:'Please select an associated course'
+				}]
+			},
 			label:{
 				identifier:'label[]',
 				rules:[{
@@ -215,32 +207,28 @@
 				rules:[{
 						type:'minCount[1]',
 						prompt:'Please select at least one skillset'
-					}
-				]
+				}]
 			},
 			milestone:{
 				identifier:'milestone',
 				rules:[{
 						type:'empty',
 						prompt:'Please enter current milestone'
-					}
-				]
+				}]
 			},
 			shortDescription:{
 				identifier:'shortDescription',
 				rules:[{
 						type:'empty',
 						prompt:'Please enter a brief project description'
-					}
-				]
+				}]
 			},
 			longDescription:{
 				identifier:'longDescription',
 				rules:[{
 						type:'empty',
 						prompt:'Please enter a detailed project description'
-					}
-				]
+				}]
 			},
 			videoPitch:{
 				identifier:'videoPitch',
@@ -252,8 +240,7 @@
 						type:'regExp',
 						value:'/^((http(s)?:\\/\\/)?)(www\\.)?((youtube\\.com\\/)|(youtu.be\\/))[\\S]+$/',
 						prompt:'Please enter a valid youtube url'
-					}
-				]
+				}]
 			}
 		},
 		onFailure:function() {
