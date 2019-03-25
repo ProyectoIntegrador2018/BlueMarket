@@ -1,5 +1,5 @@
 todo.md
-temp/
+
 # Created by https://www.gitignore.io/api/node,sass,macos,laravel,windows
 # Edit at https://www.gitignore.io/?templates=node,sass,macos,laravel,windows
 
@@ -9,6 +9,7 @@ node_modules/
 npm-debug.log
 yarn-error.log
 
+temp/
 
 # Laravel 4 specific
 bootstrap/compiled.php

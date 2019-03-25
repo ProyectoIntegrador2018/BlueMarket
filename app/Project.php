@@ -31,4 +31,8 @@ class Project extends Model
 	public function course() {
 		return $this->belongsTo('App\Course');
 	}
+	// Get the team the project belongs to
+	public function team() {
+		return $this->belongsTo('App\Team');
+	}
 }
