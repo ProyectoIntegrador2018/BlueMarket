@@ -90,7 +90,7 @@
 		<!-- Skillset -->
 		<div class="field {{ $errors->has('skillsets') ? 'error': '' }}">
 			<label for="skillsets">Skillset</label>
-			<select id="skillsets" name="skillsets[]" multiple class="ui fluid dropdown" value="{{ old('skillsets[]') }}">
+			<select id="skillsets" name="skillsets[]" multiple class="ui search dropdown">
 				<option value="">e.g. Java, HTML</option>
 				@if(isset($skillsets))
 					@foreach($skillsets->all() as $skillset)
@@ -168,15 +168,15 @@
 			projectImage: {
 				identifier:'projectImage',
 				rules:[{
-						type:'empty',
-						prompt:'Please enter a project image'
+					type:'empty',
+					prompt:'Please enter a project image'
 				}]
 			},
 			projectName:{
 				identifier:'projectName',
 				rules:[{
-						type:'empty',
-						prompt:'Please enter a project name'
+					type:'empty',
+					prompt:'Please enter a project name'
 				}]
 			},
 			// teamName:{
@@ -190,49 +190,49 @@
 			courses:{
 				identifier:'courses',
 				rules:[{
-						type:'minCount[1]',
-						prompt:'Please select an associated course'
+					type:'minCount[1]',
+					prompt:'Please select an associated course'
 				}]
 			},
 			label:{
 				identifier:'label[]',
 				rules:[{
-						type:'minCount[1]',
-						prompt:'Please select at least one label'
-					}
-				]
+					type:'minCount[1]',
+					prompt:'Please select at least one label'
+				}]
 			},
 			skillsets:{
 				identifier:'skillsets[]',
 				rules:[{
-						type:'minCount[1]',
-						prompt:'Please select at least one skillset'
+					type:'minCount[1]',
+					prompt:'Please select at least one skillset'
 				}]
 			},
 			milestone:{
 				identifier:'milestone',
 				rules:[{
-						type:'empty',
-						prompt:'Please enter current milestone'
+					type:'empty',
+					prompt:'Please enter current milestone'
 				}]
 			},
 			shortDescription:{
 				identifier:'shortDescription',
 				rules:[{
-						type:'empty',
-						prompt:'Please enter a brief project description'
+					type:'empty',
+					prompt:'Please enter a brief project description'
 				}]
 			},
 			longDescription:{
 				identifier:'longDescription',
 				rules:[{
-						type:'empty',
-						prompt:'Please enter a detailed project description'
+					type:'empty',
+					prompt:'Please enter a detailed project description'
 				}]
 			},
 			videoPitch:{
 				identifier:'videoPitch',
-				rules:[{
+				rules:[
+					{
 						type:'empty',
 						prompt:'Please enter a link to pitch video'
 					},
@@ -240,7 +240,8 @@
 						type:'regExp',
 						value:'/^((http(s)?:\\/\\/)?)(www\\.)?((youtube\\.com\\/)|(youtu.be\\/))[\\S]+$/',
 						prompt:'Please enter a valid youtube url'
-				}]
+					}
+				]
 			}
 		},
 		onFailure:function() {
