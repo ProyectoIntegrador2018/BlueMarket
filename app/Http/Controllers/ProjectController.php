@@ -9,8 +9,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 
-class ProjectController extends Controller
-{
+class ProjectController extends Controller {
+
 	public function __construct() {
 		$this->middleware('auth')->except('index');
 	}
@@ -18,7 +18,7 @@ class ProjectController extends Controller
 	public function index() {
 		$projects = Project::with('tags:name')->get();
 		$tags = Tag::all();
-		return view('projects', ['tags' => $tags, 'projects' => $projects]);
+		return view('projects', compact('tags', 'projects'));
 	}
 
 	public function show($id) {
@@ -29,6 +29,7 @@ class ProjectController extends Controller
 		return view(
 			'projects.create', [
 				'courses' => Auth::user()->EnrolledIn,
+				'teams' => Auth::user()->teamsLed()->get(),
 				'labels' => Tag::where('type', 2)->get(),
 				'skillsets' => Tag::where('type', 1)->get()
 			]
@@ -36,15 +37,18 @@ class ProjectController extends Controller
 	}
 
 	public function store(Request $request) {
+
 		$attributes = request()->validate([
-			'projectName' => ['required'],
-			'videoPitch' => ['required'],
-			'longDescription' => ['required'],
-			'shortDescription' => ['required'],
-			'course' => ['required'],
-			'projectImage' => ['required'],
+			'projectName' => ['required', 'min:3'],
+			'videoPitch' => 'required',
+			'longDescription' => 'required',
+			'shortDescription' => 'required',
+			'course' => 'required',
+			'projectImage' => 'image',
+			'createTeam' => 'required_without:teamId',
+			'teamId' => 'required_without:createTeam',
 			'labels' => 'required|array|min:1',
-			// verify each elm in labels[] to exist as a labels tag record
+			// verify each elm in labels[] to exist as a label tag record
 			'labels.*' => [
 				'integer',
 				Rule::in(Tag::where('type', 2)->pluck('id')),
@@ -57,15 +61,36 @@ class ProjectController extends Controller
 			]
 		]);
 
-		$project = $this->saveRecord($attributes);
-		if (!$project->exists) {
-			abort(500);
+		// Save the team
+		if(!empty($attributes['teamId']) && !empty($attributes['createTeam'])) {
+			// You can't have both
+			return redirect('projects/create')->withErrors([
+				'bothTeams' => 'You can either create a new team, OR associate to an existing team, but not both.'
+			])->withInput();
 		}
+		if(empty($attributes['teamId'])) {
+			// Save a new team
+			$team = new \App\Team();
+			$team->name = $attributes['createTeam'];
+			$team->leader_id = Auth::id();
+			// $team->img_url = somth;
+			abort_if(!$team->save(), 500);
+			$attributes['team_id'] = $team->id;
+		}
+		else {
+			// Associate the team to the project
+			$attributes['team_id'] = $attributes['teamId'];
+		}
+
+
+		$project = $this->saveRecord($attributes);
+
+		abort_if(!$project->exists, 500);
 
 		$project->tags()->attach($attributes['skillsets']);
 		$project->tags()->attach($attributes['labels']);
 
-		return view('projects.details', ['project' => $project]);
+		return view('projects.details', compact('project'));
 	}
 
 	private function saveRecord(array $attributes) {
@@ -78,6 +103,7 @@ class ProjectController extends Controller
 			'long_description' => $attributes['longDescription'],
 			'short_description' => $attributes['shortDescription'],
 			'course_id' => $attributes['course'],
+			'team_id' => $attributes['team_id'],
 			'photo' => Storage::url($path)
 		]);
 	}
