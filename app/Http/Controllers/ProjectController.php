@@ -68,6 +68,7 @@ class ProjectController extends Controller {
 				'bothTeams' => 'You can either create a new team, OR associate to an existing team, but not both.'
 			])->withInput();
 		}
+
 		if(empty($attributes['teamId'])) {
 			// Save a new team
 			$team = new \App\Team();
@@ -81,7 +82,6 @@ class ProjectController extends Controller {
 			// Associate the team to the project
 			$attributes['team_id'] = $attributes['teamId'];
 		}
-
 
 		$project = $this->saveRecord($attributes);
 

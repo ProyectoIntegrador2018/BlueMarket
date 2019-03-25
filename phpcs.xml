@@ -47,6 +47,9 @@
 	<rule ref="Squiz.ControlStructures.ControlSignature.SpaceAfterKeyword">
 		<severity>0</severity>
 	</rule>
+	<rule ref="Squiz.ControlStructures.ControlSignature.SpaceAfterCloseBrace">
+		<severity>0</severity>
+	</rule>
 
 	<rule ref="Squiz.ControlStructures.ElseIfDeclaration"/>
 	<rule ref="Squiz.ControlStructures.LowercaseDeclaration"/>
