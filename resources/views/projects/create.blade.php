@@ -90,7 +90,7 @@
 		<!-- Skillset -->
 		<div class="field {{ $errors->has('skillsets') ? 'error': '' }}">
 			<label for="skillsets">Skillset</label>
-			<select id="skillsets" name="skillsets[]" multiple class="ui fluid dropdown">
+			<select name="skillsets" multiple class="ui search dropdown">
 				<option value="">e.g. Java, HTML</option>
 				@if(isset($skillsets))
 					@foreach($skillsets->all() as $skillset)
@@ -133,7 +133,7 @@
 		$("#imgInput").click();
 	});
 	function validateImage(file) {
-		const maxImageSize=1MiB; // 1MB
+		const maxImageSize = 1*1024*1024; // 1MiB
 		return (file.type == "image/png" || file.type == "image/jpg") && file.size <= maxImageSize;
 	}
 	function fillDummy() {
@@ -151,17 +151,16 @@
 	function updateImage(imageInput) {
 		let reader = new FileReader();
 		let file = imageInput.files[0];
-		let preview = $("#projectImagePreview");
-		reader.addEventListener("load", function() {
-			if(validateImage(file)) {
-				$("#projectImagePreview").attr("src", reader.result);
-			}
-		});
-		if(file) {
-			reader.readAsDataURL(file);
+		if(!file || !validateImage(file)) {
+			return false;
 		}
+		reader.addEventListener("load", function() {
+			// Update the img
+			$("#projectImagePreview").attr("src", reader.result);
+		});
+		reader.readAsDataURL(file);
 	}
-	/* Register button validation */
+	/* Register button validation` */
 	$('.ui.dropdown').dropdown();
 	$('.ui.form').form({
 		fields: {
