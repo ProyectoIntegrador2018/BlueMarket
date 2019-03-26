@@ -250,9 +250,7 @@
 		onSuccess:function() {
 		}
 	});
-
 	// TODO: Associated Team Validation
-
 	@if(old('labels') !== null)
 		let labels = '{!! json_encode(old("labels")) !!}';
 		labels = JSON.parse(labels);
@@ -264,9 +262,6 @@
 		skillsets = JSON.parse(skillsets);
 		$('#skillsets').dropdown('set selected', skillsets);
 	@endif
-
-
-
 </script>
 @endsection
 @endsection
