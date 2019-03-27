@@ -22,7 +22,7 @@
 				@endforeach
 			</select>
 		</div>
-		<button id="searchButton" type="button" class="ui primary submit button" onclick="filterProjects()">Search</button>
+		<button id="searchButton" type="button" class="ui primary submit button">Search</button>
 	</form>
 	<!-- Project Cards -->
 	<div class="ui four stackable cards">

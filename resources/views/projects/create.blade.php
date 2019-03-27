@@ -9,7 +9,6 @@
 	.imgUploader {
 		margin-bottom: 20px;
 	}
-
 </style>
 <div class="padded content">
 	<h1>Create new project</h1>
@@ -24,12 +23,12 @@
 	@endif
 	<form class="ui form {{ $errors->any() ? 'error': '' }}" method="post" enctype="multipart/form-data" action="/projects">
 		@csrf
-		<!-- Project Image -->
+		<!-- Project image -->
 		<div class="projectImage field {{ $errors->has('projectImage') ? 'error': '' }}">
 			<label for="projectImage">Project image</label>
 			<div class="projectImageUploaderContainer">
 				<div class="imgUploader imagePreviewContainer">
-					{{-- <img src="https://lorempixel.com/400/400" alt="Project image" class="ui medium image" id="projectImagePreview"/> --}}
+					<img src="https://lorempixel.com/400/400" alt="Project image" class="ui medium image" id="projectImagePreview"/>
 				</div>
 				<button class="imgUploader upload-image-button ui button primary" type="button">Upload image</button>
 			</div>
@@ -53,7 +52,7 @@
 				@endif
 			</select>
 		</div>
-		<!-- Associated Team -->
+		<!-- Associated team -->
 		<div class="field">
 			<label for="teamName">Associated Team</label>
 			<div class="fields">
@@ -179,14 +178,14 @@
 					prompt:'Please enter a project name'
 				}]
 			},
-			// teamName:{
-			// 	identifier:'teamName',
-			// 	rules:[{
-			// 			type:'empty',
-			// 			prompt:'Please select a team name'
-			// 		}
-			// 	]
-			// },
+			teamName:{
+				identifier:'teamName',
+				rules:[{
+						type:'empty',
+						prompt:'Please select a team name'
+					}
+				]
+			},
 			courses:{
 				identifier:'courses',
 				rules:[{
