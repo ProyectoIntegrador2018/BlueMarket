@@ -36,5 +36,7 @@
 @section('scripts')
 <script>
 	$('.ui.dropdown').dropdown();
+	let projects = {!! $projects !!};
 </script>
+<script src="{{ mix('js/searchProjects.js')}}"></script>
 @endsection
