@@ -55,7 +55,8 @@ class TeamController extends Controller
 
 		$team->members()->attach($team->leader_id);
 
-		return view('teams.details', compact('team'));
+		// redirect to teams/{id}
+		return redirect()->route('teams.show', [$team]);
 	}
 
 	/**

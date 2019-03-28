@@ -7,7 +7,9 @@
 	<h1>{{ $team->name }}</h1>
 	<div class="team-info">
 		<div class="image-container">
-			<img id="avatar" src="<?= $team->img_url ?>" alt="Team avatar" class="ui small image"/>
+			<div class="image-uploader preview-container">
+				<img id="preview" src="<?= $team->img_url ?>" alt="Team image" class="ui small image preview"/>
+			</div>
 		</div>
 		<div class="team-people">
 			<h2>People</h2>
@@ -26,6 +28,12 @@
 	<div class="team-projects">
 		<h2>Projects</h2>
 		<!-- TODO: add project cards -->
+		<div class="ui message">
+		<div class="header">
+			No projects available
+		</div>
+		<p>Looks like this team has no projects at the moment.</p>
+		</div>
 	</div>
 </div>
 @endsection
