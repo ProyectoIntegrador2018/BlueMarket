@@ -17,7 +17,7 @@
 </head>
 <body>
 	<div class="my-container">
-		<aside class="Sidebar">
+		<aside class="sidebar">
 			<a href="#" class="logo">
 				<img src="img/logo.svg" alt="Bluemarket Admin Dashboard">
 			</a>
@@ -31,8 +31,8 @@
 			</ul>
 			<hr>
 		</aside>
-		<main class="contentPane">
-			<nav class="mainNav navbar navbar-light" style="background-color: #fff">
+		<main class="content-pane">
+			<nav class="main-nav navbar navbar-light" style="background-color: #fff">
 				<form class="form-inline">
 					<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
 					<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
