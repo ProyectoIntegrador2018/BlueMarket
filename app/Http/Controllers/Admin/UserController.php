@@ -69,10 +69,6 @@ class UserController extends Controller {
 	 * @return \Illuminate\View
 	 */
 	public function show(int $id) {
-		if ($user->role != config(self::ROLES)['sys_admin']) {
-			abort(400);
-		}
-
 		$user = User::find($id);
 		return view('admin.users.show', ['user' => $user]);
 	}
