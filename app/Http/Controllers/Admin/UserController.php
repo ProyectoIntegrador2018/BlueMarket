@@ -1,106 +1,64 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
 use App\User;
+use App\Tag;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Admin\AdminController;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 
-/**
- * Admin UsersController
- */
-class UserController extends AdminController {
-
-	public function __construct() {
-		// Add the auth
-		$this->middleware('auth');
+class UserController extends Controller {
+	/**
+	 * Show the form for editing the current user
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function edit() {
+		return view('user.edit', [
+			'skills' => Tag::where('type', 1)->get(),
+			'user' => Auth::user()
+		]);
 	}
 
 	/**
-	 * Display a listing of the users.
+	 * Update the specified resource in storage.
 	 *
 	 * @param  \Illuminate\Http\Request  $request
-	 * @return \Illuminate\View
+	 * @param  \App\User  $user
+	 * @return \Illuminate\Http\Response
 	 */
-	public function index(Request $request) {
-		$searchQuery = $request->get('search');
-		$paginationSize = $request->get('paginationSize');
-
-		if (!isset($paginationSize)) {
-			$paginationSize = 25;
-		}
-
-		if (isset($searchQuery) && !empty($searchQuery)) {
-			$users = User::where('name', 'like', "%{$searchQuery}%")->orWhere('email', 'like', "%{$searchQuery}%")->simplePaginate($paginationSize);
-		}
-		else {
-			$users = User::simplePaginate($paginationSize);
-		}
-
-		return view('admin.users.index', compact('users'));
-	}
-
-	/**
-	 * Show the form for creating a new user.
-	 *
-	 * @return \Illuminate\View
-	 */
-	public function create() {
-		return view('admin.users.create');
-	}
-
-	/**
-	 * Store a newly created user in storage.
-	 *
-	 * @param  \Illuminate\Http\Request  $request
-	 * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-	 */
-	public function store(Request $request) {
-		$validatedAttributes = request()->validate([
-			'name' => 'required|string',
-			'email' => 'required|string',
-			'role' => 'required|integer'
+	public function update(Request $request) {
+		$attributes = request()->validate([
+			'name' => ['present']
 		]);
 
-		$user = User::create($validatedAttributes);
-		abort_if(!$user->exists, 500);
+		$user = Auth::user();
+		$user->name = $attributes['name'];
+		$user->save();
 
-		return redirect('users')->with('flash_message', 'User added!');
+		// Update the picture of the user
+		if (isset($request->avatar)) {
+			$this->updateImg($request->file('avatar'));
+		}
+
+		// Update skillset of the user
+		$user->skillset()->detach();
+		if (isset($request->skills)) {
+			$user->skillset()->attach($request->skills);
+		}
+
+		return redirect()->back()->with([
+			'skills' => Tag::where('type', 1)->get(),
+			'user' => Auth::user()
+		]);
 	}
 
-	/**
-	 * Display the specified user.
-	 *
-	 * @param  int  $id
-	 * @return \Illuminate\View
-	 */
-	public function show(int $id) {
-		$user = User::find($id);
-		return view('admin.users.show', compact('user'));
-	}
-
-	/**
-	 * Show the form for editing the specified user.
-	 *
-	 * @param  int  $id
-	 * @return \Illuminate\View
-	 */
-	public function edit(int $id) {
-		$user = User::find($id);
-		return view('admin.users.edit', compact('user'));
-	}
-
-	/**
-	 * Update the specified user in storage.
-	 *
-	 * @param  \Illuminate\Http\Request  $request
-	 * @param  int $id
-	 * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-	 */
-	public function update(Request $request, int $id) {
-		$user = User::findOrFail($id);
-		$user->update($request->all());
-
-		return redirect('users')->with('flash_message', 'User updated!');
+	private function updateImg($image) {
+		$path = isset($image) ? Storage::putFile('public', $image) : Auth::user()->picture_url;
+		$user = Auth::user();
+		$user->picture_url = Storage::url($path);
+		$user->save();
 	}
 }
