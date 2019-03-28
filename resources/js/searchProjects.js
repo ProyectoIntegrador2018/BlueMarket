@@ -1,6 +1,7 @@
-// npm install --save lodash.debounce OR yarn add lodash.debounce:
+// npm install --save lodash.debounce OR yarn add lodash.debounce
 import _debounce from 'lodash.debounce';
-// Event handler (do something on type):
+
+// Event handler:
 $('#searchName').on('keyup', _debounce(filterProjects, 200));
 $('#searchTags').on('change', filterProjects);
 // Flatten out the object:
@@ -12,10 +13,7 @@ projects.forEach((project, index) => {
 	});
 });
 // DOM Elements (<projectCard>):
-const $projectCards = $('.ProjectCard-container'); // Array
-// projects[0] => $projectCards[0]
-// Search by name, labels, or skills
-// Tags => labels, skills
+const $projectCards = $('.ProjectCard-container');
 function filterProjects() {
 	const nameQuery = $('#searchName').val().trim().toLowerCase();
 	const tagQuery = $('#searchTags').val(); // Returns an array for the select
@@ -24,7 +22,6 @@ function filterProjects() {
 		return project.name.indexOf(nameQuery) > -1;
 	});
 	// Get the projects that match search tags:
-	// All the projects where projects.tags contain all of tagQuery
 	const finalResults = projectResults.filter(project => {
 		let matchesAllTags = true;
 		for (var i = 0; i < tagQuery.length; i++) {
@@ -36,7 +33,13 @@ function filterProjects() {
 		return matchesAllTags;
 	});
 	$projectCards.hide();
+	//When no projects where found:
+	if(finalResults.length == 0){
+		$('.noProjectsMessage').show();
+	}
+	//When projects where found:
 	finalResults.forEach(project => {
+		$('.noProjectsMessage').hide();
 		$projectCards.eq(project.domid).show();
 	});
 }
