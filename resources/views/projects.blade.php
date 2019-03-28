@@ -24,6 +24,13 @@
 		</div>
 		<button id="searchButton" type="button" class="ui primary submit button">Search</button>
 	</form>
+	<!-- Message -->
+	<div hidden class="ui message noProjectsMessage">
+		<div class="header">
+	    	No Projects Found
+	  	</div>
+	  	<p>No projects meet search criteria.</p>
+	</div>
 	<!-- Project Cards -->
 	<div class="ui four stackable cards">
 		@foreach ($projects as $project)
