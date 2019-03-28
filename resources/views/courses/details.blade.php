@@ -1,4 +1,3 @@
-@dd($course)
 @extends('layouts.app')
 
 @section('title', $course->name)
@@ -18,14 +17,14 @@
 		</ul> --}}
 		<p><strong>Course schedule:</strong> {{ $course->schedule }}</p>
 		<p><strong>Max. team size:</strong> {{ $course->max_team_size }}</p>
-		{{-- @if (isset($course->suppliers))
+		@if (isset($course->suppliers))
 			<p><strong>Associated courses:</strong></p>
 			<ul>
 				@foreach ($course->suppliers as $supplier)
 					<li>{{ $supplier->name }}</li>
 				@endforeach
 			</ul>
-		@endif --}}
+		@endif
 	</div>
 </div>
 @endsection
