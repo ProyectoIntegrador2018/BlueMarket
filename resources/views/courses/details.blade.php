@@ -10,11 +10,11 @@
 		<h2>Overview:</h2>
 		<p><strong>Course name:</strong> {{ $course->name }}</p>
 		<p><strong>Teacher(s):</strong></p>
-		{{-- <ul>
-			@foreach ($course->$teachers as $teacher)
+		<ul>
+			@foreach ($course->teachers as $teacher)
 			<li>{{ $teacher->name }}</li>
 			@endforeach
-		</ul> --}}
+		</ul>
 		<p><strong>Course schedule:</strong> {{ $course->schedule }}</p>
 		<p><strong>Max. team size:</strong> {{ $course->max_team_size }}</p>
 		@if (isset($course->suppliers))
