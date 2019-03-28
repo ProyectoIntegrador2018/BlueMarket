@@ -12,12 +12,12 @@
 			</div>
 		</div>
 		<div class="team-people">
-			<h2>People</h2>
+			<p><strong>People</strong></p>
 			<div class="team-members">
 				@if(isset($team->members))
 					@foreach($team->members as $member)
 						<!-- TODO: add route to user profile -->
-						<a href="https://www.google.com">
+						<a href="#">
 							<img class="ui avatar image" src="<?= $member->picture_url ?>"/>
 						</a>
 					@endforeach
@@ -26,7 +26,7 @@
 		</div>
 	</div>
 	<div class="team-projects">
-		<h2>Projects</h2>
+		<p><strong>Projects</strong></p>
 		<!-- TODO: add project cards -->
 		<div class="ui message">
 		<div class="header">
