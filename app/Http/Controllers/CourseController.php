@@ -158,7 +158,7 @@ class CourseController extends Controller
 		$course = Course::where('course_key', $courseKey)->first();
 
 		abort_if($course == null || $user == null, 400);
-		abort_if($user->role != 2, 401);
+		abort_if($user->role != config(self::ROLES)['student'], 401);
 
 		$result = $user->EnrolledIn()->attach($course);
 
