@@ -65,14 +65,12 @@ class TeamController extends Controller
 	 * @return \Illuminate\Http\Response
 	 */
 	public function show(Team $team) {
-		// Temporary stock image
-		$avatar = 'https://avatars1.githubusercontent.com/u/42351872?s=200&v=4';
-
-		if ($team->img_url) {
-			$avatar = Storage::url($team->img_url);
+		// If no set image, return temporary stock image
+		if (!$team->img_url) {
+			$team->img_url = 'https://avatars1.githubusercontent.com/u/42351872?s=200&v=4';
 		}
 
-		return view('teams.details', compact('team', 'avatar'));
+		return view('teams.details', compact('team'));
 	}
 
 	/**
@@ -113,12 +111,12 @@ class TeamController extends Controller
 	 * @return \App\Course
 	 */
 	private function createTeam(array $attributes, $image) {
-		$path = isset($image) ? Storage::putFile('teams/avatars', $image) : null;
+		$path = isset($image) ? Storage::putFile('public/teams/avatars', $image) : null;
 
 		$team = Team::create([
 			'name' => $attributes['teamName'],
 			'leader_id' => Auth::user()->id,
-			'img_url' => $path,
+			'img_url' => isset($path) ? Storage::url($path) : null,
 		]);
 
 		return $team;
