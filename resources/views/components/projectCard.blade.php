@@ -1,4 +1,4 @@
-<a class="item" href="{{ url('projects', $id) }}">
+<a class="item ProjectCard-container" href="{{ url('projects', $id) }}">
 	<div class="ui card projectcard">
 		<div class="image">
 			<img src={{ $projectImage }}>

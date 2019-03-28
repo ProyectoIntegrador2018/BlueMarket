@@ -22,5 +22,8 @@
 		"sass-lint": "^1.12.1",
 		"sass-loader": "^7.1.0",
 		"vue-template-compiler": "^2.6.5"
+	},
+	"dependencies": {
+		"lodash.debounce": "^4.0.8"
 	}
 }
