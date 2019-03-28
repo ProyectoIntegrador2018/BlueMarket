@@ -115,8 +115,8 @@ class TeamController extends Controller
 
 		$team = Team::create([
 			'name' => $attributes['teamName'],
-			'img_url' => $attributes['teamImage'],
-			'leader_id' => Auth::id()
+			'img_url' => isset($path) ? Storage::url($path) : null,
+			'leader_id' => Auth::id(),
 		]);
 
 		return $team;
