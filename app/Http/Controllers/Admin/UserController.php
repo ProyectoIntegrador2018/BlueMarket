@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class UserController extends Controller {
-	const ROLES = 'enum.user_roles';
 
 	/**
 	 * Display a listing of the resource.
@@ -26,7 +25,7 @@ class UserController extends Controller {
 		if (isset($searchQuery) && !empty($searchQuery)) {
 			$users = User::where('name', 'like', "%{$searchQuery}%")->orWhere('email', 'like', "%{$searchQuery}%")->latest()->simplePaginate(paginationSize);
 		} else {
-			$users = User::where('role', config(self::ROLES)['sys_admin'])->latest()->simplePaginate(paginationSize);
+			$users = User::all()->latest()->simplePaginate(paginationSize);
 		}
 
 		return view('admin.users.index', ['users' => $users]);
