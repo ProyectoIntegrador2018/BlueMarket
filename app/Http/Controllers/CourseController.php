@@ -83,7 +83,7 @@ class CourseController extends Controller
 			$course->suppliers()->attach($attributes['associatedCourses']);
 		}
 
-		return view('course.details', compact('course'));
+		return view('courses.details', compact('course'));
 	}
 
 	/**
@@ -93,7 +93,7 @@ class CourseController extends Controller
 	 * @return \Illuminate\Http\Response
 	 */
 	public function show(Course $course) {
-		return view('course.details', compact('course'));
+		return view('courses.details', compact('course'));
 	}
 
 	/**

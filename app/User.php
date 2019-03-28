@@ -41,7 +41,7 @@ class User extends Authenticatable
 	public function teaches() {
 		return $this->belongsToMany('App\Course')
 			->join('users as usrs', 'course_user.user_id', '=', 'usrs.id')
-			->where('users.role', config(self::ROLES)['teacher']);
+			->where('usrs.role', config(self::ROLES)['teacher']);
 	}
 
 	public function enrolledIn() {
