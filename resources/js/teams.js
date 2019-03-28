@@ -1,5 +1,3 @@
-let reader = new FileReader();
-
 // front-end input validation
 $(".ui.form").form({
 	fields: {
@@ -7,11 +5,7 @@ $(".ui.form").form({
 	},
 	onFailure: function () {
 		// onFailure needs to exist to prevent form from sending request
-		console.log("failed submission");
 		return false;
-	},
-	onSuccess: function () {
-		console.log("ok submission");
 	}
 });
 
@@ -22,23 +16,20 @@ $(".image-uploader").click(function (event) {
 });
 
 function updateImagePreview(imageInput) {
-	let file = imageInput.files[0];
-	reader.addEventListener("loadstart", function () {
-		const maxImageSize = 1048576; // 1MiB
-		// validate file
-		if (!file || !isValidImage(file, maxImageSize)) {
-			alert("Please upload a .png or .jpg file.");
-			reader.abort();
-			return;
-		}
-	});
+	const reader = new FileReader();
+
+	const file = imageInput.files[0];
+	const maxImageSize = 1024 * 1024 * 1; // 1MiB
+
+	// validate file
+	if (!file || !isValidImage(file, maxImageSize)) {
+		alert("Please upload a .png or .jpeg file. Maximum size: 1MiB.");
+		return false;
+	}
 
 	// update preview when completed successfully
 	reader.addEventListener("load", function () {
 		$("#preview").attr("src", reader.result);
-		console.log('this is the result');
-		console.log(reader.result);
 	});
-
 	reader.readAsDataURL(file);
 }
