@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class AdminUserController extends Controller {
+class UserController extends Controller {
 	const ROLES = 'enum.user_roles';
 
 	/**
