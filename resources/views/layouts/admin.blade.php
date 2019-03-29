@@ -39,8 +39,8 @@
 				</form>
 				<div class="navbar-brand">
 					<a href="#" class="user-avatar">
-						Alejandro Rodr&iacute;guez
-						<img class="user-avatar-img" src="http://colegioclassea.com.br/wp-content/themes/PageLand/assets/img/avatar/avatar.jpg" alt="User name">
+						{{ Auth::user()->name }}
+						<img class="user-avatar-img" src="http://colegioclassea.com.br/wp-content/themes/PageLand/assets/img/avatar/avatar.jpg" alt="{{ Auth::user()->name }}">
 					</a>
 				</div>
 			</nav>

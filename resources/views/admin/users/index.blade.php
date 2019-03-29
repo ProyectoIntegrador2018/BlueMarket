@@ -26,8 +26,8 @@
 							<td>{{ $user->email }}</td>
 							<td>{{ $user->role }}</td>
 							<td>{{ $user->last_logon }}</td>
-							<td>{{ $user->created_at->format('Y-m-d\TH:i:s') }}</td>
-							<td>{{ $user->updated_at->format('Y-m-d\TH:i:s') }}</td>
+							<td>{{ $user->created_at->format('Y-m-d H:i:s') }}</td>
+							<td>{{ $user->updated_at->format('Y-m-d H:i:s') }}</td>
 						</tr>
 					@endforeach
 				</tbody>
