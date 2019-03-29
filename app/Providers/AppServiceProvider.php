@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\URL;
 
 class AppServiceProvider extends ServiceProvider {
 
@@ -16,6 +17,9 @@ class AppServiceProvider extends ServiceProvider {
 		// Aliasing components
 		Blade::component('components.projectCard', 'projectCard');
 		Blade::component('components.teams.form', 'teamsform');
+		if(config('APP_ENV') === 'production') {
+			URL::forceScheme('https');
+		}
 	}
 
 	/**
