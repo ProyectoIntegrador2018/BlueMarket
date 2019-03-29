@@ -391,33 +391,6 @@ $color-white: #fff;
 	}
 }
 
-span.tag {
-	padding: 8 30 8 30px;
-	border-radius: 10px;
-
-	&.student {
-		background-color: goldenrod;
-		color: black;
-	}
-	&.teacher {
-		background-color: darkslateblue;
-		color: white;
-	}
-	&.admin {
-		background-color: #e95035;
-		color: white;
-	}
-}
-
-table.table.userInfo {
-	border: none;
-	margin-bottom: 20px !important;
-
-	tr, td {
-		border: none;
-	}
-}
-
 .ui.label.pill {
 	background-color: $color-primary;
 	color: $color-white;
@@ -427,19 +400,4 @@ table.table.userInfo {
 
 .detail-container {
 	margin-top: 25px;
-}
-form.search {
-	display: inline-block;
-	padding: 20px 0px;
-	div.ui.search {
-		.prompt {
-			border-radius: 5px !important;
-		}
-	}
-
-}
-
-div.userInfo {
-	display: inline-block;
-	padding: 0px 40px;
 }
