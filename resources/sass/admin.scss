@@ -37,7 +37,6 @@ nav.main-nav {
 	}
 }
 .sidebar {
-	// flex: 2;
 	width: 230px;
 	background-color: #242939;
 	position: fixed;
@@ -55,10 +54,8 @@ nav.main-nav {
 		border: 0 none;
 		border-bottom: 1px solid rgba(#fff,.2)
 	}
-	// width: 100%;
 }
 main.content-pane {
-	// flex: 0 0 230px;
 	margin-left: 230px;
 	> .container-fluid {
 		padding: 25px;
