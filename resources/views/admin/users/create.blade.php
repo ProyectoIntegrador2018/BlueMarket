@@ -13,7 +13,7 @@
 			</ul>
 			@endif
 
-			<form method="POST" action="{{ url('/users') }}" accept-charset="UTF-8" class="ui error form form-horizontal" enctype="multipart/form-data">
+			<form method="POST" action="{{ url('/admin/users') }}" accept-charset="UTF-8" enctype="multipart/form-data">
 				@csrf
 
 				@include('admin.users.form')
