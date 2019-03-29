@@ -15,7 +15,7 @@
 	<div class="card-body">
 		<div class="padded content">
 
-			<table class="ui single line selectable table">
+			<table class="table">
 				<thead>
 					<tr>
 						<th>#</th>
