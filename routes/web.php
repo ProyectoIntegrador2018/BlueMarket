@@ -46,5 +46,5 @@ Route::resource('teams', 'TeamController');
 /* Admin routes
 --------------------------------------------- */
 Route::namespace('Admin')->prefix('admin')->group(function() {
-	Route::resource('users', 'UsersController');
+	Route::resource('users', 'UserController');
 });

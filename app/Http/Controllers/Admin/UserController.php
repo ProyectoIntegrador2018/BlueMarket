@@ -4,12 +4,20 @@ namespace App\Http\Controllers\Admin;
 
 use App\User;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Admin\AdminController;
 
-class UserController extends Controller {
+/**
+ * Admin UsersController
+ */
+class UserController extends AdminController {
+
+	public function __construct() {
+		// Add the auth
+		$this->middleware('auth');
+	}
 
 	/**
-	 * Display a listing of the resource.
+	 * Display a listing of the users.
 	 *
 	 * @param  \Illuminate\Http\Request  $request
 	 * @return \Illuminate\View
@@ -23,16 +31,17 @@ class UserController extends Controller {
 		}
 
 		if (isset($searchQuery) && !empty($searchQuery)) {
-			$users = User::where('name', 'like', "%{$searchQuery}%")->orWhere('email', 'like', "%{$searchQuery}%")->latest()->simplePaginate(paginationSize);
-		} else {
-			$users = User::all()->latest()->simplePaginate(paginationSize);
+			$users = User::where('name', 'like', "%{$searchQuery}%")->orWhere('email', 'like', "%{$searchQuery}%")->simplePaginate($paginationSize);
+		}
+		else {
+			$users = User::simplePaginate($paginationSize);
 		}
 
-		return view('admin.users.index', ['users' => $users]);
+		return view('admin.users.index', compact('users'));
 	}
 
 	/**
-	 * Show the form for creating a new resource.
+	 * Show the form for creating a new user.
 	 *
 	 * @return \Illuminate\View
 	 */
@@ -41,7 +50,7 @@ class UserController extends Controller {
 	}
 
 	/**
-	 * Store a newly created resource in storage.
+	 * Store a newly created user in storage.
 	 *
 	 * @param  \Illuminate\Http\Request  $request
 	 * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
@@ -54,37 +63,35 @@ class UserController extends Controller {
 		]);
 
 		$user = User::create($validatedAttributes);
-		if (!isset($user)) {
-			abort(500);
-		}
+		abort_if(!$user->exists, 500);
 
 		return redirect('users')->with('flash_message', 'User added!');
 	}
 
 	/**
-	 * Display the specified resource.
+	 * Display the specified user.
 	 *
 	 * @param  int  $id
 	 * @return \Illuminate\View
 	 */
 	public function show(int $id) {
 		$user = User::find($id);
-		return view('admin.users.show', ['user' => $user]);
+		return view('admin.users.show', compact('user'));
 	}
 
 	/**
-	 * Show the form for editing the specified resource.
+	 * Show the form for editing the specified user.
 	 *
 	 * @param  int  $id
 	 * @return \Illuminate\View
 	 */
 	public function edit(int $id) {
 		$user = User::find($id);
-		return view('admin.users.edit', ['user' => $user]);
+		return view('admin.users.edit', compact('user'));
 	}
 
 	/**
-	 * Update the specified resource in storage.
+	 * Update the specified user in storage.
 	 *
 	 * @param  \Illuminate\Http\Request  $request
 	 * @param  int $id
