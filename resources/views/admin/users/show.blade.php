@@ -34,7 +34,7 @@
 					</div>
 				</div>
 
-				<table class="ui single line table userInfo">
+				<table class="table">
 					<tbody>
 						<tr>
 							<th>User ID</th>

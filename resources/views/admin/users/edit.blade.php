@@ -14,9 +14,9 @@
 			</ul>
 			@endif
 
-			<form method="POST" action="{{ url('/admin/users/' . $user->id) }}" accept-charset="UTF-8" class="ui form form-horizontal" enctype="multipart/form-data">
+			<form method="POST" action="{{ url('/admin/users/' . $user->id) }}" accept-charset="UTF-8" enctype="multipart/form-data">
 				{{ method_field('PATCH') }}
-				{{ csrf_field() }}
+				@csrf
 
 				<!-- Fields are loaded from form file -->
 				@include ('admin.users.form')
