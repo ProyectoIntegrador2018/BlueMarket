@@ -76,3 +76,17 @@ table.table {
 		color: #858796;
 	}
 }
+.badge.badge-pill {
+	&.student {
+		background-color: goldenrod;
+		color: black;
+	}
+	&.teacher {
+		background-color: darkslateblue;
+		color: white;
+	}
+	&.admin {
+		background-color: #e95035;
+		color: white;
+	}
+}
