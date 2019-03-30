@@ -33,7 +33,7 @@ class CourseController extends Controller
 
 			case config(self::ROLES)['teacher']:
 				$courses = $user->teaches;
-				return view('courses.list', compact('courses'));
+				return view('courses.index', compact('courses'));
 
 			default:
 				abort(404);
