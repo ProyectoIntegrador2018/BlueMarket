@@ -84,7 +84,7 @@ class CourseController extends Controller
 			$course->suppliers()->attach($attributes['associatedCourses']);
 		}
 
-		return view('courses.details', compact('course'));
+		return redirect()->route('courses.show', [$course]);
 	}
 
 	/**
