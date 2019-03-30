@@ -12,21 +12,72 @@
 		<p><strong>Teacher(s):</strong></p>
 		<ul>
 			@foreach ($course->teachers as $teacher)
-			<li>{{ $teacher->name }}</li>
+				<li>{{ $teacher->name }}</li>
 			@endforeach
 		</ul>
 		<p><strong>Course schedule:</strong> {{ $course->schedule }}</p>
-		@if (isset($course->suppliers))
-			<p><strong>Associated courses:</strong></p>
-			<ul>
-				@foreach ($course->suppliers as $supplier)
-					<li>{{ $supplier->name }}</li>
-				@endforeach
-			</ul>
-		@endif
+		<p><strong>Associated courses:</strong></p>
+		<div class="courses table">
+			<table id="currentCourses" class="ui selectable striped table">
+				<thead class="bluemarket-thead">
+					<tr>
+						<th>Course</th>
+						<th>Professor</th>
+						<th>Schedule</th>
+					</tr>
+				</thead>
+				<tbody>
+						@foreach($course->suppliers as $supplier)
+								<tr class="selectable">
+									<td>
+										<a href="{{ url('courses', $supplier->id) }}">
+											{{ $supplier->name }}
+										</a>
+									</td>
+									<td>
+										<a href="{{ url('courses', $supplier->id) }}">
+											@foreach($supplier->teachers as $teacher)
+												{{ $loop->first ? '' : ', ' }}
+												{{ $teacher->name }}
+											@endforeach
+										</a>
+									</td>
+									<td>
+										<a href="{{ url('courses', $supplier->id) }}">
+											{{ $supplier->schedule }}
+										</a>
+									</td>
+								</tr>
+							</a>
+						@endforeach
+						@foreach($course->clients as $client)
+								<tr class="selectable">
+									<td>
+										<a href="{{ url('courses', $client->id) }}">
+											{{ $client->name }}
+										</a>
+									</td>
+									<td>
+										<a href="{{ url('courses', $client->id) }}">
+											@foreach($client->teachers as $teacher)
+												{{ $loop->first ? '' : ', ' }}
+												{{ $teacher->name }}
+											@endforeach
+										</a>
+									</td>
+									<td>
+										<a href="{{ url('courses', $client->id) }}">
+											{{ $client->schedule }}
+										</a>
+									</td>
+								</tr>
+							</a>
+						@endforeach
+				</tbody>
+			</table>
+		</div>
 	</div>
 </div>
 @endsection
-
 @section('scripts')
 @endsection
