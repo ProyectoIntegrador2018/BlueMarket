@@ -3,6 +3,7 @@
 @section('content')
 <div class="padded content">
 	<h1>My courses</h1>
+	<a class="ui button primary" title="Add New Course" href="{{ url('/courses/create') }}">New</a>
 	@if(count($courses) > 0)
 	<div class="courses table">
 		<table id="currentCourses" class="ui selectable striped table">
