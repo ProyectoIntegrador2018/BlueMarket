@@ -15,20 +15,20 @@
 						<h1 class="align-self-center pl-4"> {{ $user->name }} </h1>
 						<div class="align-self-center pl-4">
 							@switch($user->role)
-							@case(1)
+							@case(Config::get('enum.user_roles')['admin'])
 							<span class="badge badge-pill admin">Administrator</span>
 							@break
 
-							@case(2)
+							@case(Config::get('enum.user_roles')['teacher'])
 							<span class="badge badge-pill teacher">Teacher</span>
 							@break
 
-							@case(3)
+							@case(Config::get('enum.user_roles')['student'])
 							<span class="badge badge-pill student">Student</span>
 							@break
 
 							@default
-							<span class="badge badge-pill admin">Administator</span>
+							<span class="badge badge-pill admin">Administrator</span>
 							@endswitch
 						</div>
 					</div>

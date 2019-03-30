@@ -17,9 +17,9 @@
 	<label for="role" class="control-label">{{ 'Role' }}</label>
 	<select class="form-control" name="role" id="role">
 		<option value="">Role</option>
-		<option {{ isset($user) && $user->role == 1 ? 'selected' : ''}} value="1">Administrator</option>
-		<option {{ isset($user) && $user->role == 2 ? 'selected' : ''}} value="2">Teacher</option>
-		<option {{ isset($user) && $user->role == 3 ? 'selected' : ''}} value="3">Student</option>
+		<option {{ isset($user) && $user->role == Config::get('enum.user_roles')['admin'] ? 'selected' : ''}} value="{{ Config::get('enum.user_roles')['admin'] }}">Administrator</option>
+		<option {{ isset($user) && $user->role == Config::get('enum.user_roles')['teacher'] ? 'selected' : ''}} value="{{ Config::get('enum.user_roles')['teacher'] }}">Teacher</option>
+		<option {{ isset($user) && $user->role == Config::get('enum.user_roles')['student'] ? 'selected' : ''}} value="{{ Config::get('enum.user_roles')['student'] }}">Student</option>
 	</select>
 	{!! $errors->first('role', '<p class="help-block">:message</p>') !!}
 </div>
