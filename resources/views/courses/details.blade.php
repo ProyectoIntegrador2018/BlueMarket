@@ -83,6 +83,7 @@
 				<p>This course is not currently associated to other courses in Bluemarket</p>
 			</div>
 		@endif
+		<a href="{{ url('courses') }}" title="Go to my courses" class="ui button primary">Go back to my courses</a>
 	</div>
 </div>
 @endsection
