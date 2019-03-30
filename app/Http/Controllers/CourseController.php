@@ -12,6 +12,7 @@ use Illuminate\Validation\Rule;
 class CourseController extends Controller
 {
 	const ROLES = 'enum.user_roles';
+	const COURSE_TYPES = 'enum.course_types';
 
 	public function __construct() {
 		$this->middleware('auth');
@@ -49,7 +50,7 @@ class CourseController extends Controller
 		$this->checkIfAccessAllowed([config(self::ROLES)['teacher']]);
 
 		$teachers = User::where('role', config(self::ROLES)['teacher'])->select('id', 'name')->get();
-		$courses = Course::where('course_type', 2)->get();
+		$courses = Course::where('course_type', config(self::COURSE_TYPES)['supplier'])->get();
 		return view('courses.create', compact('teachers', 'courses'));
 	}
 
