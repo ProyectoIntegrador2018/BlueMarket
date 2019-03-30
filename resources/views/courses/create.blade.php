@@ -104,6 +104,7 @@
 		</div>
 		<!-- Register button -->
 		<button id="send" type="submit" class="ui button primary">Register</button>
+		<a href="{{ url('courses') }}" title="Back" class="ui button">Back</a>
 	</form>
 </div>
 
