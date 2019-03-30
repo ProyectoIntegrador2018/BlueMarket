@@ -28,50 +28,48 @@
 				</thead>
 				<tbody>
 						@foreach($course->suppliers as $supplier)
-								<tr class="selectable">
-									<td>
-										<a href="{{ url('courses', $supplier->id) }}">
-											{{ $supplier->name }}
-										</a>
-									</td>
-									<td>
-										<a href="{{ url('courses', $supplier->id) }}">
-											@foreach($supplier->teachers as $teacher)
-												{{ $loop->first ? '' : ', ' }}
-												{{ $teacher->name }}
-											@endforeach
-										</a>
-									</td>
-									<td>
-										<a href="{{ url('courses', $supplier->id) }}">
-											{{ $supplier->schedule }}
-										</a>
-									</td>
-								</tr>
-							</a>
+							<tr class="selectable">
+								<td>
+									<a href="{{ url('courses', $supplier->id) }}">
+										{{ $supplier->name }}
+									</a>
+								</td>
+								<td>
+									<a href="{{ url('courses', $supplier->id) }}">
+										@foreach($supplier->teachers as $teacher)
+											{{ $loop->first ? '' : ', ' }}
+											{{ $teacher->name }}
+										@endforeach
+									</a>
+								</td>
+								<td>
+									<a href="{{ url('courses', $supplier->id) }}">
+										{{ $supplier->schedule }}
+									</a>
+								</td>
+							</tr>
 						@endforeach
 						@foreach($course->clients as $client)
-								<tr class="selectable">
-									<td>
-										<a href="{{ url('courses', $client->id) }}">
-											{{ $client->name }}
-										</a>
-									</td>
-									<td>
-										<a href="{{ url('courses', $client->id) }}">
-											@foreach($client->teachers as $teacher)
-												{{ $loop->first ? '' : ', ' }}
-												{{ $teacher->name }}
-											@endforeach
-										</a>
-									</td>
-									<td>
-										<a href="{{ url('courses', $client->id) }}">
-											{{ $client->schedule }}
-										</a>
-									</td>
-								</tr>
-							</a>
+							<tr class="selectable">
+								<td>
+									<a href="{{ url('courses', $client->id) }}">
+										{{ $client->name }}
+									</a>
+								</td>
+								<td>
+									<a href="{{ url('courses', $client->id) }}">
+										@foreach($client->teachers as $teacher)
+											{{ $loop->first ? '' : ', ' }}
+											{{ $teacher->name }}
+										@endforeach
+									</a>
+								</td>
+								<td>
+									<a href="{{ url('courses', $client->id) }}">
+										{{ $client->schedule }}
+									</a>
+								</td>
+							</tr>
 						@endforeach
 				</tbody>
 			</table>
