@@ -65,7 +65,7 @@ class UserController extends AdminController {
 		$user = User::create($validatedAttributes);
 		abort_if(!$user->exists, 500);
 
-		return redirect('users')->with('flash_message', 'User added!');
+		return redirect('admin/users')->with('flash_message', 'User added!');
 	}
 
 	/**
@@ -101,6 +101,6 @@ class UserController extends AdminController {
 		$user = User::findOrFail($id);
 		$user->update($request->all());
 
-		return redirect('users')->with('flash_message', 'User updated!');
+		return redirect('admin/users')->with('flash_message', 'User updated!');
 	}
 }
