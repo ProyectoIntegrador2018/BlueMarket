@@ -80,11 +80,6 @@
 				</select>
 			</div>
 		</div>
-		<!-- Student team size -->
-		<div class="field">
-			<label for="teamSize">Max. team size</label>
-			<input type="text" name="teamSize" id="teamSize" title="What is the maximum size of your students' teams?" required>
-		</div>
 		<!-- Associated courses -->
 		<div id="associatedCoursesField" class="field" title="Are you collaborating with other courses?">
 			<label for="associatedCourses">Associated courses</label>
@@ -143,8 +138,7 @@
 		hasSelection("courseType") &&
 		hasSelection("courseType") &&
 		hasSelection("courseSchedule") &&
-		hasSelection("courseHours") &&
-		isInteger("teamSize");
+		hasSelection("courseHours")
 	}
 
 	function updateAssociatedCourses(){

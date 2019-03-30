@@ -16,7 +16,6 @@
 			@endforeach
 		</ul>
 		<p><strong>Course schedule:</strong> {{ $course->schedule }}</p>
-		<p><strong>Max. team size:</strong> {{ $course->max_team_size }}</p>
 		@if (isset($course->suppliers))
 			<p><strong>Associated courses:</strong></p>
 			<ul>
