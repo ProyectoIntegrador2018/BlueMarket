@@ -138,7 +138,7 @@
 		hasSelection("courseType") &&
 		hasSelection("courseType") &&
 		hasSelection("courseSchedule") &&
-		hasSelection("courseHours")
+		hasSelection("courseHours");
 	}
 
 	function updateAssociatedCourses(){
