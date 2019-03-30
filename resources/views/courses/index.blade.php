@@ -10,7 +10,7 @@
 			<thead class="bluemarket-thead">
 				<tr>
 					<th>Course</th>
-					<th>Course key</th>
+					<th>Key</th>
 					<th>Course type</th>
 					<th>Schedule</th>
 					<th>Created at</th>
@@ -19,33 +19,43 @@
 			</thead>
 			<tbody>
 				@foreach ($courses as $course)
-				<tr class="selectable">
-					<td>
+				<tr>
+					<td class="selectable">
 						<a href="{{ url('courses', $course->id) }}">
 							{{ $course->name }}
 						</a>
 					</td>
-					<td>
+					<td class="selectable">
 						<a href="{{ url('courses', $course->id) }}">
 							{{ $course->course_key }}
 						</a>
 					</td>
-					<td>
+					<td class="selectable">
 						<a href="{{ url('courses', $course->id) }}">
-							{{ $course->course_type }}
+							<!-- Might want to add another enum? -->
+							@switch($course->course_type )
+								@case(1)
+									Client
+									@break
+								@case(2)
+									Supplier
+									@break
+								@default
+									Client
+							@endswitch
 						</a>
 					</td>
-					<td>
+					<td class="selectable">
 						<a href="{{ url('courses', $course->id) }}">
 							{{ $course->schedule }}
 						</a>
 					</td>
-					<td>
+					<td class="selectable">
 						<a href="{{ url('courses', $course->id) }}">
 							{{ $course->created_at }}
 						</a>
 					</td>
-					<td>
+					<td class="selectable">
 						<a href="{{ url('courses', $course->id) }}">
 							{{ $course->updated_at }}
 						</a>
