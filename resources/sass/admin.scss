@@ -77,9 +77,11 @@ table.table {
 	}
 }
 .badge.badge-pill {
+	padding: 5px;
+
 	&.student {
 		background-color: goldenrod;
-		color: black;
+		color: white;
 	}
 	&.teacher {
 		background-color: darkslateblue;
