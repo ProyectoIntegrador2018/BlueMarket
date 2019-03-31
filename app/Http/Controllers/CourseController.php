@@ -64,7 +64,6 @@ class CourseController extends Controller
 		$attributes = request()->validate([
 			'courseName' => 'required',
 			'courseType' => 'required|integer|min:1|max:2',
-			'teamSize' => 'required|integer|min:1',
 			'teachers' => 'required|array|min:1',
 			'teachers.*' => [
 				'integer',
@@ -237,7 +236,6 @@ class CourseController extends Controller
 			'name' => $attributes['courseName'],
 			'course_type' => $attributes['courseType'],
 			'schedule' => $schedule,
-			'max_team_size' => $attributes['teamSize'],
 			'course_key' => $courseKey,
 		]);
 
