@@ -17,7 +17,8 @@ class ProjectController extends Controller
 	public function index() {
 		$projects = Project::all();
 		$tags = Tag::all();
-		return view('projects', compact('tags', 'projects'));
+		// dd($tags);
+		return view('projects', ['tags' => $tags, 'projects' => $projects]);
 	}
 
 	public function show($id) {
@@ -40,11 +41,11 @@ class ProjectController extends Controller
 			'videoPitch' => ['required'],
 			'longDescription' => ['required'],
 			'shortDescription' => ['required'],
-			'courses' => ['required'],
+			'course' => ['required'],
 			'projectImage' => ['required'],
-			'label' => 'required|array|min:1',
-			// verify each elm in label[] to exist as a label tag record
-			'label.*' => [
+			'labels' => 'required|array|min:1',
+			// verify each elm in labels[] to exist as a labels tag record
+			'labels.*' => [
 				'integer',
 				Rule::in(Tag::where('type', 2)->pluck('id')),
 			],
@@ -62,7 +63,7 @@ class ProjectController extends Controller
 		}
 
 		$project->tags()->attach($attributes['skillsets']);
-		$project->tags()->attach($attributes['label']);
+		$project->tags()->attach($attributes['labels']);
 
 		return view('projects', ['project' => $project]);
 	}
@@ -70,11 +71,21 @@ class ProjectController extends Controller
 	private function saveRecord(array $attributes) {
 		return Project::create([
 			'name' => $attributes['projectName'],
-			'video' => $attributes['videoPitch'],
+			'video' => $this->formatYouTubeUrl($attributes['videoPitch']),
 			'long_description' => $attributes['longDescription'],
 			'short_description' => $attributes['shortDescription'],
-			'course_id' => $attributes['courses'],
+			'course_id' => $attributes['course'],
 			'photo' => $attributes['projectImage']
 		]);
+	}
+
+	// Possible inputUrl => https://www.youtube.com/watch?v=VzzwnsLX_5o
+	// Possible inputUrl => https://youtu.be/VzzwnsLX_5o
+	// Return embedUrl => https://www.youtube.com/embed/VzzwnsLX_5o
+	private function formatYouTubeUrl($inputUrl) {
+		//Regex that selects all url except id and replaces it with an empty string. Returns only the ID.
+		$id = preg_replace('/((http(s)?:\/\/)?)(www\.)?((youtube\.com\/watch\?v=)|(youtu.be\/)|(youtube\.com\/embed\/))/', '', $inputUrl);
+		$embedUrl = "https://www.youtube.com/embed/".$id;
+		return $embedUrl;
 	}
 }
