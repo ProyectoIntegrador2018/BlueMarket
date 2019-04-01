@@ -19,7 +19,7 @@ function filterProjects() {
 	const tagQuery = $('#searchTags').val(); // Returns an array for the select
 	// Get all the projects where name LIKE %namequery%:
 	let projectResults = projects.filter(project => {
-		return project.name.indexOf(nameQuery) > -1;
+		return project.name.indexOf(nameQuery) > -1; //indexOf returns position of first occurence
 	});
 	// Get the projects that match search tags:
 	const finalResults = projectResults.filter(project => {
@@ -27,10 +27,9 @@ function filterProjects() {
 		for (var i = 0; i < tagQuery.length; i++) {
 			if(project.tags.indexOf(tagQuery[i]) === -1) {
 				matchesAllTags = false;
-				break;
+				return matchesAllTags;
 			}
 		}
-		console.log(matchesAllTags);
 		return matchesAllTags;
 	});
 	$projectCards.hide();
