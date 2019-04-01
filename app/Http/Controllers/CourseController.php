@@ -29,7 +29,7 @@ class CourseController extends Controller
 		$user = Auth::user();
 		switch ($user->role) {
 			case config(self::ROLES)['student']:
-				return view('user.studentProfile', ['courses' => $user->EnrolledIn]);
+				return view('user.studentProfile', ['courses' => $user->enrolledIn]);
 
 			case config(self::ROLES)['teacher']:
 				$courses = $user->teaches;
@@ -160,7 +160,7 @@ class CourseController extends Controller
 		abort_if($course == null || $user == null, 400);
 		abort_if($user->role != config(self::ROLES)['student'], 401);
 
-		$result = $user->EnrolledIn()->attach($course);
+		$result = $user->enrolledIn()->attach($course);
 
 		return ['course' => $course, 'teachers' => $course->teachers];
 	}
