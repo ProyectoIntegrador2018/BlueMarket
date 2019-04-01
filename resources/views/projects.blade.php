@@ -18,7 +18,7 @@
 			<label for="tags">Tags</label>
 			<select id="searchTags" name="tags" class="ui fluid search dropdown searchTags" multiple>
 				@foreach ($tags as $tag)
-					<option value={{ $tag->id }}>{{ $tag->name }}</option>
+					<option value="{{ $tag->name }}">{{ $tag->name }}</option>
 				@endforeach
 			</select>
 		</div>
@@ -27,9 +27,9 @@
 	<!-- Message -->
 	<div hidden class="ui message noProjectsMessage">
 		<div class="header">
-	    	No Projects Found
-	  	</div>
-	  	<p>No projects meet search criteria.</p>
+			No Projects Found
+		</div>
+		<p>No projects meet search criteria.</p>
 	</div>
 	<!-- Project Cards -->
 	<div class="ui four stackable cards">

@@ -30,6 +30,7 @@ function filterProjects() {
 				break;
 			}
 		}
+		console.log(matchesAllTags);
 		return matchesAllTags;
 	});
 	$projectCards.hide();
