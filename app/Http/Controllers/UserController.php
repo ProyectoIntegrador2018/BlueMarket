@@ -10,6 +10,11 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 
 class UserController extends Controller {
+
+	public function __construct() {
+		$this->middleware('auth');
+	}
+
 	/**
 	 * Show the form for editing the current user
 	 *
