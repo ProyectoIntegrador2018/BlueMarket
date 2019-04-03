@@ -212,7 +212,10 @@
 				},
 				{
 					type: 'associatedTeam',
-					prompt: ''
+					prompt: function(){
+						// we only show team-association prompt once
+						return '';
+					}
 				}]
 			},
 			courses: {
