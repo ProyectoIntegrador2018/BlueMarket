@@ -118,7 +118,7 @@
 			<input type="text" id="videoPitch" name="videoPitch"  value="{{ old('videoPitch') }}" placeholder="e.g. https://youtube.com/watch?v=238028302">
 		</div>
 		<!-- Register button -->
-		<button id="registerButton" type="button" class="ui primary submit button">Register project</button>
+		<button id="registerButton" type="submit" class="ui primary submit button">Register project</button>
 		<!-- Error message -->
 		<div class="ui error message">
 			<div class="header">Whoops! Something went wrong.</div>
