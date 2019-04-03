@@ -47,7 +47,7 @@
 		<div class="ui placeholder segment">
 			<div class="ui two column very relaxed stackable grid">
 				<div class="column">
-					<div class="field">
+					<div class="field associatedTeam">
 						<label for="existingTeam">Choose an existing team</label>
 						<select id="existingTeam" name="existingTeam" class="ui search dropdown team {{ $errors->has('existingTeam') || $errors->has('bothTeams') ? 'error': '' }}" value="{{ old('existingTeam') }}" onchange="selectTeam()">
 							<option value="">Associate an existing team</option>
@@ -62,7 +62,7 @@
 					</div>
 				</div>
 				<div class="column">
-					<div class="field">
+					<div class="field associatedTeam">
 						<label for="newTeam">Create a new team</label>
 						<input id="newTeam" type="text" name="newTeam" placeholder="Create a new team" value="{{ old('newTeam')}}" onchange="createNewTeam()">
 					</div>
@@ -172,16 +172,22 @@
 	}
 
 	function createNewTeam() {
-		$("#existingTeam").dropdown('clear');
+		$(".associatedTeam").removeClass("error");
+		$("#existingTeam").dropdown("clear");
 	}
 
 	function selectTeam() {
+		$(".associatedTeam").removeClass("error");
 		$("#newTeam").val("");
 	}
 
 	$('.ui.dropdown').dropdown({ clearable: true });
 
-	/* Register button validation */
+	$.fn.form.settings.rules.associatedTeam = function() {
+		return ($("#newTeam").val() != "" || $("#existingTeam").val() != "");
+	};
+
+	/* Form validation */
 	$('.ui.form').form({
 		fields: {
 			projectName: {
@@ -190,11 +196,23 @@
 					type: 'empty'
 				}]
 			},
+			existingTeam: {
+				identifier: 'existingTeam',
+				rules: [{
+					type: 'associatedTeam',
+					prompt: 'Project must be associated with a team.'
+				}]
+			},
 			newTeam: {
 				identifier: 'newTeam',
-				optional: true,
+				optional: false,
 				rules: [{
 					type: 'maxLength[30]',
+					prompt: 'Team name cannot be longer than 30 characters.'
+				},
+				{
+					type: 'associatedTeam',
+					prompt: ''
 				}]
 			},
 			courses: {
