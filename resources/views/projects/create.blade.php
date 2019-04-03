@@ -192,10 +192,10 @@
 			},
 			newTeam: {
 				identifier: 'newTeam',
-				optional: true
+				optional: true,
 				rules: [{
 					type: 'maxLength[30]',
-				}],
+				}]
 			},
 			courses: {
 				identifier: 'courses',
@@ -240,13 +240,9 @@
 				identifier: 'videoPitch',
 				rules:[
 					{
-						type: 'empty',
-						prompt: 'Please enter a link to pitch video.'
-					},
-					{
 						type: 'regExp',
 						value: '/^((http(s)?:\\/\\/)?)(www\\.)?((youtube\\.com\\/)|(youtu.be\\/))[\\S]+$/',
-						prompt: 'Please enter a valid youtube url.'
+						prompt: 'Pitch video must be a valid YouTube URL.'
 					}
 				]
 			}
