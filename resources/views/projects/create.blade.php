@@ -12,15 +12,6 @@
 </style>
 <div class="padded content">
 	<h1>Create new project</h1>
-	@if($errors->any())
-		<div class="ui error message">
-			<ul>
-				@foreach ($errors->all() as $error)
-					<li>{{ $error }}</li>
-				@endforeach
-			</ul>
-		</div>
-	@endif
 	<form class="ui form {{ $errors->any() ? 'error': '' }}" method="post" enctype="multipart/form-data" action="/projects">
 		@csrf
 		<!-- Project image -->
@@ -32,13 +23,13 @@
 				</div>
 				<button class="imgUploader ui button primary" type="button">Upload image</button>
 			</div>
-			<input id="imgInput" name="projectImage" type="file" style="display:none" accept="image/x-png,image/jpeg,image/png" onchange="updateImage(this)">
+			<input id="projectImage" name="projectImage" type="file" style="display:none" accept="image/x-png,image/jpeg,image/png" onchange="updateImage(this)">
 		</div>
 		<button class="ui button primary" onclick="fillDummy()" type="button">Fill with dummy data </button>
 		<!-- Project name -->
 		<div class="field {{ $errors->has('projectName') ? 'error': '' }}">
 			<label for="projectName">Project name</label>
-			<input type="text" name="projectName" placeholder="e.g. Best Project" value="{{ old('projectName') }}">
+			<input type="text" id="projectName"" name="projectName" placeholder="e.g. Best Project" value="{{ old('projectName') }}">
 		</div>
 		<!-- Associated course -->
 		<div class="field {{ $errors->has('courses') ? 'error': '' }}">
@@ -72,8 +63,8 @@
 				</div>
 				<div class="column">
 					<div class="field">
-						<label for="createTeam">Create a new team</label>
-						<input id="newTeam" type="text" name="createTeam" placeholder="Create a new team" value="{{ old('createTeam')}}" onchange="createNewTeam()">
+						<label for="newTeam">Create a new team</label>
+						<input id="newTeam" type="text" name="newTeam" placeholder="Create a new team" value="{{ old('newTeam')}}" onchange="createNewTeam()">
 					</div>
 				</div>
 			</div>
@@ -83,7 +74,7 @@
 		</div>
 		<!-- Labels -->
 		<div class="field {{ $errors->has('label') ? 'error': '' }}">
-			<label for="label">Labels</label>
+			<label for="labels">Labels</label>
 			<select name="labels[]" id="labels" multiple class="ui search dropdown">
 				<option value="">e.g. Finance</option>
 				@if(isset($labels))
@@ -113,22 +104,31 @@
 		<!-- Short description -->
 		<div class="field {{ $errors->has('shortDescription') ? 'error': '' }}">
 			<label for="shortDescription">Brief description</label>
-			<textarea name="shortDescription" rows="2" placeholder="e.g. The project is a web page for personal financial organization">{{ old('shortDescription') }}</textarea>
+			<textarea id="shortDescription" name="shortDescription" rows="2" placeholder="e.g. The project is a web page for personal financial organization">{{ old('shortDescription') }}</textarea>
 		</div>
 		<!-- Long description -->
 		<div class="field {{ $errors->has('longDescription') ? 'error': '' }}">
 			<label for="longDescription">Detailed description</label>
-			<textarea name="longDescription" placeholder="e.g. The project consists of a single page application where users can sign up or login. It includes...">{{ old('longDescription') }}</textarea>
+			<textarea id="longDescription" name="longDescription" placeholder="e.g. The project consists of a single page application where users can sign up or login. It includes...">{{ old('longDescription') }}</textarea>
 		</div>
 		<!-- Pitch video -->
 		<div class="field {{ $errors->has('videoPitch') ? 'error': '' }}">
 			<label for="videoPitch">Pitch video</label>
-			<input type="text" name="videoPitch"  value="{{ old('videoPitch') }}" placeholder="e.g. https://youtube.com/watch?v=238028302">
+			<input type="text" id="videoPitch" name="videoPitch"  value="{{ old('videoPitch') }}" placeholder="e.g. https://youtube.com/watch?v=238028302">
 		</div>
 		<!-- Register button -->
-		<button id="registerButton" type="submit" class="ui primary submit button">Register project</button>
+		<button id="registerButton" type="button" class="ui primary submit button">Register project</button>
 		<!-- Error message -->
-		<div class="ui error message"></div>
+		<div class="ui error message">
+			<div class="header">Whoops! Something went wrong.</div>
+			@if($errors->any())
+				<ul>
+					@foreach ($errors->all() as $error)
+						<li>{{ $error }}</li>
+					@endforeach
+				</ul>
+			@endif
+		</div>
 	</form>
 </div>
 @section('scripts')
@@ -136,7 +136,7 @@
 	/* Upload new image */
 	$(".imgUploader").click(function(event) {
 		event.preventDefault();
-		$("#imgInput").click();
+		$("#projectImage").click();
 	});
 
 	function validateImage(file) {
@@ -147,7 +147,7 @@
 	function fillDummy() {
 		$('input[name=projectName]').val('Some project title');
 		$("select[name=courses]").val('1');
-		$('input[name=createTeam]').val('Some team name');
+		$('input[name=newTeam]').val('Some team name');
 		let labels = $("#labels option").slice(1,4).toArray().map(t => t.value);
 		$('#labels').dropdown('set selected', labels);
 		let skillsets = $('#skillsets option').slice(1,5).toArray().map(t => t.value);
@@ -184,66 +184,56 @@
 	/* Register button validation */
 	$('.ui.form').form({
 		fields: {
-			projectImage: {
-				identifier: 'projectImage',
-				rules:[{
-					type: 'empty',
-					prompt: 'Please enter a project image.'
-				}]
-			},
 			projectName: {
 				identifier:'projectName',
 				rules:[{
-					type: 'empty',
-					prompt: 'Please enter a project name.'
+					type: 'empty'
 				}]
 			},
-			createTeam: {
-				identifier: 'createTeam',
-				rules: ["empty", "maxLength[30]"],
-				prompt: 'Please enter a team name.',
-				optional: false
+			newTeam: {
+				identifier: 'newTeam',
+				optional: true
+				rules: [{
+					type: 'maxLength[30]',
+				}],
 			},
 			courses: {
 				identifier: 'courses',
 				rules: [{
-					type: 'minCount[1]',
-					prompt: 'Please select an associated course.'
+					type: 'minCount[1]'
 				}]
 			},
 			label: {
-				identifier: 'label[]',
+				identifier: 'labels[]',
 				rules: [{
 					type: 'minCount[1]',
-					prompt: 'Please select at least one label.'
 				}]
 			},
 			skillsets: {
 				identifier: 'skillsets[]',
 				rules: [{
 					type: 'minCount[1]',
-					prompt: 'Please select at least one skillset.'
 				}]
 			},
 			milestone: {
 				identifier: 'milestone',
 				rules: [{
 					type: 'empty',
-					prompt: 'Please enter current milestone.'
 				}]
 			},
 			shortDescription: {
 				identifier: 'shortDescription',
 				rules: [{
-					type: 'empty',
-					prompt: 'Please enter a brief project description.'
+						type: 'empty'
+					},
+					{
+						type: 'maxLength[280]'
 				}]
 			},
 			longDescription: {
 				identifier: 'longDescription',
 				rules: [{
-					type: 'empty',
-					prompt: 'Please enter a detailed project description.'
+					type: 'empty'
 				}]
 			},
 			videoPitch: {
@@ -262,6 +252,7 @@
 			}
 		},
 		onFailure:function() {
+			console.log('failed registration');
 			return false;
 		},
 		onSuccess:function() {
