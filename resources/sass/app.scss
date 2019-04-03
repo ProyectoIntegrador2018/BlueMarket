@@ -362,18 +362,13 @@ $color-white: #fff;
 	}
 }
 
-.upload-image-button {
-	margin-top: 2em;
-	margin-bottom: 2em;
-}
-
 .image-container {
 	display: inline-block;
 	align-content: center;
 	.preview-container {
 		margin-bottom: 1vh;
 
-		.ui.small.image.preview {
+		.ui.image.preview {
 			width: 10vmax;
 			height: 10vmax;
 			object-fit: cover;

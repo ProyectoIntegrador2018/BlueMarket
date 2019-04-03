@@ -24,13 +24,13 @@
 	<form class="ui form {{ $errors->any() ? 'error': '' }}" method="post" enctype="multipart/form-data" action="/projects">
 		@csrf
 		<!-- Project image -->
-		<div class="projectImage field {{ $errors->has('projectImage') ? 'error': '' }}">
+		<div class="field {{ $errors->has('projectImage') ? 'error': '' }}">
 			<label for="projectImage">Project image</label>
-			<div class="projectImageUploaderContainer">
-				<div class="imgUploader imagePreviewContainer">
-					<img src="https://lorempixel.com/400/400" alt="Project image" class="ui medium image" id="projectImagePreview"/>
+			<div class="image-container">
+				<div class="imgUploader preview-container">
+					<img src="https://lorempixel.com/400/400" alt="Project image" class="ui medium image preview" id="projectImagePreview"/>
 				</div>
-				<button class="imgUploader upload-image-button ui button primary" type="button">Upload image</button>
+				<button class="imgUploader ui button primary" type="button">Upload image</button>
 			</div>
 			<input id="imgInput" name="projectImage" type="file" style="display:none" accept="image/x-png,image/jpeg,image/png" onchange="updateImage(this)">
 		</div>
@@ -53,25 +53,32 @@
 			</select>
 		</div>
 		<!-- Associated team -->
-		<div class="field">
-			<label for="teamName">Associated Team</label>
-			<div class="fields">
-				<div class="seven wide field">
-					<select name="teamId" class="ui search dropdown {{ $errors->has('teamId') || $errors->has('bothTeams') ? 'error': '' }}" value="{{ old('teamId') }}">
-						<option value="">Associate an existing team</option>
-						@if(isset($teams))
-							@foreach($teams->all() as $team)
-								<option value="{{$team->id}}">{{$team->name}}</option>
-							@endforeach
-						@endif
-					</select>
+		<div class="ui placeholder segment">
+			<div class="ui two column very relaxed stackable grid">
+				<div class="column">
+					<div class="field">
+						<label for="existingTeam">Choose an existing team</label>
+						<select id="existingTeam" name="existingTeam" class="ui search dropdown team {{ $errors->has('existingTeam') || $errors->has('bothTeams') ? 'error': '' }}" value="{{ old('existingTeam') }}" onchange="selectTeam()">
+							<option value="">Associate an existing team</option>
+							<option value="1">Team 1</option>
+							<option value="2">Team 2</option>
+							@if(isset($teams))
+								@foreach($teams->all() as $team)
+									<option value="{{ $team->id }}">{{ $team->name }}</option>
+								@endforeach
+							@endif
+						</select>
+					</div>
 				</div>
-				<div class="two wide field">
-					<p style="font-weight: bold; font-size: 2rem; color: black; text-align: center;">OR</p>
+				<div class="column">
+					<div class="field">
+						<label for="createTeam">Create a new team</label>
+						<input id="newTeam" type="text" name="createTeam" placeholder="Create a new team" value="{{ old('createTeam')}}" onchange="createNewTeam()">
+					</div>
 				</div>
-				<div class="seven wide field {{ $errors->has('bothTeams') ? 'error': '' }}">
-					<input type="text" name="createTeam" placeholder="Create a new team" value="{{ old('createTeam') }}">
-				</div>
+			</div>
+			<div class="ui vertical divider">
+				Or
 			</div>
 		</div>
 		<!-- Labels -->
@@ -101,7 +108,7 @@
 		<!-- Milestone -->
 		<div class="field {{ $errors->has('milestone') ? 'error': '' }}">
 			<label for="milestone">Public milestone</label>
-			<input type="text" name="milestone" value="{{ old('milestone') }}" placeholder="e.g. Design">
+			<input type="text" id="milestone" value="{{ old('milestone') }}" placeholder="e.g. Design">
 		</div>
 		<!-- Short description -->
 		<div class="field {{ $errors->has('shortDescription') ? 'error': '' }}">
@@ -131,10 +138,12 @@
 		event.preventDefault();
 		$("#imgInput").click();
 	});
+
 	function validateImage(file) {
 		const maxImageSize = 1*1024*1024; // 1MiB
 		return (file.type == "image/png" || file.type == "image/jpg") && file.size <= maxImageSize;
 	}
+
 	function fillDummy() {
 		$('input[name=projectName]').val('Some project title');
 		$("select[name=courses]").val('1');
@@ -148,6 +157,7 @@
 		$('textarea[name=longDescription]').val('This is the long description');
 		$('input[name=videoPitch]').val('https://www.youtube.com/watch?v=QsaNaZy3SSA');
 	}
+
 	function updateImage(imageInput) {
 		let reader = new FileReader();
 		let file = imageInput.files[0];
@@ -160,85 +170,93 @@
 		});
 		reader.readAsDataURL(file);
 	}
-	/* Register button validation */
+
+	function createNewTeam() {
+		$("#existingTeam").dropdown('clear');
+	}
+
+	function selectTeam() {
+		$("#newTeam").val("");
+	}
+
 	$('.ui.dropdown').dropdown({ clearable: true });
+
+	/* Register button validation */
 	$('.ui.form').form({
 		fields: {
 			projectImage: {
-				identifier:'projectImage',
+				identifier: 'projectImage',
 				rules:[{
-					type:'empty',
-					prompt:'Please enter a project image'
+					type: 'empty',
+					prompt: 'Please enter a project image.'
 				}]
 			},
-			projectName:{
+			projectName: {
 				identifier:'projectName',
 				rules:[{
-					type:'empty',
-					prompt:'Please enter a project name'
+					type: 'empty',
+					prompt: 'Please enter a project name.'
 				}]
 			},
-			teamName:{
-				identifier:'teamName',
-				rules:[{
-						type:'empty',
-						prompt:'Please select a team name'
-					}
-				]
+			createTeam: {
+				identifier: 'createTeam',
+				rules: ["empty", "maxLength[30]"],
+				prompt: 'Please enter a team name.',
+				optional: false
 			},
-			courses:{
-				identifier:'courses',
-				rules:[{
-					type:'minCount[1]',
-					prompt:'Please select an associated course'
+			courses: {
+				identifier: 'courses',
+				rules: [{
+					type: 'minCount[1]',
+					prompt: 'Please select an associated course.'
 				}]
 			},
-			label:{
-				identifier:'label[]',
-				rules:[{
-					type:'minCount[1]',
-					prompt:'Please select at least one label'
+			label: {
+				identifier: 'label[]',
+				rules: [{
+					type: 'minCount[1]',
+					prompt: 'Please select at least one label.'
 				}]
 			},
-			skillsets:{
-				identifier:'skillsets[]',
-				rules:[{
-					type:'minCount[1]',
-					prompt:'Please select at least one skillset'
+			skillsets: {
+				identifier: 'skillsets[]',
+				rules: [{
+					type: 'minCount[1]',
+					prompt: 'Please select at least one skillset.'
 				}]
 			},
-			milestone:{
-				identifier:'milestone',
-				rules:[{
-					type:'empty',
-					prompt:'Please enter current milestone'
+			milestone: {
+				identifier: 'milestone',
+				rules: [{
+					type: 'empty',
+					prompt: 'Please enter current milestone.'
 				}]
 			},
-			shortDescription:{
-				identifier:'shortDescription',
-				rules:[{
-					type:'empty',
-					prompt:'Please enter a brief project description'
+			shortDescription: {
+				identifier: 'shortDescription',
+				rules: [{
+					type: 'empty',
+					prompt: 'Please enter a brief project description.'
 				}]
 			},
-			longDescription:{
-				identifier:'longDescription',
-				rules:[{
-					type:'empty',
-					prompt:'Please enter a detailed project description'
+			longDescription: {
+				identifier: 'longDescription',
+				rules: [{
+					type: 'empty',
+					prompt: 'Please enter a detailed project description.'
 				}]
 			},
-			videoPitch:{
-				identifier:'videoPitch',
+			videoPitch: {
+				identifier: 'videoPitch',
 				rules:[
 					{
-						type:'empty',
-						prompt:'Please enter a link to pitch video'
+						type: 'empty',
+						prompt: 'Please enter a link to pitch video.'
 					},
 					{
-						type:'regExp',
-						value:'/^((http(s)?:\\/\\/)?)(www\\.)?((youtube\\.com\\/)|(youtu.be\\/))[\\S]+$/',
-						prompt:'Please enter a valid youtube url'
+						type: 'regExp',
+						value: '/^((http(s)?:\\/\\/)?)(www\\.)?((youtube\\.com\\/)|(youtu.be\\/))[\\S]+$/',
+						prompt: 'Please enter a valid youtube url.'
 					}
 				]
 			}
