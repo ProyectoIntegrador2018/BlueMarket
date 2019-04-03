@@ -46,13 +46,11 @@
 		<!-- Associated team -->
 		<div class="ui placeholder segment">
 			<div class="ui two column very relaxed stackable grid">
-				<div class="column">
+				<div class="column responsive-segment">
 					<div class="field associatedTeam">
 						<label for="existingTeam">Choose an existing team</label>
 						<select id="existingTeam" name="existingTeam" class="ui search dropdown team {{ $errors->has('existingTeam') || $errors->has('bothTeams') ? 'error': '' }}" value="{{ old('existingTeam') }}" onchange="selectTeam()">
-							<option value="">Associate an existing team</option>
-							<option value="1">Team 1</option>
-							<option value="2">Team 2</option>
+							<option value="">My teams</option>
 							@if(isset($teams))
 								@foreach($teams->all() as $team)
 									<option value="{{ $team->id }}">{{ $team->name }}</option>
@@ -61,7 +59,10 @@
 						</select>
 					</div>
 				</div>
-				<div class="column">
+				<div class="ui horizontal divider">
+					Or
+				</div>
+				<div class="column responsive-segment">
 					<div class="field associatedTeam">
 						<label for="newTeam">Create a new team</label>
 						<input id="newTeam" type="text" name="newTeam" placeholder="Create a new team" value="{{ old('newTeam')}}" onchange="createNewTeam()">
@@ -171,6 +172,7 @@
 		reader.readAsDataURL(file);
 	}
 
+	/* Team association */
 	function createNewTeam() {
 		$(".associatedTeam").removeClass("error");
 		$("#existingTeam").dropdown("clear");
@@ -181,13 +183,32 @@
 		$("#newTeam").val("");
 	}
 
+	/* Responsiveness not handled by Semantic */
+	function setResponsiveProperties(mobile) {
+		$(".ui.divider").hide();
+		if (mobile.matches) { // If media query matches
+			$(".ui.horizontal.divider").show();
+			$(".responsive-segment").addClass("row").removeClass("column");
+
+		}
+		else {
+			$(".ui.vertical.divider").show();
+			$(".responsive-segment").addClass("column").removeClass("row");
+		}
+	}
+
+	let mobile = window.matchMedia("(max-width: 767px)");
+	setResponsiveProperties(mobile);
+	mobile.addListener(setResponsiveProperties);
+
+	/* Semantic dropdown set up  */
 	$('.ui.dropdown').dropdown({ clearable: true });
 
+	/* Form validation */
 	$.fn.form.settings.rules.associatedTeam = function() {
 		return ($("#newTeam").val() != "" || $("#existingTeam").val() != "");
 	};
 
-	/* Form validation */
 	$('.ui.form').form({
 		fields: {
 			projectName: {
