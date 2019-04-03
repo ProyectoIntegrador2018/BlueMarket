@@ -140,11 +140,6 @@
 		$("#projectImage").click();
 	});
 
-	function validateImage(file) {
-		const maxImageSize = 1*1024*1024; // 1MiB
-		return (file.type == "image/png" || file.type == "image/jpg") && file.size <= maxImageSize;
-	}
-
 	function fillDummy() {
 		$('input[name=projectName]').val('Some project title');
 		$("select[name=courses]").val('1');
@@ -160,13 +155,19 @@
 	}
 
 	function updateImage(imageInput) {
-		let reader = new FileReader();
-		let file = imageInput.files[0];
-		if(!file || !validateImage(file)) {
+		const reader = new FileReader();
+
+		const file = imageInput.files[0];
+		const maxImageSize = 1024 * 1024 * 1; // 1MiB
+
+		// validate file
+		if (!file || !isValidImage(file, maxImageSize)) {
+			alert("Please upload a .png or .jpeg file. Maximum size: 1MiB.");
 			return false;
 		}
-		reader.addEventListener("load", function() {
-			// Update the img
+
+		// update preview when completed successfully
+		reader.addEventListener("load", function () {
 			$("#projectImagePreview").attr("src", reader.result);
 		});
 		reader.readAsDataURL(file);
@@ -226,7 +227,6 @@
 			},
 			newTeam: {
 				identifier: 'newTeam',
-				optional: false,
 				rules: [{
 					type: 'maxLength[30]',
 					prompt: 'Team name cannot be longer than 30 characters.'
