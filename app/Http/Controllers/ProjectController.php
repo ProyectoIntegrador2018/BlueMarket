@@ -17,7 +17,6 @@ class ProjectController extends Controller
 	public function index() {
 		$projects = Project::with('tags:name')->get();
 		$tags = Tag::all();
-		// dd($tags);
 		return view('projects', ['tags' => $tags, 'projects' => $projects]);
 	}
 
