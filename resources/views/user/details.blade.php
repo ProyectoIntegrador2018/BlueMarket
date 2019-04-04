@@ -9,6 +9,27 @@
 @section( "content" )
 	<div class="padded content student profile">
 		<h1>Student profile</h1>
+		<div class="ui grid">
+			<div class="four wide column">
+				Hello
+			</div>
+			<div class="twelve wide column">
+				<div class="ui top attached tabular menu">
+					<a class="active item" data-tab="first">First</a>
+					<a class="item" data-tab="second">Second</a>
+					<a class="item" data-tab="third">Third</a>
+				</div>
+				<div class="ui bottom attached active tab segment" data-tab="first">
+					First
+				</div>
+				<div class="ui bottom attached tab segment" data-tab="second">
+					Second
+				</div>
+				<div class="ui bottom attached tab segment" data-tab="third">
+					Third
+				</div>
+			</div>
+		</div>
 		<div class="courses">
 			<h2>My courses</h2>
 			<div id="courseKeyInputContainer" class="ui action input">
@@ -89,6 +110,10 @@
 	</div>
 @section( "scripts" )
 <script>
+	$('.menu .item')
+		.tab()
+	;
+
 	$.ajaxSetup({
 		beforeSend: function(xhr) {
 			xhr.setRequestHeader('X-CSRF-TOKEN', $('meta[name="csrf-token"]').attr( "content" ));
