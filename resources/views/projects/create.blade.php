@@ -29,13 +29,13 @@
 		<!-- Project name -->
 		<div class="field {{ $errors->has('projectName') ? 'error': '' }}">
 			<label for="projectName">Project name</label>
-			<input type="text" id="projectName"" name="projectName" placeholder="e.g. Best Project" value="{{ old('projectName') }}">
+			<input type="text" id="projectName"" name="projectName" placeholder="e.g. Best project" value="{{ old('projectName') }}">
 		</div>
 		<!-- Associated course -->
 		<div class="field {{ $errors->has('courses') ? 'error': '' }}">
 			<label for="course">Associated course</label>
 			<select name="course" id="course" class="ui search dropdown" value="{{ old('course') }}">
-				<option value="">e.g. Web development class</option>
+				<option value="">e.g. Web Development</option>
 				@if(isset($courses))
 					@foreach($courses->all() as $course)
 						<option value="{{ $course->id }}" {{ (old('course') == $course->id ? 'selected' : '') }}>{{ $course->name }}</option>
@@ -62,7 +62,7 @@
 			<div class="seven wide field {{ $errors->has('newTeam') || $errors->has('bothTeams') ? 'error': '' }}">
 				<div class="field associatedTeam">
 					<label for="newTeam">Create a new team</label>
-					<input id="newTeam" type="text" name="newTeam" placeholder="Create a new team" value="{{ old('newTeam')}}" onchange="createNewTeam()">
+					<input id="newTeam" type="text" name="newTeam" placeholder="e.g. New team" value="{{ old('newTeam')}}" onchange="createNewTeam()">
 				</div>
 			</div>
 		</div>
