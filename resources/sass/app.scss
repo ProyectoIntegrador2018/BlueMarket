@@ -237,6 +237,10 @@ $color-white: #fff;
 			width: 100%;
 		}
 	}
+
+	.ui.form .fields {
+		margin-bottom: 14px;
+	}
 }
 
 .progress {
@@ -391,4 +395,8 @@ $color-white: #fff;
 
 .detail-container {
 	margin-top: 25px;
+}
+
+.two-column-divider {
+	margin: 0 auto;
 }
