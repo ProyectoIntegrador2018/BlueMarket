@@ -4,7 +4,7 @@
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 
-@section( "title", "Welcome" )
+@section( "title", $user->name )
 
 @section( "content" )
 	<div class="padded content student profile">
@@ -34,7 +34,7 @@
 				<div class="ui top attached tabular menu">
 					<a class="active item" data-tab="first">First</a>
 					<a class="item" data-tab="second">Second</a>
-					<a class="item" data-tab="third">Third</a>
+					<a class="item" data-tab="courses">Courses</a>
 				</div>
 				<div class="ui bottom attached active tab segment" data-tab="first">
 					First
@@ -42,85 +42,101 @@
 				<div class="ui bottom attached tab segment" data-tab="second">
 					Second
 				</div>
-				<div class="ui bottom attached tab segment" data-tab="third">
-					Third
-				</div>
-			</div>
-		</div>
-		<div class="courses">
-			<h2>My courses</h2>
-			<div id="courseKeyInputContainer" class="ui action input">
-				<input id="courseKey" type="text" placeholder="Course key">
-				<button type="button" id="addCourse" class="ui primary button">Add course</button>
-			</div>
-			<div class="courses table">
-				<table id="currentCourses" class="ui striped table">
-					<thead class="bluemarket-thead">
-						<tr>
-							<th>Course</th>
-							<th>Professor</th>
-							<th>Schedule</th>
-						</tr>
-					</thead>
-					<tbody>
-						@if(isset($courses))
-							@foreach($courses->all() as $course)
-							<tr>
-								<td>{{ $course->name }}</td>
-								<td>
-									@foreach($course->teachers as $teacher)
-										{{ $loop->first ? '' : ', ' }}
-										{{ $teacher->name }}
-									@endforeach
-								</td>
-								<td>{{ $course->schedule }}</td>
-							</tr>
-							@endforeach
+				<div class="ui bottom attached tab segment" data-tab="courses">
+					<div class="courses">
+						@if($user->id == Auth::user()->id)
+							<div id="courseKeyInputContainer" class="ui action input add-course">
+								<input id="courseKey" type="text" placeholder="Course key">
+								<button type="button" id="addCourse" class="ui primary button">Add course</button>
+							</div>
 						@endif
-					</tbody>
-					</table>
-			</div>
-			<div id="courseFound" class="ui coupled first modal">
-				<div class="header">Add course</div>
-				<div class="content">
-					<p id="courseName">Advanced Databases</p>
-					<p id="courseTeacher">Hello World</p>
-					<p id="courseSchedule">MoFri 13:00, Spring 2019</p>
-				</div>
-				<div class="actions">
-					<button type="button" class="ui cancel button">Cancel</button>
-					<button type="button" id="confirmAddCourse" class="ui primary button">Confirm</button>
-				</div>
-			</div>
-			<div class="ui coupled second modal">
-				<div class="header">Course successfully added</div>
-				<div class="content">
-					<i class="check huge green circle icon"></i>
-					<p>You have been added to</p>
-					<p id="courseAddedName"></p>
-				</div>
-				<div class="actions">
-					<button type="button" class="ui ok primary button">Done</button>
-				</div>
-			</div>
-			<div id="courseNotFound" class="ui modal">
-				<div class="header">Course not found</div>
-				<div class="content">
-					<i class="times huge red circle icon"></i>
-					<p>The course key you entered was not found.</p>
-				</div>
-				<div class="actions">
-					<button type="button" class="ui ok primary button">Done</button>
-				</div>
-			</div>
-			<div id="courseDuplicated" class="ui modal">
-				<div class="header">Duplicated course</div>
-				<div class="content">
-					<i class="times huge red circle icon"></i>
-					<p>You are already associated with this course.</p>
-				</div>
-				<div class="actions">
-					<button type="button" class="ui ok primary button">Done</button type="button">
+						<div id="current-courses" class="courses table">
+							<table class="ui striped table">
+								<thead class="bluemarket-thead">
+									<tr>
+										<th>Course</th>
+										<th>Professor</th>
+										<th>Schedule</th>
+									</tr>
+								</thead>
+								<tbody>
+									@if(isset($courses))
+										@foreach($courses->all() as $course)
+										<tr class="selectable">
+											<td>
+												<a href="{{ url('courses', $course->id) }}">
+													{{ $course->name }}
+												</a>
+											</td>
+											<td>
+												<a href="{{ url('courses', $course->id) }}">
+													@foreach($course->teachers as $teacher)
+														{{ $loop->first ? '' : ', ' }}
+														{{ $teacher->name }}
+													@endforeach
+												</a>
+											</td>
+											<td>
+												<a href="{{ url('courses', $course->id) }}">
+													{{ $course->schedule }}
+												</a>
+											</td>
+										</tr>
+										@endforeach
+									@endif
+								</tbody>
+							</table>
+						</div>
+						<div id="no-courses-msg" class="ui message">
+							<div class="header">
+								No courses found
+							</div>
+							<p>This user is not enrolled in any courses yet.</p>
+						</div>
+						<div id="courseFound" class="ui coupled first modal">
+							<div class="header">Add course</div>
+							<div class="content">
+								<p id="courseName"></p>
+								<p id="courseTeacher"></p>
+								<p id="courseSchedule"></p>
+							</div>
+							<div class="actions">
+								<button type="button" class="ui cancel button">Cancel</button>
+								<button type="button" id="confirmAddCourse" class="ui primary button">Confirm</button>
+							</div>
+						</div>
+						<div class="ui coupled second modal">
+							<div class="header">Course successfully added</div>
+							<div class="content">
+								<i class="check huge green circle icon"></i>
+								<p>You have been added to</p>
+								<p id="courseAddedName"></p>
+							</div>
+							<div class="actions">
+								<button type="button" class="ui ok primary button">Done</button>
+							</div>
+						</div>
+						<div id="courseNotFound" class="ui modal">
+							<div class="header">Course not found</div>
+							<div class="content">
+								<i class="times huge red circle icon"></i>
+								<p>The course key you entered was not found.</p>
+							</div>
+							<div class="actions">
+								<button type="button" class="ui ok primary button">Done</button>
+							</div>
+						</div>
+						<div id="courseDuplicated" class="ui modal">
+							<div class="header">Duplicated course</div>
+							<div class="content">
+								<i class="times huge red circle icon"></i>
+								<p>You are already associated with this course.</p>
+							</div>
+							<div class="actions">
+								<button type="button" class="ui ok primary button">Done</button type="button">
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -137,6 +153,23 @@
 		}
 	});
 
+	/* courses */
+	let courseCount = {!! count($courses) !!};
+
+	function showCourses() {
+		if(courseCount > 0) {
+			$('#current-courses').show();
+			$('#no-courses-msg').hide();
+
+		}
+		else {
+			$('#current-courses').hide();
+			$('#no-courses-msg').show();
+		}
+	}
+
+	showCourses(); // execute on load
+
 	function displayCandidateCourseDetails(courseKey) {
 		$.ajax({
 			url: '/user/courses/associate/details',
@@ -149,7 +182,7 @@
 				$( "#courseName" ).text(data.course.name);
 				let courseTeachers = data.teachers.map(function(val) {
 					return val.name;
-				}).join(',');
+				}).join(', ');
 				$( "#courseTeacher" ).text(courseTeachers);
 				$( "#courseSchedule" ).text(data.course.schedule);
 				$( ".first.modal" ).modal({
@@ -158,7 +191,6 @@
 			},
 			error: function(data) {
 				// course not found
-				console.log(data);
 				if(data.status == 404) {
 					$( "#courseNotFound" ).modal({
 						transition: "fade up"
@@ -174,8 +206,37 @@
 		});
 	}
 
+	function generateCourseDetailsRow(course, teachers) {
+		let courseId = course.id;
+		let courseName = course.name;
+		let courseTeachers = teachers.map(function(val) {
+			return val.name;
+		}).join(', ');
+		let courseSchedule = course.schedule;
+		// modify confirmation modal
+		$( "#courseAddedName" ).text(courseName);
+		// add row to table
+		let row = `<tr class="selectable">
+						<td>
+							<a href="/courses/${courseId}">
+								${courseName}
+							</a>
+						</td>
+						<td>
+							<a href="/courses/${courseId}">
+								${courseTeachers}
+							</a>
+						</td>
+						<td>
+							<a href="/courses/${courseId}">
+								${courseSchedule}
+							</a>
+						</td>
+					</tr>`;
+		return row;
+	}
+
 	function associateWithCourse(courseKey) {
-		console.log("sending ajax" + courseKey);
 		$.ajax({
 			url: '/user/courses/associate',
 			type: 'POST',
@@ -184,23 +245,15 @@
 			},
 			dataType: 'JSON',
 			success: function (data) {
-				console.log(data);
-				console.log("success ajax");
 				let courseName = data.course.name;
-				let courseTeachers = data.teachers.map(function(val) {
-					return val.name;
-				}).join(',');
-				let courseSchedule = data.course.schedule;
-				// modify confirmation modal
+				// confirmation modal
 				$( "#courseAddedName" ).text(courseName);
 				// add row to table
-				let rowToAdd = `<tr><td>${courseName}</td><td>${courseTeachers}</td><td>${courseSchedule}</td></tr>`;
-				$( "#currentCourses tbody" ).append(rowToAdd);
+				let rowToAdd = generateCourseDetailsRow(data.course, data.teachers);
+				$( "#current-courses tbody" ).append(rowToAdd);
 				$( "#courseKey" ).val("");
-			},
-			error: function(data) {
-				console.log(data);
-				console.log("error ajax");
+				courseCount++;
+				showCourses();
 			}
 		});
 	}
