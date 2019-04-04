@@ -18,7 +18,7 @@ class UserController extends Controller {
 
 	public function show($id) {
 		$user = User::findOrFail($id);
-		return view('user.details', ['courses' => $user->enrolledIn]);
+		return view('user.details', ['user' => $user, 'courses' => $user->enrolledIn]);
 	}
 
 	/**
