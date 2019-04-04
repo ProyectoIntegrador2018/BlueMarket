@@ -29,7 +29,11 @@ Route::resource('projects', 'ProjectController')->only([
 
 /* users */
 Route::resource('users', 'UserController')->only([
+<<<<<<< HEAD
 	'show', 'edit', 'update'
+=======
+	'edit', 'update', 'show'
+>>>>>>> Layout for student profile
 ]);
 
 /* courses */
