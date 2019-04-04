@@ -8,10 +8,27 @@
 
 @section( "content" )
 	<div class="padded content student profile">
-		<h1>Student profile</h1>
 		<div class="ui grid">
 			<div class="four wide column">
-				Hello
+				<!-- User avatar -->
+				<img class="ui medium circular image" src={{ $user->picture_url }}>
+				<!-- User name -->
+				<h2 class="center" style="text-align: center;">{{ $user->name }}</h2>
+				<!-- Contact button -->
+				<a class="fluid ui primary button buttonSpace" href="mailto:{{ $user->email }}" style="margin-bottom: 10px;"><i class="icon envelope"></i>Contact</a>
+				<!-- Edit button -->
+				@if ($user->id == Auth::user()->id)
+					<a class="fluid ui grey button buttonSpace" href="#" style="margin-bottom: 10px;">Edit</a> <!--TODO: Falta cambiar el href-->
+				@endif
+				<!-- Skillset pills -->
+				@if (count($user->skillset) > 0)
+					<div class="ui left aligned detail-container">
+						<p><strong>Skillset</strong></p>
+						@foreach($user->skillset as $skill)
+							<div class="ui label pill">{{ $skill->name }}</div>
+						@endforeach
+					</div>
+				@endif
 			</div>
 			<div class="twelve wide column">
 				<div class="ui top attached tabular menu">
