@@ -16,6 +16,11 @@ class UserController extends Controller {
 		$this->middleware('auth');
 	}
 
+	public function show($id) {
+		$user = User::findOrFail($id);
+		return view('user.details', ['courses' => $user->enrolledIn]);
+	}
+
 	/**
 	 * Display the specified user.
 	 *
