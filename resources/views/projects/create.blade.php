@@ -19,7 +19,7 @@
 			<label for="projectImage">Project image</label>
 			<div class="image-container">
 				<div class="imgUploader preview-container">
-					<img src="https://lorempixel.com/400/400" alt="Project image" class="ui small image preview" id="projectImagePreview"/>
+					<img src="https://dummyimage.com/400x400/3498db/ffffff.png&text=B" alt="Project image" class="ui small image preview" id="projectImagePreview"/>
 				</div>
 				<button class="imgUploader ui button primary" type="button">Upload image</button>
 			</div>
