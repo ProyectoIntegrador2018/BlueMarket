@@ -143,7 +143,9 @@ class CourseController extends Controller
 		// Check if course is already associated
 		$associatedCourse = $user->enrolledIn()->where('course_id', $course->id)->first();
 
-		abort_if(!$associatedCourse, 400);
+		abort_if($associatedCourse, 400);
+
+		return ['course' => $course, 'teachers' => $course->teachers];
 	}
 
 	/**
