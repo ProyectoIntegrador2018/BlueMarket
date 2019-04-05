@@ -24,7 +24,7 @@ class UserController extends Controller {
 	 */
 	public function show(int $id) {
 		$user = User::find($id);
-		return view('user.studentProfile', compact('user'));
+		return view('user.details', compact('user'));
 	}
 
 	/**
