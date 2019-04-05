@@ -6,6 +6,7 @@ use App\Project;
 use App\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 
 class ProjectController extends Controller
@@ -56,7 +57,7 @@ class ProjectController extends Controller
 			]
 		]);
 
-		$project = $this->saveRecord($attributes);
+		$project = $this->saveRecord($attributes, $request->file('projectImage'));
 		if (!$project->exists) {
 			abort(500);
 		}
@@ -67,14 +68,16 @@ class ProjectController extends Controller
 		return view('projects.details', ['project' => $project]);
 	}
 
-	private function saveRecord(array $attributes) {
+	private function saveRecord(array $attributes, $image) {
+		$path = isset($image) ? Storage::putFile('public', $image) : null;
+
 		return Project::create([
 			'name' => $attributes['projectName'],
 			'video' => $this->formatYouTubeUrl($attributes['videoPitch']),
 			'long_description' => $attributes['longDescription'],
 			'short_description' => $attributes['shortDescription'],
 			'course_id' => $attributes['course'],
-			'photo' => $attributes['projectImage']
+			'photo' => Storage::url($path)
 		]);
 	}
 

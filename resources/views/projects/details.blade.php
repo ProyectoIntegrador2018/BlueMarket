@@ -10,6 +10,12 @@
 		<div class="ui embed detail-container">
 			<iframe src="{{ $project->video }}" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 		</div>
+		<!-- Project Image -->
+		<div class="ui left aligned detail-container image-container">
+			<div class="preview-container">
+				<img id="preview" src="<?php echo asset($project->photo) ?>" alt="Project Image" class="ui small image preview"/>
+			</div>
+		</div>
 		<!-- Short description -->
 		<div class="ui left aligned detail-container">
 			<p><strong>Description</strong></p>
