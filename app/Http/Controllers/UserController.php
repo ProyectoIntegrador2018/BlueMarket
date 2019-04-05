@@ -17,6 +17,17 @@ class UserController extends Controller {
 	}
 
 	/**
+	 * Display the specified user.
+	 *
+	 * @param  int  $id
+	 * @return \Illuminate\View
+	 */
+	public function show(int $id) {
+		$user = User::find($id);
+		return view('user.studentProfile', compact('user'));
+	}
+
+	/**
 	 * Show the form for editing the current user
 	 *
 	 * @return \Illuminate\Http\Response
