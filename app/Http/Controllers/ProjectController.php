@@ -64,7 +64,7 @@ class ProjectController extends Controller
 		$project->tags()->attach($attributes['skillsets']);
 		$project->tags()->attach($attributes['labels']);
 
-		return view('projects', ['project' => $project]);
+		return view('projects.details', ['project' => $project]);
 	}
 
 	private function saveRecord(array $attributes) {
