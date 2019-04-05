@@ -78,7 +78,7 @@ class UserController extends Controller {
 		$associatedCourse = $user->enrolledIn()->where('course_id', $course->id)->first();
 
 		abort_if($associatedCourse, 400);
- 		return ['course' => $course];
+		return ['course' => $course];
 	}
 
 	/**
