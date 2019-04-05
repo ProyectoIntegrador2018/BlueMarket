@@ -35,8 +35,8 @@ Route::resource('users', 'UserController')->only([
 /* courses */
 Route::resource('courses', 'CourseController');
 Route::get('/user/profile', 'CourseController@index');
-Route::get('/user/courses/associate/details', 'CourseController@getCourseDetails');
-Route::post('/user/courses/associate', 'CourseController@associate');
+Route::get('/user/courses/associate/details', 'UserController@getCourseDetails');
+Route::post('/user/courses/associate', 'UserController@associate');
 Route::post('/contact', 'ContactMessageController@post');
 
 /* teams */

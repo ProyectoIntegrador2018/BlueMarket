@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Tag;
+use App\Course;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -58,6 +59,45 @@ class UserController extends Controller {
 			'skills' => Tag::where('type', 1)->get(),
 			'user' => Auth::user()
 		]);
+	}
+
+	/**
+	 * Get a course details.
+	 *
+	 * @param  \Illuminate\Http\Request  $request
+	 * @return \App\Course
+	 */
+	public function getCourseDetails(Request $request) {
+		$user = Auth::user();
+		$courseKey = $request->courseKey;
+		$course = Course::with('teachers')->where('course_key', $courseKey)->first();
+
+		abort_if($course === null, 404);
+
+		// Check if course is already associated
+		$associatedCourse = $user->enrolledIn()->where('course_id', $course->id)->first();
+
+		abort_if($associatedCourse, 400);
+ 		return ['course' => $course];
+	}
+
+	/**
+	 * Associate a student with a course.
+	 *
+	 * @param  \Illuminate\Http\Request  $request
+	 * @return Bool
+	 */
+	public function associate(Request $request) {
+		$user = Auth::user();
+		$courseKey = $request->courseKey;
+		$course = Course::where('course_key', $courseKey)->first();
+
+		abort_if($course == null || $user == null, 400);
+		abort_if($user->role != config(self::ROLES)['student'], 401);
+
+		$result = $user->enrolledIn()->attach($course);
+
+		return ['course' => $course, 'teachers' => $course->teachers];
 	}
 
 	private function updateImg($image) {
