@@ -60,8 +60,7 @@
 									</tr>
 								</thead>
 								<tbody>
-									@if(isset($courses))
-										@foreach($courses->all() as $course)
+									@foreach($user->enrolledIn as $course)
 										<tr class="selectable">
 											<td>
 												<a href="{{ url('courses', $course->id) }}">
@@ -82,8 +81,7 @@
 												</a>
 											</td>
 										</tr>
-										@endforeach
-									@endif
+									@endforeach
 								</tbody>
 							</table>
 						</div>
@@ -154,10 +152,10 @@
 	});
 
 	/* courses */
-	let courseCount = {!! count($courses) !!};
+	let hasCourses = {!! $user->enrolledIn !!}.length > 0;
 
 	function showCourses() {
-		if(courseCount > 0) {
+		if(hasCourses) {
 			$('#current-courses').show();
 			$('#no-courses-msg').hide();
 
@@ -250,13 +248,16 @@
 				$( "#courseAddedName" ).text(courseName);
 				// add row to table
 				let rowToAdd = generateCourseDetailsRow(data.course, data.teachers);
-				$( "#current-courses tbody" ).append(rowToAdd);
 				$( "#courseKey" ).val("");
-				courseCount++;
+
+				// update courses tab
+				$( "#current-courses tbody" ).append(rowToAdd);
+				hasCourses = true;
 				showCourses();
 			}
 		});
 	}
+
 	$(document).ready(function() {
 		$( "#courseKeyInputContainer" ).removeClass( "error" );
 		$( "#courseKey" ).removeClass( "error" );
