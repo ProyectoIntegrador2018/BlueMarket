@@ -37,7 +37,7 @@
 		<!-- Associated course -->
 		<div class="ui left aligned detail-container">
 			<p><strong>Associated course</strong></p>
-			<p>e.g. Computer Graphics</p>
+			<p>{{ $project->course->name }}</p>
 		</div>
 		<!-- Associated team -->
 		<div class="ui left aligned detail-container">
