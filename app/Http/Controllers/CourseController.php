@@ -28,9 +28,6 @@ class CourseController extends Controller
 
 		$user = Auth::user();
 		switch ($user->role) {
-			case config(self::ROLES)['student']:
-				return view('user.studentProfile', ['courses' => $user->enrolledIn]);
-
 			case config(self::ROLES)['teacher']:
 				$courses = $user->teaches;
 				return view('courses.index', compact('courses'));

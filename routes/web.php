@@ -29,7 +29,7 @@ Route::resource('projects', 'ProjectController')->only([
 
 /* users */
 Route::resource('users', 'UserController')->only([
-	'edit', 'update'
+	'show', 'edit', 'update'
 ]);
 
 /* courses */
