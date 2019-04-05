@@ -136,7 +136,7 @@ class CourseController extends Controller
 	public function getCourseDetails(Request $request) {
 		$user = Auth::user();
 		$courseKey = $request->courseKey;
-		$course = Course::where('course_key', $courseKey)->first();
+		$course = Course::with('teachers')->where('course_key', $courseKey)->first();
 
 		abort_if($course === null, 404);
 
@@ -144,7 +144,7 @@ class CourseController extends Controller
 		$associatedCourse = $user->enrolledIn()->where('course_id', $course->id)->first();
 
 		abort_if($associatedCourse, 400);
- 		return ['course' => $course, 'teachers' => $course->teachers];
+ 		return ['course' => $course];
 	}
 
 	/**
