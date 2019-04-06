@@ -16,10 +16,6 @@ class UserController extends Controller {
 		$this->middleware('auth');
 	}
 
-	public function show(User $user) {
-		return view('user.details', compact('user'));
-	}
-
 	/**
 	 * Display the specified user.
 	 *
