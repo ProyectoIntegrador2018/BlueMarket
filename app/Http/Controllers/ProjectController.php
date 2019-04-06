@@ -28,7 +28,7 @@ class ProjectController extends Controller {
 	public function create() {
 		return view(
 			'projects.create', [
-				'courses' => Auth::user()->EnrolledIn,
+				'courses' => Auth::user()->enrolledIn,
 				'teams' => Auth::user()->teamsLed()->get(),
 				'labels' => Tag::where('type', 2)->get(),
 				'skillsets' => Tag::where('type', 1)->get()
@@ -81,7 +81,13 @@ class ProjectController extends Controller {
 		}
 		else {
 			// Associate the team to the project
-			$attributes['team_id'] = $attributes['existingTeam'];
+			$team_id = $attributes['existingTeam'];
+			abort_if(
+				!$this->validateTeam($team_id, $attributes['course']),
+				400,
+				'Some team members do not belong to the course you\'re trying to create this project in.'
+			);
+			$attributes['team_id'] = $team_id;
 		}
 
 		$project = $this->saveRecord($attributes);
@@ -92,6 +98,20 @@ class ProjectController extends Controller {
 		$project->tags()->attach($attributes['labels']);
 
 		return view('projects.details', compact('project'));
+	}
+
+	private function validateTeam($team_id, $course_id) {
+		// Check that all members in the team belong to the course that you're trying to create this project in
+		$team = \App\Team::find($team_id);
+		if(!$team->exists()) {
+			return false;
+		}
+		foreach($team->members()->get() as $member) {
+			if(!$member->enrolledIn()->where('course_id', $course_id)->exists()) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	private function saveRecord(array $attributes) {

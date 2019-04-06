@@ -23,7 +23,7 @@ class UserController extends Controller {
 	 * @return \Illuminate\View
 	 */
 	public function show(int $id) {
-		$user = User::find($id);
+		$user = User::findOrFail($id);
 		return view('user.details', compact('user'));
 	}
 
@@ -108,10 +108,9 @@ class UserController extends Controller {
 
 		// prevent insertion of duplicates
 		$isDuplicatedCourse = $user->enrolledIn()->where('course_id', $course->id)->exists();
-
 		abort_if($isDuplicatedCourse, 400, 'Duplicated course');
 
-		$result = $user->enrolledIn()->attach($course);
+		$user->enrolledIn()->attach($course);
 
 		return $course;
 	}
