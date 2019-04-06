@@ -29,7 +29,7 @@
 		<!-- Project name -->
 		<div class="field {{ $errors->has('projectName') ? 'error': '' }}">
 			<label for="projectName">Project name</label>
-			<input type="text" id="projectName"" name="projectName" placeholder="e.g. Best project" value="{{ old('projectName') }}">
+			<input type="text" id="projectName" name="projectName" placeholder="e.g. Best project" value="{{ old('projectName') }}">
 		</div>
 		<!-- Associated course -->
 		<div class="field {{ $errors->has('course') ? 'error': '' }}">
@@ -73,7 +73,7 @@
 				<option value="">e.g. Finance</option>
 				@if(isset($labels))
 					@foreach($labels->all() as $label)
-						<option value="{{ $label->id }}" {{ (collect(old('labels'))->contains($label->id)) ? 'selected' : '' }}>{{ $label->name }}</option>
+						<option value="{{ $label->id }}">{{ $label->name }}</option>
 					@endforeach
 				@endif
 			</select>
@@ -85,7 +85,7 @@
 				<option value="">e.g. Java, HTML</option>
 				@if(isset($skillsets))
 					@foreach($skillsets->all() as $skillset)
-						<option value="{{ $skillset->id }}" {{ (collect(old('skillsets'))->contains($skillset->id)) ? 'selected' : '' }}>{{ $skillset->name }}</option>
+						<option value="{{ $skillset->id }}">{{ $skillset->name }}</option>
 					@endforeach
 				@endif
 			</select>
