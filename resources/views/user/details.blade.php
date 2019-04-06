@@ -8,7 +8,7 @@
 
 @section( "content" )
 	<div class="padded content student profile">
-		<div class="ui grid">
+		<div class="ui stackable grid">
 			<div class="four wide column user-basic-info">
 				<!-- User avatar -->
 				<img class="ui small circular image user-avatar" src="<?php echo asset($user->picture_url) ?>"/>
@@ -45,7 +45,7 @@
 				<div class="ui bottom attached tab segment" data-tab="courses">
 					<div class="courses">
 						@if($user->id == Auth::user()->id)
-							<div id="courseKeyInputContainer" class="ui action input add-course">
+							<div id="courseKeyInputContainer" class="ui fluid action input add-course">
 								<input id="courseKey" type="text" placeholder="Course key">
 								<button type="button" id="addCourse" class="ui primary button">Add course</button>
 							</div>
