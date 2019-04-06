@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\AdminController;
+use Illuminate\Support\Facades\Auth;
+
 
 /**
  * Admin UsersController
@@ -103,4 +105,14 @@ class UserController extends AdminController {
 
 		return redirect('admin/users')->with('flash_message', 'User updated!');
 	}
+
+	/* Sign in as a specific user (admins only) */
+	public function signInAs(int $user_id) {
+		$user = User::findOrFail($user_id);
+		Auth::logout();
+		Auth::login($user);
+		// TODO: change this to /
+		return redirect('admin/users');
+	}
+
 }
