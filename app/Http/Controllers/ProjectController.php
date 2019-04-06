@@ -87,6 +87,7 @@ class ProjectController extends Controller {
 					'teamMembership' => 'Some team members do not belong to the course you\'re trying to create this project in.'
 				])->withInput();
 			}
+
 			$attributes['team_id'] = $team_id;
 		}
 
@@ -106,10 +107,12 @@ class ProjectController extends Controller {
 		if(!$team->exists()) {
 			return false;
 		}
+
 		foreach($team->members()->get() as $member) {
 			if(!$member->enrolledIn()->where('course_id', $course_id)->exists()) {
 				return false;
 			}
+
 		}
 		return true;
 	}
