@@ -34,11 +34,11 @@
 		<!-- Associated course -->
 		<div class="field {{ $errors->has('course') ? 'error': '' }}">
 			<label for="course">Associated course</label>
-			<select name="course" id="course" class="ui search dropdown" value="{{ old('course') }}">
+			<select name="course" id="course" class="ui search dropdown">
 				<option value="">e.g. Web Development</option>
 				@if(isset($courses))
 					@foreach($courses->all() as $course)
-						<option value="{{ $course->id }}" {{ (old('course') == $course->id ? 'selected' : '') }}>{{ $course->name }}</option>
+						<option value="{{ $course->id }}">{{ $course->name }}</option>
 					@endforeach
 				@endif
 			</select>
@@ -47,7 +47,7 @@
 		<div class="fields">
 			<div class="seven wide field {{ $errors->has('existingTeam') || $errors->has('bothTeams') ? 'error': '' }}">
 				<label for="existingTeam">Choose an existing team</label>
-				<select id="existingTeam" name="existingTeam" class="ui search dropdown team" value="{{ old('existingTeam') }}" onchange="selectTeam()">
+				<select id="existingTeam" name="existingTeam" class="ui search dropdown team" onchange="selectTeam()">
 					<option value="">My teams</option>
 					@if(isset($teams))
 						@foreach($teams->all() as $team)
@@ -133,7 +133,7 @@
 		$("#projectImage").click();
 	});
 
-	/* hide empty image */
+	/* Hide empty image */
 	$("#projectImagePreview").hide();
 
 	function fillDummy() {
@@ -275,6 +275,8 @@
 		}
 	});
 	// TODO: Associated Team Validation
+
+	/* Select old values in <selects> */
 	@if(old('labels') !== null)
 		let labels = '{!! json_encode(old("labels")) !!}';
 		labels = JSON.parse(labels);
@@ -285,6 +287,18 @@
 		let skillsets = '{!! json_encode(old("skillsets")) !!}';
 		skillsets = JSON.parse(skillsets);
 		$('#skillsets').dropdown('set selected', skillsets);
+	@endif
+
+	@if(old('course') !== null)
+		let course = '{!! json_encode(old("course")) !!}';
+		course = JSON.parse(course);
+		$('#course').dropdown('set selected', course);
+	@endif
+
+	@if(old('existingTeam') !== null)
+		let existingTeam = '{!! json_encode(old("existingTeam")) !!}';
+		existingTeam = JSON.parse(existingTeam);
+		$('#existingTeam').dropdown('set selected', existingTeam);
 	@endif
 </script>
 @endsection
