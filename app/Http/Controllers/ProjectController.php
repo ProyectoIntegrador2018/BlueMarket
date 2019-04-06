@@ -82,11 +82,11 @@ class ProjectController extends Controller {
 		else {
 			// Associate the team to the project
 			$team_id = $attributes['existingTeam'];
-			abort_if(
-				!$this->validateTeam($team_id, $attributes['course']),
-				400,
-				'Some team members do not belong to the course you\'re trying to create this project in.'
-			);
+			if(!$this->validateTeam($team_id, $attributes['course'])) {
+				return redirect('projects/create')->withErrors([
+					'teamMembership' => 'Some team members do not belong to the course you\'re trying to create this project in.'
+				])->withInput();
+			}
 			$attributes['team_id'] = $team_id;
 		}
 
