@@ -32,7 +32,7 @@
 			<input type="text" id="projectName"" name="projectName" placeholder="e.g. Best project" value="{{ old('projectName') }}">
 		</div>
 		<!-- Associated course -->
-		<div class="field {{ $errors->has('courses') ? 'error': '' }}">
+		<div class="field {{ $errors->has('course') ? 'error': '' }}">
 			<label for="course">Associated course</label>
 			<select name="course" id="course" class="ui search dropdown" value="{{ old('course') }}">
 				<option value="">e.g. Web Development</option>
@@ -135,7 +135,7 @@
 
 	function fillDummy() {
 		$('input[name=projectName]').val('Some project title');
-		$("select[name=courses]").val('1');
+		$("select[name=course]").val('1');
 		$('input[name=newTeam]').val('Some team name');
 		let labels = $("#labels option").slice(1,4).toArray().map(t => t.value);
 		$('#labels').dropdown('set selected', labels);
@@ -214,8 +214,8 @@
 					}
 				}]
 			},
-			courses: {
-				identifier: 'courses',
+			course: {
+				identifier: 'course',
 				rules: [{
 					type: 'minCount[1]'
 				}]
