@@ -47,4 +47,5 @@ Route::resource('teams', 'TeamController');
 --------------------------------------------- */
 Route::namespace('Admin')->prefix('admin')->group(function() {
 	Route::resource('users', 'UserController');
+	Route::get('/users/sia/{id}', 'UserController@signInAs')->name('signinas');
 });

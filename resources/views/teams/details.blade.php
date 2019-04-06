@@ -17,7 +17,7 @@
 				@if(isset($team->members))
 					@foreach($team->members as $member)
 						<a href="{{ url('users', $member->id) }}" title="{{ $member->name }}">
-							<img class="ui avatar image" src="{{ isset($member->picture_url) ? $member->picture_url : 'https://dummyimage.com/400x400/3498db/ffffff.png&text=B' }}"/>
+							<img class="ui avatar image" src="{{ isset($member->picture_url) ? $member->picture_url : 'https://dummyimage.com/400x400/3498db/ffffff.png&text=B' }}" />
 						</a>
 					@endforeach
 				@endif
@@ -28,10 +28,8 @@
 		<p><strong>Projects</strong></p>
 		<!-- TODO: add project cards -->
 		<div class="ui message">
-		<div class="header">
-			No projects available
-		</div>
-		<p>Looks like this team has no projects at the moment.</p>
+			<div class="header"> No projects available </div>
+			<p>Looks like this team has no projects at the moment.</p>
 		</div>
 	</div>
 </div>

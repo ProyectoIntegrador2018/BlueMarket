@@ -26,6 +26,7 @@
 						<th>Last logon</th>
 						<th>Created</th>
 						<th>Modified</th>
+						<th>Sign in as</th>
 						<th>Action</th>
 					</tr>
 				</thead>
@@ -77,9 +78,12 @@
 						<td>{{ $user->created_at->format('Y-m-d H:i:s') }}</td>
 						<td>{{ $user->updated_at->format('Y-m-d H:i:s') }}</td>
 
+						<td style="min-width: 140px">
+							<a class="btn btn-sm btn-outline-warning" href="{{ route('signinas', ['id' => $user->id]) }}"><small>Sign in as this user</small></a>
+						</td>
 						<td>
-							<a class="btn btn-outline-primary" href="{{ url('/admin/users/' . $user->id) }}">View</a>
-							<a class="btn btn-outline-primary" href="{{ url('/admin/users/' . $user->id . '/edit') }}">Edit</a>
+							<a class="btn btn-outline-primary btn-sm" href="{{ url('/admin/users/' . $user->id) }}">View</a>
+							<a class="btn btn-outline-primary btn-sm" href="{{ url('/admin/users/' . $user->id . '/edit') }}">Edit</a>
 						</td>
 					</tr>
 					@endforeach
@@ -87,7 +91,7 @@
 				<tfoot>
 					<!-- Ver cómo generarlo según el número de usuarios que me manda backend-->
 					<tr>
-						<th colspan="9">
+						<th colspan="10">
 							<nav aria-label="Page navigation example">
 								<ul class="pagination">
 									<li class="page-item">
