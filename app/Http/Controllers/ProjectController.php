@@ -57,7 +57,7 @@ class ProjectController extends Controller
 			]
 		]);
 
-		$project = $this->saveRecord($attributes, $request->file('projectImage'));
+		$project = $this->saveRecord($attributes);
 		if (!$project->exists) {
 			abort(500);
 		}
@@ -68,7 +68,8 @@ class ProjectController extends Controller
 		return view('projects.details', ['project' => $project]);
 	}
 
-	private function saveRecord(array $attributes, $image) {
+	private function saveRecord(array $attributes) {
+		$image = $attributes['projectImage'];
 		$path = isset($image) ? Storage::putFile('public', $image) : null;
 
 		return Project::create([
