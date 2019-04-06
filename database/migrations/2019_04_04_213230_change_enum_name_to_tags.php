@@ -32,8 +32,15 @@ class ChangeEnumNameToTags extends Migration
      */
     public function down()
     {
-        Schema::table('tags', function (Blueprint $table) {
-            //
-        });
+		DB::statement("ALTER TABLE `tags` CHANGE `type` `type`
+		  ENUM('category','skill', 'label') CHARACTER SET utf8
+		  COLLATE utf8_general_ci NOT NULL;");
+
+		DB::statement("UPDATE `tags` set `type` = 'category' where
+		  `type` = 'label';");
+
+		DB::statement("ALTER TABLE `tags` CHANGE `type` `type`
+		  ENUM('category','skill') CHARACTER SET utf8 COLLATE
+		  utf8_general_ci NOT NULL;");
     }
 }
