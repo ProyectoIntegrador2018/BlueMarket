@@ -11,11 +11,13 @@
 			<iframe src="{{ $project->video }}" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 		</div>
 		<!-- Project Image -->
-		<div class="ui left aligned detail-container image-container">
-			<div class="preview-container">
-				<img id="preview" src="<?php echo asset($project->photo) ?>" alt="Project Image" class="ui small image preview"/>
+		@if(isset($project->photo))
+			<div class="ui left aligned detail-container image-container">
+				<div class="preview-container">
+					<img id="preview" src="<?php echo asset($project->photo) ?>" alt="Project Image" class="ui small image preview"/>
+				</div>
 			</div>
-		</div>
+		@endif
 		<!-- Short description -->
 		<div class="ui left aligned detail-container">
 			<p><strong>Description</strong></p>
