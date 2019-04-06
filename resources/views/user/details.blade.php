@@ -9,9 +9,9 @@
 @section( "content" )
 	<div class="padded content student profile">
 		<div class="ui grid">
-			<div class="four wide column">
+			<div class="four wide column user-basic-info">
 				<!-- User avatar -->
-				<img class="ui medium circular image" src={{ $user->picture_url }}>
+				<img class="ui small circular image user-avatar" src={{ $user->picture_url }}>
 				<!-- User name -->
 				<h2 class="center" style="text-align: center;">{{ $user->name }}</h2>
 				<!-- Contact button -->
