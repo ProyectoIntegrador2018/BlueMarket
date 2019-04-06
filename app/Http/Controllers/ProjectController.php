@@ -45,8 +45,8 @@ class ProjectController extends Controller {
 			'shortDescription' => 'required',
 			'course' => 'required',
 			'projectImage' => 'image',
-			'createTeam' => 'required_without:teamId',
-			'teamId' => 'required_without:createTeam',
+			'newTeam' => 'required_without:existingTeam',
+			'existingTeam' => 'required_without:newTeam',
 			'labels' => 'required|array|min:1',
 			// verify each elm in labels[] to exist as a label tag record
 			'labels.*' => [
@@ -62,25 +62,26 @@ class ProjectController extends Controller {
 		]);
 
 		// Save the team
-		if(!empty($attributes['teamId']) && !empty($attributes['createTeam'])) {
+		if(!empty($attributes['existingTeam']) && !empty($attributes['newTeam'])) {
 			// You can't have both
 			return redirect('projects/create')->withErrors([
 				'bothTeams' => 'You can either create a new team, OR associate to an existing team, but not both.'
 			])->withInput();
 		}
 
-		if(empty($attributes['teamId'])) {
+		if(empty($attributes['existingTeam'])) {
 			// Save a new team
 			$team = new \App\Team();
-			$team->name = $attributes['createTeam'];
+			$team->name = $attributes['newTeam'];
 			$team->leader_id = Auth::id();
-			// $team->img_url = somth;
+			// TODO: should we add the team image here?
 			abort_if(!$team->save(), 500);
+			$team->members()->attach(Auth::id());
 			$attributes['team_id'] = $team->id;
 		}
 		else {
 			// Associate the team to the project
-			$attributes['team_id'] = $attributes['teamId'];
+			$attributes['team_id'] = $attributes['existingTeam'];
 		}
 
 		$project = $this->saveRecord($attributes);
