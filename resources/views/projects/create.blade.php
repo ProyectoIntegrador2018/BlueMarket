@@ -93,7 +93,7 @@
 		<!-- Milestone -->
 		<div class="field {{ $errors->has('milestone') ? 'error': '' }}">
 			<label for="milestone">Public milestone</label>
-			<input type="text" id="milestone" value="{{ old('milestone') }}" placeholder="e.g. Design">
+			<input type="text" name="milestone" id="milestone" value="{{ old('milestone') }}" placeholder="e.g. Design">
 		</div>
 		<!-- Short description -->
 		<div class="field {{ $errors->has('shortDescription') ? 'error': '' }}">
