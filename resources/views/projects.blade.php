@@ -32,7 +32,7 @@
 		<p>No projects meet search criteria.</p>
 	</div>
 	<!-- Project Cards -->
-	<div class="ui four stackable cards">
+	<div class="ui four column stackable grid">
 		@foreach ($projects as $project)
 			@projectCard(['id'=> $project->id,'projectImage' => $project->photo, 'projectName' => $project->name, 'projectShortDescription' => $project->short_description, 'skillset' => $project->skills, 'labels' => $project->labels, 'publicMilestone' => 'shipping'])
 			@endprojectCard

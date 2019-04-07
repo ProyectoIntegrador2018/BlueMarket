@@ -1,5 +1,5 @@
-<a class="item ProjectCard-container" href="{{ url('projects', $id) }}">
-	<div class="ui card projectcard">
+<a class="ProjectCard-container column" href="{{ url('projects', $id) }}">
+	<div class="ui stackable centered card projectcard">
 		<div class="image">
 			<img src={{ $projectImage }}>
 		</div>
@@ -9,12 +9,14 @@
 				{{ $projectShortDescription }}
 			</div>
 		</div>
-		<div class="extra content">
-			<p class="ui sub header">Required skills</p>
-			@foreach($skillset as $skill)
-				<div class="ui bluemarket-skill label">{{ $skill->name }}</div>
-			@endforeach
-		</div>
+		@if(isset($skillset))
+			<div class="extra content">
+				<p class="ui sub header">Required skills</p>
+				@foreach($skillset as $skill)
+					<div class="ui bluemarket-skill label">{{ $skill->name }}</div>
+				@endforeach
+			</div>
+		@endif
 		<div class="extra content">
 			<p class="ui sub header">Labels</p>
 			@foreach($labels as $label)
