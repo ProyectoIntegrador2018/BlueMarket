@@ -313,18 +313,11 @@ $color-white: #fff;
 	}
 }
 
-.ui.four.stackable.cards {
+.ui.stackable.grid {
 	margin: 0 auto;
 	margin-top: 10px;
 
-	.ui.card.projectcard {
-		margin: 5px 3px;
-
-		.category {
-			margin-top: 0.5vh;
-			margin-bottom: 0.5vh;
-		}
-
+	.ProjectCard-container {
 		.extra.content {
 			.ui.bluemarket-skill.label {
 				background-color: $color-primary;

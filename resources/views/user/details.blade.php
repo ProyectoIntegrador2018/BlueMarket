@@ -32,12 +32,26 @@
 			</div>
 			<div class="twelve wide column">
 				<div class="ui top attached tabular menu">
-					<a class="active item" data-tab="first">First</a>
+					<a class="active item" data-tab="projects">Projects</a>
 					<a class="item" data-tab="second">Second</a>
 					<a class="item" data-tab="courses">Courses</a>
 				</div>
-				<div class="ui bottom attached active tab segment" data-tab="first">
-					First
+				<div class="ui bottom attached active tab segment" data-tab="projects">
+					@if(isset($user->projects) && count($user->projects) > 0)
+						<div class="ui two column stackable grid">
+							@foreach ($user->projects as $project)
+								@projectCard(['id'=> $project->id,'projectImage' => $project->photo, 'projectName' => $project->name, 'projectShortDescription' => $project->short_description, 'labels' => $project->labels, 'publicMilestone' => 'shipping'])
+								@endprojectCard
+							@endforeach
+						</div>
+					@else
+						<div id="no-courses-msg" class="ui message">
+							<div class="header">
+								No projects found!
+							</div>
+							<p>Looks like this user is not participating in any projects... yet!</p>
+						</div>
+					@endif
 				</div>
 				<div class="ui bottom attached tab segment" data-tab="second">
 					Second
@@ -87,7 +101,7 @@
 						</div>
 						<div id="no-courses-msg" class="ui message">
 							<div class="header">
-								No courses found
+								No courses found!
 							</div>
 							<p>This user is not enrolled in any courses yet.</p>
 						</div>
