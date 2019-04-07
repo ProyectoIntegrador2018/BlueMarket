@@ -45,7 +45,7 @@
 							@endforeach
 						</div>
 					@else
-						<div id="no-courses-msg" class="ui message">
+						<div id="no-projects-msg" class="ui message">
 							<div class="header">
 								No projects found!
 							</div>
@@ -191,12 +191,13 @@
 			},
 			dataType: 'JSON',
 			success: function (data) {
-				$( "#courseName" ).text(data.course.name);
-				let courseTeachers = data.course.teachers.map(function(val) {
+				let course = data.course;
+				$( "#courseName" ).text(course.name);
+				let courseTeachers = course.teachers.map(function(val) {
 					return val.name;
 				}).join(', ');
 				$( "#courseTeacher" ).text(courseTeachers);
-				$( "#courseSchedule" ).text(data.course.schedule);
+				$( "#courseSchedule" ).text(course.schedule);
 				$( ".first.modal" ).modal({
 					transition: "fade up"
 				}).modal( "show" );
@@ -257,11 +258,12 @@
 			},
 			dataType: 'JSON',
 			success: function (data) {
-				let courseName = data.course.name;
+				let course = data.course;
+				let courseName = course.name;
 				// confirmation modal
 				$( "#courseAddedName" ).text(courseName);
 				// add row to table
-				let rowToAdd = generateCourseDetailsRow(data.course, data.teachers);
+				let rowToAdd = generateCourseDetailsRow(course, course.teachers);
 				$( "#courseKey" ).val("");
 
 				// update courses tab
@@ -292,7 +294,7 @@
 			displayCandidateCourseDetails(courseKey);
 		});
 		$( "#confirmAddCourse" ).click(function() {
-			let courseKey = $( "#courseKey" ).val();
+			let courseKey = $( "#courseKey" ).val().trim();
 			associateWithCourse(courseKey);
 		});
 	});
