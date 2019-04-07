@@ -125,49 +125,6 @@ class CourseController extends Controller
 	}
 
 	/**
-<<<<<<< HEAD
-=======
-	 * Get a course details.
-	 *
-	 * @param  \Illuminate\Http\Request  $request
-	 * @return \App\Course
-	 */
-	public function getCourseDetails(Request $request) {
-		$user = Auth::user();
-		$courseKey = $request->courseKey;
-		$course = Course::where('course_key', $courseKey)->first();
-
-		abort_if($course === null, 404);
-
-		// Check if course is already associated
-		$associatedCourse = $user->enrolledIn()->where('course_id', $course->id)->first();
-
-		abort_if($associatedCourse, 400);
-
-		return ['course' => $course, 'teachers' => $course->teachers];
-	}
-
-	/**
-	 * Associate a student with a course.
-	 *
-	 * @param  \Illuminate\Http\Request  $request
-	 * @return Bool
-	 */
-	public function associate(Request $request) {
-		$user = Auth::user();
-		$courseKey = $request->courseKey;
-		$course = Course::where('course_key', $courseKey)->first();
-
-		abort_if($course == null || $user == null, 400);
-		abort_if($user->role != config(self::ROLES)['student'], 401);
-
-		$result = $user->EnrolledIn()->attach($course);
-
-		return ['course' => $course, 'teachers' => $course->teachers];
-	}
-
-	/**
->>>>>>> Added courses in user profile
 	 * Generate a descriptive schedule string for a course
 	 *
 	 * @param array $courseSchedule
