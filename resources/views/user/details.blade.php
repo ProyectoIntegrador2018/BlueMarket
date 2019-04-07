@@ -192,7 +192,7 @@
 			dataType: 'JSON',
 			success: function (data) {
 				$( "#courseName" ).text(data.course.name);
-				let courseTeachers = data.teachers.map(function(val) {
+				let courseTeachers = data.course.teachers.map(function(val) {
 					return val.name;
 				}).join(', ');
 				$( "#courseTeacher" ).text(courseTeachers);
