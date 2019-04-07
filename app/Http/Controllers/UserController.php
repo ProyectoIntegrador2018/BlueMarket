@@ -12,6 +12,8 @@ use Illuminate\Validation\Rule;
 
 class UserController extends Controller {
 
+	const ROLES = 'enum.user_roles';
+
 	public function __construct() {
 		$this->middleware('auth');
 	}
