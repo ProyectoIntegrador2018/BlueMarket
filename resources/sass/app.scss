@@ -27,7 +27,7 @@ $color-white: #fff;
 .ui.popup.vertical {
 	background: $color-dark;
 
-	&:before {
+	&::before {
 		background: $color-dark;
 	}
 
