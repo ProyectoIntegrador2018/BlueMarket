@@ -1,12 +1,12 @@
-@extends( "layouts.app" )
+@extends("layouts.app")
 
-@section( "meta" )
+@section("meta")
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 
-@section( "title", $user->name )
+@section("title", $user->name)
 
-@section( "content" )
+@section("content")
 	<div class="padded content student profile">
 		<div class="ui stackable grid">
 			<div class="four wide column user-basic-info">
@@ -60,8 +60,8 @@
 					<div class="courses">
 						@if($user->id == Auth::user()->id)
 							<div id="courseKeyInputContainer" class="ui fluid action input add-course">
-								<input id="courseKey" type="text" placeholder="Course key">
-								<button type="button" id="addCourse" class="ui primary button">Add course</button>
+								<input id="courseKey" type="text" placeholder="Course key" onkeypress="handleKeyPress(event)">
+								<button type="button" id="addCourse" class="ui primary button" onclick="addNewCourse()">Add course</button>
 							</div>
 						@endif
 						<div id="current-courses" class="courses table">
@@ -114,10 +114,10 @@
 							</div>
 							<div class="actions">
 								<button type="button" class="ui cancel button">Cancel</button>
-								<button type="button" id="confirmAddCourse" class="ui primary button">Confirm</button>
+								<button type="button" id="confirmAddCourse" class="ui primary button" onclick="associateCourse()">Confirm</button>
 							</div>
 						</div>
-						<div class="ui coupled second modal">
+						<div id="courseAddedSuccessfully" class="ui coupled second modal">
 							<div class="header">Course successfully added</div>
 							<div class="content">
 								<i class="check huge green circle icon"></i>
@@ -148,20 +148,36 @@
 								<button type="button" class="ui ok primary button">Done</button type="button">
 							</div>
 						</div>
+						<div id="courseAdditionError" class="ui modal">
+							<div class="header">Something went wrong</div>
+							<div class="content">
+								<i class="times huge red circle icon"></i>
+								<p>We were unable to associate you with this course.</p>
+							</div>
+							<div class="actions">
+								<button type="button" class="ui ok primary button">Done</button type="button">
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-@section( "scripts" )
+@section("scripts")
 <script>
+	/* Semantic UI setup */
 	$('.menu .item')
 		.tab()
 	;
 
+	$(".coupled.modal").modal({
+			allowMultiple: false
+	});
+
+	/* send cstf token on every ajax request */
 	$.ajaxSetup({
 		beforeSend: function(xhr) {
-			xhr.setRequestHeader('X-CSRF-TOKEN', $('meta[name="csrf-token"]').attr( "content" ));
+			xhr.setRequestHeader('X-CSRF-TOKEN', $('meta[name="csrf-token"]').attr("content"));
 		}
 	});
 
@@ -182,122 +198,137 @@
 
 	showCourses(); // execute on load
 
-	function displayCandidateCourseDetails(courseKey) {
-		$.ajax({
-			url: '/user/courses/associate/details',
-			type: 'GET',
-			data: {
-				courseKey: courseKey
-			},
-			dataType: 'JSON',
-			success: function (data) {
-				let course = data.course;
-				$( "#courseName" ).text(course.name);
-				let courseTeachers = course.teachers.map(function(val) {
-					return val.name;
-				}).join(', ');
-				$( "#courseTeacher" ).text(courseTeachers);
-				$( "#courseSchedule" ).text(course.schedule);
-				$( ".first.modal" ).modal({
-					transition: "fade up"
-				}).modal( "show" );
-			},
-			error: function(data) {
-				// course not found
-				if(data.status == 404) {
-					$( "#courseNotFound" ).modal({
-						transition: "fade up"
-					}).modal( "show" );
-				}
-				// student is already associated with course
-				if(data.status == 400) {
-					$( "#courseDuplicated" ).modal({
-						transition: "fade up"
-					}).modal( "show" );
-				}
-			}
-		});
-	}
+	@if($user->id == Auth::user()->id)
+		/* course association workflow */
+		function validateCourseKey(courseKey) {
+			$("#courseKeyInputContainer").removeClass("error");
+			$("#courseKey").removeClass("error");
 
-	function generateCourseDetailsRow(course, teachers) {
-		let courseId = course.id;
-		let courseName = course.name;
-		let courseTeachers = teachers.map(function(val) {
-			return val.name;
-		}).join(', ');
-		let courseSchedule = course.schedule;
-		// modify confirmation modal
-		$( "#courseAddedName" ).text(courseName);
-		// add row to table
-		let row = `<tr class="selectable">
-						<td>
-							<a href="/courses/${courseId}">
-								${courseName}
-							</a>
-						</td>
-						<td>
-							<a href="/courses/${courseId}">
-								${courseTeachers}
-							</a>
-						</td>
-						<td>
-							<a href="/courses/${courseId}">
-								${courseSchedule}
-							</a>
-						</td>
-					</tr>`;
-		return row;
-	}
-
-	function associateWithCourse(courseKey) {
-		$.ajax({
-			url: '/user/courses/associate',
-			type: 'POST',
-			data: {
-				courseKey: courseKey
-			},
-			dataType: 'JSON',
-			success: function (data) {
-				let course = data.course;
-				let courseName = course.name;
-				// confirmation modal
-				$( "#courseAddedName" ).text(courseName);
-				// add row to table
-				let rowToAdd = generateCourseDetailsRow(course, course.teachers);
-				$( "#courseKey" ).val("");
-
-				// update courses tab
-				$( "#current-courses tbody" ).append(rowToAdd);
-				hasCourses = true;
-				showCourses();
-			}
-		});
-	}
-
-	$(document).ready(function() {
-		$( "#courseKeyInputContainer" ).removeClass( "error" );
-		$( "#courseKey" ).removeClass( "error" );
-		$( ".coupled.modal" ).modal({
-			allowMultiple: false
-		});
-		$( ".second.modal" ).modal( "attach events", ".first.modal .button" );
-		$( "#addCourse" ).click(function() {
-			$( "#courseKeyInputContainer" ).removeClass( "error" );
-			$( "#courseKey" ).removeClass( "error" );
-			let courseKey = $( "#courseKey" ).val();
-			if(courseKey == "" ) {
-				$( "#courseKeyInputContainer" ).addClass( "error" );
-				$( "#courseKey" ).addClass( "error" );
+			if(courseKey == "") {
+				$("#courseKeyInputContainer").addClass("error");
+				$("#courseKey").addClass("error");
 				return false;
 			}
-			courseKey = courseKey.toUpperCase();
-			displayCandidateCourseDetails(courseKey);
-		});
-		$( "#confirmAddCourse" ).click(function() {
-			let courseKey = $( "#courseKey" ).val().trim();
-			associateWithCourse(courseKey);
-		});
-	});
+			return true;
+		}
+
+		function displayCandidateCourseDetails(courseKey) {
+			$.ajax({
+				url: '/user/courses/associate/details',
+				type: 'GET',
+				data: {
+					courseKey: courseKey
+				},
+				dataType: 'JSON',
+				success: function (data) {
+					let course = data.course;
+					$("#courseName").text(course.name);
+					let courseTeachers = course.teachers.map(function(val) {
+						return val.name;
+					}).join(', ');
+					$("#courseTeacher").text(courseTeachers);
+					$("#courseSchedule").text(course.schedule);
+					$(".first.modal").modal({
+						transition: "fade up"
+					}).modal("show");
+				},
+				error: function(data) {
+					// course not found
+					if(data.status == 404) {
+						$("#courseNotFound").modal({
+							transition: "fade up"
+						}).modal("show");
+					}
+					// student is already associated with course
+					if(data.status == 400) {
+						$("#courseDuplicated").modal({
+							transition: "fade up"
+						}).modal("show");
+					}
+				}
+			});
+		}
+
+		function generateCourseDetailsRow(course, teachers) {
+			let courseId = course.id;
+			let courseName = course.name;
+			let courseTeachers = teachers.map(function(val) {
+				return val.name;
+			}).join(', ');
+			let courseSchedule = course.schedule;
+			// modify confirmation modal
+			$("#courseAddedName").text(courseName);
+			// add row to table
+			let row = `<tr class="selectable">
+							<td>
+								<a href="/courses/${courseId}">
+									${courseName}
+								</a>
+							</td>
+							<td>
+								<a href="/courses/${courseId}">
+									${courseTeachers}
+								</a>
+							</td>
+							<td>
+								<a href="/courses/${courseId}">
+									${courseSchedule}
+								</a>
+							</td>
+						</tr>`;
+			return row;
+		}
+
+		function addNewCourse() {
+			let courseKey = $("#courseKey").val().trim();
+
+			if(validateCourseKey(courseKey)) {
+				courseKey = courseKey.toUpperCase();
+				displayCandidateCourseDetails(courseKey);
+			}
+		}
+
+		function handleKeyPress(e){
+			if(e.keyCode === 13) { // press Enter
+				addNewCourse();
+			}
+		}
+
+		function associateCourse() {
+			let courseKey = $("#courseKey").val().trim();
+
+			$.ajax({
+				url: '/user/courses/associate',
+				type: 'POST',
+				data: {
+					courseKey: courseKey
+				},
+				dataType: 'JSON',
+				success: function (data) {
+					let course = data;
+					let courseName = course.name;
+					// confirmation modal
+					$("#courseAddedName").text(courseName);
+					$("#courseAddedSuccessfully").modal({
+						transition: "fade up"
+					}).modal("show");
+					// add row to table
+					let rowToAdd = generateCourseDetailsRow(course, course.teachers);
+					$("#courseKey").val("");
+
+					// update courses tab
+					$("#current-courses tbody").append(rowToAdd);
+					hasCourses = true;
+					showCourses();
+				},
+				error: function (data) {
+					$("#courseAdditionError").modal({
+						transition: "fade up"
+					}).modal("show");
+				}
+			});
+		}
+	@endif
 </script>
 @endsection
 @endsection
