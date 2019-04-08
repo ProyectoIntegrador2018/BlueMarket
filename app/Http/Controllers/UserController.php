@@ -12,8 +12,6 @@ use Illuminate\Validation\Rule;
 
 class UserController extends Controller {
 
-	const ROLES = 'enum.user_roles';
-
 	public function __construct() {
 		$this->middleware('auth');
 	}
@@ -105,13 +103,13 @@ class UserController extends Controller {
 		$courseKey = $request->courseKey;
 		$course = Course::with('teachers')->where('course_key', $courseKey)->first();
 
-		abort_if($course == null || $user == null, 509);
-		abort_if($user->role != config(self::ROLES)['student'], 509);
+		abort_if($course == null, 400, 'Invalid course key');
+		abort_if($user == null || $user->role != config('enum.user_roles')['student'], 401, 'Not student');
 
 		// prevent insertion of duplicates
-		$associatedCourse = $user->enrolledIn()->where('course_id', $course->id)->first();
+		$isDuplicatedCourse = $user->enrolledIn()->where('course_id', $course->id)->exists();
 
-		abort_if($associatedCourse, 509);
+		abort_if($isDuplicatedCourse, 400, 'Duplicated course');
 
 		$result = $user->enrolledIn()->attach($course);
 

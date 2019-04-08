@@ -17,7 +17,7 @@
 				<!-- Contact button -->
 				<a class="fluid ui primary button buttonSpace" href="mailto:{{ $user->email }}" style="margin-bottom: 10px;"><i class="icon envelope"></i>Contact</a>
 				<!-- Edit button -->
-				@if ($user->id == Auth::user()->id)
+				@if ($user->id == Auth::id())
 					<a class="fluid ui grey button buttonSpace" href="#" style="margin-bottom: 10px;">Edit</a> <!--TODO: Falta cambiar el href-->
 				@endif
 				<!-- Skillset pills -->
@@ -33,6 +33,7 @@
 			<div class="twelve wide column">
 				<div class="ui top attached tabular menu">
 					<a class="active item" data-tab="projects">Projects</a>
+					<!-- TODO: add teams tab -->
 					<a class="item" data-tab="second">Second</a>
 					<a class="item" data-tab="courses">Courses</a>
 				</div>
@@ -58,53 +59,53 @@
 				</div>
 				<div class="ui bottom attached tab segment" data-tab="courses">
 					<div class="courses">
-						@if($user->id == Auth::user()->id)
+						@if($user->id == Auth::id())
 							<div id="courseKeyInputContainer" class="ui fluid action input add-course">
 								<input id="courseKey" type="text" placeholder="Course key" onkeypress="handleKeyPress(event)">
 								<button type="button" id="addCourse" class="ui primary button" onclick="addNewCourse()">Add course</button>
 							</div>
 						@endif
-						<div id="current-courses" class="courses table">
-							<table class="ui striped table">
-								<thead class="bluemarket-thead">
-									<tr>
-										<th>Course</th>
-										<th>Professor</th>
-										<th>Schedule</th>
-									</tr>
-								</thead>
-								<tbody>
-									@foreach($user->enrolledIn as $course)
-										<tr class="selectable">
-											<td>
-												<a href="{{ url('courses', $course->id) }}">
-													{{ $course->name }}
-												</a>
-											</td>
-											<td>
-												<a href="{{ url('courses', $course->id) }}">
-													@foreach($course->teachers as $teacher)
-														{{ $loop->first ? '' : ', ' }}
-														{{ $teacher->name }}
-													@endforeach
-												</a>
-											</td>
-											<td>
-												<a href="{{ url('courses', $course->id) }}">
-													{{ $course->schedule }}
-												</a>
-											</td>
+							<div id="current-courses" class="courses table" {{ count($user->enrolledIn) <= 0 ? 'hidden' : '' }}>
+								<table class="ui striped table">
+									<thead class="bluemarket-thead">
+										<tr>
+											<th>Course</th>
+											<th>Professor</th>
+											<th>Schedule</th>
 										</tr>
-									@endforeach
-								</tbody>
-							</table>
-						</div>
-						<div id="no-courses-msg" class="ui message">
-							<div class="header">
-								No courses found!
+									</thead>
+									<tbody>
+										@foreach($user->enrolledIn as $course)
+											<tr class="selectable">
+												<td>
+													<a href="{{ url('courses', $course->id) }}">
+														{{ $course->name }}
+													</a>
+												</td>
+												<td>
+													<a href="{{ url('courses', $course->id) }}">
+														@foreach($course->teachers as $teacher)
+															{{ $loop->first ? '' : ', ' }}
+															{{ $teacher->name }}
+														@endforeach
+													</a>
+												</td>
+												<td>
+													<a href="{{ url('courses', $course->id) }}">
+														{{ $course->schedule }}
+													</a>
+												</td>
+											</tr>
+										@endforeach
+									</tbody>
+								</table>
 							</div>
-							<p>This user is not enrolled in any courses yet.</p>
-						</div>
+							<div id="no-courses-msg" class="ui message" {{ count($user->enrolledIn) > 0 ? 'hidden' : '' }}>
+								<div class="header">
+									No courses found!
+								</div>
+								<p>This user is not enrolled in any courses yet.</p>
+							</div>
 						<div id="courseFound" class="ui coupled first modal">
 							<div class="header">Add course</div>
 							<div class="content">
@@ -128,11 +129,11 @@
 								<button type="button" class="ui ok primary button">Done</button>
 							</div>
 						</div>
-						<div id="courseNotFound" class="ui modal">
-							<div class="header">Course not found</div>
+						<div id="invalidCourseKey" class="ui modal">
+							<div class="header">Invalid course key</div>
 							<div class="content">
 								<i class="times huge red circle icon"></i>
-								<p>The course key you entered was not found.</p>
+								<p>The course key you entered is not valid. Try another one!</p>
 							</div>
 							<div class="actions">
 								<button type="button" class="ui ok primary button">Done</button>
@@ -158,6 +159,16 @@
 								<button type="button" class="ui ok primary button">Done</button type="button">
 							</div>
 						</div>
+						<div id="userNotAllowed" class="ui modal">
+							<div class="header">Not allowed</div>
+							<div class="content">
+								<i class="times huge red circle icon"></i>
+								<p>You need a student account to enroll on courses.</p>
+							</div>
+							<div class="actions">
+								<button type="button" class="ui ok primary button">Done</button>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -166,9 +177,7 @@
 @section("scripts")
 <script>
 	/* Semantic UI setup */
-	$('.menu .item')
-		.tab()
-	;
+	$('.menu .item').tab();
 
 	$(".coupled.modal").modal({
 			allowMultiple: false
@@ -182,31 +191,18 @@
 	});
 
 	/* courses */
-	let hasCourses = {!! $user->enrolledIn !!}.length > 0;
-
 	function showCourses() {
-		if(hasCourses) {
-			$('#current-courses').show();
-			$('#no-courses-msg').hide();
-
-		}
-		else {
-			$('#current-courses').hide();
-			$('#no-courses-msg').show();
-		}
+		$('#current-courses').show();
+		$('#no-courses-msg').hide();
 	}
 
-	showCourses(); // execute on load
-
-	@if($user->id == Auth::user()->id)
+	@if($user->id == Auth::id())
 		/* course association workflow */
 		function validateCourseKey(courseKey) {
-			$("#courseKeyInputContainer").removeClass("error");
-			$("#courseKey").removeClass("error");
+			$("#courseKeyInputContainer,#courseKey").removeClass("error");
 
 			if(courseKey == "") {
-				$("#courseKeyInputContainer").addClass("error");
-				$("#courseKey").addClass("error");
+				$("#courseKeyInputContainer,#courseKey").addClass("error");
 				return false;
 			}
 			return true;
@@ -235,7 +231,7 @@
 				error: function(data) {
 					// course not found
 					if(data.status == 404) {
-						$("#courseNotFound").modal({
+						$("#invalidCourseKey").modal({
 							transition: "fade up"
 						}).modal("show");
 					}
@@ -318,13 +314,33 @@
 
 					// update courses tab
 					$("#current-courses tbody").append(rowToAdd);
-					hasCourses = true;
 					showCourses();
 				},
 				error: function (data) {
-					$("#courseAdditionError").modal({
-						transition: "fade up"
-					}).modal("show");
+					$("#courseKey").val("");
+					switch(data.status) {
+						case 400:
+							if(data.responseJSON.message == "Duplicated course") {
+								$("#courseDuplicated").modal({
+									transition: "fade up"
+								}).modal("show");
+								break;
+							}
+							$("#invalidCourseKey").modal({
+								transition: "fade up"
+							}).modal("show");
+							break;
+						case 401:
+							$("#userNotAllowed").modal({
+								transition: "fade up"
+							}).modal("show");
+							break;
+						default:
+							$("#courseAdditionError").modal({
+								transition: "fade up"
+							}).modal("show");
+							break;
+					}
 				}
 			});
 		}
