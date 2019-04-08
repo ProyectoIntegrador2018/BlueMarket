@@ -103,14 +103,19 @@ class UserController extends Controller {
 	public function associate(Request $request) {
 		$user = Auth::user();
 		$courseKey = $request->courseKey;
-		$course = Course::where('course_key', $courseKey)->first();
+		$course = Course::with('teachers')->where('course_key', $courseKey)->first();
 
-		abort_if($course == null || $user == null, 400);
-		abort_if($user->role != config(self::ROLES)['student'], 401);
+		abort_if($course == null || $user == null, 509);
+		abort_if($user->role != config(self::ROLES)['student'], 509);
+
+		// prevent insertion of duplicates
+		$associatedCourse = $user->enrolledIn()->where('course_id', $course->id)->first();
+
+		abort_if($associatedCourse, 509);
 
 		$result = $user->enrolledIn()->attach($course);
 
-		return ['course' => $course, 'teachers' => $course->teachers];
+		return $course;
 	}
 
 	private function updateImg($image) {
