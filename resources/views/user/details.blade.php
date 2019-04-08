@@ -228,7 +228,7 @@
 					}).join(', ');
 					$("#courseTeacher").text(courseTeachers);
 					$("#courseSchedule").text(course.schedule);
-					$(".first.modal").modal({
+					$("#courseFound").modal({
 						transition: "fade up"
 					}).modal("show");
 				},
