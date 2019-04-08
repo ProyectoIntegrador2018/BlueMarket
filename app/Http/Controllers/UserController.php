@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Tag;
 use App\Course;
+use App\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -24,7 +25,8 @@ class UserController extends Controller {
 	 */
 	public function show(int $id) {
 		$user = User::find($id);
-		return view('user.details', compact('user'));
+		$projects = Project::with('tags:name')->take(6)->get();
+		return view('user.details', ['user' => $user, 'projects' => $projects]);
 	}
 
 	/**

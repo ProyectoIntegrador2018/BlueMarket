@@ -1,24 +1,30 @@
-<a class="column" href="{{ url('teams', 0) }}">
-	<div class="ui centered card">
-		<div>
-			<img class="ui fluid image" src="https://dummyimage.com/400x400/3498db/ffffff.png&text=Kul%20team">
+<a class="column project-card" href="{{ url('teams', $team->id) }}">
+	<div class="ui stackable centered card projectcard">
+		<div class="ui image">
+			<img src="{{ $team->img_url }}">
 		</div>
 		<div class="content">
-			<a class="header">Kristy</a>
-			<div class="meta">
-				<span class="date">
-					Joined in 2013
-				</span>
-			</div>
+			<div class="header">{{ $team->name }}</div>
 			<div class="description">
-				Kristy is an art director living in New York.
+				<?php $max = min(count($team->members), 5) ?>
+				<?php $members = $team->members ?>
+				@for($i = 0; $i < $max; $i++)
+					<span class="team-member-avatar-container">
+						<img class="ui mini circular image" src="{{ $members[$i]->picture_url }}">
+					</span>
+				@endfor
 			</div>
 		</div>
 		<div class="extra content">
-			<a>
-			<i class="user icon"></i>
-				22 Friends
-			</a>
+			<span class="right floated">
+				<i class="user icon"></i>
+					{{ count($team->members) }} Members
+			</span>
+			<span>
+				<i class="columns icon"></i>
+					<!-- TODO: set count of projects -->
+					0 projects
+			</span>
 		</div>
 	</div>
 </a>

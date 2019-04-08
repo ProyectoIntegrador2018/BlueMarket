@@ -37,9 +37,9 @@
 					<a class="item" data-tab="courses">Courses</a>
 				</div>
 				<div class="ui bottom attached active tab segment" data-tab="projects">
-					@if(isset($user->projects) && count($user->projects) > 0)
+					@if(isset($projects) && count($projects) > 0)
 						<div class="ui two column stackable grid">
-							@foreach ($user->projects as $project)
+							@foreach ($projects as $project)
 								@projectCard(['id'=> $project->id,'projectImage' => $project->photo, 'projectName' => $project->name, 'projectShortDescription' => $project->short_description, 'labels' => $project->labels, 'publicMilestone' => 'shipping'])
 								@endprojectCard
 							@endforeach
@@ -54,14 +54,13 @@
 					@endif
 				</div>
 				<div class="ui bottom attached tab segment" data-tab="teams">
-					<div class="ui two column stackable grid">
-						@component('components.teams.teamCard')
-						@endcomponent
-						@component('components.teams.teamCard')
-						@endcomponent
-					</div>
 					@if(isset($user->teams) && count($user->teams) > 0)
-						Hello
+						<div class="ui two column stackable grid">
+							@foreach ($user->teams as $team)
+								@teamCard (['team' => $team])
+								@endteamCard
+							@endforeach
+						</div>
 					@else
 						<div id="no-teams-msg" class="ui message">
 							<div class="header">
