@@ -33,8 +33,7 @@
 			<div class="twelve wide column">
 				<div class="ui top attached tabular menu">
 					<a class="active item" data-tab="projects">Projects</a>
-					<!-- TODO: add teams tab -->
-					<a class="item" data-tab="second">Second</a>
+					<a class="item" data-tab="teams">Teams</a>
 					<a class="item" data-tab="courses">Courses</a>
 				</div>
 				<div class="ui bottom attached active tab segment" data-tab="projects">
@@ -54,8 +53,23 @@
 						</div>
 					@endif
 				</div>
-				<div class="ui bottom attached tab segment" data-tab="second">
-					Second
+				<div class="ui bottom attached tab segment" data-tab="teams">
+					<div class="ui two column stackable grid">
+						@component('components.teams.teamCard')
+						@endcomponent
+						@component('components.teams.teamCard')
+						@endcomponent
+					</div>
+					@if(isset($user->teams) && count($user->teams) > 0)
+						Hello
+					@else
+						<div id="no-teams-msg" class="ui message">
+							<div class="header">
+								No teams found!
+							</div>
+							<p>Looks like this user is not participating in any teams... yet!</p>
+						</div>
+					@endif
 				</div>
 				<div class="ui bottom attached tab segment" data-tab="courses">
 					<div class="courses">
