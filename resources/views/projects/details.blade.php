@@ -45,7 +45,7 @@
 		<!-- Associated course -->
 		<div class="ui left aligned detail-container">
 			<p><strong>Associated course</strong></p>
-			<p>{{ $project->course->name }}</p>
+			<p>{{ isset($project->course->name) ? $project->course->name : '' }}</p>
 		</div>
 		<!-- Associated team -->
 		<div class="ui left aligned detail-container">
