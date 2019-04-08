@@ -5,21 +5,47 @@ $color-dark: #333;
 $color-white: #fff;
 
 
-.ui.menu.menu.bluemarketheader {
+.ui.menu.bluemarket-header {
 	background: $color-dark;
-	padding-top: 10px;
+	border: none;
 	margin: 0;
+	padding: 0 5px;
+
 	.item.item {
 		color: $color-white;
+		height: 100%;
 		&.active {
 			color: $color-white;
 			border-color: $color-primary;
 		}
-		&:hover {
+		&:hover:hover {
 			color: $color-primary;
-			border-color: $color-primary;
 		}
 	}
+}
+
+.ui.popup.vertical {
+	background: $color-dark;
+
+	&:before {
+		background: $color-dark;
+	}
+
+	.user-dropdown-menu.item {
+		color: $color-white;
+		background: $color-dark;
+		&.active {
+			color: $color-white;
+			border-color: $color-primary;
+		}
+		&:hover:hover {
+			color: $color-primary;
+		}
+	}
+}
+
+.ui.mini.circular.image.user-avatar {
+	width: 25px;
 }
 
 .ui.button {
