@@ -9,5 +9,9 @@ return [
     'course_types' => [
         'client' => 1,
         'supplier' => 2,
+    ],
+    'tags_types' => [
+        'skill' => 1,
+        'label' => 2,
     ]
 ];
