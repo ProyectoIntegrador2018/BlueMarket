@@ -55,12 +55,33 @@
 				</div>
 				<div class="ui bottom attached tab segment" data-tab="teams">
 					@if(isset($user->teams) && count($user->teams) > 0)
-						<div class="ui two column stackable grid">
-							@foreach ($user->teams as $team)
-								@teamCard (['team' => $team])
-								@endteamCard
-							@endforeach
-						</div>
+						<table class="ui small striped table">
+							<tbody>
+								@foreach($user->teams as $team)
+									<tr class="selectable">
+										<td>
+											<a href="{{ url('teams', $team->id) }}">
+												<span class="team-img-tiny">
+													<img class="ui mini image team-img" src="{{ isset($team->img_url) ? $team->img_url : 'https://dummyimage.com/400x400/3498db/ffffff.png&text=B' }}" style="display: inline; margin-right: 10px;"/>
+													{{ $team->name }}
+												</span>
+											</a>
+										</td>
+										<td>
+											<a href="{{ url('teams', $team->id) }}">
+												<?php $loop_boundary = min(count($team->members), 10) ?>
+												<?php $members = $team->members ?>
+												@for($i = 0; $i < $loop_boundary; $i++)
+													<span class="team-member-avatar-container">
+														<img class="ui mini circular image user-avatar" src="{{ isset($members[$i]->picture_url) ? $members[$i]->picture_url : 'https://dummyimage.com/400x400/3498db/ffffff.png&text=B' }}" title="{{ $members[$i]->name }}"/>
+													</span>
+												@endfor
+											</a>
+										</td>
+									</tr>
+								@endforeach
+							</tbody>
+						</table>
 					@else
 						<div id="no-teams-msg" class="ui message">
 							<div class="header">
