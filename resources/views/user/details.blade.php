@@ -23,7 +23,7 @@
 				<!-- Skillset pills -->
 				@if (count($user->skillset) > 0)
 					<div class="ui left aligned detail-container">
-						<p><strong>Skillset</strong></p>
+						<p><strong>Skills</strong></p>
 						@foreach($user->skillset as $skill)
 							<div class="ui label pill">{{ $skill->name }}</div>
 						@endforeach
