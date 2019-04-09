@@ -53,7 +53,7 @@ class TeamController extends Controller
 			abort(500);
 		}
 
-		$team->members()->attach($team->leader_id);
+		$team->members()->attach($team->leader_id, ['has_accepted' => 1]);
 
 		// redirect to teams/{id} // NOSONAR
 		return redirect()->route('teams.show', [$team]);
