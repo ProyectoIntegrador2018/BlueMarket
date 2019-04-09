@@ -18,7 +18,10 @@ class Team extends Model
 	}
 
 	public function members() {
-		return $this->belongsToMany('App\User', 'team_user', 'team_id', 'user_id');
+		return $this->belongsToMany('App\User', 'team_user', 'team_id', 'user_id')
+			->withPivot('has_accepted')
+			->withTimestamps()
+			->wherePivot('has_accepted', 1);
 	}
 	public function projects() {
 		return $this->hasMany('App\Project');
