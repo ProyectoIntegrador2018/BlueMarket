@@ -8,7 +8,7 @@
 	<div class="team-info">
 		<div class="image-container">
 			<div class="image-uploader preview-container">
-				<img id="preview" src="<?= $team->img_url ?>" alt="Team image" class="ui small image preview"/>
+				<img id="preview" src="{{ isset($team->img_url) ? $team->img_url : 'https://dummyimage.com/400x400/3498db/ffffff.png&text=B' }}" alt="Team image" class="ui small image preview"/>
 			</div>
 		</div>
 		<div class="team-people">
@@ -16,9 +16,8 @@
 			<div class="team-members">
 				@if(isset($team->members))
 					@foreach($team->members as $member)
-						<!-- TODO: add route to user profile -->
-						<a href="#">
-							<img class="ui avatar image" src="<?= $member->picture_url ?>"/>
+						<a href="{{ url('users', $member->id) }}" title="{{ $member->name }}">
+							<img class="ui avatar image" src="{{ isset($member->picture_url) ? $member->picture_url : 'https://dummyimage.com/400x400/3498db/ffffff.png&text=B' }}"/>
 						</a>
 					@endforeach
 				@endif
