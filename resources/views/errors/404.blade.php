@@ -4,7 +4,7 @@
 
 @section('content')
 <style>
-	.bluemarketheader {
+	.bluemarket-header {
 		position: absolute;
 		width: 100%;
 		z-index: 10;
