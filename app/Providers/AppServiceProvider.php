@@ -17,7 +17,6 @@ class AppServiceProvider extends ServiceProvider {
 		// Aliasing components
 		Blade::component('components.projectCard', 'projectCard');
 		Blade::component('components.teams.form', 'teamsform');
-
 		if(\App::environment('production')) {
 			URL::forceScheme('https');
 		}
