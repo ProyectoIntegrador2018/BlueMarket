@@ -55,7 +55,10 @@ class User extends Authenticatable
 	}
 
 	public function teams() {
-		return $this->belongsToMany('App\Team', 'team_user', 'user_id', 'team_id');
+		return $this->belongsToMany('App\Team', 'team_user', 'user_id', 'team_id')
+		->withPivot('has_accepted')
+		->withTimestamps()
+		->wherePivot('has_accepted', 1);
 	}
 
 	public function skillset() {
