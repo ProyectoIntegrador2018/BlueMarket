@@ -7,7 +7,7 @@
 			</div>
 			<!--User name-->
 			<!-- TODO: need to make name centered-->
-			<div class="header">{{ $user->name }}</div>
+			<div class="header studentCardName">{{ $user->name }}</div>
 		</div>
 		<!--User skillset-->
 		@if(isset($user->skillset) && count($user->skillset) > 0)
