@@ -7,31 +7,18 @@
 @section('title', 'Welcome')
 
 @section('content')
-	<div>
-		<h1 class="ui header large">Blue Market</h1>
-	</div>
 	<section class="home-hero-section">
-		<div class="home-hero-container">
-			<div class="hero-text">
-				<div class="ui padded segment">
-					<h2 class="ui large header home-hero-desc">
-						Get started
-					</h2>
-					<div class="ui center aligned basic segment">
-						<a class="ui button primary" href="{{ url('login') }}">Sign up now</a>
-						<div class="ui horizontal divider">
-							Or
-						</div>
-						<a class="ui button primary" href="{{ url('projects') }}">Find projects</a>
-					</div>
-				</div>
+		<div class="hero-container">
+			<img class="hero-img" alt="Homepage hero image" src="../img/unsplash-stock01-min.jpg"/>
+			<div class="hero-text-container">
+				<h1 class="huge ui header bm-h1">Blue Market</h1>
 			</div>
-			<div class="hero-image">
-				<img alt="Homepage hero image" src="../img/unsplash-stock01-min.jpg"/>
-			</div>
-		<div>
+		</div>
 	</section>
-
+	<section class="home-details-section">
+		<div class="home-details">
+		</div>
+	</section>
 
 	<div style="display:none;" class="contact ui grid">
 		<div class="home info contact">
