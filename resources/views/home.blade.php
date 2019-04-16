@@ -30,7 +30,7 @@
 	}
 
 	.detail-icon i {
-		color:  #2c3e50;
+		color: #2980b9;
 		line-height: inherit;
 		position: relative;
 		margin: 0 auto;
@@ -38,7 +38,7 @@
 	}
 
 	.detail-icon:hover {
-		background-color: #2c3e50;
+		background-color: #2980b9;
 	}
 
 	.detail-icon:hover i {
@@ -49,7 +49,7 @@
 		margin: -1px auto;
 	}
 
-	.ui.header.home-details-text {
+	.home-details-text {
 		color: white;
 		text-align: center;
 		text-transform: uppercase;
@@ -86,24 +86,34 @@
 
 	@media only screen and (max-width: 800px) {
 		.home-hero-section .hero-container .hero-text-container {
-			margin-top: 10%;
+			margin-top: 5%;
 		}
 
-		.home-hero-section .hero-container .hero-text-container .bm-hero-text {
-			font-size: 6.5vmin;
+		.hero-img {
+			display: none;
 		}
+
+		.home-hero-section .hero-container {
+			background: url('../img/unsplash-stock01-min.jpg');
+			object-fit: cover;
+			object-position: center center;
+		}
+
+		/* .home-hero-section .hero-container .hero-text-container .bm-hero-text {
+			font-size: 10vmin;
+		} */
 	}
 </style>
 	<section class="home-hero-section">
 		<div class="hero-container">
 			<img class="hero-img" alt="Homepage hero image" src="../img/unsplash-stock01-min.jpg"/>
 			<div class="hero-text-container">
-				<h1 class="ui header bm-hero-text">Blue Market</h1>
-				<span class="bm-word-list bm-hero-text">
-					<span class="ui header bm-hero-text">
+				<h1 class="bm-hero-text">Blue Market</h1>
+				<span style="display: none;" class="bm-word-list bm-hero-text">
+					<span class="bm-hero-text">
 						is
-						<span id="hero-words" class="ui header bm-hero-text bm-hero-word-list"></span>
-						<span class="ui header bm-hero-text">.</span>
+						<span id="hero-words" class="bm-hero-text bm-hero-word-list"></span>
+						<span class="bm-hero-text">.</span>
 					</span>
 				</span>
 			</div>
@@ -116,19 +126,19 @@
 					<div class="column">
 						<a href="{{ url('/projects') }}">
 							<span class="detail-icon"><i class="address book outline icon"></i></span>
-							<h2 class="ui header home-details-text">Get started</h2>
+							<h2 class="home-details-text">Get started</h2>
 						</a>
 					</div>
 					<div class="column">
 						<a href="{{ url('/projects') }}">
 							<span class="detail-icon"><i class="address book outline icon"></i></span>
-							<h2 class="ui header home-details-text">Find projects</h2>
+							<h2 class="home-details-text">Find projects</h2>
 						</a>
 					</div>
 					<div class="column">
 						<a href="{{ url('/projects') }}">
 							<span class="detail-icon"><i class="address book outline icon"></i></span>
-							<h2 class="ui header home-details-text">Find people</h2>
+							<h2 class="home-details-text">Find people</h2>
 						</a>
 					</div>
 				</div>
