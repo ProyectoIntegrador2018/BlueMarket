@@ -65,53 +65,15 @@ $color-white: #fff;
 	}
 }
 
-.home.view-projects {
-	background-size: cover;
-	background-image: url('../img/unsplash-stock01-min.jpg');
-	background-position: center center;
-	height: 60vh;
-	display: flex;
-	display: -webkit-flex;
-	align-items: center;
-	justify-content: center;
-
-	.overlay {
-		background: rgba($color-dark, 0.7);
-		width: 100%;
-		height: 100%;
-		display: inherit;
-
-		.contents {
-			height: 90%;
-			width: 100%;
-			display: grid;
-
-			h1 {
-				color: $color-white;
-				width: fit-content;
-				font-size: 5rem;
-				overflow: hidden;
-			}
-
-			.button {
-				justify-content: center;
-				align-items: center;
-				margin: auto;
-				width: inherit;
-				height: min-content;
-			}
-		}
-	}
-}
-
 .home-hero-section {
 	width: 100%;
 	height: 80vmin;
 	position: relative;
+	color: white;
 
 	.hero-container {
 		position: absolute;
-		background-color: white;
+		background-color: #1c587f;
 		width: 100%;
 		height: inherit;
 		overflow: hidden;
@@ -132,13 +94,12 @@ $color-white: #fff;
 		}
 
 		.hero-text-container {
-			background-color: white;
 			width: 45%;
-			height: inherit;
+			height: auto;
 			overflow: hidden;
 			position: absolute;
 			top: 0;
-			z-index: 6;
+			z-index: 4;
 			margin-left: 5%;
 			margin-top: 5vmin;
 
@@ -146,45 +107,49 @@ $color-white: #fff;
 				font-size: 10vmin;
 				position: relative;
 			}
-		}marker-end:
+		}
 	}
 }
 
 .home-details-section {
 	width: 100%;
-	height: 90vh;
 	position: relative;
+	z-index: 6;
 
 	.home-details-container {
 		height: inherit;
 		width: 100%;
 		position: relative;
-		margin-top: -30vh;
-		z-index: 8;
-		margin-bottom: 30vh;
 
 		&::before {
 			content: '';
-			height: 10%;
-			background-color: #2c3e50;
-			-webkit-clip-path: polygon(0 50%, 100% 0, 100% 100%, 0% 100%);
-			clip-path: polygon(0 50%, 100% 0, 100% 100%, 0% 100%);
+			height: 30vmin;
+			background-color: #2980b9;
 			display: block;
+			width: 100%;
+			-webkit-clip-path: polygon(0 30%, 100% 0, 100% 100%, 0 100%);
+			clip-path: polygon(0 30%, 100% 0, 100% 100%, 0 100%);
+			margin-top: -30vmin;
 		}
 
 		.home-details {
 			display: block;
-			background-color: #2c3e50;
+			background-color: #2980b9;
+			padding-bottom: 15vmin;
+			margin-bottom: 15vmin;
 		}
 
-		&::after {
-			content: '';
-			height: 10%;
-			background-color: #2c3e50;
-			-webkit-clip-path: polygon(100% 0, 0 0, 0 100%, 100% 30%);
-			clip-path: polygon(100% 0, 0 0, 0 100%, 100% 30%);
-			display: block;
-		}
+		// &::after {
+		// 	content: '';
+		// 	height: 200px;
+		// 	background-color: #2980b9;
+		// 	display: block;
+		// 	width: 100%;
+		// 	z-index: 8;
+		// 	margin-bottom: 75px;
+		// 	-webkit-clip-path: polygon(0 30%, 100% 0, 100% 100%, 0 100%);
+		// 	clip-path: polygon(0 30%, 100% 0, 100% 100%, 0 100%);
+		// }
 	}
 
 }
@@ -199,51 +164,6 @@ $color-white: #fff;
 
 .sign-in-info {
 	margin-bottom: 5vh;
-}
-
-.home.info {
-	.ui.divider {
-		border: none;
-	}
-
-	h1.bluemarket-text {
-		font-size: 1.75vmax;
-	}
-
-	p.bluemarket-text {
-		font-size: 1.75vmax;
-	}
-
-	label.bluemarket-text {
-		font-size: 1.5vmax;
-		font-weight: inherit;
-		margin-top: 1vmax;
-		margin-bottom: 0.5vmax;
-	}
-
-	.send {
-		background-color: $color-primary;
-		color: $color-white;
-	}
-
-	div.column.image-container {
-		justify-content: center;
-		align-items: flex-end;
-		display: grid;
-	}
-
-	.ui.small.circular.image {
-		max-width: 100%;
-		max-height: 100%;
-		height: auto;
-		width: auto;
-		object-fit: contain;
-		margin: 0%;
-	}
-
-	&.contact {
-		width: 100%;
-	}
 }
 
 .team-info {
@@ -270,54 +190,6 @@ $color-white: #fff;
 }
 
 @media only screen and (max-width: 800px) {
-
-	.home.view-projects {
-		height: 40vh;
-
-		button {
-			width: 50%;
-		}
-
-		h1.ui.header {
-			white-space: nowrap;
-			overflow: hidden;
-		}
-	}
-
-	.home.info {
-		h1.bluemarket-text {
-			font-size: 1.5vmax;
-		}
-
-		p.bluemarket-text {
-			font-size: 1.5vmax;
-		}
-
-		label.bluemarket-text {
-			font-size: 1.5vmax;
-		}
-
-		.image-div.column.image-container {
-			justify-content: center;
-			align-items: center;
-			display: grid;
-		}
-
-		.ui.small.circular.image {
-			max-width: 100%;
-			max-height: 100%;
-			height: auto;
-			width: initial;
-			object-fit: contain;
-			margin: 0%;
-		}
-
-		.steps {
-			justify-content: center;
-			align-content: center;
-		}
-	}
-
 	.ui.modal {
 		text-align: center;
 		font-size: 1.2em;
