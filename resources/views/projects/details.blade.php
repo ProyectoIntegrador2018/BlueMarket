@@ -1,6 +1,10 @@
 @extends('layouts.app')
 
+<<<<<<< HEAD
 @section("title", $project->name)
+=======
+@section('title', $project->name)
+>>>>>>> Initial view done.
 
 @section('content')
 
@@ -89,6 +93,54 @@
 					@foreach($project->skills as $skill)
 						<div class="ui label pill">{{ $skill->name }}</div>
 					@endforeach
+				</div>
+			</div>
+		</div>
+		<!-- Progress section -->
+		<div class="ui left aligned detail-container">
+			<p><strong>Progress</strong></p>
+			<div class="ui blue progress">
+				<div class="bar">
+					<div class="progress"></div>
+				</div>
+				<div class="label">Currently: Design</div>
+			</div>
+			<a class="milestones" title="See project's milestones" onclick="displayMilestones()">See milestones</a>
+			<div class="ui list">
+				<div class="item">
+					<i class="large circle icon green"></i>
+					<div class="content">
+						<div class="header">Ideation</div>
+						<div class="description">4/20</div>
+					</div>
+				</div>
+				<div class="item">
+					<i class="large circle icon green"></i>
+					<div class="content">
+						<div class="header">Design</div>
+						<div class="description"></div>
+					</div>
+				</div>
+				<div class="item">
+					<i class="large circle icon grey"></i>
+					<div class="content">
+						<div class="header">Planning</div>
+						<div class="description"></div>
+					</div>
+				</div>
+				<div class="item">
+					<i class="large circle icon grey"></i>
+					<div class="content">
+						<div class="header">Execution</div>
+						<div class="description"></div>
+					</div>
+				</div>
+				<div class="item">
+					<i class="large circle icon grey"></i>
+					<div class="content">
+						<div class="header">Test</div>
+						<div class="description"></div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -185,4 +237,18 @@
 	});
 </script>
 @endsection
+@endsection
+
+@section('scripts')
+<script>
+	$(document).ready(function(){
+		$('.progress').progress({
+			percent: 20
+		});
+	})
+
+	function displayMilestones(){
+
+	}
+</script>
 @endsection
