@@ -38,7 +38,7 @@
 	}
 
 	.detail-icon:hover {
-		background-color: #2980b9;
+		background-color: rgba(0,0,0,0);
 	}
 
 	.detail-icon:hover i {
@@ -201,7 +201,6 @@
 		}
 
 		let animateWordsTimer = setInterval(changeWordInList, 1000);
-
 
 		function sendEmail() {
 			$( ".ui.form" ).removeClass( "error" );
