@@ -5,16 +5,16 @@ $color-dark: #333;
 $color-white: #fff;
 
 .ui.menu.bluemarket-header {
-	background: $color-dark;
+	//background: $color-dark;
 	border: none;
 	margin: 0;
 	padding: 0 5px;
 
 	.item.item {
-		color: $color-white;
+		//color: $color-white;
 		height: 100%;
 		&.active {
-			color: $color-white;
+			//color: $color-white;
 			border-color: $color-primary;
 		}
 		&:hover:hover {
@@ -72,13 +72,14 @@ $color-white: #fff;
 	color: white;
 
 	.hero-container {
-		position: absolute;
-		background-color: #1c587f;
-		width: 100%;
+		background-size: cover;
+		background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../img/unsplash-stock01-min.jpg');
 		height: inherit;
-		overflow: hidden;
+		display: flex;
+		display: -webkit-flex;
 
 		.hero-img {
+			display: none;
 			-webkit-transform: scaleX(-1); // mirror image
 			transform: scaleX(-1);
 			-webkit-clip-path: polygon(50% 0, 0 0, 0 100%, 50% 30%);
@@ -123,8 +124,8 @@ $color-white: #fff;
 
 		&::before {
 			content: '';
-			height: 30vmin;
-			background-color: #2980b9;
+			height: 25vmin;
+			background: linear-gradient(90deg, #00d2ff 0%, #3a47d5 100%);
 			display: block;
 			width: 100%;
 			-webkit-clip-path: polygon(0 30%, 100% 0, 100% 100%, 0 100%);
@@ -134,22 +135,21 @@ $color-white: #fff;
 
 		.home-details {
 			display: block;
-			background-color: #2980b9;
+			background: linear-gradient(90deg, #00d2ff 0%, #3a47d5 100%);
 			padding-bottom: 15vmin;
-			margin-bottom: 15vmin;
 		}
 
-		// &::after {
-		// 	content: '';
-		// 	height: 200px;
-		// 	background-color: #2980b9;
-		// 	display: block;
-		// 	width: 100%;
-		// 	z-index: 8;
-		// 	margin-bottom: 75px;
-		// 	-webkit-clip-path: polygon(0 30%, 100% 0, 100% 100%, 0 100%);
-		// 	clip-path: polygon(0 30%, 100% 0, 100% 100%, 0 100%);
-		// }
+		&::after {
+			content: '';
+			height: 25vmin;
+			background: linear-gradient(90deg, #00d2ff 0%, #3a47d5 100%);
+			display: block;
+			width: 100%;
+			z-index: 8;
+			margin-bottom: 15vmin;
+			-webkit-clip-path: polygon(0 0, 100% 0, 100% 30%, 0 100%);
+			clip-path: polygon(0 0, 100% 0, 100% 30%, 0 100%);
+		}
 	}
 
 }
