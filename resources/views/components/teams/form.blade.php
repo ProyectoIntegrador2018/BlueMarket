@@ -1,7 +1,7 @@
 <div id ="image" class="field">
 	<label for="teamImage">Team image</label>
 	<div class="image-container">
-		<div class="image-uploader preview-container" hidden>
+		<div class="image-uploader preview-container hidden">
 			<img id="preview" src="" alt="Team image" class="ui small image preview"/>
 		</div>
 		<button type="button" class="ui button primary image-uploader">Upload image</button>

@@ -30,6 +30,7 @@ function updateImagePreview(imageInput) {
 	// update preview when completed successfully
 	reader.addEventListener("load", function () {
 		$("#preview").attr("src", reader.result);
+		$(".preview-container").removeClass("hidden");
 	});
 	reader.readAsDataURL(file);
 }
