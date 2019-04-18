@@ -99,7 +99,7 @@
 								<button type="button" id="addCourse" class="ui primary button" onclick="addNewCourse()">Add course</button>
 							</div>
 						@endif
-							<div id="current-courses" class="courses table" {{ count($user->enrolledIn) <= 0 ? 'hidden' : '' }}>
+							<div id="current-courses" class="courses table {{ count($user->enrolledIn) <= 0 ? 'hidden' : '' }}">
 								<table class="ui striped table">
 									<thead class="bluemarket-thead">
 										<tr>
@@ -134,7 +134,7 @@
 									</tbody>
 								</table>
 							</div>
-							<div id="no-courses-msg" class="ui message" {{ count($user->enrolledIn) > 0 ? 'hidden' : '' }}>
+							<div id="no-courses-msg" class="ui message {{ count($user->enrolledIn) > 0 ? 'hidden' : '' }}">
 								<div class="header">
 									No courses found!
 								</div>
