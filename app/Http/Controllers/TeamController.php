@@ -55,7 +55,7 @@ class TeamController extends Controller
 
 		$team->members()->attach($team->leader_id);
 
-		// redirect to teams/{id}
+		// redirect to teams/{id} // NOSONAR
 		return redirect()->route('teams.show', [$team]);
 	}
 

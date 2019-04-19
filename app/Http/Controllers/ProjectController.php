@@ -112,8 +112,8 @@ class ProjectController extends Controller {
 			if(!$member->enrolledIn()->where('course_id', $course_id)->exists()) {
 				return false;
 			}
-
 		}
+
 		return true;
 	}
 

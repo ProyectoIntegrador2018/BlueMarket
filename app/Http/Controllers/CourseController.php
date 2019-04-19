@@ -201,6 +201,7 @@ class CourseController extends Controller
 		if (!$course->exists) {
 			abort(500);
 		}
+
 		return $course;
 	}
 
