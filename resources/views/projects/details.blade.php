@@ -60,13 +60,6 @@
 						<!-- Associated course -->
 						<div class="ui detail-container">
 							<p><strong>Associated course</strong></p>
-							<a href="#">
-								<p>Computer Graphics</p>
-								<p>
-									Dr. Zoom, Captain Marvel
-								</p>
-								<p>Fall 2019, MoThu 13:00</p>
-							</a>
 							@if(isset($project->course))
 								<a href="{{ url('courses', $project->course->id) }}">
 									<p>$project->course->name</p>
