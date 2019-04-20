@@ -1352,3 +1352,10 @@ insert into client_supplier_course (id, client_id, supplier_id) values (3, 2, 7)
 insert into client_supplier_course (id, client_id, supplier_id) values (4, 4, 8);
 insert into client_supplier_course (id, client_id, supplier_id) values (5, 5, 9);
 insert into client_supplier_course (id, client_id, supplier_id) values (6, 5, 10);
+
+-- team/user many-to-many relationship (members)
+INSERT INTO team_user (id, team_id, user_id) VALUES (1, 1, 1);
+INSERT INTO team_user (id, team_id, user_id) VALUES (2, 2, 1);
+INSERT INTO team_user (id, team_id, user_id) VALUES (3, 3, 1);
+INSERT INTO team_user (id, team_id, user_id) VALUES (4, 4, 1);
+INSERT INTO team_user (id, team_id, user_id) VALUES (5, 5, 1);
