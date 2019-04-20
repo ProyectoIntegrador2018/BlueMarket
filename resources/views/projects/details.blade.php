@@ -47,7 +47,7 @@
 							<p><strong>Owner team</strong></p>
 							<!-- Team Image -->
 							<!-- TODO: add 'href' and 'title' with project name to <a> tag. Blocked by #110 -->
-							<a href="#">
+							<a href="{{ url('teams', $project->team->id) }}" title="{{  $project->team->name }}">
 								<div class="ui image-container">
 									<div class="squared-image-container" >
 										<img src="{{ isset($project->team->img_url) ? $project->team->img_url : 'https://dummyimage.com/400x400/3498db/ffffff.png&text=B' }}" alt="Owner team: {{ isset($project->team->name) ? $project->team->name : '' }}" class="ui small image squared-image"/>
@@ -62,14 +62,14 @@
 							<p><strong>Associated course</strong></p>
 							@if(isset($project->course))
 								<a href="{{ url('courses', $project->course->id) }}">
-									<p>$project->course->name</p>
+									<p>{{ $project->course->name }}</p>
 									<p>
 										@foreach($project->course->teachers as $teacher)
 											{{ $loop->first ? '' : ', ' }}
 											{{ $teacher->name }}
 										@endforeach
 									</p>
-									<p>$project->course->schedule</p>
+									<p>{{ $project->course->schedule }}</p>
 								</a>
 							@endif
 						</div>
