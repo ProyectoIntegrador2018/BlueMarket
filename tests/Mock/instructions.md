@@ -2,9 +2,10 @@ These are the instructions on how to use `mock.sql` to populate your local datab
 
 # Steps
 1. On your cmd, run `php artisan migrate:fresh`. 
-2. Go to your MySQL admin tool (phpMyAdmin). 
-3. Run the `mock.sql` script on the tool.
-4. Done!
+2. Run `yarn run frontend` and login with a student @itesm account. This will create a new, registered student user with id #1, which we'll use as owner of the teams that get created further on (`leader_id` attribute on the `teams` table).
+3. Go to your MySQL admin tool (phpMyAdmin). 
+4. Run the `mock.sql` script on the tool.
+5. Done!
 
 # Available mock data
 The `mock.sql` script currently contains mock data for the following tables:
