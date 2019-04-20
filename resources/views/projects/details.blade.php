@@ -105,41 +105,43 @@
 				</div>
 				<div class="label">Currently: Design</div>
 			</div>
-			<a class="milestones" title="See project's milestones" onclick="displayMilestones()">See milestones</a>
-			<div class="ui list">
+			<div class="ui right floated button">
+				<a class="milestones" title="See project's milestones" onclick="displayMilestones()">See milestones</a>
+			</div>
+			<div class="ui list milestone-section hidden">
 				<div class="item">
-					<i class="large circle icon green"></i>
+					<i class="large circle icon done"></i>
 					<div class="content">
 						<div class="header">Ideation</div>
-						<div class="description">4/20</div>
+						<div class="description">Finished on 4/20</div>
 					</div>
 				</div>
 				<div class="item">
-					<i class="large circle icon green"></i>
+					<i class="large circle icon current"></i>
 					<div class="content">
 						<div class="header">Design</div>
-						<div class="description"></div>
+						<div class="description">Currently working</div>
 					</div>
 				</div>
 				<div class="item">
-					<i class="large circle icon grey"></i>
+					<i class="large circle icon coming-up"></i>
 					<div class="content">
 						<div class="header">Planning</div>
-						<div class="description"></div>
+						<div class="description">TBD</div>
 					</div>
 				</div>
 				<div class="item">
-					<i class="large circle icon grey"></i>
+					<i class="large circle icon coming-up"></i>
 					<div class="content">
 						<div class="header">Execution</div>
-						<div class="description"></div>
+						<div class="description">TBD</div>
 					</div>
 				</div>
 				<div class="item">
-					<i class="large circle icon grey"></i>
+					<i class="large circle icon coming-up"></i>
 					<div class="content">
 						<div class="header">Test</div>
-						<div class="description"></div>
+						<div class="description">TBD</div>
 					</div>
 				</div>
 			</div>
@@ -248,7 +250,7 @@
 	})
 
 	function displayMilestones(){
-
+		$('.milestone-section').removeClass('hidden');
 	}
 </script>
 @endsection

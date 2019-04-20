@@ -487,3 +487,15 @@ $color-white: #fff;
 .invite-sent-datetime {
 	display: inline;
 }
+.item {
+	.done {
+		color: #8caf83;
+	}
+	.current {
+		color: green;
+	}
+	.coming-up {
+		color: #acacac;
+	}
+}
+
