@@ -9,7 +9,6 @@
 	<h1>{{ $project->name }}</h1>
 	<div class="ui top attached tabular menu">
 		<a class="active item" data-tab="overview">Overview</a>
-		<a class="item" data-tab="tasks">Tasks</a>
 	</div>
 	<div class="ui bottom attached active tab segment" data-tab="overview">
 		<div class="ui stackable two column grid">
@@ -46,7 +45,6 @@
 						<div class="ui detail-container">
 							<p><strong>Owner team</strong></p>
 							<!-- Team Image -->
-							<!-- TODO: add 'href' and 'title' with project name to <a> tag. Blocked by #110 -->
 							<a href="{{ url('teams', $project->team->id) }}" title="{{  $project->team->name }}">
 								<div class="ui image-container">
 									<div class="squared-image-container" >
