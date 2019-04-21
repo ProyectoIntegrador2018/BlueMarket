@@ -409,21 +409,17 @@ $color-white: #fff;
 		}
 	}
 
-	.squared-image-container {
-		margin-bottom: 1vh;
-
-		.ui.small.image.squared-image {
-			width: 100px;
-			height: auto;
-			object-fit: cover;
-			object-position: center center;
-			border-radius: 15px;
-		}
-	}
-
 	button {
 		width: 100%;
 	}
+}
+
+.squared-image-container .ui.small.image.squared-image {
+	width: 100px;
+	height: auto;
+	object-fit: cover;
+	object-position: center center;
+	border-radius: 15px;
 }
 
 .ui.label.pill {
