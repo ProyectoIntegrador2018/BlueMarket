@@ -1,10 +1,6 @@
 @extends('layouts.app')
 
-<<<<<<< HEAD
-@section("title", $project->name)
-=======
 @section('title', $project->name)
->>>>>>> Initial view done.
 
 @section('content')
 
