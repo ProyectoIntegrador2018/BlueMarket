@@ -91,56 +91,58 @@
 					@endforeach
 				</div>
 			</div>
-		</div>
-		<!-- Progress section -->
-		<div class="ui left aligned detail-container">
-			<p><strong>Progress</strong></p>
-			<div class="ui blue progress">
-				<div class="bar">
-					<div class="progress"></div>
-				</div>
-				<div class="label">Currently on: Design</div>
-			</div>
-			<div class="ui right floated button" onclick="displayMilestones()">
-				<a class="milestones" title="See project's milestones">See milestones</a>
-			</div>
-			<div class="ui list milestone-section hidden">
-				<div class="item done">
-					<i class="large circle icon"></i>
-					<div class="content">
-						<div class="header">Ideation</div>
-						<div class="description">Finished on 4/20</div>
+			<!-- Progress section -->
+			<div class="sixteen wide column">
+				<div class="ui left aligned detail-container">
+					<p><strong>Progress</strong></p>
+					<div class="ui blue progress">
+						<div class="bar">
+							<div class="progress"></div>
+						</div>
+						<div class="label">Currently on: Design</div>
+					</div>
+					<div class="ui right floated button" onclick="displayMilestones()">
+						<a class="milestones" title="See project's milestones">See milestones</a>
+					</div>
+					<div class="ui list milestone-section hidden">
+						<div class="item done">
+							<i class="large circle icon"></i>
+							<div class="content">
+								<div class="header">Ideation</div>
+								<div class="description">Finished on 4/20</div>
+							</div>
+						</div>
+						<div class="item current">
+							<i class="large circle icon"></i>
+							<div class="content">
+								<div class="header">Design</div>
+								<div class="description">Estimated date: 4/25</div>
+							</div>
+						</div>
+						<div class="item coming-up">
+							<i class="large circle icon"></i>
+							<div class="content">
+								<div class="header">Planning</div>
+								<div class="description">Estimated date: 4/30</div>
+							</div>
+						</div>
+						<div class="item coming-up">
+							<i class="large circle icon"></i>
+							<div class="content">
+								<div class="header">Execution</div>
+								<div class="description">Estimated date: 6/10</div>
+							</div>
+						</div>
+						<div class="item coming-up">
+							<i class="large circle icon"></i>
+							<div class="content">
+								<div class="header">Test</div>
+								<div class="description">Estimated date: 6/30</div>
+							</div>
+						</div>
+						<a class="ui right floated button" title="Edit milestone map" href="/milestones/edit">Edit milestone map</a>
 					</div>
 				</div>
-				<div class="item current">
-					<i class="large circle icon"></i>
-					<div class="content">
-						<div class="header">Design</div>
-						<div class="description">Estimated date: 4/25</div>
-					</div>
-				</div>
-				<div class="item coming-up">
-					<i class="large circle icon"></i>
-					<div class="content">
-						<div class="header">Planning</div>
-						<div class="description">Estimated date: 4/30</div>
-					</div>
-				</div>
-				<div class="item coming-up">
-					<i class="large circle icon"></i>
-					<div class="content">
-						<div class="header">Execution</div>
-						<div class="description">Estimated date: 6/10</div>
-					</div>
-				</div>
-				<div class="item coming-up">
-					<i class="large circle icon"></i>
-					<div class="content">
-						<div class="header">Test</div>
-						<div class="description">Estimated date: 6/30</div>
-					</div>
-				</div>
-				<a class="ui right floated button" title="Edit milestone map" href="/milestones/edit">Edit milestone map</a>
 			</div>
 		</div>
 	</div>
