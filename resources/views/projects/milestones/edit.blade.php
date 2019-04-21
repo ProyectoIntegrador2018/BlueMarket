@@ -33,6 +33,15 @@
 			<input type="date" name="estimatedDate" id="estimatedDate" value="{{ $milestone->estimated_date }}" required>
 		</div>
 
+		<!-- Status -->
+		<div class="field">
+			<label for="status">Status</label>
+			<select class="ui fluid search dropdown" name="status" id="status" value="{{ $milestone->status }}" required>
+				<option value="done">Done</option>
+				<option value="current">Current</option>
+				<option value="coming-up">Coming up</option>
+		</div>
+
 		<input class="ui button primary" type="submit" value="Update">
 		<a class="ui button outline primary" href="" title="Back">Back</a>
 	</form>
