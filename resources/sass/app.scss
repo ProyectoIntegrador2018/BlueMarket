@@ -460,6 +460,7 @@ $color-white: #fff;
 	border-radius: 5px;
 }
 
+<<<<<<< HEAD
 .ui.modal.new-task-modal {
 	text-align: left;
 
@@ -490,11 +491,21 @@ $color-white: #fff;
 .item {
 	.done {
 		color: #8caf83;
+=======
+.ui.progress .label {
+	font-weight: 300;
+}
+
+.ui.list.milestone-section .item {
+	padding-bottom: 10px;
+	&.done .icon {
+		color: #79d759;
+>>>>>>> Fixed styling in project details view; added milestone index view with fixed table.
 	}
-	.current {
-		color: green;
+	&.current .icon {
+		color: #79d759;
 	}
-	.coming-up {
+	&.coming-up .icon {
 		color: #acacac;
 	}
 }
