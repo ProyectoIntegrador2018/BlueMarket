@@ -7,7 +7,7 @@
 <div class="padded content">
 	<h1>Edit milestone</h1>
 
-	<form method="POST" action="{{ url('/admin/users/' . $user->id) }}" accept-charset="UTF-8" enctype="multipart/form-data">
+	<form method="POST" action="" accept-charset="UTF-8" enctype="multipart/form-data">
 		{{ method_field('PATCH') }}
 		@csrf
 
@@ -20,7 +20,7 @@
 		<!-- Previous milestone -->
 		<div class="field">
 			<label for="prevMilestone">Previous milestone</label>
-			<select class="ui fluid search dropdown" name="prevMilestone" id="prevMilestone" required>
+			<select class="ui fluid search dropdown" name="prevMilestone" id="prevMilestone" value="{{ $milestone->previous_milestone }}" required>
 				@foreach ($milestones as $prevMilestone)
 					<option value={{ $prevMilestone->id }}> {{ $prevMilestone->name }} </option>
 				@endforeach
