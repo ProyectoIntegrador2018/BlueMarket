@@ -33,6 +33,15 @@
 			<input type="date" name="estimatedDate" id="estimatedDate" required>
 		</div>
 
+		<!-- Status -->
+		<div class="field">
+			<label for="status">Status</label>
+			<select class="ui fluid search dropdown" name="status" id="status" required>
+				<option value="done">Done</option>
+				<option value="current">Current</option>
+				<option value="coming-up">Coming up</option>
+		</div>
+
 		<input class="ui button primary" type="submit" value="Create">
 		<a class="ui button outline primary" href="" title="Back">Back</a>
 	</form>
