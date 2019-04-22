@@ -12,6 +12,7 @@ class Project extends Model
 	 * @var array
 	 */
 	protected $guarded = [];
+
 	// Get all the tags of a project (skills + labels)
 	public function tags() {
 		return $this->belongsToMany('App\Tag', 'tag_project', 'project_id', 'tag_id');
@@ -31,6 +32,7 @@ class Project extends Model
 	public function course() {
 		return $this->belongsTo('App\Course');
 	}
+
 	// Get the team the project belongs to
 	public function team() {
 		return $this->belongsTo('App\Team');
