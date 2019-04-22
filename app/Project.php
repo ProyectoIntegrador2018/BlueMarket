@@ -37,4 +37,9 @@ class Project extends Model
 	public function team() {
 		return $this->belongsTo('App\Team');
 	}
+
+	// Get the milestones of the project
+	public function milestones() {
+		return $this->hasMany('App\Milestone');
+	}
 }
