@@ -3,6 +3,7 @@
 @section('title', $team->name)
 
 @section('content')
+<h1 id="date-box" class="needs-datetimeago" datetime="2019-04-22 13:43:00">Hello</h1>
 <div class="padded content">
 	<div class="ui stackable grid">
 		<div class="four wide column">
@@ -110,6 +111,7 @@
 	</div>
 </div>
 @section("scripts")
+<script src="{{ mix('js/utilities.js')}}"></script>
 <script>
 	/* Semantic UI tabs */
 	$(".menu .item").tab();
@@ -140,10 +142,11 @@
 		}
 
 		/* Generate a table row with the info of the user to inveite */
-		function generateNewMemberRow(user) {
-			const id = user.id;
-			const name = user.name;
-			const picture_url = user.picture_url ? user.picture_url : 'https://dummyimage.com/400x400/3498db/ffffff.png&text=B';
+		function generatePendingInviteRow(invite) {
+			const id = invite.receiver.id;
+			const name = invite.receiver.name;
+			const picture_url = invite.receiver.picture_url ? invite.receiver.picture_url : 'https://dummyimage.com/400x400/3498db/ffffff.png&text=B';
+			const sent_datetime = invite.created_at;
 
 			let row = `<tr class="selectable">
 							<td>
@@ -152,8 +155,10 @@
 									${name}
 								</a>
 							</td>
+							<td>
+								sent <p class="needs-datetimeago invite-sent-datetime" datetime="${sent_datetime}">${sent_datetime}</p>
+							</td>
 						</tr>`;
-
 			return row;
 		}
 
@@ -175,7 +180,7 @@
 				dataType: 'json',
 				success: function(data) {
 					// add new member to pending invites list
-					let rowToAdd = generateNewMemberRow(data.user);
+					let rowToAdd = generatePendingInviteRow(data.invite);
 					$("#pendingInvites tbody").append(rowToAdd);
 					$("#pendingInvites").show();
 				},
