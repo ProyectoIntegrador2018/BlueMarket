@@ -37,7 +37,7 @@
 			</select>
 		</div>
 		<!-- Course schedule -->
-		<div class="ui stackable two column grid">
+		<div class="ui stackable two column grid course">
 			<div class="column wide field">
 				<label for="courseSchedule">Course schedule</label>
 				<select class="ui fluid search dropdown" name="courseSchedule[]" id="courseSchedule" multiple required>
