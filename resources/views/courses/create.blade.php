@@ -14,27 +14,30 @@
 			<input type="text" name="courseName" id="courseName">
 		</div>
 		<!-- Teacher(s) -->
-		<div class="field" title="Are you giving this course with another teacher?">
+		<div class="field">
 			<label for="teachers">Teacher(s)</label>
 			<select class="ui fluid search dropdown" name="teachers[]" id="teachers" multiple>
 				@foreach ($teachers as $teacher)
 					<option value={{ $teacher['id'] }} {{ ($teacher['id'] == Auth::user()->id) ? 'selected' : '' }}> {{ $teacher['name'] }} </option>
 				@endforeach
 			</select>
+			<legend>Are you giving this course with another teacher?</legend>
 		</div>
 		<!-- Course semester -->
 		<div class="field">
 			<label for="courseSemester">Course semester</label>
-			<input type="text" name="courseSemester" id="courseSemester" placeholder="Spring/Summer/Fall/Winter and year.  Ex. Fall 2018" title="When is this course taking place?">
+			<input type="text" name="courseSemester" id="courseSemester">
+			<legend>When is this course taking place? Spring/Summer/Fall/Winter and year. Ex. Fall 2018</legend>
 		</div>
 		<!-- Course type -->
-		<div class="field" title="A client course is looking to outsource specific tasks. A supplier course is looking for projects to team up with.">
+		<div class="field">
 			<label for="courseType">Course type</label>
 			<select class="ui fluid search dropdown" name="courseType" id="courseType"   onchange="updateAssociatedCourses()">
 				<option value=""></option>
 				<option value="1">Client</option>
 				<option value="2">Supplier</option>
 			</select>
+			<legend>A client course is looking to outsource specific tasks. A supplier course is looking for projects to team up with.</legend>
 		</div>
 		<!-- Course schedule -->
 		<div class="two fields">
@@ -82,7 +85,7 @@
 			</div>
 		</div>
 		<!-- Associated courses -->
-		<div id="associatedCoursesField" class="field" title="Are you collaborating with other courses?">
+		<div id="associatedCoursesField" class="field">
 			<label for="associatedCourses">Associated courses</label>
 			<select class="ui fluid search dropdown" name="associatedCourses[]" id="associatedCourses" multiple>
 				@if(isset($courses))
@@ -97,6 +100,7 @@
 					@endforeach
 				@endif
 			</select>
+			<legend>Are you collaborating with other courses?</legend>
 		</div>
 		<!-- Error message -->
 		<div class="ui error message hidden">
