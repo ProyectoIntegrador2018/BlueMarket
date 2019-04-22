@@ -11,7 +11,7 @@
 			<div class="userInfo">
 				<div class="item">
 					<div class="d-flex mt-2 mb-3">
-						<img class="rounded-circle" src="{{ isset($user->picture_url) ? $user->picture_url : 'http://colegioclassea.com.br/wp-content/themes/PageLand/assets/img/avatar/avatar.jpg' }}" alt="User profile picture">
+						<img class="rounded-circle" src="{{ isset($user->picture_url) ? $user->picture_url : 'http://colegioclassea.com.br/wp-content/themes/PageLand/assets/img/avatar/avatar.jpgb' }}" alt="User profile picture">
 						<h1 class="align-self-center pl-4"> {{ $user->name }} </h1>
 						<div class="align-self-center pl-4">
 							@switch($user->role)
