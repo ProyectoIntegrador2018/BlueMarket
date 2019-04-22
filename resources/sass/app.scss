@@ -449,3 +449,12 @@ $color-white: #fff;
 .team-img {
 	border-radius: 5px;
 }
+
+.ui.stackable.grid.course {
+	.field:first-child {
+		padding-left: 0px;
+	}
+	.field:nth-child(2) {
+		padding-right: 0px;
+	}
+}
