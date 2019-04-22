@@ -43,28 +43,9 @@
 			</div>
 			<div class="ui bottom attached tab segment" data-tab="members">
 				<div class="{{ count($team->members) <= 0 ? 'hidden' : '' }}">
+					<h2>Current members</h2>
 					<table class="ui striped table">
 						<tbody>
-							@foreach($team->members as $member)
-								<tr class="selectable">
-									<td>
-										<a href="{{ url('users', $member->id) }}">
-											<img class="ui mini circular image" src="{{ isset($member->picture_url) ? $member->picture_url : 'https://dummyimage.com/400x400/3498db/ffffff.png&text=B' }}" style="display: inline; margin-right: 10px;"/>
-											{{ $member->name }}
-										</a>
-									</td>
-								</tr>
-							@endforeach
-							@foreach($team->members as $member)
-								<tr class="selectable">
-									<td>
-										<a href="{{ url('users', $member->id) }}">
-											<img class="ui mini circular image" src="{{ isset($member->picture_url) ? $member->picture_url : 'https://dummyimage.com/400x400/3498db/ffffff.png&text=B' }}" style="display: inline; margin-right: 10px;"/>
-											{{ $member->name }}
-										</a>
-									</td>
-								</tr>
-							@endforeach
 							@foreach($team->members as $member)
 								<tr class="selectable">
 									<td>
@@ -78,14 +59,136 @@
 						</tbody>
 					</table>
 				</div>
+				@if($team->leader->id == Auth::id())
+					<div id="userNameInputContainer" class="ui fluid action input" style="margin:20px 0;">
+						<div id="newMemberDropdown" class="ui fluid search selection dropdown">
+							<input type="hidden" name="memberToAdd">
+							<div class="default text">Select new member</div>
+							<div class="menu">
+								@foreach($team->members as $member)
+									<div class="item" data-value={{ $member->id }}>
+										<img class="ui mini circular image" src="{{ isset($member->picture_url) ? $member->picture_url : 'https://dummyimage.com/400x400/3498db/ffffff.png&text=B' }}" style="display: inline; margin-right: 10px;"/>
+										{{ $member->name }}
+									</div>
+								@endforeach
+							</div>
+						</div>
+						<button type="button" class="ui primary button" onclick="validateNewMember()">Add team member</button>
+					</div>
+					<div id="pendingInvites" class="{{ count($team->members) <= 5 ? 'hidden' : '' }}">
+						<h2>Pending invites</h2>
+						<table class="ui striped table">
+							<tbody>
+								@foreach($team->members as $member)
+									<tr class="selectable">
+										<td>
+											<a href="{{ url('users', $member->id) }}">
+												<img class="ui mini circular image" src="{{ isset($member->picture_url) ? $member->picture_url : 'https://dummyimage.com/400x400/3498db/ffffff.png&text=B' }}" style="display: inline; margin-right: 10px;"/>
+												{{ $member->name }}
+											</a>
+										</td>
+									</tr>
+								@endforeach
+							</tbody>
+						</table>
+					</div>
+					<div id="memberToAddModal" class="ui modal">
+						<div class="header">Add member</div>
+						<div class="content">
+							<p>Invite</p>
+							<p><strong id="newMemberName"></strong></p>
+							<p>to join <strong>{{ $team->name }}.</strong></p>
+						</div>
+						<div class="actions">
+							<button type="button" class="ui cancel button">Cancel</button>
+							<button type="button" class="ui ok primary button" onclick="inviteMember()">Confirm</button>
+						</div>
+					</div>
+				@endif
 			</div>
 		</div>
 	</div>
 </div>
 @section("scripts")
 <script>
-	/* Semantic UI setup */
-	$('.menu .item').tab();
+	/* Semantic UI tabs */
+	$(".menu .item").tab();
+
+	@if($team->leader->id == Auth::id())
+
+		/* Semantic UI dropdown */
+		$("#newMemberDropdown").dropdown({
+			onChange: function() {
+				$("#newMemberDropdown").removeClass("error");
+			}
+		});
+
+		/* Validate invitation to join the team */
+		function validateNewMember() {
+			// get the info of the user that will receive the invitation
+			const newMemberName = $("#newMemberDropdown").dropdown("get text");
+			const newMemberId = $("#newMemberDropdown").dropdown("get value");
+
+			if(newMemberId === $("#newMemberDropdown").dropdown("get default value")) {
+				$("#newMemberDropdown").addClass("error");
+				return false;
+			}
+
+			$("#newMemberName").text(newMemberName);
+			$("#memberToAddModal").modal({
+				transition: "fade up"
+			}).modal("show");
+		}
+
+		/* Generate a table row with the info of the user to inveite */
+		function generateNewMemberRow(user) {
+			const id = user.id;
+			const name = user.name;
+			const picture_url = user.picture_url ? user.picture_url : 'https://dummyimage.com/400x400/3498db/ffffff.png&text=B';
+
+			let row = `<tr class="selectable">
+							<td>
+								<a href="/users/${id}">
+									<img class="ui mini circular image" src="${picture_url}" style="display: inline; margin-right: 10px;"/>
+									${name}
+								</a>
+							</td>
+						</tr>`;
+
+			return row;
+		}
+
+		/* Send invitation via ajax to join the team */
+		function inviteMember() {
+			// get the id of the user that will receive the invitation
+			const userToInvite = $("#newMemberDropdown").dropdown("get value");
+
+			$.ajax({
+				// TODO: update url
+				url: '',
+				method: 'POST',
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				},
+				data: {
+					'id_team' : {!! $team->id !!},
+					'id_new_member': userToInvite
+				},
+				dataType: 'json',
+				success: function(data) {
+					// add new member to pending invites list
+					let rowToAdd = generateNewMemberRow(data.user);
+					$("#pendingInvites tbody").append(rowToAdd);
+					$("#pendingInvites").show();
+				},
+				error: function(data) {
+					// TODO: error handling (need possible errors)
+				}
+			});
+
+			$("#newMemberDropdown").dropdown("restore defaults");
+		}
+	@endif
 </script>
 @endsection
 @endsection
