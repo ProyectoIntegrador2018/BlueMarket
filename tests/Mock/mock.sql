@@ -1,9 +1,9 @@
 -- teachers
-insert into users (id, name, email, role) values (2, 'Adam Brashear', 'adam@mail.com', 2);
-insert into users (id, name, email, role) values (3, 'Curtis Connors', 'curtis@mail.com', 2);
-insert into users (id, name, email, role) values (4, 'Theodore Sallis', 'theo@mail.com', 2);
-insert into users (id, name, email, role) values (5, 'Walter Langkowski', 'walter@mail.com', 2);
-insert into users (id, name, email, role) values (6, 'Anne Marconi', 'anne@mail.com', 2);
+insert into users (id, name, email, role, created_at, updated_at) values (2, 'Adam Brashear', 'adam@mail.com', 2, '2019-01-01 10:20:30', '2019-01-01 10:20:30');
+insert into users (id, name, email, role, created_at, updated_at) values (3, 'Curtis Connors', 'curtis@mail.com', 2, '2019-01-01 10:20:30', '2019-01-01 10:20:30');
+insert into users (id, name, email, role, created_at, updated_at) values (4, 'Theodore Sallis', 'theo@mail.com', 2, '2019-01-01 10:20:30', '2019-01-01 10:20:30');
+insert into users (id, name, email, role, created_at, updated_at) values (5, 'Walter Langkowski', 'walter@mail.com', 2, '2019-01-01 10:20:30', '2019-01-01 10:20:30');
+insert into users (id, name, email, role, created_at, updated_at) values (6, 'Anne Marconi', 'anne@mail.com', 2, '2019-01-01 10:20:30', '2019-01-01 10:20:30');
 
 -- courses
 insert into courses (id, name, course_key, course_type, schedule) values (1, 'Linear Programming', '02681519', 1, 'Spring 2019, MoThu 13:00');
