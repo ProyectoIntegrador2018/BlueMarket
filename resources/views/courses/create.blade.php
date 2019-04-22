@@ -37,8 +37,8 @@
 			</select>
 		</div>
 		<!-- Course schedule -->
-		<div class="ui stackable two column grid course">
-			<div class="column wide field">
+		<div class="two fields">
+			<div class="field">
 				<label for="courseSchedule">Course schedule</label>
 				<select class="ui fluid search dropdown" name="courseSchedule[]" id="courseSchedule" multiple>
 					<option value="monday">Monday</option>
@@ -49,8 +49,9 @@
 					<option value="saturday">Saturday</option>
 				</select>
 			</div>
+
 			<!-- Course hours -->
-			<div class="column wide field">
+			<div class="field">
 				<label for="courseHours">Starting time</label>
 				<select class="ui fluid search dropdown" name="courseHours" id="courseHours">
 					<option value=""></option>
@@ -101,7 +102,7 @@
 		<div class="ui error message hidden">
 			<div class="header">Whoops! Something went wrong.</div>
 			@if($errors->any())
-				<ul>
+				<ul class="list">
 					@foreach ($errors->all() as $error)
 						<li>{{ $error }}</li>
 					@endforeach
