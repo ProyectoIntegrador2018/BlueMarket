@@ -25,8 +25,8 @@ class ProjectController extends Controller {
 
 	public function show($id) {
 		$project = Project::findOrFail($id);
-		$project->milestones = $project->milestones->sortBy('estimated_date');
 
+		// Calculate project progress.
 		$numOfMilestones = $project->milestones->count();
 		$numOfDoneMilestones = $project->milestones->where('status', config(self::MILESTONE_STATUS)['done'])->count();
 		$project->progress = $numOfDoneMilestones / $numOfMilestones;
