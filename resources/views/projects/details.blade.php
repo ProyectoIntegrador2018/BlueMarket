@@ -9,6 +9,7 @@
 	<h1>{{ $project->name }}</h1>
 	<div class="ui top attached tabular menu">
 		<a class="active item" data-tab="overview">Overview</a>
+		<a class="item" data-tab="collaborators">Collaborators</a>
 	</div>
 	<div class="ui bottom attached active tab segment" data-tab="overview">
 		<div class="ui stackable two column grid">
@@ -92,5 +93,53 @@
 			</div>
 		</div>
 	</div>
+	<div class="ui bottom attached tab segment" data-tab="collaborators">
+		<div class="ui stackable grid">
+			<div class="eight wide column {{ count($project->team->members) <= 0 ? 'hidden' : '' }}">
+				<h2>Owners</h2>
+				<table class="ui striped table">
+					<tbody>
+						@foreach($project->team->members as $member)
+							<tr class="selectable">
+								<td>
+									<a href="{{ url('users', $member->id) }}">
+										<img class="ui mini circular image" src="{{ isset($member->picture_url) ? $member->picture_url : 'https://dummyimage.com/400x400/3498db/ffffff.png&text=B' }}" style="display: inline; margin-right: 10px;"/>
+										{{ $member->name }}
+									</a>
+								</td>
+							</tr>
+						@endforeach
+					</tbody>
+				</table>
+			</div>
+			<!-- TODO: remove isset condition (currently prevents view from crashing) -->
+			@if(isset($project->suppliers))
+				<div class="eight wide column {{ count($project->suppliers) <= 0 ? 'hidden' : '' }}">
+					<h2>Suppliers</h2>
+					<table class="ui striped table">
+						<tbody>
+							@foreach($project->suppliers as $supplier)
+								<tr class="selectable">
+									<td>
+										<a href="{{ url('users', $supplier->id) }}">
+											<img class="ui mini circular image" src="{{ isset($supplier->picture_url) ? $supplier->picture_url : 'https://dummyimage.com/400x400/3498db/ffffff.png&text=B' }}" style="display: inline; margin-right: 10px;"/>
+											{{ $supplier->name }}
+										</a>
+									</td>
+								</tr>
+							@endforeach
+						</tbody>
+					</table>
+				</div>
+			@endif
+		</div>
+	</div>
 </div>
+
+@section('scripts')
+<script>
+	/* Semantic UI setup */
+	$('.menu .item').tab();
+</script>
+@endsection
 @endsection
