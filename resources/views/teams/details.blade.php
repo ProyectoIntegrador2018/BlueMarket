@@ -60,9 +60,9 @@
 					</table>
 				</div>
 				@if($team->leader->id == Auth::id())
-					<div id="userNameInputContainer" class="ui fluid action input" style="margin:20px 0;">
-						<div id="newMemberDropdown" class="ui fluid search selection dropdown">
-							<input type="hidden" name="memberToAdd">
+					<div class="ui fluid action input" style="margin:20px 0;">
+						<div id="new-member-dropdown" class="ui fluid search selection dropdown">
+							<input type="hidden" name="newMember">
 							<div class="default text">Select new member</div>
 							<div class="menu">
 								@foreach($team->members as $member)
@@ -92,7 +92,7 @@
 							</tbody>
 						</table>
 					</div>
-					<div id="memberToAddModal" class="ui modal">
+					<div id="member-to-add-modal" class="ui modal">
 						<div class="header">Add member</div>
 						<div class="content">
 							<p>Invite</p>
@@ -114,28 +114,27 @@
 	/* Semantic UI tabs */
 	$(".menu .item").tab();
 
-	@if($team->leader->id == Auth::id())
-
+	@if(Auth::id() === $team->leader->id)
 		/* Semantic UI dropdown */
-		$("#newMemberDropdown").dropdown({
+		$("#new-member-dropdown").dropdown({
 			onChange: function() {
-				$("#newMemberDropdown").removeClass("error");
+				$("#new-member-dropdown").removeClass("error");
 			}
 		});
 
 		/* Validate invitation to join the team */
 		function validateNewMember() {
 			// get the info of the user that will receive the invitation
-			const newMemberName = $("#newMemberDropdown").dropdown("get text");
-			const newMemberId = $("#newMemberDropdown").dropdown("get value");
+			const newMemberName = $("#new-member-dropdown").dropdown("get text");
+			const newMemberId = $("#new-member-dropdown").dropdown("get value");
 
-			if(newMemberId === $("#newMemberDropdown").dropdown("get default value")) {
-				$("#newMemberDropdown").addClass("error");
+			if(newMemberId === $("#new-member-dropdown").dropdown("get default value")) {
+				$("#new-member-dropdown").addClass("error");
 				return false;
 			}
 
 			$("#newMemberName").text(newMemberName);
-			$("#memberToAddModal").modal({
+			$("#member-to-add-modal").modal({
 				transition: "fade up"
 			}).modal("show");
 		}
@@ -161,17 +160,16 @@
 		/* Send invitation via ajax to join the team */
 		function inviteMember() {
 			// get the id of the user that will receive the invitation
-			const userToInvite = $("#newMemberDropdown").dropdown("get value");
+			const userToInvite = $("#new-member-dropdown").dropdown("get value");
 
 			$.ajax({
 				// TODO: update url
-				url: '',
-				method: 'POST',
+				url: '/teams/edit/{!! $team->id !!}',
+				method: 'patch',
 				headers: {
 					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 				},
 				data: {
-					'id_team' : {!! $team->id !!},
 					'id_new_member': userToInvite
 				},
 				dataType: 'json',
@@ -186,7 +184,7 @@
 				}
 			});
 
-			$("#newMemberDropdown").dropdown("restore defaults");
+			$("#new-member-dropdown").dropdown("restore defaults");
 		}
 	@endif
 </script>
