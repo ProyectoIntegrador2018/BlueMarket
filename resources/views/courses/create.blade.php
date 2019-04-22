@@ -18,7 +18,7 @@
 			<label for="teachers">Teacher(s)</label>
 			<select class="ui fluid search dropdown" name="teachers[]" id="teachers" multiple required>
 				@foreach ($teachers as $teacher)
-					<option value={{ $teacher['id'] }}> {{ $teacher['name'] }} </option>
+					<option value={{ $teacher['id'] }} {{ ($teacher['id'] == Auth::user()->id) ? 'selected' : '' }}> {{ $teacher['name'] }} </option>
 				@endforeach
 			</select>
 		</div>
