@@ -18,9 +18,9 @@ class CreateMilestonesTable extends Migration
 			$table->charset = 'utf8';
 			$table->increments('id');
 			$table->string('name');
-			$table->enum('status', ['done', 'current', 'coming-up']);
+			$table->integer('status')->nullable();
 			$table->date('estimated_date');
-			$table->date('done_date');
+			$table->date('done_date')->nullable();
 			$table->integer('project_id')->unsigned();
 			$table->foreign('project_id')->references('id')->on('projects');
             $table->timestamps();
