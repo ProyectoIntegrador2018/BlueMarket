@@ -11,12 +11,12 @@
 		<!-- Course name -->
 		<div class="field">
 			<label for="courseName">Course name</label>
-			<input type="text" name="courseName" id="courseName" required>
+			<input type="text" name="courseName" id="courseName">
 		</div>
 		<!-- Teacher(s) -->
 		<div class="field" title="Are you giving this course with another teacher?">
 			<label for="teachers">Teacher(s)</label>
-			<select class="ui fluid search dropdown" name="teachers[]" id="teachers" multiple required>
+			<select class="ui fluid search dropdown" name="teachers[]" id="teachers" multiple>
 				@foreach ($teachers as $teacher)
 					<option value={{ $teacher['id'] }} {{ ($teacher['id'] == Auth::user()->id) ? 'selected' : '' }}> {{ $teacher['name'] }} </option>
 				@endforeach
@@ -25,12 +25,12 @@
 		<!-- Course semester -->
 		<div class="field">
 			<label for="courseSemester">Course semester</label>
-			<input type="text" name="courseSemester" id="courseSemester" placeholder="Spring/Summer/Fall/Winter and year.  Ex. Fall 2018" title="When is this course taking place?"required>
+			<input type="text" name="courseSemester" id="courseSemester" placeholder="Spring/Summer/Fall/Winter and year.  Ex. Fall 2018" title="When is this course taking place?">
 		</div>
 		<!-- Course type -->
 		<div class="field" title="A client course is looking to outsource specific tasks. A supplier course is looking for projects to team up with.">
 			<label for="courseType">Course type</label>
-			<select class="ui fluid search dropdown" name="courseType" id="courseType"  required  onchange="updateAssociatedCourses()">
+			<select class="ui fluid search dropdown" name="courseType" id="courseType"   onchange="updateAssociatedCourses()">
 				<option value=""></option>
 				<option value="1">Client</option>
 				<option value="2">Supplier</option>
@@ -40,7 +40,7 @@
 		<div class="ui stackable two column grid course">
 			<div class="column wide field">
 				<label for="courseSchedule">Course schedule</label>
-				<select class="ui fluid search dropdown" name="courseSchedule[]" id="courseSchedule" multiple required>
+				<select class="ui fluid search dropdown" name="courseSchedule[]" id="courseSchedule" multiple>
 					<option value="monday">Monday</option>
 					<option value="tuesday">Tuesday</option>
 					<option value="wednesday">Wednesday</option>
@@ -52,7 +52,7 @@
 			<!-- Course hours -->
 			<div class="column wide field">
 				<label for="courseHours">Starting time</label>
-				<select class="ui fluid search dropdown" name="courseHours" id="courseHours" required>
+				<select class="ui fluid search dropdown" name="courseHours" id="courseHours">
 					<option value=""></option>
 					<option value="7:00">7:00</option>
 					<option value="7:30">7:30</option>
@@ -98,9 +98,15 @@
 			</select>
 		</div>
 		<!-- Error message -->
-		<div id="error" class="ui error hidden message">
+		<div class="ui error message hidden">
 			<div class="header">Whoops! Something went wrong.</div>
-			<p>Please make sure to properly fill out all required fields.</p>
+			@if($errors->any())
+				<ul>
+					@foreach ($errors->all() as $error)
+						<li>{{ $error }}</li>
+					@endforeach
+				</ul>
+			@endif
 		</div>
 		<!-- Register button -->
 		<button id="send" type="submit" class="ui button primary">Register</button>
@@ -116,31 +122,7 @@
 		$(".ui.fluid.search.dropdown").dropdown();
 
 		$("#associatedCoursesField").css("display", "none");
-
-		$("#send").click(function(e){
-			e.preventDefault();
-
-			if(validateForm()){
-				// Input validation was successful
-				console.log("Successful form.");
-				$("form").submit();
-			} else {
-				// There are input errors
-				console.log("Unsuccessful form.");
-				$(".ui.message").removeClass("hidden");
-			}
-		});
 	})
-
-	function validateForm(){
-		return isAlphanumeric("courseName") &&
-		hasSelection("teachers") &&
-		isAlphanumeric("courseSemester") &&
-		hasSelection("courseType") &&
-		hasSelection("courseType") &&
-		hasSelection("courseSchedule") &&
-		hasSelection("courseHours");
-	}
 
 	function updateAssociatedCourses(){
 		console.log('changes course type');
@@ -151,6 +133,55 @@
 		}
 		$("#associatedCoursesField").css("display", "block");
 	}
+
+	$('.ui.form').form({
+		fields: {
+			courseName: {
+				identifier: 'courseName',
+				rules: [{
+					type: 'empty',
+				}]
+			},
+			teachers: {
+				identifier: 'teachers[]',
+				rules: [{
+					type: 'minCount[1]',
+				}]
+			},
+			courseSemester: {
+				identifier: 'courseSemester',
+				rules: [{
+					type: 'regExp',
+					value: '/^[a-zA-Z0-9][a-zA-Z0-9\\s]+$/',
+					prompt: 'Course semester must have a valid value'
+				}]
+			},
+			courseType: {
+				identifier: 'courseType',
+				rules: [{
+					type: 'exactCount[1]',
+				}]
+			},
+			courseSchedule: {
+				identifier: 'courseSchedule',
+				rules: [{
+					type: 'minCount[1]',
+				}]
+			},
+			courseHours: {
+				identifier: 'courseHours',
+				rules: [{
+					type: 'exactCount[1]',
+				}]
+			},
+		},
+		onFailure:function() {
+			$('.ui.error.message').removeClass('hidden');
+			return false;
+		},
+		onSuccess:function() {
+		}
+	});
 
 </script>
 
