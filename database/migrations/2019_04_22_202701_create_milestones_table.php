@@ -23,8 +23,10 @@ class CreateMilestonesTable extends Migration
 			$table->date('done_date')->nullable();
 			$table->integer('project_id')->unsigned();
 			$table->foreign('project_id')->references('id')->on('projects');
+			$table->integer('previous_milestone_id')->unsigned()->nullable();
+			$table->foreign('previous_milestone_id')->references('id')->on('milestones');
             $table->timestamps();
-        });
+		});
     }
 
     /**
