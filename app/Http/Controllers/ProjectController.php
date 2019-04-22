@@ -11,6 +11,8 @@ use Illuminate\Validation\Rule;
 
 class ProjectController extends Controller {
 
+	const MILESTONE_STATUS = 'enum.milestone_status';
+
 	public function __construct() {
 		$this->middleware('auth')->except(['index', 'show']);
 	}
@@ -22,7 +24,14 @@ class ProjectController extends Controller {
 	}
 
 	public function show($id) {
-		return view('projects.details', ['project' => Project::findOrFail($id)]);
+		$project = Project::findOrFail($id);
+		$project->milestones = $project->milestones->sortBy('estimated_date');
+
+		$numOfMilestones = $project->milestones->count();
+		$numOfDoneMilestones = $project->milestones->where('status', config(self::MILESTONE_STATUS)['done'])->count();
+		$project->progress = $numOfDoneMilestones / $numOfMilestones;
+
+		return view('projects.details', ['project' => $project]);
 	}
 
 	public function create() {
