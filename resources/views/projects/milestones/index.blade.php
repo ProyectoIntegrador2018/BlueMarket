@@ -49,7 +49,7 @@
 				<td>{{ isset($milestone->done_date) ?  $milestone->done_date : '-' }}</td>
 
 				<td>
-					<a class="" href="{{ url('/projects/' . $project->id . '/milestones/' . $milestone->id . '/edit') }}">Edit</a>
+					<a class="ui button primary" href="{{ url('/projects/' . $project->id . '/milestones/' . $milestone->id . '/edit') }}">Edit</a>
 				</td>
 			</tr>
 			@endforeach --}}
@@ -62,7 +62,7 @@
 				<td>4/19</td>
 				<td>4/20</td>
 				<td>
-					<a class="" href="">Edit</a>
+					<a class="ui button primary" href="">Edit</a>
 				</td>
 			</tr>
 
@@ -75,7 +75,7 @@
 				<td>4/25</td>
 				<td>-</td>
 				<td>
-					<a class="" href="">Edit</a>
+					<a class="ui button primary" href="">Edit</a>
 				</td>
 			</tr>
 
@@ -88,7 +88,7 @@
 				<td>4/30</td>
 				<td>-</td>
 				<td>
-					<a class="" href="">Edit</a>
+					<a class="ui button primary" href="">Edit</a>
 				</td>
 			</tr>
 
@@ -101,7 +101,7 @@
 				<td>6/10</td>
 				<td>-</td>
 				<td>
-					<a class="" href="">Edit</a>
+					<a class="ui button primary" href="">Edit</a>
 				</td>
 			</tr>
 
@@ -114,7 +114,7 @@
 				<td>6/30</td>
 				<td>-</td>
 				<td>
-					<a class="" href="">Edit</a>
+					<a class="ui button primary" href="">Edit</a>
 				</td>
 			</tr>
 		</tbody>
