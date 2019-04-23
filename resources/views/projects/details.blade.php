@@ -140,7 +140,7 @@
 								<div class="description">Estimated date: 6/30</div>
 							</div>
 						</div>
-						<a class="ui right floated primary button" title="Edit milestone map" href="/milestones/edit">Edit milestone map</a>
+						<a class="ui right floated primary button" title="Edit milestone map" href="">Edit milestone map</a>
 					</div>
 				</div>
 			</div>
