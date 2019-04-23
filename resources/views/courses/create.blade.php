@@ -21,13 +21,13 @@
 					<option value={{ $teacher['id'] }} {{ ($teacher['id'] == Auth::user()->id) ? 'selected' : '' }}> {{ $teacher['name'] }} </option>
 				@endforeach
 			</select>
-			<legend>Are you giving this course with another teacher?</legend>
+			<p>Are you giving this course with another teacher?</p>
 		</div>
 		<!-- Course semester -->
 		<div class="field">
 			<label for="courseSemester">Course semester</label>
 			<input type="text" name="courseSemester" id="courseSemester">
-			<legend>When is this course taking place? Spring/Summer/Fall/Winter and year. Ex. Fall 2018</legend>
+			<p>When is this course taking place? Spring/Summer/Fall/Winter and year. Ex. Fall 2018</p>
 		</div>
 		<!-- Course type -->
 		<div class="field">
@@ -37,7 +37,7 @@
 				<option value="1">Client</option>
 				<option value="2">Supplier</option>
 			</select>
-			<legend>A client course is looking to outsource specific tasks. A supplier course is looking for projects to team up with.</legend>
+			<p>A client course is looking to outsource specific tasks. A supplier course is looking for projects to team up with.</p>
 		</div>
 		<!-- Course schedule -->
 		<div class="two fields">
@@ -100,7 +100,7 @@
 					@endforeach
 				@endif
 			</select>
-			<legend>Are you collaborating with other courses?</legend>
+			<p>Are you collaborating with other courses?</p>
 		</div>
 		<!-- Error message -->
 		<div class="ui error message hidden">
