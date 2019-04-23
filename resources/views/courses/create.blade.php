@@ -18,7 +18,7 @@
 			<label for="teachers">Teacher(s)</label>
 			<select class="ui fluid search dropdown" name="teachers[]" id="teachers" multiple>
 				@foreach ($teachers as $teacher)
-					<option value={{ $teacher['id'] }} {{ ($teacher['id'] == Auth::user()->id) ? 'selected' : '' }}> {{ $teacher['name'] }} </option>
+					<option value={{ $teacher->id }} {{ ($teacher->id == Auth::id()) ? "selected" : '' }}> {{ $teacher->name }} </option>
 				@endforeach
 			</select>
 			<p>Are you giving this course with another teacher?</p>
@@ -27,12 +27,12 @@
 		<div class="field">
 			<label for="courseSemester">Course semester</label>
 			<input type="text" name="courseSemester" id="courseSemester">
-			<p>When is this course taking place? Spring/Summer/Fall/Winter and year. Ex. Fall 2018</p>
+			<p>When is this course taking place? Spring/Summer/Fall/Winter and year. e.g. Fall 2018</p>
 		</div>
 		<!-- Course type -->
 		<div class="field">
 			<label for="courseType">Course type</label>
-			<select class="ui fluid search dropdown" name="courseType" id="courseType"   onchange="updateAssociatedCourses()">
+			<select class="ui fluid search dropdown" name="courseType" id="courseType" onchange="updateAssociatedCourses()">
 				<option value=""></option>
 				<option value="1">Client</option>
 				<option value="2">Supplier</option>
@@ -90,13 +90,13 @@
 			<select class="ui fluid search dropdown" name="associatedCourses[]" id="associatedCourses" multiple>
 				@if(isset($courses))
 					@foreach($courses->all() as $course)
-						<option value={{ $course['id'] }}>
-						{{ $course['name'] }} /
-						@foreach($course['teachers'] as $teacher)
+						<option value="{{ $course->id }}">
+						{{ $course->name }} /
+						@foreach($course->teachers as $teacher)
 							{{ $loop->first ? '' : ', ' }}
-							{{ $teacher['name'] }}
+							{{ $teacher->name }}
 						@endforeach /
-						{{ $course['schedule'] }} </option>
+						{{ $course->schedule }} </option>
 					@endforeach
 				@endif
 			</select>
