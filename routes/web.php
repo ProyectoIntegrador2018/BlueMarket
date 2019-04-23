@@ -59,11 +59,16 @@ Route::get('/projects/tasks/create', function () {
 	return view('projects.tasks.create');
 
 /* Temporal milestone route */
-Route::get('/projects/milestones', function () {
+Route::get('/projects/milestones/', function () {
 	return view('projects.milestones.index');
 });
 
 /* Temporal milestone route */
 Route::get('/projects/milestones/create', function () {
 	return view('projects.milestones.create');
+});
+
+/* Temporal milestone route */
+Route::get('/projects/milestones/edit', function () {
+	return view('projects.milestones.edit');
 });
