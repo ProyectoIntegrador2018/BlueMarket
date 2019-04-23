@@ -7,6 +7,7 @@
 <div class="padded content">
 	<h1>View milestones</h1>
 
+	<a class="ui button primary right floated" href="">Create</a>
 	<table class="ui celled table">
 		<thead>
 			<tr>
@@ -57,7 +58,7 @@
 				<td>1</td>
 				<td>Ideation</td>
 				<td>
-					<span>Done</span>
+					<span class="ui green label">Done</span>
 				</td>
 				<td>4/19</td>
 				<td>4/20</td>
@@ -70,7 +71,7 @@
 				<td>2</td>
 				<td>Design</td>
 				<td>
-					<span class="">Current</span>
+					<span class="ui blue label">Current</span>
 				</td>
 				<td>4/25</td>
 				<td>-</td>
@@ -83,7 +84,7 @@
 				<td>3</td>
 				<td>Planning</td>
 				<td>
-					<span class="">Coming up</span>
+					<span class="ui grey label">Coming up</span>
 				</td>
 				<td>4/30</td>
 				<td>-</td>
@@ -96,7 +97,7 @@
 				<td>4</td>
 				<td>Execution</td>
 				<td>
-					<span class="">Coming up</span>
+					<span class="ui grey label">Coming up</span>
 				</td>
 				<td>6/10</td>
 				<td>-</td>
@@ -109,7 +110,7 @@
 				<td>5</td>
 				<td>Test</td>
 				<td>
-					<span class="-up">Coming up</span>
+					<span class="ui grey label">Coming up</span>
 				</td>
 				<td>6/30</td>
 				<td>-</td>
