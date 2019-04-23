@@ -41,11 +41,16 @@ Route::post('/contact', 'ContactMessageController@post');
 /* teams */
 Route::resource('teams', 'TeamController');
 
-
 /* Admin routes
 --------------------------------------------- */
 Route::namespace('Admin')->prefix('admin')->group(function() {
 	Route::redirect('/', '/admin/users', 301);
 	Route::resource('users', 'UserController');
 	Route::get('/users/sia/{id}', 'UserController@signInAs')->name('signinas');
+});
+
+/* Temp routes */
+// TODO: remove all temp routes once the correct controller has been set up.
+Route::get('/projects/tasks/create', function () {
+	return view('projects.tasks.create');
 });
