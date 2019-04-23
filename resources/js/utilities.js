@@ -1,7 +1,13 @@
 import { render, cancel } from 'timeago.js';
 import _debounce from 'lodash.debounce';
 
-function filterUsersByName(pattern) {
+/* global functions */
+window.renderDateTimeAgoOnce = () => {
+	render($(".needs-datetimeago"));
+	cancel(); // stop real-time rendering
+};
+
+function filterStudentsByName(pattern) {
 	$.ajax({
 		// TODO: update url
 		url: '/users/',
@@ -10,7 +16,8 @@ function filterUsersByName(pattern) {
 			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 		},
 		data: {
-			'pattern': pattern
+			'pattern': pattern,
+			'role' : 3 // student
 		},
 		dataType: 'json',
 		success: function (data) {
@@ -22,7 +29,12 @@ function filterUsersByName(pattern) {
 	});
 }
 
-function renderDateTimeAgoOnce() {
-	render($(".needs-datetimeago"));
-	cancel(); // stop real-time rendering
+function updateUserSearchDropdown() {
+	const pattern = $(".text.filtered").text();
+
+	let dropdownOptions = filterUsersByName(pattern);
+
+	// TODO: update options in dropdown programatically
 }
+
+$(".search.dropdown.user-search").on("keyup", _debounce(updateUserSearchDropdown, 400));

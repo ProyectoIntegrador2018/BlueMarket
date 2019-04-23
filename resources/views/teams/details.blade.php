@@ -3,7 +3,6 @@
 @section('title', $team->name)
 
 @section('content')
-<h1 id="date-box" class="needs-datetimeago" datetime="2019-04-22 13:43:00">Hello</h1>
 <div class="padded content">
 	<div class="ui stackable grid">
 		<div class="four wide column">
@@ -62,37 +61,41 @@
 				</div>
 				@if($team->leader->id == Auth::id())
 					<div class="ui fluid action input" style="margin:20px 0;">
-						<div id="new-member-dropdown" class="ui fluid search selection dropdown">
-							<input type="hidden" name="newMember">
+						<div id="new-member-dropdown" class="ui fluid search selection dropdown user-search">
+							<input class="user-search-input" type="hidden" name="newMember">
 							<div class="default text">Select new member</div>
 							<div class="menu">
-								@foreach($team->members as $member)
-									<div class="item" data-value={{ $member->id }}>
-										<img class="ui mini circular image" src="{{ isset($member->picture_url) ? $member->picture_url : 'https://dummyimage.com/400x400/3498db/ffffff.png&text=B' }}" style="display: inline; margin-right: 10px;"/>
-										{{ $member->name }}
-									</div>
-								@endforeach
+								@if(isset($users))
+									@foreach($users as $user)
+										<div class="item" data-value={{ $user->id }}>
+											<img class="ui mini circular image" src="{{ isset($user->picture_url) ? $user->picture_url : 'https://dummyimage.com/400x400/3498db/ffffff.png&text=B' }}" style="display: inline; margin-right: 10px;"/>
+											{{ $user->name }}
+										</div>
+									@endforeach
+								@endif
 							</div>
 						</div>
 						<button type="button" class="ui primary button" onclick="validateNewMember()">Add team member</button>
 					</div>
-					<div id="pendingInvites" class="{{ count($team->members) <= 5 ? 'hidden' : '' }}">
-						<h2>Pending invites</h2>
-						<table class="ui striped table">
-							<tbody>
-								@foreach($team->members as $member)
-									<tr class="selectable">
-										<td>
-											<a href="{{ url('users', $member->id) }}">
-												<img class="ui mini circular image" src="{{ isset($member->picture_url) ? $member->picture_url : 'https://dummyimage.com/400x400/3498db/ffffff.png&text=B' }}" style="display: inline; margin-right: 10px;"/>
-												{{ $member->name }}
-											</a>
-										</td>
-									</tr>
-								@endforeach
-							</tbody>
-						</table>
-					</div>
+					@if(isset($team->pending_members))
+						<div id="pendingInvites" class="{{ count($team->pending_members) <= 0 ? 'hidden' : '' }}">
+							<h2>Pending invites</h2>
+							<table class="ui striped table">
+								<tbody>
+									@foreach($team->pending_members as $pending_member)
+										<tr class="selectable">
+											<td>
+												<a href="{{ url('users', $pending_member->id) }}">
+													<img class="ui mini circular image" src="{{ isset($pending_member->picture_url) ? $pending_member->picture_url : 'https://dummyimage.com/400x400/3498db/ffffff.png&text=B' }}" style="display: inline; margin-right: 10px;"/>
+													{{ $pending_member->name }}
+												</a>
+											</td>
+										</tr>
+									@endforeach
+								</tbody>
+							</table>
+						</div>
+					@endif
 					<div id="member-to-add-modal" class="ui modal">
 						<div class="header">Add member</div>
 						<div class="content">
@@ -124,6 +127,9 @@
 			}
 		});
 
+		/* render sent datetime for all invites*/
+		renderDateTimeAgoOnce();
+
 		/* Validate invitation to join the team */
 		function validateNewMember() {
 			// get the info of the user that will receive the invitation
@@ -148,7 +154,7 @@
 			const picture_url = invite.receiver.picture_url ? invite.receiver.picture_url : 'https://dummyimage.com/400x400/3498db/ffffff.png&text=B';
 			const sent_datetime = invite.created_at;
 
-			let row = `<tr class="selectable">
+			const row = `<tr class="selectable">
 							<td>
 								<a href="/users/${id}">
 									<img class="ui mini circular image" src="${picture_url}" style="display: inline; margin-right: 10px;"/>
@@ -159,16 +165,16 @@
 								sent <p class="needs-datetimeago invite-sent-datetime" datetime="${sent_datetime}">${sent_datetime}</p>
 							</td>
 						</tr>`;
+
 			return row;
 		}
 
 		/* Send invitation via ajax to join the team */
 		function inviteMember() {
-			// get the id of the user that will receive the invitation
 			const userToInvite = $("#new-member-dropdown").dropdown("get value");
 
 			$.ajax({
-				// TODO: update url
+				// TODO: update url if needed
 				url: '/teams/edit/{!! $team->id !!}',
 				method: 'patch',
 				headers: {
@@ -179,10 +185,10 @@
 				},
 				dataType: 'json',
 				success: function(data) {
-					// add new member to pending invites list
 					let rowToAdd = generatePendingInviteRow(data.invite);
 					$("#pendingInvites tbody").append(rowToAdd);
 					$("#pendingInvites").show();
+					renderDateTimeAgoOnce(); // refresh sent datetimes
 				},
 				error: function(data) {
 					// TODO: error handling (need possible errors)
