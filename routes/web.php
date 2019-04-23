@@ -46,6 +46,7 @@ Route::resource('teams', 'TeamController');
 /* Admin routes
 --------------------------------------------- */
 Route::namespace('Admin')->prefix('admin')->group(function() {
+	Route::redirect('/', '/admin/users', 301);
 	Route::resource('users', 'UserController');
 	Route::get('/users/sia/{id}', 'UserController@signInAs')->name('signinas');
 });

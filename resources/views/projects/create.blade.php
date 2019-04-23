@@ -268,7 +268,10 @@
 				]
 			}
 		},
-		onFailure:function() {
+		onFailure:function(fe, fields) {
+			console.log(fe);
+			console.log(fields);
+
 			return false;
 		},
 		onSuccess:function() {

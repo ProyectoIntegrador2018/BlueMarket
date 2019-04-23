@@ -1,4 +1,5 @@
 todo.md
+tags
 
 # Created by https://www.gitignore.io/api/node,sass,macos,laravel,windows
 # Edit at https://www.gitignore.io/?templates=node,sass,macos,laravel,windows
@@ -144,6 +145,7 @@ public/**/*.map
 public/mix-manifest.json
 public/js/*
 public/css/*
+public/img/*
 
 ### Windows ###
 # Windows thumbnail cache files

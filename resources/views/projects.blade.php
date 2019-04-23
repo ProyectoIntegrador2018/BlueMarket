@@ -26,20 +26,27 @@
 	</form>
 	<!-- Message -->
 	<div hidden class="ui message noProjectsMessage">
-		<div class="header">
-			No Projects Found
-		</div>
+		<p class="header">No projects found</p>
 		<p>No projects meet search criteria.</p>
 	</div>
 	<!-- Project Cards -->
 	<div class="ui four column stackable grid">
 		@foreach ($projects as $project)
-			@projectCard(['id'=> $project->id,'projectImage' => $project->photo, 'projectName' => $project->name, 'projectShortDescription' => $project->short_description, 'skillset' => $project->skills, 'labels' => $project->labels, 'publicMilestone' => 'shipping'])
+			@projectCard([
+				'id'=> $project->id,
+				'projectImage' => $project->photo,
+				'projectName' => $project->name,
+				'projectShortDescription' => $project->short_description,
+				'skillset' => $project->skills,
+				'labels' => $project->labels,
+				'publicMilestone' => 'shipping'
+			])
 			@endprojectCard
 		@endforeach
 	</div>
 </div>
 @endsection
+
 @section('scripts')
 <script>
 	$('.ui.dropdown').dropdown();

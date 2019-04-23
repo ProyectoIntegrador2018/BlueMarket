@@ -12,7 +12,7 @@ use Illuminate\Validation\Rule;
 class ProjectController extends Controller {
 
 	public function __construct() {
-		$this->middleware('auth')->except('index');
+		$this->middleware('auth')->except(['index', 'show']);
 	}
 
 	public function index() {
@@ -98,7 +98,7 @@ class ProjectController extends Controller {
 		$project->tags()->attach($attributes['skillsets']);
 		$project->tags()->attach($attributes['labels']);
 
-		return view('projects.details', compact('project'));
+		return redirect()->action('ProjectController@show', ['id' => $project->id]);
 	}
 
 	private function validateTeam($team_id, $course_id) {
@@ -118,8 +118,8 @@ class ProjectController extends Controller {
 	}
 
 	private function saveRecord(array $attributes) {
-		$image = $attributes['projectImage'];
-		$path = isset($image) ? Storage::putFile('public', $image) : null;
+		$path = isset($attributes['projectImage']) ? Storage::putFile('public', $attributes['projectImage']) : null;
+		$path = $path != null ? Storage::url($path) : null;
 
 		return Project::create([
 			'name' => $attributes['projectName'],
@@ -128,7 +128,7 @@ class ProjectController extends Controller {
 			'short_description' => $attributes['shortDescription'],
 			'course_id' => $attributes['course'],
 			'team_id' => $attributes['team_id'],
-			'photo' => Storage::url($path)
+			'photo' => $path
 		]);
 	}
 

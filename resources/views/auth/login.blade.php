@@ -21,7 +21,7 @@
 </div>
 @section('scripts')
 <script src="https://apis.google.com/js/platform.js" async defer></script>
-<script>
+<script defer>
 	const errorMessageGeneric = "Please contact us for support.";
 	const errorMessageItesmAccount = "Please use your \@itesm.mx account.";
 
