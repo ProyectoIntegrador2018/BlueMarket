@@ -95,26 +95,27 @@
 	</div>
 	<div class="ui bottom attached tab segment" data-tab="collaborators">
 		<div class="ui stackable grid">
-			<div class="eight wide column {{ count($project->team->members) <= 0 ? 'hidden' : '' }}">
-				<h2>Owners</h2>
-				<table class="ui striped table">
-					<tbody>
-						@foreach($project->team->members as $member)
-							<tr class="selectable">
-								<td>
-									<a href="{{ url('users', $member->id) }}">
-										<img class="ui mini circular image" src="{{ isset($member->picture_url) ? $member->picture_url : 'https://dummyimage.com/400x400/3498db/ffffff.png&text=B' }}" style="display: inline; margin-right: 10px;"/>
-										{{ $member->name }}
-									</a>
-								</td>
-							</tr>
-						@endforeach
-					</tbody>
-				</table>
-			</div>
-			<!-- TODO: remove isset condition (currently prevents view from crashing) -->
-			@if(isset($project->suppliers))
-				<div class="eight wide column {{ count($project->suppliers) <= 0 ? 'hidden' : '' }}">
+			@if(isset($project->team->members) && count($project->team->members) > 0)
+				<div class="eight wide column">
+					<h2>Owners</h2>
+					<table class="ui striped table">
+						<tbody>
+							@foreach($project->team->members as $member)
+								<tr class="selectable">
+									<td>
+										<a href="{{ url('users', $member->id) }}">
+											<img class="ui mini circular image" src="{{ isset($member->picture_url) ? $member->picture_url : 'https://dummyimage.com/400x400/3498db/ffffff.png&text=B' }}" style="display: inline; margin-right: 10px;"/>
+											{{ $member->name }}
+										</a>
+									</td>
+								</tr>
+							@endforeach
+						</tbody>
+					</table>
+				</div>
+			@endif
+			@if(isset($project->suppliers) && count($project->suppliers) > 0)
+				<div class="eight wide column">
 					<h2>Suppliers</h2>
 					<table class="ui striped table">
 						<tbody>
