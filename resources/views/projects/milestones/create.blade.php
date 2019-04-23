@@ -7,7 +7,7 @@
 <div class="padded content">
 	<h1>Create milestone</h1>
 
-	<form class="ui error form" method="POST" action="/courses">
+	<form class="ui form {{ $errors->any() ? 'error': '' }}" method="post" enctype="multipart/form-data" action="">
 		@csrf
 
 		<!-- Milestone name -->
@@ -39,6 +39,7 @@
 				<option value="done">Done</option>
 				<option value="current">Current</option>
 				<option value="coming-up">Coming up</option>
+			</select>
 		</div>
 
 		<!-- Error message -->
@@ -54,8 +55,8 @@
 		</div>
 
 		<!-- Submit button -->
-		<input class="ui button primary" type="submit" value="Create">
-		<a class="ui button outline primary" href="" title="Back">Back</a>
+		<button type="submit" class="ui button submit primary">Create</button>
+		<a href="" title="Back" class="ui button">Back</a>
 	</form>
 </div>
 @endsection
