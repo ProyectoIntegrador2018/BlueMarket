@@ -7,43 +7,80 @@
 <div class="padded content">
 	<h1>Edit milestone</h1>
 
-	<form method="POST" action="" accept-charset="UTF-8" enctype="multipart/form-data">
-		{{ method_field('PATCH') }}
+	<form class="ui form {{ $errors->any() ? 'error': '' }}" method="post" enctype="multipart/form-data" action="">
 		@csrf
 
 		<!-- Milestone name -->
 		<div class="field">
 			<label for="milestoneName">Name</label>
-			<input type="text" name="milestoneName" id="milestoneName" value="{{ $milestone->name }}" required>
+			<!-- Missing: value="{ $milestone->name }}"-->
+			<input type="text" name="milestoneName" id="milestoneName">
 		</div>
 
 		<!-- Previous milestone -->
 		<div class="field">
 			<label for="prevMilestone">Previous milestone</label>
-			<select class="ui fluid search dropdown" name="prevMilestone" id="prevMilestone" value="{{ $milestone->previous_milestone }}" required>
-				@foreach ($milestones as $prevMilestone)
+			<!-- Missing: value="{ $milestone->previous_milestone }}"-->
+			<select class="ui fluid search dropdown" name="prevMilestone" id="prevMilestone">
+				{{-- @foreach ($milestones as $prevMilestone)
 					<option value={{ $prevMilestone->id }}> {{ $prevMilestone->name }} </option>
-				@endforeach
+				@endforeach --}}
 			</select>
 		</div>
 
 		<!-- Estimated date -->
 		<div class="field">
 			<label for="estimatedDate">Estimated date</label>
-			<input type="date" name="estimatedDate" id="estimatedDate" value="{{ $milestone->estimated_date }}" required>
+			<!-- Missing: value="{ $milestone->estimated_date }}"-->
+			<input type="date" name="estimatedDate" id="estimatedDate">
 		</div>
 
 		<!-- Status -->
 		<div class="field">
 			<label for="status">Status</label>
-			<select class="ui fluid search dropdown" name="status" id="status" value="{{ $milestone->status }}" required>
+			<!-- Missing: value="{ $milestone->status }}"-->
+			<select class="ui fluid search dropdown" name="status" id="status">
 				<option value="done">Done</option>
 				<option value="current">Current</option>
 				<option value="coming-up">Coming up</option>
+			</select>
 		</div>
 
-		<input class="ui button primary" type="submit" value="Update">
-		<a class="ui button outline primary" href="" title="Back">Back</a>
+		<!-- Error message -->
+		<div class="ui error message">
+			<div class="header">Whoops! Something went wrong.</div>
+			@if($errors->any())
+				<ul>
+					@foreach ($errors->all() as $error)
+						<li>{{ $error }}</li>
+					@endforeach
+				</ul>
+			@endif
+		</div>
+
+		<!-- Update button -->
+		<button type="submit" class="ui button submit primary">Update</button>
+		<a href="" title="Back" class="ui button">Back</a>
 	</form>
 </div>
+@endsection
+
+@section('scripts')
+<script>
+	$(document).ready(function(){
+		$(".ui.fluid.search.dropdown").dropdown();
+	})
+
+	$(".ui.form").form({
+		fields: {
+			milestoneName: ["empty", "maxLength[30]"],
+			prevMilestone: ["empty"],
+			estimatedDate: ["empty"],
+			status: ["empty"]
+		},
+		onFailure: function() {
+			return false;
+		}
+	});
+</script>
 @endsection
