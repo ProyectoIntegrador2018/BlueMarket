@@ -57,4 +57,13 @@ Route::namespace('Admin')->prefix('admin')->group(function() {
 // TODO: remove all temp routes once the correct controller has been set up.
 Route::get('/projects/tasks/create', function () {
 	return view('projects.tasks.create');
+
+/* Temporal milestone route */
+Route::get('/projects/milestones', function () {
+	return view('projects.milestones.index');
+});
+
+/* Temporal milestone route */
+Route::get('/projects/milestones/create', function () {
+	return view('projects.milestones.create');
 });
