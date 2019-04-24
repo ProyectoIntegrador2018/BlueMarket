@@ -28,8 +28,8 @@ Route::resource('projects', 'ProjectController')->only([
 ]);
 
 /* users */
-Route::resource('users', 'UserController')->only(['update']);
-Route::get('/user/profile', 'UserController@show');
+Route::resource('users', 'UserController')->only(['update', 'show']);
+Route::get('/user/profile', 'UserController@myProfile');
 Route::get('/user/profile/edit', 'UserController@edit');
 
 /* courses */

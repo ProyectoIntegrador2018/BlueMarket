@@ -22,9 +22,13 @@ class UserController extends Controller {
 	 * @param  int  $id
 	 * @return \Illuminate\View
 	 */
-	public function show() {
-		$user = User::findOrFail(Auth::id());
+	public function show($id) {
+		$user = User::findOrFail($id);
 		return view('user.details', compact('user'));
+	}
+
+	public function myProfile() {
+		return $this->show(Auth::id());
 	}
 
 	/**
