@@ -16,7 +16,7 @@ class CreateTasksTable extends Migration {
 			$table->string('title', 255);
 			$table->text('description');
 			$table->dateTime('deadline')->nullable(false);
-			$table->boolean('completed')->default(false); // complete / incomplete
+			$table->unsignedInteger('task_status'); // Enum [pending, overdue, done]
 			$table->dateTime('completed_date')->nullable();
 
 			// Foreign keys
