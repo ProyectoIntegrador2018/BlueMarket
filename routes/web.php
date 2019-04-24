@@ -28,13 +28,12 @@ Route::resource('projects', 'ProjectController')->only([
 ]);
 
 /* users */
-Route::resource('users', 'UserController')->only([
-	'show', 'edit', 'update'
-]);
+Route::resource('users', 'UserController')->only(['update']);
+Route::get('/user/profile', 'UserController@show');
+Route::get('/user/profile/edit', 'UserController@edit');
 
 /* courses */
 Route::resource('courses', 'CourseController');
-Route::get('/user/profile', 'CourseController@index');
 Route::get('/user/courses/associate/details', 'UserController@getCourseDetails');
 Route::post('/user/courses/associate', 'UserController@associate');
 Route::post('/contact', 'ContactMessageController@post');

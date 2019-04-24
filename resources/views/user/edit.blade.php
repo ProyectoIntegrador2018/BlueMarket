@@ -12,10 +12,12 @@
 		{{ csrf_field() }}
 		<!-- User avatar -->
 		<div class="field {{ $errors->has('avatar') ? 'error': '' }}">
-			<label for="avatar">Avatar</label>
 			<div class="image-container">
 				<div class="image-uploader preview-container">
-					<img id="preview" src="<?php echo asset($user->picture_url) ?>" alt="User avatar" class="ui small circular image preview"/>
+					@php
+						$img = isset($user->picture_url) ? $user->picture_url : 'img/avatar.jpg';
+					@endphp
+					<img id="preview" src="{{ asset($img) }}" alt="User avatar" class="ui small circular image preview"/>
 				</div>
 				<button type="button" class="ui button primary image-uploader">Upload image</button>
 			</div>
