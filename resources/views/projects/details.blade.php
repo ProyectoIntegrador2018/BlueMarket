@@ -137,12 +137,16 @@
 			@endif
 		</div>
 	</div>
+	<!-- TODO: if(isStakeholder(Auth::id()) -->
 	<div class="ui bottom attached tab segment" data-tab="tasks">
+		<!-- TODO: @if(isCollaborator(Auth::id()) -->
 		<button type="button" class="ui button primary" onclick="showTaskModal()">New task</button>
+		<div id="new-task-modal" class="ui long modal new-task-modal">
+			@include('projects.tasks.create')
+		</div>
+		<!-- TODO: @endif -->
 	</div>
-	<div id="new-task-modal" class="ui long modal new-task-modal">
-		@include('projects.tasks.create')
-	</div>
+	<!-- TODO: @endif -->
 </div>
 
 @section('scripts')
@@ -151,13 +155,7 @@
 	/* Semantic UI setup */
 	$(".menu .item").tab();
 
-	$(".ui.calendar").popup({
-		popup: $(".popup.calendar"),
-		on: 'focus',
-		inline: true,
-		position: 'bottom left',
-	});
-
+	// TODO: @if(isCollaborator(Auth::id())
 	function showTaskModal() {
 		$("#new-task-modal").modal({
 			transition: "fade up"
@@ -189,6 +187,7 @@
 			return false;
 		}
 	});
+	// TODO: @endif
 </script>
 @endsection
 @endsection
