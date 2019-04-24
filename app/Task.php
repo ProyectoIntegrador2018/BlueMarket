@@ -12,4 +12,8 @@ class Task extends Model {
 	 */
 	protected $guarded = [];
 
+	// Get the project the task belongs to
+	public function project() {
+		return $this->belongsTo('App\Project');
+	}
 }
