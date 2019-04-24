@@ -268,13 +268,13 @@
 				]
 			}
 		},
-		onFailure:function(fe, fields) {
+		onFailure: function(fe, fields) {
 			console.log(fe);
 			console.log(fields);
 
 			return false;
 		},
-		onSuccess:function() {
+		onSuccess: function() {
 		}
 	});
 	// TODO: Associated Team Validation
