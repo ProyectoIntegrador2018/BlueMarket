@@ -264,18 +264,17 @@
 				},
 				error: function(data) {
 					// course not found
-					if(data.status == 401) {
+					if(data.responseJSON.message == "COURSE_NOT_FOUND") {
 						$("#invalidCourseKey").modal({
 							transition: "fade up"
 						}).modal("show");
 					}
 					// student is already associated with course
-					if(data.status == 400) {
+					if(data.responseJSON.message == "COURSE_DUPLICATED") {
 						$("#courseDuplicated").modal({
 							transition: "fade up"
 						}).modal("show");
 					}
-					console.log(data);
 				}
 			});
 		}
