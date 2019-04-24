@@ -11,8 +11,6 @@ use Illuminate\Http\Request;
 
 class TeamController extends Controller
 {
-	const ROLES = 'enum.user_roles';
-
 	public function __construct() {
 		$this->middleware('auth');
 	}
@@ -53,7 +51,7 @@ class TeamController extends Controller
 			abort(500);
 		}
 
-		$team->members()->attach($team->leader_id, ['has_accepted' => 1]);
+		$team->members()->attach($team->leader_id, ['has_accepted' => config('enum.invite_status')['accepted']]);
 
 		// redirect to teams/{id} // NOSONAR
 		return redirect()->route('teams.show', [$team]);
