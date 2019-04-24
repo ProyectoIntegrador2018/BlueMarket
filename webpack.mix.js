@@ -12,8 +12,7 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/app.js', 'public/js')
-.js('resources/js/searchProjects.js', 'public/js')
-.js('resources/js/searchStudents.js', 'public/js')
+.js('resources/js/searchFunction.js', 'public/js')
 .sass('resources/sass/app.scss', 'public/css', { implementation: require('node-sass') })
 .sass('resources/sass/admin.scss', 'public/css', { implementation: require('node-sass') })
 .options({processCssUrls: false });

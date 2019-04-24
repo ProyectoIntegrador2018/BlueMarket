@@ -33,7 +33,7 @@
 	<!-- Student cards -->
 	<div class="ui four column stackable grid">
 		@foreach ($users as $user)
-			@studentCard(['user'=> $user])
+			@studentCard(['user' => $user])
 			@endstudentCard
 		@endforeach
 	</div>
@@ -42,6 +42,11 @@
 @section('scripts')
 <script>
 	$('.ui.dropdown').dropdown();
+	let students = {!! $users !!};
 </script>
-<script src="{{ mix('js/searchStudents.js')}}"></script>
+<script src="{{ mix('js/searchFunction.js')}}"></script>
+<script>
+	const fzs = new FuzzySearch('#searchName', '#searchSkills', '.studentCard-container', students, 'skillset');
+</script>
+
 @endsection
