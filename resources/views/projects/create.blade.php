@@ -199,7 +199,7 @@
 				identifier: 'existingTeam',
 				rules: [{
 					type: 'associatedTeam',
-					prompt: 'Project must be associated with a team.'
+					prompt: 'The existing team field is required when new team is not present.'
 				}]
 			},
 			newTeam: {
@@ -210,10 +210,7 @@
 				},
 				{
 					type: 'associatedTeam',
-					prompt: function(){
-						// we only show team-association prompt once
-						return false;
-					}
+					prompt: 'The new team field is required when existing team is not present.'
 				}]
 			},
 			course: {
