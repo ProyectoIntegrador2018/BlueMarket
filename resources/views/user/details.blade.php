@@ -264,7 +264,7 @@
 				},
 				error: function(data) {
 					// course not found
-					if(data.status == 404) {
+					if(data.status == 401) {
 						$("#invalidCourseKey").modal({
 							transition: "fade up"
 						}).modal("show");
@@ -275,6 +275,7 @@
 							transition: "fade up"
 						}).modal("show");
 					}
+					console.log(data);
 				}
 			});
 		}

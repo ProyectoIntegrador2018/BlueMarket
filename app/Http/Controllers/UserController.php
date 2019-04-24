@@ -83,12 +83,13 @@ class UserController extends Controller {
 		$courseKey = $request->courseKey;
 		$course = Course::with('teachers')->where('course_key', $courseKey)->first();
 
-		abort_if($course === null, 404);
+		abort_if($course === null, 401);
 
 		// Check if course is already associated
 		$associatedCourse = $user->enrolledIn()->where('course_id', $course->id)->first();
 
 		abort_if($associatedCourse, 400);
+
 		return ['course' => $course];
 	}
 
