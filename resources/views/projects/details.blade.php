@@ -10,6 +10,8 @@
 	<div class="ui top attached tabular menu">
 		<a class="active item" data-tab="overview">Overview</a>
 		<a class="item" data-tab="collaborators">Collaborators</a>
+		<!-- TODO:check if($project->IsProjectCollaborator(Auth::id())) -->
+		<a class="item" data-tab="tasks">Tasks</a>
 	</div>
 	<div class="ui bottom attached active tab segment" data-tab="overview">
 		<div class="ui stackable two column grid">
@@ -135,12 +137,58 @@
 			@endif
 		</div>
 	</div>
+	<div class="ui bottom attached tab segment" data-tab="tasks">
+		<button type="button" class="ui button primary" onclick="showTaskModal()">New task</button>
+	</div>
+	<div id="new-task-modal" class="ui long modal new-task-modal">
+		@include('projects.tasks.create')
+	</div>
 </div>
 
 @section('scripts')
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui-calendar/0.0.8/calendar.min.js"></script>
 <script>
 	/* Semantic UI setup */
-	$('.menu .item').tab();
+	$(".menu .item").tab();
+
+	$(".ui.calendar").popup({
+		popup: $(".popup.calendar"),
+		on: 'focus',
+		inline: true,
+		position: 'bottom left',
+	});
+
+	function showTaskModal() {
+		$("#new-task-modal").modal({
+			transition: "fade up"
+		}).modal("show");
+	}
+
+	/* Due date datetime picker */
+	$(".ui.calendar").calendar({
+		monthFirst: false,
+		formatter: {
+			date: function (date, settings) {
+				if (!date) return '';
+				var day = date.getDate();
+				var month = date.getMonth() + 1;
+				var year = date.getFullYear();
+				return day + '/' + month + '/' + year;
+			}
+		}
+	});
+
+	/* Semantic UI form validation */
+	$(".ui.form").form({
+		fields: {
+			title: ["empty", "maxLength[30]"],
+			description: ["empty", "maxLength[2000]"],
+			dueDate: ["empty"]
+		},
+		onFailure: function() {
+			return false;
+		}
+	});
 </script>
 @endsection
 @endsection

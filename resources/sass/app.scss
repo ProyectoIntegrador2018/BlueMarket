@@ -449,3 +449,22 @@ $color-white: #fff;
 .team-img {
 	border-radius: 5px;
 }
+
+.ui.modal.new-task-modal {
+	text-align: left;
+
+	.ui.calendar:focus-within .ui.popup.calendar {
+		display: block;
+		position: absolute;
+		top: 110%;
+		left: 1%;
+
+		&::before {
+			display: none;
+		}
+	}
+
+	.calendar.icon {
+		margin: 0;
+	}
+}

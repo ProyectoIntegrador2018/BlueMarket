@@ -9,6 +9,7 @@
 
 	<!-- Semantic UI -->
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui-calendar/0.0.8/calendar.min.css">
 
 	<!-- Styles -->
 	<link href="{{ mix('css/app.css') }}" rel="stylesheet">
@@ -72,7 +73,7 @@
 		@yield('content')
 	</div>
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-	<script src="https://cdn.rawgit.com/mdehoog/Semantic-UI/6e6d051d47b598ebab05857545f242caf2b4b48c/dist/semantic.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
 	<script src="{{ mix('js/inputValidation.js') }}"></script>
 	<script>
 		$('#user-menu-item').popup({

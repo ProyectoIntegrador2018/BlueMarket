@@ -1,8 +1,3 @@
-@extends('layouts.app')
-
-@section('title', 'New task')
-
-@section('content')
 <div class="padded content">
 	<!-- TODO: action url -->
 		<div class="ui stackable grid">
@@ -60,34 +55,3 @@
 			</div>
 		</div>
 </div>
-@section('scripts')
-<script>
-	/* Due date datetime picker */
-	$(".ui.calendar").calendar({
-		monthFirst: false,
-		formatter: {
-			date: function (date, settings) {
-				if (!date) return '';
-				var day = date.getDate();
-				var month = date.getMonth() + 1;
-				var year = date.getFullYear();
-				return day + '/' + month + '/' + year;
-			}
-		}
-	});
-
-	/* Semantic UI form validation */
-	$(".ui.form").form({
-		fields: {
-			title: ["empty", "maxLength[30]"],
-			description: ["empty", "maxLength[2000]"],
-			dueDate: ["empty"]
-		},
-		onFailure: function() {
-			return false;
-		}
-	});
-
-</script>
-@endsection
-@endsection
