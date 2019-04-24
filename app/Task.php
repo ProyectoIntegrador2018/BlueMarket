@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Tag extends Model {
+class Task extends Model {
 	/**
 	 * The attributes that cannot be mass assigned.
 	 *
@@ -12,7 +12,4 @@ class Tag extends Model {
 	 */
 	protected $guarded = [];
 
-	public function projects() {
-		return $this->belongsToMany('App\Project',  'tag_project', 'project_id', 'tag_id');
-	}
 }
