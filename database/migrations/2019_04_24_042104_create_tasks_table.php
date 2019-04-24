@@ -16,15 +16,15 @@ class CreateTasksTable extends Migration {
 			$table->string('title', 255);
 			$table->text('description');
 			$table->dateTime('deadline')->nullable(false);
-			$table->unsignedInteger('task_status'); // Enum [pending, overdue, done]
+			$table->unsignedInteger('task_status'); // Enum [open, overdue, closed]
 			$table->dateTime('completed_date')->nullable();
 
 			// Foreign keys
-			$table->unsignedInteger('completed_by')->nullable();
+			$table->unsignedInteger('closed_by')->nullable();
 			$table->unsignedInteger('created_by')->nullable(false);
 			$table->unsignedInteger('project_id')->nullable(false);
 
-			$table->foreign('completed_by')->references('id')->on('users');
+			$table->foreign('closed_by')->references('id')->on('users');
 			$table->foreign('created_by')->references('id')->on('users');
 			$table->foreign('project_id')->references('id')->on('projects');
 

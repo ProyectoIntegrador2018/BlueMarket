@@ -99,4 +99,12 @@ class User extends Authenticatable
 	public function isAdmin() {
 		return $this->role === config('enum.user_roles')['admin']; // Admin
 	}
+
+	public function tasksCreated() {
+		return $this->hasMany('App\Team', 'created_by');
+	}
+
+	public function tasksClosed() {
+		return $this->hasMany('App\Team', 'completed_by');
+	}
 }
