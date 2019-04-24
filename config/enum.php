@@ -13,5 +13,9 @@ return [
     'tags_types' => [
         'skill' => 1,
         'label' => 2,
-    ]
+	],
+	'invite_status' => [
+		'pending' => 1,
+		'accepted' => 2,
+	],
 ];

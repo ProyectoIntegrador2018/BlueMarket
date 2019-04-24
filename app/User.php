@@ -5,12 +5,14 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Collection;
 
 class User extends Authenticatable
 {
 	use Notifiable;
 
 	const ROLES = 'enum.user_roles';
+	const INVITES = 'enum.invite_status';
 
 	/**
 	 * The attributes that are mass assignable.
@@ -58,12 +60,22 @@ class User extends Authenticatable
 		return $this->belongsToMany('App\Team', 'team_user', 'user_id', 'team_id')
 		->withPivot('has_accepted')
 		->withTimestamps()
-		->wherePivot('has_accepted', 1);
+		->wherePivot('has_accepted', config(self::INVITES)['accepted']);
 	}
 
 	public function skillset() {
 		return $this->belongsToMany('App\Tag', 'skill_user', 'user_id', 'tag_id');
 	}
+
+	public function receivedTeamInvites() {
+		// TODO: add invites to join project as supplier
+		return $this->belongsToMany('App\Team', 'team_user', 'user_id', 'team_id')
+		->withPivot('has_accepted')
+		->withTimestamps()
+		->wherePivot('has_accepted', config(self::INVITES)['pending'])
+		->orderBy('pivot_created_at', 'desc');
+	}
+
 	public function isAdmin() {
 		return $this->role === config('enum.user_roles')['admin']; // Admin
 	}

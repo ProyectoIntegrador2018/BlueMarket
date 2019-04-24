@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Team extends Model
 {
+	const INVITES = 'enum.invite_status';
+
 	/**
 	 * The attributes that cannot be mass assigned.
 	 *
@@ -21,7 +23,15 @@ class Team extends Model
 		return $this->belongsToMany('App\User', 'team_user', 'team_id', 'user_id')
 			->withPivot('has_accepted')
 			->withTimestamps()
-			->wherePivot('has_accepted', 1);
+			->wherePivot('has_accepted', config(self::INVITES)['accepted']);
+	}
+
+	public function pendingInvites() {
+		return $this->belongsToMany('App\User', 'team_user', 'team_id', 'user_id')
+			->withPivot('has_accepted')
+			->withTimestamps()
+			->wherePivot('has_accepted', config(self::INVITES)['pending'])
+			->orderBy('pivot_created_at', 'desc');
 	}
 	public function projects() {
 		return $this->hasMany('App\Project');
