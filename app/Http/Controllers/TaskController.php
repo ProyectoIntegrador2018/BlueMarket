@@ -26,7 +26,8 @@ class TaskController extends Controller
      */
     public function create()
     {
-        //
+		// TODO: send the project team members to view?
+		return view('tasks.create');
     }
 
     /**
@@ -37,7 +38,14 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        //
+		$attributes = request()->validate([
+			'title' => 'required',
+			'description' => 'required',
+			'dueDate' => 'required', // TODO: check for datetime format
+		]);
+
+		$task = $this->createTask($attributes);
+
     }
 
     /**
@@ -84,4 +92,23 @@ class TaskController extends Controller
     {
         //
     }
+
+	/**
+	 * Create a task with the provided validated attributes
+	 *
+	 * @param array $attributes
+	 * @return \App\Task
+	 */
+	private function createTask(array $attributes) {
+		$task = Team::create([
+			'title' => $attributes['title'],
+			'description' => $attributes['description'],
+			'due_date' => $attributes['dueDate'],
+			'task_status' => config(self::TASK_STATUS)['pending'],
+		]);
+
+		// TODO: attach task to project
+
+		return $task;
+	}
 }
