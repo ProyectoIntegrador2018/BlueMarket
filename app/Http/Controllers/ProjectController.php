@@ -119,7 +119,6 @@ class ProjectController extends Controller {
 
 	private function saveRecord(array $attributes) {
 		$path = isset($attributes['projectImage']) ? Storage::putFile('public', $attributes['projectImage']) : null;
-		$path = $path != null ? Storage::url($path) : null;
 
 		return Project::create([
 			'name' => $attributes['projectName'],

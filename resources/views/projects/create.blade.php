@@ -19,7 +19,7 @@
 			<label for="projectImage">Project image</label>
 			<div class="image-container">
 				<div class="imgUploader preview-container">
-					<img src="" alt="Project image" class="ui small image preview" id="projectImagePreview"/>
+					<img alt="Project image" class="ui small image preview" id="projectImagePreview"/>
 				</div>
 				<button class="imgUploader ui button primary" type="button">Upload image</button>
 			</div>
@@ -45,7 +45,7 @@
 		</div>
 		<!-- Associated team -->
 		<div class="fields">
-			<div class="seven wide field {{ $errors->has('existingTeam') || $errors->has('bothTeams') ? 'error': '' }}">
+			<div class="seven wide field associatedTeam {{ $errors->has('existingTeam') || $errors->has('bothTeams') ? 'error': '' }}">
 				<label for="existingTeam">Choose an existing team</label>
 				<select id="existingTeam" name="existingTeam" class="ui search dropdown team" onchange="selectTeam()">
 					<option value="">My teams</option>
@@ -59,11 +59,9 @@
 			<div class="two wide two-column-divider">
 				<p style="font-weight: bold; font-size: 2rem; color: black; text-align: center; margin-top: 50%">OR</p>
 			</div>
-			<div class="seven wide field {{ $errors->has('newTeam') || $errors->has('bothTeams') ? 'error': '' }}">
-				<div class="field associatedTeam">
-					<label for="newTeam">Create a new team</label>
-					<input id="newTeam" type="text" name="newTeam" placeholder="e.g. New team" value="{{ old('newTeam')}}" onchange="createNewTeam()">
-				</div>
+			<div class="seven wide field associatedTeam {{ $errors->has('newTeam') || $errors->has('bothTeams') ? 'error': '' }}">
+				<label for="newTeam">Create a new team</label>
+				<input id="newTeam" type="text" name="newTeam" placeholder="e.g. New team" value="{{ old('newTeam')}}" onchange="createNewTeam()">
 			</div>
 		</div>
 		<!-- Labels -->
@@ -214,7 +212,7 @@
 					type: 'associatedTeam',
 					prompt: function(){
 						// we only show team-association prompt once
-						return '';
+						return false;
 					}
 				}]
 			},
@@ -277,7 +275,6 @@
 		onSuccess: function() {
 		}
 	});
-	// TODO: Associated Team Validation
 
 	/* Select old values in <selects> */
 	@if(old('labels') !== null)
