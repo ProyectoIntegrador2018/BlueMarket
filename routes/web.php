@@ -27,6 +27,9 @@ Route::resource('projects', 'ProjectController')->only([
 	'index', 'show', 'create', 'store', 'update'
 ]);
 
+/* tasks */
+Route::resource('tasks', 'TaskController')->only(['create', 'store']);
+
 /* users */
 Route::resource('users', 'UserController')->only(['index', 'update', 'show']);
 Route::get('/user/profile/edit', 'UserController@edit');
