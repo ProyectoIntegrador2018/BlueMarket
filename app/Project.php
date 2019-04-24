@@ -4,8 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Project extends Model
-{
+
+class Project extends Model {
+
 	const INVITES = 'enum.invite_status';
 
 	/**
@@ -58,5 +59,26 @@ class Project extends Model
 			->withTimestamps()
 			->wherePivot('accepted', config(self::INVITES)['pending'])
 			->orderBy('pivot_created_at', 'desc');
+	}
+
+	// Get the project collaborators
+	public function collaborators() {
+		$members = $this->team()->first()->members()->get();
+		$sups = $this->suppliers()->get();
+		return $members->merge($sups);
+	}
+
+	// Check if user is a project collaborator
+	public function isCollaborator($id) {
+		// TODO: check if this actually returns suppliers as well
+		// TODO: check if supplier_project relationshi exists
+		return $this->collaborators()->where('user_id', $id)->exists();
+	}
+
+	// Check if a user is a project stakeholder (as defined in #gh-169)
+	public function isStakeholder($id) {
+		// Check if this is a teacher associated with the course
+		$is_teacher = $this->course()->first()->teachers()->where('user_id', $id)->exists();
+		return $this->isProjectCollaborator($id) || $is_teacher;
 	}
 }
