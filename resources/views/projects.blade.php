@@ -52,5 +52,9 @@
 	$('.ui.dropdown').dropdown();
 	let projects = {!! $projects !!};
 </script>
-<script src="{{ mix('js/searchProjects.js')}}"></script>
+
+<script src="{{ mix('js/searchFunction.js')}}"></script>
+<script>
+	const fzs = new FuzzySearch('#searchName', '#searchTags', '.ProjectCard-container', projects, 'tags');
+</script>
 @endsection
