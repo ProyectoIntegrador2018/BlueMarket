@@ -264,13 +264,13 @@
 	<div class="ui bottom attached active tab segment" data-tab="tasks">
 		<button type="button" class="ui button primary" onclick="showTaskModal()">New task</button>
 		@include('projects.tasks.index')
-		<div id="new-task-modal" class="ui tiny modal new-task-modal">
-			<div class="content">
-				@include('projects.tasks.create')
-			</div>
-			<div class="actions">
-				<button class="ui black deny button">Close</button>
-			</div>
+	</div>
+	<div id="new-task-modal" class="ui tiny modal new-task-modal">
+		<div class="content">
+			@include('projects.tasks.create')
+		</div>
+		<div class="actions">
+			<button class="ui black deny button">Close</button>
 		</div>
 	</div>
 
