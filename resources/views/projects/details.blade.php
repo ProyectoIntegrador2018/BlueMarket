@@ -270,7 +270,8 @@
 			@include('projects.tasks.create')
 		</div>
 		<div class="actions">
-			<button class="ui black deny button">Close</button>
+			<button type="button" class="ui black deny button">Close</button>
+			<button type="submit" class="ui primary button" onclick="createNewTask()">Save</button>
 		</div>
 	</div>
 
@@ -320,15 +321,47 @@
 		$("#new-task-modal").modal("hide");
 	}
 
+	$(".modal").modal({ transition: "fade up" });
+
+	/* Task details modal */
+	$(".task-row").click(showTaskDetails);
+
+	function showTaskDetails() {
+		$("#task-details-modal").modal("show");
+	}
+
+	/* New task modal */
 	function showTaskModal() {
 		$("#new-task-modal").modal("show");
 	}
+
+	function createNewTask() {
+		$("#new-task-form").submit();
+	}
+
+	/* Due date datetime picker */
+	$(".ui.calendar").calendar({
+		monthFirst: false,
+		formatter: {
+			date: function (date, settings) {
+				if (!date) return '';
+				var day = date.getDate();
+				var month = date.getMonth() + 1;
+				var year = date.getFullYear();
+				return day + '/' + month + '/' + year;
+			}
+		}
+	});
+
 	/* Semantic UI form validation */
-	$(".ui.form.tasks.create").form({
+	$("#new-task-form").form({
 		fields: {
 			title: ["empty", "maxLength[30]"],
 			description: ["empty", "maxLength[2000]"],
 			dueDate: ["empty"]
+		},
+		onSuccess: function() {
+			$("#new-task-modal").modal("hide");
 		},
 		onFailure: function() {
 			return false;
