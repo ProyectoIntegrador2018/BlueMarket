@@ -25,9 +25,9 @@
 	</form>
 	<!-- Message -->
 	<div hidden class="ui message noStudentsMessage">
-		<div class="header">
-			No Students Found
-		</div>
+		<p class="header">
+			No students found
+		</p>
 		<p>No students meet search criteria.</p>
 	</div>
 	<!-- Student cards -->

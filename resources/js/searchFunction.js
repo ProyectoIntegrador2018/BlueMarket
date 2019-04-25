@@ -70,5 +70,3 @@ class FuzzySearch {
 }
 
 window.FuzzySearch = FuzzySearch;
-
-
