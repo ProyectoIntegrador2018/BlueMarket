@@ -46,8 +46,6 @@
 										</ul>
 									@endif
 								</div>
-								<button type="button" class="ui cancel button" onclick="hideTaskModal()">Cancel</button>
-								<button type="submit" class="ui ok primary button">Save</button>
 							</div>
 						</div>
 					</form>

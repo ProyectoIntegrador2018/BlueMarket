@@ -265,7 +265,12 @@
 		<button type="button" class="ui button primary" onclick="showTaskModal()">New task</button>
 		@include('projects.tasks.index')
 		<div id="new-task-modal" class="ui tiny modal new-task-modal">
-			@include('projects.tasks.create')
+			<div class="content">
+				@include('projects.tasks.create')
+			</div>
+			<div class="actions">
+				<button class="ui black deny button">Close</button>
+			</div>
 		</div>
 	</div>
 
