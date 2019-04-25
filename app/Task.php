@@ -13,8 +13,6 @@ class Task extends Model {
 	 */
 	protected $guarded = [];
 
-	const ROLES = 'enum.user_roles';
-
 	// Get the project the task belongs to
 	public function project() {
 		return $this->belongsTo('App\Project');
