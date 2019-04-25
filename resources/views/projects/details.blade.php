@@ -12,7 +12,7 @@
 	<!-- Project name -->
 	<h1>{{ $project->name }}</h1>
 	<div class="ui top attached tabular menu">
-		<a class="active item" data-tab="overview">Overview</a>
+		<a class="item" data-tab="overview">Overview</a>
 		<a class="item" data-tab="collaborators">Collaborators</a>
 		<!-- TODO:check if($project->IsProjectCollaborator(Auth::id())) -->
 		<a class="item" data-tab="tasks">Tasks</a>
@@ -261,9 +261,9 @@
 			@endif
 		</div>
 	</div>
-
-	<div class="ui bottom attached tab segment" data-tab="tasks">
+	<div class="ui bottom attached active tab segment" data-tab="tasks">
 		<button type="button" class="ui button primary" onclick="showTaskModal()">New task</button>
+		@include('projects.tasks.index')
 		<div id="new-task-modal" class="ui tiny modal new-task-modal">
 			@include('projects.tasks.create')
 		</div>
