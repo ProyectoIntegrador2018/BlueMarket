@@ -10,19 +10,12 @@
 					<form class="ui form {{ $errors->any() ? 'error': '' }}" method="post" enctype="multipart/form-data" action="" style="width: 100%;">
 						@csrf
 						<div class="ui stackable grid">
-							<div class="ten wide column">
+							<div class="sixteen wide column">
 								<!-- Title -->
 								<div class="field {{ $errors->has('title') ? 'error': '' }}">
 									<label for="title">Title</label>
 									<input type="text" id="title" name="title" placeholder="e.g. Design UI layout" value="{{ old('title') }}">
 								</div>
-								<!-- Description -->
-								<div class="field {{ $errors->has('description') ? 'error': '' }}">
-									<label for="description">Description</label>
-									<textarea id="description" name="description" placeholder="e.g. Design the layout for the application in all devices...">{{ old('description') }}</textarea>
-								</div>
-							</div>
-							<div class="six wide column">
 								<!-- Due date -->
 								<div class="field {{ $errors->has('dueDate') ? 'error': '' }}">
 									<label for="dueDate">Due date</label>
@@ -33,10 +26,13 @@
 										</div>
 									</div>
 								</div>
+								<!-- Description -->
+								<div class="field {{ $errors->has('description') ? 'error': '' }}">
+									<label for="description">Description</label>
+									<textarea id="description" name="description" placeholder="e.g. Design the layout for the application in all devices...">{{ old('description') }}</textarea>
+								</div>
 							</div>
 							<div class="sixteen wide column">
-								<!-- Save button -->
-								<button type="submit" class="ui primary submit button">Save</button>
 								<!-- Error message -->
 								<div class="ui error message">
 									<h2 class="header">Whoops! Something went wrong.</h2>
@@ -48,6 +44,8 @@
 										</ul>
 									@endif
 								</div>
+								<button type="button" class="ui cancel button" onclick="hideTaskModal()">Cancel</button>
+								<button type="submit" class="ui ok primary button">Save</button>
 							</div>
 						</div>
 					</form>
