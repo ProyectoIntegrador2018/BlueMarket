@@ -6,7 +6,7 @@
 			</div>
 		</div>
 		<div class="row">
-			<form class="ui form {{ $errors->any() ? 'error': '' }}" method="post" enctype="multipart/form-data" action="/tasks" style="width: 100%;">
+			<form id="new-task-form" class="ui form {{ $errors->any() ? 'error': '' }}" method="post" enctype="multipart/form-data" action="/tasks" style="width: 100%;">
 				@csrf
 				<div class="ui stackable grid">
 					<div class="sixteen wide column">

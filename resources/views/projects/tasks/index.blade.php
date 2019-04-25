@@ -1,9 +1,8 @@
 <div>
 	<h2>Open</h2>
 	<table class="ui selectable very padded stackable yellow table">
-		<thead>
 		<tbody>
-			<tr class="warning" onclick="showTaskDetails()">
+			<tr class="task-row warning">
 				<td>
 					<p>Upload wireframes to remote workspace</p>
 					<p>Opened <span>2 days ago</span> by {{ $project->team->leader->name }}</p>
@@ -13,7 +12,7 @@
 					<p><i class="attention icon"></i>Overdue</p>
 				</td>
 			</tr>
-			<tr class="warning" onclick="showTaskDetails()">
+			<tr class="task-row warning">
 				<td>
 					<p>Upload wireframes to remote workspace</p>
 					<p>Opened <span>2 days ago</span> by {{ $project->team->leader->name }}</p>
@@ -23,7 +22,7 @@
 					<p><i class="attention icon"></i>Overdue</p>
 				</td>
 			</tr>
-			<tr onclick="showTaskDetails()">
+			<tr class="task-row">
 				<td>
 					<p>Upload wireframes to remote workspace</p>
 					<p>Opened <span>2 days ago</span> by {{ $project->team->leader->name }}</p>
@@ -32,7 +31,7 @@
 					<p>Due <span>01/03/2019 11:59PM</span></p>
 				</td>
 			</tr>
-			<tr onclick="showTaskDetails()">
+			<tr class="task-row">
 				<td>
 					<p>Upload wireframes to remote workspace</p>
 					<p>Opened <span>2 days ago</span> by {{ $project->team->leader->name }}</p>
@@ -41,7 +40,7 @@
 					<p>Due <span>01/03/2019 11:59PM</span></p>
 				</td>
 			</tr>
-			<tr onclick="showTaskDetails()">
+			<tr class="task-row">
 				<td>
 					<p>Upload wireframes to remote workspace</p>
 					<p>Opened <span>2 days ago</span> by {{ $project->team->leader->name }}</p>
@@ -57,7 +56,7 @@
 	<table class="ui selectable very padded stackable grey table">
 		<thead>
 		<tbody>
-			<tr onclick="showTaskDetails()">
+			<tr class="task-row">
 				<td>
 					<p>Upload wireframes to remote workspace</p>
 					<p>Closed <span>2 days ago</span> by {{ $project->team->leader->name }}</p>
@@ -66,7 +65,7 @@
 					<p>Due <span>01/03/2019 11:59PM</span></p>
 				</td>
 			</tr>
-			<tr onclick="showTaskDetails()">
+			<tr class="task-row">
 				<td>
 					<p>Upload wireframes to remote workspace</p>
 					<p>Closed <span>2 days ago</span> by {{ $project->team->leader->name }}</p>
@@ -86,11 +85,3 @@
 		</div>
 	</div>
 </div>
-
-<script>
-	function showTaskDetails() {
-		$("#task-details-modal").modal({
-			transition: "fade up"
-		}).modal("show");
-	}
-</script>
