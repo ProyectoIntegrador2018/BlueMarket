@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Task;
 use App\User;
 use Illuminate\Http\Request;
@@ -28,7 +29,7 @@ class TaskController extends Controller
 	 */
 	public function create() {
 		// TODO: send the project team members to view?
-		return view('tasks.create');
+		return view('projects.tasks.create');
 	}
 
 	/**
@@ -88,8 +89,51 @@ class TaskController extends Controller
 	 * @param  \App\Task  $task
 	 * @return \Illuminate\Http\Response
 	 */
-	public function update(Request $request, Task $task) {
-		$task->update($request->all());
+	public function update(Request $request, int $id) {
+
+		$attributes = request()->validate([
+			'title' => 'present',
+			'description' => 'present',
+			'dueDate' => 'present', // TODO: check for datetime format
+			'task_status' => 'present|integer|min:1|max:2',
+		]);
+
+		$task = Task::findOrFail($id)
+
+		// Update the title of the task
+		if (isset($request->title)) {
+			$task->title = $attributes['title'];
+		}
+
+		// Update the description of the task
+		if (isset($request->description)) {
+			$task->description = $attributes['description'];
+		}
+
+		// Update the deadline of the task
+		if (isset($request->dueDate)) {
+			$task->deadline = $attributes['dueDate'];
+		}
+
+		// Update the status of the task
+		if (isset($request->task_status)) {
+			$new_status = $attributes['task_status']
+
+			if ($new_status == 2) { // Closed
+				// Update the date and responsible for closure
+				$task->completed_date = Carbon::now()
+				$task->closed_by = Auth::user()
+			} else { // Open
+				// Reset the date and responsible for closure
+				$task->completed_date = null
+				$task->closed_by = null
+			}
+
+			$task->task_status = $new_status;
+		}
+
+		$task->save();
+
 		return ['task' => $task]
 	}
 
