@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Task;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 class TaskController extends Controller
 {
@@ -42,10 +45,14 @@ class TaskController extends Controller
 			'title' => 'required',
 			'description' => 'required',
 			'dueDate' => 'required', // TODO: check for datetime format
+			'project' => 'required', // TODO: validate for existing user project
 		]);
 
 		$task = $this->createTask($attributes);
 
+		// Add creator
+		Auth::user()->tasksCreated()->associate($task);
+		Auth::user()->save();
     }
 
     /**
@@ -100,14 +107,17 @@ class TaskController extends Controller
 	 * @return \App\Task
 	 */
 	private function createTask(array $attributes) {
-		$task = Team::create([
+		$task = Task::create([
 			'title' => $attributes['title'],
 			'description' => $attributes['description'],
-			'due_date' => $attributes['dueDate'],
-			'task_status' => config(self::TASK_STATUS)['pending'],
+			'deadline' => $attributes['dueDate'],
+			'task_status' => config(self::TASK_STATUS)['open'],
+			'project_id' => $attributes['project'],
 		]);
 
-		// TODO: attach task to project
+		if (!$task->exists) {
+			abort(500);
+		}
 
 		return $task;
 	}

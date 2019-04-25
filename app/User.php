@@ -101,10 +101,10 @@ class User extends Authenticatable
 	}
 
 	public function tasksCreated() {
-		return $this->hasMany('App\Team', 'created_by');
+		return $this->hasMany('App\Task', 'created_by');
 	}
 
 	public function tasksClosed() {
-		return $this->hasMany('App\Team', 'completed_by');
+		return $this->hasMany('App\Task', 'closed_by');
 	}
 }
