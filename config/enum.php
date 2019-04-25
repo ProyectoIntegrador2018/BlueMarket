@@ -28,7 +28,6 @@ return [
 	],
 	'task_status' => [
         'open' => 1,
-        'overdue' => 2,
-        'closed' => 3,
+        'closed' => 2,
 	]
 ];
