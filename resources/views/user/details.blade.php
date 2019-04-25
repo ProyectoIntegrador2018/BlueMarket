@@ -212,6 +212,7 @@
 <script>
 	/* Semantic UI setup */
 	$('.menu .item').tab();
+	$(".modal").modal({ transition: "fade up" });
 
 	$(".coupled.modal").modal({
 			allowMultiple: false
@@ -258,9 +259,7 @@
 					}).join(', ');
 					$("#courseTeacher").text(courseTeachers);
 					$("#courseSchedule").text(course.schedule);
-					$("#courseFound").modal({
-						transition: "fade up"
-					}).modal("show");
+					$("#courseFound").modal("show");
 				},
 				error: function(data) {
 					if(data.responseJSON.error_reason === "COURSE_NOT_FOUND") {
@@ -337,9 +336,7 @@
 					let courseName = course.name;
 					// confirmation modal
 					$("#courseAddedName").text(courseName);
-					$("#courseAddedSuccessfully").modal({
-						transition: "fade up"
-					}).modal("show");
+					$("#courseAddedSuccessfully").modal("show");
 					// add row to table
 					let rowToAdd = generateCourseDetailsRow(course, course.teachers);
 					$("#courseKey").val("");
@@ -353,25 +350,17 @@
 					switch(data.status) {
 						case 400:
 							if(data.responseJSON.error_reason === "COURSE_NOT_FOUND") {
-								$("#invalidCourseKey").modal({
-									transition: "fade up"
-								}).modal("show");
+								$("#invalidCourseKey").modal("show");
 							}
 							if(data.responseJSON.error_reason === "COURSE_DUPLICATED") {
-								$("#courseDuplicated").modal({
-									transition: "fade up"
-								}).modal("show");
+								$("#courseDuplicated").modal("show");
 							}
 							break;
 						case 401:
-							$("#userNotAllowed").modal({
-								transition: "fade up"
-							}).modal("show");
+							$("#userNotAllowed").modal("show");
 							break;
 						default:
-							$("#courseAdditionError").modal({
-								transition: "fade up"
-							}).modal("show");
+							$("#courseAdditionError").modal("show");
 							break;
 					}
 				}

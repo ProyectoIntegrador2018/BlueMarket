@@ -150,17 +150,14 @@
 <script>
 	/* Semantic UI setup */
 	$(".menu .item").tab();
+	$("#new-task-modal").modal({ transition: "fade up" });
 
 	function hideTaskModal() {
-		$("#new-task-modal").modal({
-			transition: "fade up"
-		}).modal("hide");
+		$("#new-task-modal").modal("hide");
 	}
 
 	function showTaskModal() {
-		$("#new-task-modal").modal({
-			transition: "fade up"
-		}).modal("show");
+		$("#new-task-modal").modal("show");
 	}
 
 	/* Due date datetime picker */
