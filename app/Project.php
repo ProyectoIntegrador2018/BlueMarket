@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 
@@ -98,5 +99,24 @@ class Project extends Model {
 	// Get all the tasks of a project
 	public function tasks() {
 		return $this->hasMany('App\Task');
+	}
+
+	// Get all the open tasks of a project
+	public function openTasks() {
+		return $this->tasks
+			->where('task_status', config('enum.task_status')['open'])
+			->where('deadline', '>=', Carbon::now()->toDateTimeString());
+	}
+
+	// Get all the closed tasks of a project
+	public function closedTasks() {
+		return $this->tasks->where('task_status', config('enum.task_status')['closed']);
+	}
+
+	// Get all the closed tasks of a project
+	public function overdueTasks() {
+		return $this->tasks
+			->where('task_status', config('enum.task_status')['open'])
+			->where('deadline', '<', Carbon::now()->toDateTimeString());
 	}
 }
