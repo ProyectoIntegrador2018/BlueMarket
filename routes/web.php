@@ -28,7 +28,7 @@ Route::resource('projects', 'ProjectController')->only([
 ]);
 
 /* users */
-Route::resource('users', 'UserController')->only(['index', 'update']);
+Route::resource('users', 'UserController')->only(['index', 'update', 'show']);
 Route::get('/user/profile', 'UserController@show');
 Route::get('/user/profile/edit', 'UserController@edit');
 

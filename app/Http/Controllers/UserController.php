@@ -22,13 +22,10 @@ class UserController extends Controller {
 	 * @param  int  $id
 	 * @return \Illuminate\View
 	 */
-<<<<<<< HEAD
-	public function show() {
-		$user = User::findOrFail(Auth::id());
-=======
 	public function index() {
 		$users = User::with('skillset:name')->where('role', config('enum.user_roles')['student'])->get();
-		$skills = Tag::where('type', config('enum.tags_types')['skill']);
+		$skills = Tag::where('type', config('enum.tags_types')['skill'])->get();
+		//$skills = Tag::all();
 
 		return view('students', ['users' => $users, 'skills' => $skills]);
 	}
@@ -40,8 +37,7 @@ class UserController extends Controller {
 	 * @return \Illuminate\View
 	 */
 	public function show(int $id) {
-		$user = User::find($id);
->>>>>>> - Added feature to be able to search for students on filter
+		$user = User::findOrFail($id);
 		return view('user.details', compact('user'));
 	}
 
