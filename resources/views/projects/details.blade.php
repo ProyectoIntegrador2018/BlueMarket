@@ -262,16 +262,22 @@
 		</div>
 	</div>
 	<div class="ui bottom attached active tab segment" data-tab="tasks">
-		<button type="button" class="ui button primary" onclick="showTaskModal()">New task</button>
-		@include('projects.tasks.index')
-	</div>
-	<div id="new-task-modal" class="ui tiny modal new-task-modal">
-		<div class="content">
-			@include('projects.tasks.create')
+		<div class="ui stackable grid">
+			<div class="right aligned sixteen wide column">
+				<button type="button" class="ui button primary" onclick="showTaskModal()">New task</button>
+			</div>
+			<div class="sixteen wide column">
+				@include('projects.tasks.index')
+			</div>
 		</div>
-		<div class="actions">
-			<button type="button" class="ui black deny button">Close</button>
-			<button type="submit" class="ui primary button" onclick="createNewTask()">Save</button>
+		<div id="new-task-modal" class="ui tiny modal new-task-modal">
+			<div class="content">
+				@include('projects.tasks.create')
+			</div>
+			<div class="actions">
+				<button type="button" class="ui black deny button">Close</button>
+				<button type="submit" class="ui primary button" onclick="createNewTask()">Save</button>
+			</div>
 		</div>
 	</div>
 
