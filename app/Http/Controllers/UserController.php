@@ -25,7 +25,6 @@ class UserController extends Controller {
 	public function index() {
 		$users = User::with('skillset:name')->where('role', config('enum.user_roles')['student'])->get();
 		$skills = Tag::where('type', config('enum.tags_types')['skill'])->get();
-		//$skills = Tag::all();
 
 		return view('students', ['users' => $users, 'skills' => $skills]);
 	}
