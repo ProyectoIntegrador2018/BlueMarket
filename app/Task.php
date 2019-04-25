@@ -19,12 +19,12 @@ class Task extends Model {
 
 	// Get the user who created (opened for the first time) the task
 	public function creator() {
-		return $this->hasMany('App\User', 'created_by');
+		return $this->belongsTo('App\User', 'created_by');
 	}
 
 	// Get the user who completed (closed) the task
 	public function closed_by() {
-		return $this->hasMany('App\User', 'completed_by');
+		return $this->belongsTo('App\User', 'closed_by');
 	}
 
 }

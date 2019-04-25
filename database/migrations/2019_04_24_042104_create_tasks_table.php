@@ -21,7 +21,7 @@ class CreateTasksTable extends Migration {
 
 			// Foreign keys
 			$table->unsignedInteger('closed_by')->nullable();
-			$table->unsignedInteger('created_by')->nullable(false);
+			$table->unsignedInteger('created_by')->nullable();
 			$table->unsignedInteger('project_id')->nullable(false);
 
 			$table->foreign('closed_by')->references('id')->on('users');
