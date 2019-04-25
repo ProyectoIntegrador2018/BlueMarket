@@ -48,6 +48,10 @@ $color-white: #fff;
 	width: 25px;
 }
 
+.ui.small.circular.user-avatar-in-card {
+	display: block;
+}
+
 .ui.button {
 	color: $color-white;
 	&.primary {
@@ -469,7 +473,7 @@ $color-white: #fff;
 	}
 }
 
-.student-card-name {
+.header.student-card-name {
 	text-align: center;
 	margin-top: 10px;
 }

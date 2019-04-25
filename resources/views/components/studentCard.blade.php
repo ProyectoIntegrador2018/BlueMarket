@@ -3,11 +3,11 @@
 		<div class="content">
 			<!--User avatar-->
 			<div>
-				<img class="ui small circular image user-avatar" src="{{ isset($user->picture_url) ? $user->picture_url : 'https://dummyimage.com/400x400/3498db/ffffff.png&text=B' }}">
+				<img class="ui centered small circular image user-avatar-in-card" src="{{ isset($user->picture_url) ? $user->picture_url : 'https://dummyimage.com/400x400/3498db/ffffff.png&text=B' }}">
 			</div>
 			<!--User name-->
 			<!-- TODO: need to make name centered-->
-			<div class="header student-card-name">{{ $user->name }}</div>
+			<div class="ui header student-card-name">{{ $user->name }}</div>
 		</div>
 		<!--User skillset-->
 		@if(isset($user->skillset) && count($user->skillset) > 0)
