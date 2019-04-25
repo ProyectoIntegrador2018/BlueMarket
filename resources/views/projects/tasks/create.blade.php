@@ -7,10 +7,12 @@
 					</div>
 				</div>
 				<div class="row">
-					<form class="ui form {{ $errors->any() ? 'error': '' }}" method="post" enctype="multipart/form-data" action="" style="width: 100%;">
+					<form class="ui form {{ $errors->any() ? 'error': '' }}" method="post" enctype="multipart/form-data" action="/tasks" style="width: 100%;">
 						@csrf
 						<div class="ui stackable grid">
 							<div class="sixteen wide column">
+								<!-- Project id -->
+								<input type="hidden" id="project" name="project" value="{{ $project->id }}">
 								<!-- Title -->
 								<div class="field {{ $errors->has('title') ? 'error': '' }}">
 									<label for="title">Title</label>
