@@ -58,7 +58,7 @@ class TaskController extends Controller
 		Auth::user()->tasksCreated()->associate($task);
 		Auth::user()->save();
 
-		return redirect()->back()->with(compact('task'));
+		return ['task' => $task]
 	}
 
 	/**
@@ -68,7 +68,7 @@ class TaskController extends Controller
 	 * @return \Illuminate\Http\Response
 	 */
 	public function show(Task $task) {
-		return view('task.details', compact('task'));
+		return ['task' => $task]
 	}
 
 	/**
@@ -77,8 +77,8 @@ class TaskController extends Controller
 	 * @param  \App\Task  $task
 	 * @return \Illuminate\Http\Response
 	 */
-	public function edit(Task $task) {
-		return view('task.edit', compact('task'));
+	public function edit(int $id) {
+		return ['task' => Task::findOrFail($id)]
 	}
 
 	/**
@@ -90,7 +90,7 @@ class TaskController extends Controller
 	 */
 	public function update(Request $request, Task $task) {
 		$task->update($request->all());
-		return redirect()->back()->with(compact('task'));
+		return ['task' => $task]
 	}
 
 	/**
