@@ -1,7 +1,14 @@
 <div class="padded content">
-	<!-- TODO: action url -->
-		<div class="ui stackable grid">
-				<div class="row">
+	<div class="ui stackable grid">
+		<div class="row">
+			<div class="sixteen wide column">
+				<h2>New task</h2>
+			</div>
+		</div>
+		<div class="row">
+			<form class="ui form {{ $errors->any() ? 'error': '' }}" method="post" enctype="multipart/form-data" action="/tasks" style="width: 100%;">
+				@csrf
+				<div class="ui stackable grid">
 					<div class="sixteen wide column">
 						<h1>New task</h1>
 					</div>
@@ -48,7 +55,27 @@
 								</div>
 							</div>
 						</div>
-					</form>
+						<!-- Description -->
+						<div class="field {{ $errors->has('description') ? 'error': '' }}">
+							<label for="description">Description</label>
+							<textarea id="description" name="description" placeholder="e.g. Design the layout for the application in all devices...">{{ old('description') }}</textarea>
+						</div>
+					</div>
+					<div class="sixteen wide column">
+						<!-- Error message -->
+						<div class="ui error message">
+							<h3 class="header">Whoops! Something went wrong.</h3>
+							@if($errors->any())
+								<ul>
+									@foreach ($errors->all() as $error)
+										<li>{{ $error }}</li>
+									@endforeach
+								</ul>
+							@endif
+						</div>
+					</div>
 				</div>
+			</form>
 		</div>
+	</div>
 </div>
