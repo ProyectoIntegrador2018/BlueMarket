@@ -83,12 +83,12 @@ class UserController extends Controller {
 		$courseKey = $request->courseKey;
 		$course = Course::with('teachers')->where('course_key', $courseKey)->first();
 
-		abort_if($course === null, 400, 'COURSE_NOT_FOUND');
+		if(!$course) {	return response()->json(['error_reason' => 'COURSE_NOT_FOUND'], 400); }
 
 		// Check if course is already associated
 		$associatedCourse = $user->enrolledIn()->where('course_id', $course->id)->first();
 
-		abort_if($associatedCourse, 400, 'COURSE_DUPLICATED');
+		if($associatedCourse) {	return response()->json(['error_reason' => 'COURSE_DUPLICATED'], 400); }
 
 		return ['course' => $course];
 	}
@@ -104,12 +104,13 @@ class UserController extends Controller {
 		$courseKey = $request->courseKey;
 		$course = Course::with('teachers')->where('course_key', $courseKey)->first();
 
-		abort_if($course == null, 400, 'Invalid course key');
+		if(!$course) {	return response()->json(['error_reason' => 'COURSE_NOT_FOUND'], 400); }
+
 		abort_if($user == null || $user->role != config('enum.user_roles')['student'], 401, 'Not student');
 
 		// prevent insertion of duplicates
 		$isDuplicatedCourse = $user->enrolledIn()->where('course_id', $course->id)->exists();
-		abort_if($isDuplicatedCourse, 400, 'Duplicated course');
+		if($isDuplicatedCourse) {	return response()->json(['error_reason' => 'COURSE_DUPLICATED'], 400); }
 
 		$user->enrolledIn()->attach($course);
 
