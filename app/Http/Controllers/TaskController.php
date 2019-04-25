@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use App\Project;
 use App\Task;
 use App\User;
 use Illuminate\Http\Request;
@@ -55,11 +56,7 @@ class TaskController extends Controller
 
 		$task = $this->createTask($attributes);
 
-		// Add creator
-		Auth::user()->tasksCreated()->associate($task);
-		Auth::user()->save();
-
-		return ['task' => $task]
+		return redirect()->back()->with(compact('task'));
 	}
 
 	/**
@@ -69,7 +66,7 @@ class TaskController extends Controller
 	 * @return \Illuminate\Http\Response
 	 */
 	public function show(Task $task) {
-		return ['task' => $task]
+		return ['task' => $task];
 	}
 
 	/**
@@ -79,7 +76,7 @@ class TaskController extends Controller
 	 * @return \Illuminate\Http\Response
 	 */
 	public function edit(int $id) {
-		return ['task' => Task::findOrFail($id)]
+		return ['task' => Task::findOrFail($id)];
 	}
 
 	/**
@@ -98,7 +95,7 @@ class TaskController extends Controller
 			'task_status' => 'present|integer|min:1|max:2',
 		]);
 
-		$task = Task::findOrFail($id)
+		$task = Task::findOrFail($id);
 
 		// Update the title of the task
 		if (isset($request->title)) {
@@ -112,21 +109,21 @@ class TaskController extends Controller
 
 		// Update the deadline of the task
 		if (isset($request->dueDate)) {
-			$task->deadline = $attributes['dueDate'];
+			$task->deadline = "2019-04-25 00:13:26";
 		}
 
 		// Update the status of the task
 		if (isset($request->task_status)) {
-			$new_status = $attributes['task_status']
+			$new_status = $attributes['task_status'];
 
 			if ($new_status == 2) { // Closed
 				// Update the date and responsible for closure
-				$task->completed_date = Carbon::now()
-				$task->closed_by = Auth::user()
+				$task->completed_date = Carbon::now();
+				$task->closed_by = Auth::user();
 			} else { // Open
 				// Reset the date and responsible for closure
-				$task->completed_date = null
-				$task->closed_by = null
+				$task->completed_date = null;
+				$task->closed_by = null;
 			}
 
 			$task->task_status = $new_status;
@@ -134,7 +131,7 @@ class TaskController extends Controller
 
 		$task->save();
 
-		return ['task' => $task]
+		return ['task' => $task];
 	}
 
 	/**
@@ -148,7 +145,7 @@ class TaskController extends Controller
 	}
 
 	private function validateProject($project_id) {
-		Project::find($project_id) == null
+		Project::find($project_id) == null;
 		// Check that all members in the team belong to the course that you're trying to create this project in
 		$project = \App\Project::find($project_id);
 		if(!$project->exists()) {
@@ -168,9 +165,10 @@ class TaskController extends Controller
 		$task = Task::create([
 			'title' => $attributes['title'],
 			'description' => $attributes['description'],
-			'deadline' => $attributes['dueDate'],
+			'deadline' => "2019-04-25 00:13:26",
 			'task_status' => config(self::TASK_STATUS)['open'],
 			'project_id' => $attributes['project'],
+			'created_by' => Auth::user()->id
 		]);
 
 		if (!$task->exists) {
