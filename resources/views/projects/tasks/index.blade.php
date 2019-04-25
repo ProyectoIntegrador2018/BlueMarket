@@ -1,106 +1,96 @@
-<h2>Open</h2>
-<table class="ui selectable very padded stackable yellow table">
-	<thead>
-	<tbody>
-		<tr class="warning">
-			<td>
-				<a class="task-url" href="{{ url('/projects/tasks/details') }}">
+<div>
+	<h2>Open</h2>
+	<table class="ui selectable very padded stackable yellow table">
+		<thead>
+		<tbody>
+			<tr class="warning" onclick="showTaskDetails()">
+				<td>
 					<p>Upload wireframes to remote workspace</p>
 					<p>Opened <span>2 days ago</span> by {{ $project->team->leader->name }}</p>
-				</a>
-			</td>
-			<td>
-				<a class="task-url" href="{{ url('/projects/tasks/details') }}">
+				</td>
+				<td>
 					<p>Due <span>01/03/2019 11:59PM</span></p>
 					<p><i class="attention icon"></i>Overdue</p>
-				</a>
-			</td>
-		</tr>
-		<tr class="warning">
-			<td>
-				<a class="task-url" href="{{ url('/projects/tasks/details') }}">
+				</td>
+			</tr>
+			<tr class="warning" onclick="showTaskDetails()">
+				<td>
 					<p>Upload wireframes to remote workspace</p>
 					<p>Opened <span>2 days ago</span> by {{ $project->team->leader->name }}</p>
-				</a>
-			</td>
-			<td>
-				<a class="task-url" href="{{ url('/projects/tasks/details') }}">
+				</td>
+				<td>
 					<p>Due <span>01/03/2019 11:59PM</span></p>
 					<p><i class="attention icon"></i>Overdue</p>
-				</a>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<a class="task-url" href="{{ url('/projects/tasks/details') }}">
+				</td>
+			</tr>
+			<tr onclick="showTaskDetails()">
+				<td>
 					<p>Upload wireframes to remote workspace</p>
 					<p>Opened <span>2 days ago</span> by {{ $project->team->leader->name }}</p>
-				</a>
-			</td>
-			<td>
-				<a class="task-url" href="{{ url('/projects/tasks/details') }}">
+				</td>
+				<td>
 					<p>Due <span>01/03/2019 11:59PM</span></p>
-				</a>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<a class="task-url" href="{{ url('/projects/tasks/details') }}">
+				</td>
+			</tr>
+			<tr onclick="showTaskDetails()">
+				<td>
 					<p>Upload wireframes to remote workspace</p>
 					<p>Opened <span>2 days ago</span> by {{ $project->team->leader->name }}</p>
-				</a>
-			</td>
-			<td>
-				<a class="task-url" href="{{ url('/projects/tasks/details') }}">
+				</td>
+				<td>
 					<p>Due <span>01/03/2019 11:59PM</span></p>
-				</a>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<a class="task-url" href="{{ url('/projects/tasks/details') }}">
+				</td>
+			</tr>
+			<tr onclick="showTaskDetails()">
+				<td>
 					<p>Upload wireframes to remote workspace</p>
 					<p>Opened <span>2 days ago</span> by {{ $project->team->leader->name }}</p>
-				</a>
-			</td>
-			<td>
-				<a class="task-url" href="{{ url('/projects/tasks/details') }}">
+				</td>
+				<td>
 					<p>Due <span>01/03/2019 11:59PM</span></p>
-				</a>
-			</td>
-		</tr>
-	</tbody>
-</table>
+				</td>
+			</tr>
+		</tbody>
+	</table>
 
-<h2>Closed</h2>
-<table class="ui selectable very padded stackable grey table">
-	<thead>
-	<tbody>
-		<tr>
-			<td>
-				<a class="task-url" href="{{ url('/projects/tasks/details') }}">
+	<h2>Closed</h2>
+	<table class="ui selectable very padded stackable grey table">
+		<thead>
+		<tbody>
+			<tr onclick="showTaskDetails()">
+				<td>
 					<p>Upload wireframes to remote workspace</p>
 					<p>Closed <span>2 days ago</span> by {{ $project->team->leader->name }}</p>
-				</a>
-			</td>
-			<td>
-				<a class="task-url" href="{{ url('/projects/tasks/details') }}">
+				</td>
+				<td>
 					<p>Due <span>01/03/2019 11:59PM</span></p>
-				</a>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<a class="task-url" href="{{ url('/projects/tasks/details') }}">
+				</td>
+			</tr>
+			<tr onclick="showTaskDetails()">
+				<td>
 					<p>Upload wireframes to remote workspace</p>
 					<p>Closed <span>2 days ago</span> by {{ $project->team->leader->name }}</p>
-				</a>
-			</td>
-			<td>
-				<a class="task-url" href="{{ url('/projects/tasks/details') }}">
+				</td>
+				<td>
 					<p>Due <span>01/03/2019 11:59PM</span></p>
-				</a>
-			</td>
-		</tr>
-	</tbody>
-</table>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<div id="task-details-modal" class="ui fullscreen modal task-details-modal">
+		<div class="scrolling content">
+			@include('projects.tasks.details')
+		</div>
+		<div class="actions">
+			<button class="ui black deny button">Close</button>
+		</div>
+	</div>
+</div>
+
+<script>
+	function showTaskDetails() {
+		$("#task-details-modal").modal({
+			transition: "fade up"
+		}).modal("show");
+	}
+</script>
