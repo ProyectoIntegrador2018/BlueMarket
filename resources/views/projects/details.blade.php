@@ -367,9 +367,27 @@
 			dueDate: ["empty"]
 		},
 		onSuccess: function() {
+			console.log($("#new-task-form").serialize());
+			alert('success');
+			event.preventDefault();
+			$.ajax({
+				type: "post",
+				url: "/tasks",
+				data: $("#new-task-form").serialize(),
+				dataType: 'json',
+				success: function (data) {
+					console.log(data);
+					alert('success form');
+				},
+				error: function (data) {
+					console.log(data);
+					alert('failed form');
+				}
+			});
 			$("#new-task-modal").modal("hide");
 		},
 		onFailure: function() {
+			alert('failure');
 			return false;
 		}
 	});
