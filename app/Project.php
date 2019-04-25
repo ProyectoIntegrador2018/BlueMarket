@@ -96,6 +96,8 @@ class Project extends Model {
 		}
 
 		return $this->isCollaborator($id) || $is_teacher || $is_supplier_teacher;
+	}
+
 	// Get all the tasks of a project
 	public function tasks() {
 		return $this->hasMany('App\Task');
