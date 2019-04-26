@@ -209,6 +209,16 @@
 		$("#new-task-modal").modal("show");
 	}
 
+	function displayMilestones(){
+		$('.milestone-section').toggle();
+	}
+
+	$(document).ready(function(){
+		$('.progress').progress({
+			percent: 20
+		});
+	})
+
 	/* Due date datetime picker */
 	$(".ui.calendar").calendar({
 		monthFirst: false,
@@ -236,18 +246,4 @@
 	});
 </script>
 @endsection
-@endsection
-
-@section('scripts')
-<script>
-	$(document).ready(function(){
-		$('.progress').progress({
-			percent: 20
-		});
-	})
-
-	function displayMilestones(){
-		$('.milestone-section').toggle();
-	}
-</script>
 @endsection
