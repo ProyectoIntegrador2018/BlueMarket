@@ -343,7 +343,7 @@ $color-white: #fff;
 	}
 }
 
-.ui.stackable.grid {
+.ui.stackable.grid:not(.notifications-grid) {
 	margin: 0 auto;
 	margin-top: 10px;
 
@@ -424,12 +424,25 @@ $color-white: #fff;
 	}
 }
 
-.squared-image-container .ui.small.image.squared-image {
-	width: 100px;
+.ui.image.squared-image {
 	height: auto;
 	object-fit: cover;
 	object-position: center center;
-	border-radius: 15px;
+
+	&.medium {
+		width: 150px;
+		border-radius: 20px;
+	}
+
+	&.small {
+		width: 100px;
+		border-radius: 15px;
+	}
+
+	&.tiny {
+		width: 30px;
+		border-radius: 5px;
+	}
 }
 
 .ui.label.pill {
