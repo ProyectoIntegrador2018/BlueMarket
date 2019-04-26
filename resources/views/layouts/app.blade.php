@@ -26,6 +26,9 @@
 			@if(Auth::user())
 				@if(Auth::user()->role ==Config::get('enum.user_roles')['student'])
 					<div class="ui menu bluemarket-header">
+						<a class="browse item" href="{{ action('NotificationController@index') }}">
+							<i class="bell icon"></i>
+						</a>
 						<a id="add-menu-item" class="browse item">
 							<i class="plus icon"></i>
 							<i class="dropdown icon"></i>

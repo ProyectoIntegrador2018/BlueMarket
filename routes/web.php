@@ -58,3 +58,5 @@ Route::namespace('Admin')->prefix('admin')->group(function() {
 Route::get('/projects/tasks/create', function () {
 	return view('projects.tasks.create');
 });
+
+Route::resource('notifications', 'NotificationController')->only(['index']);
