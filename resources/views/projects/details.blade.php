@@ -94,49 +94,47 @@
 			<!-- Progress section -->
 			<div class="sixteen wide column">
 				<div class="ui left aligned detail-container">
-					<p><strong>Progress</strong></p>
+					<h3>Progress</h3>
 					<div class="ui blue progress">
 						<div class="bar">
 							<div class="progress"></div>
 						</div>
 						<div class="label">Currently on: Design</div>
 					</div>
-					<div class="ui right floated button" onclick="displayMilestones()">
-						<a class="milestones" title="See project's milestones">See milestones</a>
-					</div>
+					<a role="button" class="ui right floated button milestones" title="See project's milestones" onclick="displayMilestones()">See milestones</a>
 					<div class="ui list milestone-section hidden">
 						<div class="item done">
 							<i class="large circle green icon"></i>
 							<div class="content">
-								<div class="header">Ideation</div>
+								<p class="header">Ideation</p>
 								<div class="description">Finished on 4/20</div>
 							</div>
 						</div>
 						<div class="item current">
 							<i class="large circle blue icon"></i>
 							<div class="content">
-								<div class="header">Design</div>
+								<p class="header">Design</p>
 								<div class="description">Estimated date: 4/25</div>
 							</div>
 						</div>
 						<div class="item coming-up">
 							<i class="large circle grey icon"></i>
 							<div class="content">
-								<div class="header">Planning</div>
+								<p class="header">Planning</p>
 								<div class="description">Estimated date: 4/30</div>
 							</div>
 						</div>
 						<div class="item coming-up">
 							<i class="large circle grey icon"></i>
 							<div class="content">
-								<div class="header">Execution</div>
+								<p class="header">Execution</p>
 								<div class="description">Estimated date: 6/10</div>
 							</div>
 						</div>
 						<div class="item coming-up">
 							<i class="large circle grey icon"></i>
 							<div class="content">
-								<div class="header">Test</div>
+								<p class="header">Test</p>
 								<div class="description">Estimated date: 6/30</div>
 							</div>
 						</div>
@@ -249,7 +247,7 @@
 	})
 
 	function displayMilestones(){
-		$('.milestone-section').removeClass('hidden');
+		$('.milestone-section').toggle();
 	}
 </script>
 @endsection
