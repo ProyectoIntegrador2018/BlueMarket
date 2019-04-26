@@ -28,15 +28,22 @@
 				@if(isset($team->projects) && count($team->projects) > 0)
 					<div class="ui three column stackable grid">
 						@foreach ($team->projects as $project)
-							@projectCard(['id'=> $project->id,'projectImage' => $project->photo, 'projectName' => $project->name, 'projectShortDescription' => $project->short_description, 'labels' => $project->labels, 'publicMilestone' => 'shipping'])
+							@projectCard([
+								'id'=> $project->id,
+								'projectImage' => $project->photo,
+								'projectName' => $project->name,
+								'projectShortDescription' => $project->short_description,
+								'labels' => $project->labels,
+								'publicMilestone' => 'shipping'
+							])
 							@endprojectCard
 						@endforeach
 					</div>
 				@else
 					<div id="no-projects-msg" class="ui message">
-						<div class="header">
+						<p class="header">
 							No projects found!
-						</div>
+						</p>
 						<p>Looks like this team does not own any projects... yet!</p>
 					</div>
 				@endif
@@ -65,6 +72,7 @@
 							<input class="user-search-input" type="hidden" name="newMember">
 							<div class="default text">Select new member</div>
 							<div class="menu">
+								<!-- TODO: populate select onChange and onFocus -->
 								@if(isset($users))
 									@foreach($users as $user)
 										<div class="item" data-value={{ $user->id }}>
@@ -97,7 +105,7 @@
 						</div>
 					@endif
 					<div id="member-to-add-modal" class="ui modal">
-						<div class="header">Add member</div>
+						<p class="header">Add member</p>
 						<div class="content">
 							<p>Invite</p>
 							<p><strong id="newMemberName"></strong></p>
