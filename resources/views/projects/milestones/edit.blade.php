@@ -23,7 +23,7 @@
 			<!-- Missing: value="{ $milestone->previous_milestone }}"-->
 			<select class="ui fluid search dropdown" name="prevMilestone" id="prevMilestone">
 				{{-- @foreach ($milestones as $prevMilestone)
-					<option value={{ $prevMilestone->id }}> {{ $prevMilestone->name }} </option>
+					<option value="{{ $prevMilestone->id }}"> {{ $prevMilestone->name }} </option>
 				@endforeach --}}
 			</select>
 		</div>
@@ -32,7 +32,12 @@
 		<div class="field">
 			<label for="estimatedDate">Estimated date</label>
 			<!-- Missing: value="{ $milestone->estimated_date }}"-->
-			<input type="date" name="estimatedDate" id="estimatedDate">
+			<div class="ui calendar">
+				<div class="ui input left icon">
+					<i class="calendar icon"></i>
+					<input id="dueDate" name="dueDate" type="text" placeholder="e.g. 30/4/2019 5:30 PM" value="">
+				</div>
+			</div>
 		</div>
 
 		<!-- Status -->
@@ -48,7 +53,7 @@
 
 		<!-- Error message -->
 		<div class="ui error message">
-			<div class="header">Whoops! Something went wrong.</div>
+			<p class="header">Whoops! Something went wrong.</p>
 			@if($errors->any())
 				<ul>
 					@foreach ($errors->all() as $error)
