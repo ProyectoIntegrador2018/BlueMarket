@@ -67,7 +67,7 @@ class User extends Authenticatable
 		return $this->belongsToMany('App\Tag', 'skill_user', 'user_id', 'tag_id');
 	}
 
-	public function receivedTeamInvites() {
+	public function teamInvites() {
 		// TODO: add invites to join project as supplier
 		return $this->belongsToMany('App\Team', 'team_user', 'user_id', 'team_id')
 		->withPivot('has_accepted')
