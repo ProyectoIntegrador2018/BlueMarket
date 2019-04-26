@@ -41,6 +41,10 @@ Route::post('/contact', 'ContactMessageController@post');
 /* teams */
 Route::resource('teams', 'TeamController');
 
+/* notification center */
+//Route::get('/notifications', 'NotificationController@index');
+
+
 /* Admin routes
 --------------------------------------------- */
 Route::namespace('Admin')->prefix('admin')->group(function() {
