@@ -25,7 +25,7 @@
 				<a class="item" data-tab="members">Members</a>
 			</div>
 			<div class="ui bottom attached active tab segment" data-tab="projects">
-				@if(isset($team->projects) && count($team->projects) > 0)
+				@if(isset($team->projects))
 					<div class="ui three column stackable grid">
 						@foreach ($team->projects as $project)
 							@projectCard([
@@ -41,15 +41,13 @@
 					</div>
 				@else
 					<div id="no-projects-msg" class="ui message">
-						<p class="header">
-							No projects found!
-						</p>
+						<p class="header">No projects found!</p>
 						<p>Looks like this team does not own any projects... yet!</p>
 					</div>
 				@endif
 			</div>
 			<div class="ui bottom attached tab segment" data-tab="members">
-				<div class="{{ count($team->members) <= 0 ? 'hidden' : '' }}">
+				<div>
 					<h2>Current members</h2>
 					<table class="ui striped table">
 						<tbody>
@@ -142,10 +140,11 @@
 		/* Validate invitation to join the team */
 		function validateNewMember() {
 			// get the info of the user that will receive the invitation
+			const defaultValue = $("#new-member-dropdown").dropdown("get default value");
 			const newMemberName = $("#new-member-dropdown").dropdown("get text");
 			const newMemberId = $("#new-member-dropdown").dropdown("get value");
 
-			if(newMemberId === $("#new-member-dropdown").dropdown("get default value")) {
+			if(newMemberId === defaultValue) {
 				$("#new-member-dropdown").addClass("error");
 				return false;
 			}
