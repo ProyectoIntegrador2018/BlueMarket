@@ -126,6 +126,7 @@
 <script>
 	/* Semantic UI tabs */
 	$(".menu .item").tab();
+	$("#member-to-add-modal").modal({ transition: "fade up" });
 
 	@if(Auth::id() === $team->leader->id)
 		/* Semantic UI dropdown */
@@ -150,9 +151,7 @@
 			}
 
 			$("#newMemberName").text(newMemberName);
-			$("#member-to-add-modal").modal({
-				transition: "fade up"
-			}).modal("show");
+			$("#member-to-add-modal").modal("show");
 		}
 
 		/* Generate a table row with the info of the user to inveite */
