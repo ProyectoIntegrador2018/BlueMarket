@@ -11,6 +11,9 @@ use Illuminate\Http\Request;
 
 class TeamController extends Controller
 {
+	const ROLES = 'enum.user_roles';
+	const INVITES = 'enum.invite_status';
+
 	public function __construct() {
 		$this->middleware('auth');
 	}
@@ -121,6 +124,14 @@ class TeamController extends Controller
 	 */
 	public function destroy(Team $team) {
 		//
+	}
+
+	public function acceptInvite(int $id) {
+		DB::table('team_user')->where('id', $id)->update(['has_accepted' => config(self::INVITES)['accepted']]);
+	}
+
+	public function refuseInvite(int $id) {
+		DB::table('team_user')->where('id', $id)->delete();
 	}
 
 	/**
