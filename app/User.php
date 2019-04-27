@@ -33,23 +33,23 @@ class User extends Authenticatable
 	];
 
 	public static function students() {
-		return self::where('role', config(self::ROLES)['student'])->get();
+		return self::where('role', config(self::ROLES)['student']);
 	}
 
 	public static function teachers() {
-		return self::where('role', config(self::ROLES)['teacher'])->get();
+		return self::where('role', config(self::ROLES)['teacher']);
 	}
 
 	public function teaches() {
 		return $this->belongsToMany('App\Course')
-			->join('users as usrs', 'course_user.user_id', '=', 'usrs.id')
-			->where('usrs.role', config(self::ROLES)['teacher']);
+			->join('users', 'course_user.user_id', '=', 'users.id')
+			->where('users.role', config(self::ROLES)['teacher']);
 	}
 
 	public function enrolledIn() {
 		return $this->belongsToMany('App\Course')
-			->join('users as usrs', 'course_user.user_id', '=', 'usrs.id')
-			->where('usrs.role', config(self::ROLES)['student']);
+			->join('users', 'course_user.user_id', '=', 'users.id')
+			->where('users.role', config(self::ROLES)['student']);
 	}
 
 	public function teamsLed() {

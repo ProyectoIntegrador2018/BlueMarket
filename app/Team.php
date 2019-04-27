@@ -26,7 +26,7 @@ class Team extends Model
 			->wherePivot('has_accepted', config(self::INVITES)['accepted']);
 	}
 
-	public function pendingInvites() {
+	public function pending_members() {
 		return $this->belongsToMany('App\User', 'team_user', 'team_id', 'user_id')
 			->withPivot('has_accepted')
 			->withTimestamps()
