@@ -348,7 +348,16 @@ $color-white: #fff;
 	margin-top: 10px;
 
 	.project-card, .student-card {
+		display: flex;
+
 		.extra.content {
+			&.milestone {
+				color: $color-white;
+				background: $color-primary;
+				text-transform: uppercase;
+				text-align: center;
+			}
+
 			.ui.bluemarket-skill.label {
 				background-color: $color-primary;
 				color: $color-white;
@@ -356,14 +365,11 @@ $color-white: #fff;
 				margin-bottom: 1vh;
 			}
 		}
-		.ui.bottom.attached.label {
-			position: relative;
-			color: $color-white;
-			background: $color-secondary;
-			text-transform: uppercase;
-			text-align: center;
-			width: auto;
-		}
+	}
+
+	.ui.card.eq-card {
+		flex: 1; /* shrink and grow according to available height */
+  		flex-basis: 0;
 	}
 }
 

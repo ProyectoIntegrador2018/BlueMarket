@@ -1,5 +1,5 @@
 <a class="project-card ProjectCard-container column" href="{{ url('projects', $id) }}">
-	<div class="ui stackable centered card projectcard">
+	<div class="ui stackable centered card projectcard fluid eq-card">
 		<div class="image">
 			<img src={{ $projectImage }}>
 		</div>
@@ -23,6 +23,8 @@
 				<div class="ui bluemarket-skill label">{{ $label->name }}</div>
 			@endforeach
 		</div>
-		<div class="ui bottom attached label content">{{ $publicMilestone }}</div>
+		<div class="extra content milestone">
+			<p>{{ $publicMilestone }}</p>
+		</div>
 	</div>
 </a>

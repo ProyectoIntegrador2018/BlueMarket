@@ -30,7 +30,7 @@
 		<p>No projects meet search criteria.</p>
 	</div>
 	<!-- Project Cards -->
-	<div class="ui four column stackable grid">
+	<div id="projects-grid" class="ui four column stackable grid">
 		@foreach ($projects as $project)
 			@projectCard([
 				'id'=> $project->id,
@@ -49,6 +49,19 @@
 
 @section('scripts')
 <script>
+	function adjustProjectsGrid(maxWidth) {
+		if (maxWidth.matches) {
+			$("#projects-grid").removeClass("four column stackable grid").addClass("two column stackable grid");
+		}
+		else {
+			$("#projects-grid").removeClass("two column stackable grid").addClass("four column stackable grid");
+		}
+	}
+
+	let maxWidth = window.matchMedia("(max-width: 1100px)");
+	adjustProjectsGrid(maxWidth); // Call listener function at run time
+	maxWidth.addListener(adjustProjectsGrid); // Attach listener function on state changes
+
 	$('.ui.dropdown').dropdown();
 	let projects = {!! $projects !!};
 </script>
