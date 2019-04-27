@@ -42,7 +42,6 @@ class MilestoneController extends Controller
     {
         $validatedAttributes = request()->validate([
 			'name' => 'required|string',
-			'estimated_date' => 'required|string',
 			'project_id' => 'required|int',
 		]);
 
