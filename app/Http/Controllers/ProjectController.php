@@ -111,6 +111,8 @@ class ProjectController extends Controller {
 		$project->tags()->attach($attributes['skillsets']);
 		$project->tags()->attach($attributes['labels']);
 
+		MilestoneController::createDefaultMilestones($project->id);
+
 		return redirect()->action('ProjectController@show', ['id' => $project->id]);
 	}
 
