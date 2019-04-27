@@ -126,12 +126,24 @@ class TeamController extends Controller
 		//
 	}
 
-	public function acceptInvite(int $id) {
-		DB::table('team_user')->where('id', $id)->update(['has_accepted' => config(self::INVITES)['accepted']]);
+	/**
+	 * Accept an invite to join a team.
+	 *
+	 * @param  int $inviteId
+	 * @return \Illuminate\Http\Response
+	 */
+	public function acceptInvite(int $inviteId) {
+		DB::table('team_user')->where('id', $inviteId)->update(['has_accepted' => config(self::INVITES)['accepted']]);
 	}
 
-	public function refuseInvite(int $id) {
-		DB::table('team_user')->where('id', $id)->delete();
+	/**
+	 * Refuse an invite to join a team.
+	 *
+	 * @param  int $inviteId
+	 * @return \Illuminate\Http\Response
+	 */
+	public function refuseInvite(int $inviteId) {
+		DB::table('team_user')->where('id', $inviteId)->delete();
 	}
 
 	/**
