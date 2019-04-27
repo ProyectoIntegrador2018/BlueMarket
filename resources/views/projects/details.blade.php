@@ -12,6 +12,7 @@
 		<a class="item" data-tab="collaborators">Collaborators</a>
 		<!-- TODO:check if($project->IsProjectCollaborator(Auth::id())) -->
 		<a class="item" data-tab="tasks">Tasks</a>
+		<a class="item" data-tab="milestones">Milestones</a>
 	</div>
 	<div class="ui bottom attached active tab segment" data-tab="overview">
 		<div class="ui stackable two column grid">
@@ -93,53 +94,12 @@
 			</div>
 			<!-- Progress section -->
 			<div class="sixteen wide column">
-				<div class="ui left aligned detail-container">
-					<h3>Progress</h3>
-					<div class="ui blue progress">
-						<div class="bar">
-							<div class="progress"></div>
-						</div>
-						<div class="label">Currently on: Design</div>
+				<h3>Progress</h3>
+				<div class="ui blue progress">
+					<div class="bar">
+						<div class="progress"></div>
 					</div>
-					<a role="button" class="ui right floated button milestones" title="See project's milestones" onclick="displayMilestones()">See milestones</a>
-					<div class="ui list milestone-section hidden">
-						<div class="item done">
-							<i class="large circle green icon"></i>
-							<div class="content">
-								<p class="header">Ideation</p>
-								<div class="description">Finished on 4/20</div>
-							</div>
-						</div>
-						<div class="item current">
-							<i class="large circle blue icon"></i>
-							<div class="content">
-								<p class="header">Design</p>
-								<div class="description">Estimated date: 4/25</div>
-							</div>
-						</div>
-						<div class="item coming-up">
-							<i class="large circle grey icon"></i>
-							<div class="content">
-								<p class="header">Planning</p>
-								<div class="description">Estimated date: 4/30</div>
-							</div>
-						</div>
-						<div class="item coming-up">
-							<i class="large circle grey icon"></i>
-							<div class="content">
-								<p class="header">Execution</p>
-								<div class="description">Estimated date: 6/10</div>
-							</div>
-						</div>
-						<div class="item coming-up">
-							<i class="large circle grey icon"></i>
-							<div class="content">
-								<p class="header">Test</p>
-								<div class="description">Estimated date: 6/30</div>
-							</div>
-						</div>
-						<a class="ui right floated primary button" title="Edit milestone map" href="">Edit milestone map</a>
-					</div>
+					<div class="label">Currently on: Design</div>
 				</div>
 			</div>
 		</div>
@@ -192,6 +152,48 @@
 			@include('projects.tasks.create')
 		</div>
 	</div>
+	<div class="ui bottom attached tab segment" data-tab="milestones">
+		<div class="ui left aligned detail-container">
+			<div class="ui list milestone-section hidden">
+				<div class="item done">
+					<i class="large circle green icon"></i>
+					<div class="content">
+						<p class="header">Ideation</p>
+						<div class="description">Finished on 4/20</div>
+					</div>
+				</div>
+				<div class="item current">
+					<i class="large circle blue icon"></i>
+					<div class="content">
+						<p class="header">Design</p>
+						<div class="description">Estimated date: 4/25</div>
+					</div>
+				</div>
+				<div class="item coming-up">
+					<i class="large circle grey icon"></i>
+					<div class="content">
+						<p class="header">Planning</p>
+						<div class="description">Estimated date: 4/30</div>
+					</div>
+				</div>
+				<div class="item coming-up">
+					<i class="large circle grey icon"></i>
+					<div class="content">
+						<p class="header">Execution</p>
+						<div class="description">Estimated date: 6/10</div>
+					</div>
+				</div>
+				<div class="item coming-up">
+					<i class="large circle grey icon"></i>
+					<div class="content">
+						<p class="header">Test</p>
+						<div class="description">Estimated date: 6/30</div>
+					</div>
+				</div>
+				<a class="ui right floated primary button" title="Edit milestone map" href="{{ url('/projects/milestones/index') }}">Edit milestone map</a>
+			</div>
+		</div>
+	</div>
 </div>
 
 @section('scripts')
@@ -207,10 +209,6 @@
 
 	function showTaskModal() {
 		$("#new-task-modal").modal("show");
-	}
-
-	function displayMilestones(){
-		$('.milestone-section').toggle();
 	}
 
 	$(document).ready(function(){
