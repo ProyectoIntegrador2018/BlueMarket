@@ -12,8 +12,10 @@
 		<a class="item" data-tab="collaborators">Collaborators</a>
 		<!-- TODO:check if($project->IsProjectCollaborator(Auth::id())) -->
 		<a class="item" data-tab="tasks">Tasks</a>
+		<!-- TODO:check if($project->IsProjectCollaborator(Auth::id())) -->
 		<a class="item" data-tab="milestones">Milestones</a>
 	</div>
+
 	<div class="ui bottom attached active tab segment" data-tab="overview">
 		<div class="ui stackable two column grid">
 			<div class="four wide column">
@@ -101,9 +103,47 @@
 					</div>
 					<div class="label">Currently on: Design</div>
 				</div>
+				<div class="ui list milestone-section">
+					<div class="item done">
+						<i class="large circle green icon"></i>
+						<div class="content">
+							<p class="header">Ideation</p>
+							<div class="description">Finished on 4/20</div>
+						</div>
+					</div>
+					<div class="item current">
+						<i class="large circle blue icon"></i>
+						<div class="content">
+							<p class="header">Design</p>
+							<div class="description">Estimated date: 4/25</div>
+						</div>
+					</div>
+					<div class="item coming-up">
+						<i class="large circle grey icon"></i>
+						<div class="content">
+							<p class="header">Planning</p>
+							<div class="description">Estimated date: 4/30</div>
+						</div>
+					</div>
+					<div class="item coming-up">
+						<i class="large circle grey icon"></i>
+						<div class="content">
+							<p class="header">Execution</p>
+							<div class="description">Estimated date: 6/10</div>
+						</div>
+					</div>
+					<div class="item coming-up">
+						<i class="large circle grey icon"></i>
+						<div class="content">
+							<p class="header">Test</p>
+							<div class="description">Estimated date: 6/30</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
+
 	<div class="ui bottom attached tab segment" data-tab="collaborators">
 		<div class="ui stackable grid">
 			@if(isset($project->team->members) && count($project->team->members) > 0)
@@ -146,52 +186,19 @@
 			@endif
 		</div>
 	</div>
+
 	<div class="ui bottom attached tab segment" data-tab="tasks">
 		<button type="button" class="ui button primary" onclick="showTaskModal()">New task</button>
 		<div id="new-task-modal" class="ui tiny modal new-task-modal">
 			@include('projects.tasks.create')
 		</div>
 	</div>
+
 	<div class="ui bottom attached tab segment" data-tab="milestones">
-		<div class="ui left aligned detail-container">
-			<div class="ui list milestone-section hidden">
-				<div class="item done">
-					<i class="large circle green icon"></i>
-					<div class="content">
-						<p class="header">Ideation</p>
-						<div class="description">Finished on 4/20</div>
-					</div>
-				</div>
-				<div class="item current">
-					<i class="large circle blue icon"></i>
-					<div class="content">
-						<p class="header">Design</p>
-						<div class="description">Estimated date: 4/25</div>
-					</div>
-				</div>
-				<div class="item coming-up">
-					<i class="large circle grey icon"></i>
-					<div class="content">
-						<p class="header">Planning</p>
-						<div class="description">Estimated date: 4/30</div>
-					</div>
-				</div>
-				<div class="item coming-up">
-					<i class="large circle grey icon"></i>
-					<div class="content">
-						<p class="header">Execution</p>
-						<div class="description">Estimated date: 6/10</div>
-					</div>
-				</div>
-				<div class="item coming-up">
-					<i class="large circle grey icon"></i>
-					<div class="content">
-						<p class="header">Test</p>
-						<div class="description">Estimated date: 6/30</div>
-					</div>
-				</div>
-				<a class="ui right floated primary button" title="Edit milestone map" href="{{ url('/projects/milestones/index') }}">Edit milestone map</a>
-			</div>
+		<button type="button" class="ui button primary" onclick="showMilestoneModal()">New milestone</button>
+		@include('projects.milestones.index')
+		<div id="new-milestone-modal" class="ui tiny modal new-milestone-modal">
+			@include('projects.milestones.create')
 		</div>
 	</div>
 </div>
@@ -202,6 +209,7 @@
 	/* Semantic UI setup */
 	$(".menu .item").tab();
 	$("#new-task-modal").modal({ transition: "fade up" });
+	$("#new-milestone-modal").modal({ transition: "fade up" });
 
 	function hideTaskModal() {
 		$("#new-task-modal").modal("hide");
@@ -209,6 +217,14 @@
 
 	function showTaskModal() {
 		$("#new-task-modal").modal("show");
+	}
+
+	function showMilestoneModal() {
+		$("#new-milestone-modal").modal("show");
+	}
+
+	function hideMilestoneModal() {
+		$("#new-milestone-modal").modal("hide");
 	}
 
 	$(document).ready(function(){
