@@ -1,40 +1,30 @@
-@extends('layouts.app')
+<form class="ui form {{ $errors->any() ? 'error': '' }}" method="post" enctype="multipart/form-data" action="">
+@csrf
 
-@section('title', 'Create milestone')
+@include('projects.milestones.form')
 
-@section('content')
+<!-- Submit button -->
+<button type="submit" class="ui button submit primary">Create</button>
+<a href="" title="Back" class="ui button">Back</a>
+</form>
+</div>
 
-<div class="padded content">
-	<h1>Create milestone</h1>
+@section('scripts')
+<script>
+$(document).ready(function(){
+	$(".ui.fluid.search.dropdown").dropdown();
+})
 
-	<form class="ui form {{ $errors->any() ? 'error': '' }}" method="post" enctype="multipart/form-data" action="">
-		@csrf
-
-		@include('projects.milestones.form')
-
-		<!-- Submit button -->
-		<button type="submit" class="ui button submit primary">Create</button>
-		<a href="" title="Back" class="ui button">Back</a>
-		</form>
-	</div>
-	@endsection
-
-	@section('scripts')
-	<script>
-		$(document).ready(function(){
-			$(".ui.fluid.search.dropdown").dropdown();
-		})
-
-		$(".ui.form").form({
-			fields: {
-				milestoneName: ["empty", "maxLength[30]"],
-				prevMilestone: ["empty"],
-				estimatedDate: ["empty"],
-				status: ["empty"]
-			},
-			onFailure: function() {
-				return false;
-			}
-		});
-	</script>
-	@endsection
+$(".ui.form").form({
+	fields: {
+		milestoneName: ["empty", "maxLength[30]"],
+		prevMilestone: ["empty"],
+		estimatedDate: ["empty"],
+		status: ["empty"]
+	},
+	onFailure: function() {
+		return false;
+	}
+});
+</script>
+@endsection

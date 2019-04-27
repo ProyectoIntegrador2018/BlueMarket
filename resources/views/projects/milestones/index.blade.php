@@ -1,129 +1,112 @@
-@extends('layouts.app')
+<table class="ui celled table">
+	<thead>
+		<tr>
+			<th>#</th>
+			<th>Name</th>
+			<th>Status</th>
+			<th>Estimated date</th>
+			<th>Done date</th>
+			<th>Action</th>
+		</tr>
+	</thead>
+	<tbody>
+	{{-- @foreach($milestones as $milestone)
+		<tr>
+			<td>{{ $loop->iteration }}</td>
 
-@section('title', 'View milestones')
+			<td>{{ $milestone->name }}</td>
 
-@section('content')
+			<td>
+				@switch($milestone->status)
+				@case(Config::get('enum.milestone_status')['done'])
+				<span class="">Done</span>
+				@break
 
-<div class="padded content">
-	<h1>View milestones</h1>
+				@case(Config::get('enum.milestone_status')['current'])
+				<span class="">Current</span>
+				@break
 
-	<a class="ui button primary right floated" href="">Create</a>
-	<table class="ui celled table">
-		<thead>
-			<tr>
-				<th>#</th>
-				<th>Name</th>
-				<th>Status</th>
-				<th>Estimated date</th>
-				<th>Done date</th>
-				<th>Action</th>
-			</tr>
-		</thead>
-		<tbody>
-			{{-- @foreach($milestones as $milestone)
-			<tr>
-				<td>{{ $loop->iteration }}</td>
+				@case(Config::get('enum.milestone_status')['coming-up'])
+				<span class="">Coming up</span>
+				@break
 
-				<td>{{ $milestone->name }}</td>
+				@default
+				<span class="">Coming up</span>
+				@endswitch
+			</td>
 
-				<td>
-					@switch($milestone->status)
-					@case(Config::get('enum.milestone_status')['done'])
-					<span class="">Done</span>
-					@break
+			<td>{{ $milestone->estimated_date }}</td>
 
-					@case(Config::get('enum.milestone_status')['current'])
-					<span class="">Current</span>
-					@break
+			<td>{{ isset($milestone->done_date) ?  $milestone->done_date : '-' }}</td>
 
-					@case(Config::get('enum.milestone_status')['coming-up'])
-					<span class="">Coming up</span>
-					@break
+			<td>
+				<a class="ui button primary" href="{{ url('/projects/' . $project->id . '/milestones/' . $milestone->id . '/edit') }}">Edit</a>
+			</td>
+		</tr>
+		@endforeach --}}
+		<tr>
+			<td>1</td>
+			<td>Ideation</td>
+			<td>
+				<span class="ui green label">Done</span>
+			</td>
+			<td>4/19</td>
+			<td>4/20</td>
+			<td>
+				<a class="ui button primary" href="">Edit</a>
+			</td>
+		</tr>
 
-					@default
-					<span class="">Coming up</span>
-					@endswitch
-				</td>
+		<tr>
+			<td>2</td>
+			<td>Design</td>
+			<td>
+				<span class="ui blue label">Current</span>
+			</td>
+			<td>4/25</td>
+			<td>-</td>
+			<td>
+				<a class="ui button primary" href="">Edit</a>
+			</td>
+		</tr>
 
-				<td>{{ $milestone->estimated_date }}</td>
+		<tr>
+			<td>3</td>
+			<td>Planning</td>
+			<td>
+				<span class="ui grey label">Coming up</span>
+			</td>
+			<td>4/30</td>
+			<td>-</td>
+			<td>
+				<a class="ui button primary" href="">Edit</a>
+			</td>
+		</tr>
 
-				<td>{{ isset($milestone->done_date) ?  $milestone->done_date : '-' }}</td>
+		<tr>
+			<td>4</td>
+			<td>Execution</td>
+			<td>
+				<span class="ui grey label">Coming up</span>
+			</td>
+			<td>6/10</td>
+			<td>-</td>
+			<td>
+				<a class="ui button primary" href="">Edit</a>
+			</td>
+		</tr>
 
-				<td>
-					<a class="ui button primary" href="{{ url('/projects/' . $project->id . '/milestones/' . $milestone->id . '/edit') }}">Edit</a>
-				</td>
-			</tr>
-			@endforeach --}}
-			<tr>
-				<td>1</td>
-				<td>Ideation</td>
-				<td>
-					<span class="ui green label">Done</span>
-				</td>
-				<td>4/19</td>
-				<td>4/20</td>
-				<td>
-					<a class="ui button primary" href="">Edit</a>
-				</td>
-			</tr>
-
-			<tr>
-				<td>2</td>
-				<td>Design</td>
-				<td>
-					<span class="ui blue label">Current</span>
-				</td>
-				<td>4/25</td>
-				<td>-</td>
-				<td>
-					<a class="ui button primary" href="">Edit</a>
-				</td>
-			</tr>
-
-			<tr>
-				<td>3</td>
-				<td>Planning</td>
-				<td>
-					<span class="ui grey label">Coming up</span>
-				</td>
-				<td>4/30</td>
-				<td>-</td>
-				<td>
-					<a class="ui button primary" href="">Edit</a>
-				</td>
-			</tr>
-
-			<tr>
-				<td>4</td>
-				<td>Execution</td>
-				<td>
-					<span class="ui grey label">Coming up</span>
-				</td>
-				<td>6/10</td>
-				<td>-</td>
-				<td>
-					<a class="ui button primary" href="">Edit</a>
-				</td>
-			</tr>
-
-			<tr>
-				<td>5</td>
-				<td>Test</td>
-				<td>
-					<span class="ui grey label">Coming up</span>
-				</td>
-				<td>6/30</td>
-				<td>-</td>
-				<td>
-					<a class="ui button primary" href="">Edit</a>
-				</td>
-			</tr>
-		</tbody>
-	</table>
-
-</div>
-
-@endsection
-
-@section('scripts')
-@endsection
+		<tr>
+			<td>5</td>
+			<td>Test</td>
+			<td>
+				<span class="ui grey label">Coming up</span>
+			</td>
+			<td>6/30</td>
+			<td>-</td>
+			<td>
+				<a class="ui button primary" href="">Edit</a>
+			</td>
+		</tr>
+	</tbody>
+</table>
