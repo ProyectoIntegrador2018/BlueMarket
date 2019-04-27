@@ -28,8 +28,12 @@ class ProjectController extends Controller {
 
 		// Calculate project progress.
 		$numOfMilestones = $project->milestones->count();
-		$numOfDoneMilestones = $project->milestones->where('status', config(self::MILESTONE_STATUS)['done'])->count();
-		$project->progress = $numOfDoneMilestones / $numOfMilestones;
+		if ($numOfMilestones > 0) {
+			$numOfDoneMilestones = $project->milestones->where('status', config(self::MILESTONE_STATUS)['done'])->count();
+			$project->progress = $numOfDoneMilestones / $numOfMilestones;
+		} else {
+			$project->progress = 0;
+		}
 
 		return view('projects.details', ['project' => $project]);
 	}
