@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 
 class ProjectController extends Controller {
+	const INVITES = 'enum.invite_status';
 
 	public function __construct() {
 		$this->middleware('auth')->except(['index', 'show']);
@@ -140,5 +141,25 @@ class ProjectController extends Controller {
 		$id = preg_replace('/((http(s)?:\/\/)?)(www\.)?((youtube\.com\/watch\?v=)|(youtu.be\/)|(youtube\.com\/embed\/))/', '', $inputUrl);
 		$embedUrl = "https://www.youtube.com/embed/".$id;
 		return $embedUrl;
+	}
+
+	/**
+	 * Accept an invite to join a project.
+	 *
+	 * @param  int $inviteId
+	 * @return \Illuminate\Http\Response
+	 */
+	public function acceptInvite(int $inviteId) {
+		DB::table('project_user')->where('id', $inviteId)->update(['has_accepted' => config(self::INVITES)['accepted']]);
+	}
+
+	/**
+	 * Refuse an invite to join a project.
+	 *
+	 * @param  int $inviteId
+	 * @return \Illuminate\Http\Response
+	 */
+	public function refuseInvite(int $inviteId) {
+		DB::table('project_user')->where('id', $inviteId)->delete();
 	}
 }
