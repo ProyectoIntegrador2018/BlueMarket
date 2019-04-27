@@ -19,7 +19,7 @@ class MilestoneController extends Controller
 		$projectId = $request->get('projectId');
 		$milestones = Project::findOrFail($projectId)->milestones;
 
-		return view('milestones.index', compact('milestones'));
+		return view('projects.milestones.index', compact('milestones'));
     }
 
     /**
@@ -29,7 +29,7 @@ class MilestoneController extends Controller
      */
     public function create()
     {
-        return view('milestones.create');
+        return view('projects.milestones.create');
     }
 
     /**
@@ -61,7 +61,7 @@ class MilestoneController extends Controller
     public function show(int $id)
     {
 		$milestone = Milestone::findOrFail($id);
-		return view('milestones.details', compact('milestone'));
+		return view('projects.milestones.details', compact('milestone'));
     }
 
     /**
@@ -73,7 +73,7 @@ class MilestoneController extends Controller
     public function edit(int $id)
     {
 		$milestone = Milestone::findOrFail($id);
-		return view('milestones.edit', compact('milestone'));
+		return view('projects.milestones.edit', compact('milestone'));
     }
 
     /**
