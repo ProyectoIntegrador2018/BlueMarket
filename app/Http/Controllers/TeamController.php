@@ -69,7 +69,22 @@ class TeamController extends Controller
 			$team->img_url = 'https://avatars1.githubusercontent.com/u/42351872?s=200&v=4';
 		}
 
-		return view('teams.details', compact('team'));
+		// Check courses associated with teams' existing projects, and filter users accordingly
+		$courses = array_unique($team->projects()->with('course:id')->get()->pluck('course.id')->toArray());
+		$teamUsers = array_merge($team->members()->get()->pluck('id')->toArray(), $team->pending_members()->get()->pluck('id')->toArray());
+
+		if (empty($courses)) {
+			// get all students except team members
+			$students = User::students()->whereNotIn('users.id', $teamUsers)->get();
+		} else {
+			// get all students except team members and people in courses
+			$students = User::students()->whereNotIn('users.id', $teamUsers)
+				->whereHas('enrolledIn', function ($q) use($courses) {
+					$q->whereIn('courses.id', $courses);
+				})->get();
+		}
+
+		return view('teams.details', compact('team', 'users'));
 	}
 
 	/**
@@ -90,7 +105,10 @@ class TeamController extends Controller
 	 * @return \Illuminate\Http\Response
 	 */
 	public function update(Request $request, Team $team) {
-		//
+		if (!empty($request['newMember'])) {
+			$team->members()->attach($request['newMember']);
+		}
+		return redirect()->route('teams.show', [$team]);
 	}
 
 	/**
