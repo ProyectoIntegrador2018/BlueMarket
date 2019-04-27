@@ -111,7 +111,7 @@
 						</div>
 						<div class="actions">
 							<button type="button" class="ui cancel button">Cancel</button>
-							<button type="button" class="ui ok primary button" onclick="inviteMember()">Confirm</button>
+							<button type="button" class="ui ok primary button">Confirm</button>
 						</div>
 					</div>
 				@endif
@@ -173,35 +173,6 @@
 						</tr>`;
 
 			return row;
-		}
-
-		/* Send invitation via ajax to join the team */
-		function inviteMember() {
-			const userToInvite = $("#new-member-dropdown").dropdown("get value");
-
-			$.ajax({
-				// TODO: update url if needed
-				url: '/teams/edit/{!! $team->id !!}',
-				method: 'patch',
-				headers: {
-					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-				},
-				data: {
-					'id_new_member': userToInvite
-				},
-				dataType: 'json',
-				success: function(data) {
-					let rowToAdd = generatePendingInviteRow(data.invite);
-					$("#pendingInvites tbody").append(rowToAdd);
-					$("#pendingInvites").show();
-					renderDateTimeAgoOnce(); // refresh sent datetimes
-				},
-				error: function(data) {
-					// TODO: error handling (need possible errors)
-				}
-			});
-
-			$("#new-member-dropdown").dropdown("restore defaults");
 		}
 	@endif
 </script>
