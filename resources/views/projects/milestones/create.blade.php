@@ -1,30 +1,21 @@
-<form class="ui form {{ $errors->any() ? 'error': '' }}" method="post" enctype="multipart/form-data" action="">
-@csrf
-
-@include('projects.milestones.form')
-
-<!-- Submit button -->
-<button type="submit" class="ui button submit primary">Create</button>
-<a href="" title="Back" class="ui button">Back</a>
-</form>
+<div class="header">New milestone</div>
+<div class="content">
+	<form class="ui form milestones create {{ $errors->any() ? 'error': '' }}">
+		@csrf
+		@include('projects.milestones.form')
+	</form>
 </div>
-
-@section('scripts')
-<script>
-$(document).ready(function(){
-	$(".ui.fluid.search.dropdown").dropdown();
-})
-
-$(".ui.form").form({
-	fields: {
-		milestoneName: ["empty", "maxLength[30]"],
-		prevMilestone: ["empty"],
-		estimatedDate: ["empty"],
-		status: ["empty"]
-	},
-	onFailure: function() {
-		return false;
-	}
-});
-</script>
-@endsection
+<div class="ui error message">
+	<h2 class="header">Whoops! Something went wrong.</h2>
+	@if($errors->any())
+		<ul>
+			@foreach ($errors->all() as $error)
+				<li>{{ $error }}</li>
+			@endforeach
+		</ul>
+	@endif
+</div>
+<div class="actions">
+	<button type="button" class="ui cancel button" onclick="hideMilestoneModal('create')">Cancel</button>
+	<button type="submit" class="ui ok button primary">Create</button>
+</div>
