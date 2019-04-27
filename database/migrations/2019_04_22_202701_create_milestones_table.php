@@ -19,7 +19,6 @@ class CreateMilestonesTable extends Migration
 			$table->increments('id');
 			$table->string('name');
 			$table->integer('status')->nullable();
-			$table->date('estimated_date');
 			$table->date('done_date')->nullable();
 			$table->integer('project_id')->unsigned();
 			$table->foreign('project_id')->references('id')->on('projects');
