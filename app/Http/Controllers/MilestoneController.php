@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 
 class MilestoneController extends Controller
 {
+	const MILESTONE_STATUS = 'enum.milestone_status';
+
     /**
      * Display a listing of the resource.
      *
@@ -100,5 +102,48 @@ class MilestoneController extends Controller
     {
 		$milestone = Milestone::findOrFail($id);
         $milestone->destroy();
+    }
+
+    /**
+     * Create the default 5 milestones for a project.
+     *
+	 * @param  int  $projectId
+     */
+    public static function createDefaultMilestones(int $projectId)
+    {
+		$milestoneIdeation = new Milestone(['name' => 'Ideation',
+			'status' => config(self::MILESTONE_STATUS)['current'],
+			'done_date' => null,
+			'project_id' => $projectId,
+			'previous_milestone_id' => null]);
+		$milestoneIdeation->save();
+
+		$milestonertDesign = new Milestone(['name' => 'Design',
+			'status' => null,
+			'done_date' => null,
+			'project_id' => $projectId,
+			'previous_milestone_id' => $milestonIdeation]);
+		$milestonertDesign->save();
+
+		$milestonePlanning = new Milestone(['name' => 'Planning',
+			'status' => null,
+			'done_date' => null,
+			'project_id' => $projectId,
+			'previous_milestone_id' => $milestonDesign]);
+		$milestonePlanning->save();
+
+		$milestonExecution = new Milestone(['name' => 'Execution',
+			'status' => null,
+			'done_date' => null,
+			'project_id' => $projectId,
+			'previous_milestone_id' => $milestonPlanning]);
+		$milestonExecution->save();
+
+		$milestonesertTest = new Milestone(['name' => 'Test',
+			'status' => null,
+			'done_date' => null,
+			'project_id' => $projectId,
+			'previous_milestone_id' => $milestonExecution]);
+		$milestonesertTest->save();
     }
 }
