@@ -4,7 +4,6 @@
 			<th>#</th>
 			<th>Name</th>
 			<th>Status</th>
-			<th>Estimated date</th>
 			<th>Done date</th>
 			<th>Action</th>
 		</tr>
@@ -13,34 +12,29 @@
 	{{-- @foreach($milestones as $milestone)
 		<tr>
 			<td>{{ $loop->iteration }}</td>
-
 			<td>{{ $milestone->name }}</td>
-
 			<td>
 				@switch($milestone->status)
 				@case(Config::get('enum.milestone_status')['done'])
-				<span class="">Done</span>
+				<span class="ui green label">Done</span>
 				@break
 
 				@case(Config::get('enum.milestone_status')['current'])
-				<span class="">Current</span>
+				<span class="ui blue label">Current</span>
 				@break
 
 				@case(Config::get('enum.milestone_status')['coming-up'])
-				<span class="">Coming up</span>
+				<span class="ui grey label">Coming up</span>
 				@break
 
 				@default
-				<span class="">Coming up</span>
+				<span class="ui grey label">Coming up</span>
 				@endswitch
 			</td>
-
-			<td>{{ $milestone->estimated_date }}</td>
-
 			<td>{{ isset($milestone->done_date) ?  $milestone->done_date : '-' }}</td>
-
 			<td>
-				<a class="ui button primary" href="{{ url('/projects/' . $project->id . '/milestones/' . $milestone->id . '/edit') }}">Edit</a>
+				<button class="ui button primary" onclick="showMilestoneModal('edit')">Edit</button>
+				<button class="ui button red" onclick="showMilestoneModal('delete')">Delete</button>
 			</td>
 		</tr>
 		@endforeach --}}
@@ -51,9 +45,9 @@
 				<span class="ui green label">Done</span>
 			</td>
 			<td>4/19</td>
-			<td>4/20</td>
 			<td>
-				<a class="ui button primary" href="">Edit</a>
+				<button class="ui button primary" onclick="showMilestoneModal('edit')">Edit</button>
+				<button class="ui button red" onclick="showMilestoneModal('delete')">Delete</button>
 			</td>
 		</tr>
 
@@ -63,10 +57,10 @@
 			<td>
 				<span class="ui blue label">Current</span>
 			</td>
-			<td>4/25</td>
 			<td>-</td>
 			<td>
-				<a class="ui button primary" href="">Edit</a>
+				<button class="ui button primary" onclick="showMilestoneModal('edit')">Edit</button>
+				<button class="ui button red" onclick="showMilestoneModal('delete')">Delete</button>
 			</td>
 		</tr>
 
@@ -76,10 +70,10 @@
 			<td>
 				<span class="ui grey label">Coming up</span>
 			</td>
-			<td>4/30</td>
 			<td>-</td>
 			<td>
-				<a class="ui button primary" href="">Edit</a>
+				<button class="ui button primary" onclick="showMilestoneModal('edit')">Edit</button>
+				<button class="ui button red" onclick="showMilestoneModal('delete')">Delete</button>
 			</td>
 		</tr>
 
@@ -89,10 +83,10 @@
 			<td>
 				<span class="ui grey label">Coming up</span>
 			</td>
-			<td>6/10</td>
 			<td>-</td>
 			<td>
-				<a class="ui button primary" href="">Edit</a>
+				<button class="ui button primary" onclick="showMilestoneModal('edit')">Edit</button>
+				<button class="ui button red" onclick="showMilestoneModal('delete')">Delete</button>
 			</td>
 		</tr>
 
@@ -102,11 +96,27 @@
 			<td>
 				<span class="ui grey label">Coming up</span>
 			</td>
-			<td>6/30</td>
 			<td>-</td>
 			<td>
-				<a class="ui button primary" href="">Edit</a>
+				<button class="ui button primary" onclick="showMilestoneModal('edit')">Edit</button>
+				<button class="ui button red" onclick="showMilestoneModal('delete')">Delete</button>
 			</td>
 		</tr>
 	</tbody>
 </table>
+<div id="edit-milestone-modal" class="ui tiny modal edit-milestone-modal">
+	@include('projects.milestones.edit')
+</div>
+<div id="delete-milestone-modal" class="ui tiny modal delete-milestone-modal">
+	<div class="header">Are you sure you want to delete this milestone?</div>
+	<div class="content">
+		<form class="ui form milestones create {{ $errors->any() ? 'error': '' }}">
+			@csrf
+			<p>Confirming this modal will erase all info about this milestone.</p>
+		</form>
+	</div>
+	<div class="actions">
+		<button type="button" class="ui cancel button" onclick="hideMilestoneModal('delete')">No</button>
+		<button type="submit" class="ui ok button primary">Yes</button>
+	</div>
+</div>

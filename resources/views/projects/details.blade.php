@@ -108,35 +108,35 @@
 						<i class="large circle green icon"></i>
 						<div class="content">
 							<p class="header">Ideation</p>
-							<div class="description">Finished on 4/20</div>
+							<div class="description">Done on 4/20</div>
 						</div>
 					</div>
 					<div class="item current">
 						<i class="large circle blue icon"></i>
 						<div class="content">
 							<p class="header">Design</p>
-							<div class="description">Estimated date: 4/25</div>
+							<div class="description"></div>
 						</div>
 					</div>
 					<div class="item coming-up">
 						<i class="large circle grey icon"></i>
 						<div class="content">
 							<p class="header">Planning</p>
-							<div class="description">Estimated date: 4/30</div>
+							<div class="description"></div>
 						</div>
 					</div>
 					<div class="item coming-up">
 						<i class="large circle grey icon"></i>
 						<div class="content">
 							<p class="header">Execution</p>
-							<div class="description">Estimated date: 6/10</div>
+							<div class="description"></div>
 						</div>
 					</div>
 					<div class="item coming-up">
 						<i class="large circle grey icon"></i>
 						<div class="content">
 							<p class="header">Test</p>
-							<div class="description">Estimated date: 6/30</div>
+							<div class="description"></div>
 						</div>
 					</div>
 				</div>
@@ -195,7 +195,7 @@
 	</div>
 
 	<div class="ui bottom attached tab segment" data-tab="milestones">
-		<button type="button" class="ui button primary" onclick="showMilestoneModal()">New milestone</button>
+		<button type="button" class="ui button primary" onclick="showMilestoneModal('create')">New milestone</button>
 		@include('projects.milestones.index')
 		<div id="new-milestone-modal" class="ui tiny modal new-milestone-modal">
 			@include('projects.milestones.create')
@@ -219,15 +219,38 @@
 		$("#new-task-modal").modal("show");
 	}
 
-	function showMilestoneModal() {
-		$("#new-milestone-modal").modal("show");
+	function showMilestoneModal(action) {
+		switch (action) {
+			case 'create':
+				$("#new-milestone-modal").modal("show");
+				break;
+			case 'edit':
+				$("#edit-milestone-modal").modal("show");
+				break;
+			case 'delete':
+				$("#delete-milestone-modal").modal("show");
+				break;
+			default:
+		}
 	}
 
-	function hideMilestoneModal() {
-		$("#new-milestone-modal").modal("hide");
+	function hideMilestoneModal(action) {
+		switch (action) {
+			case 'create':
+				$("#new-milestone-modal").modal("hide");
+				break;
+			case 'edit':
+				$("#edit-milestone-modal").modal("hide");
+				break;
+			case 'delete':
+				$("#delete-milestone-modal").modal("hide");
+				break;
+			default:
+		}
 	}
 
-	$(document).ready(function(){
+	$(document).ready(function() {
+		$(".ui.fluid.search.dropdown").dropdown();
 		$('.progress').progress({
 			percent: 20
 		});
@@ -248,13 +271,46 @@
 	});
 
 	/* Semantic UI form validation */
-	$(".ui.form").form({
+	$(".ui.form.tasks.create").form({
 		fields: {
 			title: ["empty", "maxLength[30]"],
 			description: ["empty", "maxLength[2000]"],
 			dueDate: ["empty"]
 		},
 		onFailure: function() {
+			return false;
+		}
+	});
+
+	$(".ui.form.milestones.create").form({
+		fields: {
+			milestoneName: ["empty", "maxLength[30]"],
+			prevMilestone: ["empty"],
+			estimatedDate: ["empty"],
+			status: ["empty"]
+		},
+		onSuccess: function() {
+			console.log($(".ui.form.milestones.create").serialize());
+			alert('success');
+			event.preventDefault();
+			$.ajax({
+				type: "post",
+				url: "/milestones",
+				data: $(".ui.form.milestones.create").serialize(),
+				dataType: 'json',
+				success: function (data) {
+					console.log(data);
+					alert('Your milestone has been created!');
+				},
+				error: function (data) {
+					console.log(data);
+					alert('Uh oh! Something went wrong and we couldn\'t create your milestone.');
+				}
+			});
+			$("#new-milestone-modal").modal("hide");
+		},
+		onFailure: function() {
+			alert('failure');
 			return false;
 		}
 	});
