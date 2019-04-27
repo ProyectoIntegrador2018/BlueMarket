@@ -153,7 +153,7 @@
 			$("#member-to-add-modal").modal("show");
 		}
 
-		/* Generate a table row with the info of the user to inveite */
+		/* Generate a table row with the info of the user to invite */
 		function generatePendingInviteRow(invite) {
 			const id = invite.receiver.id;
 			const name = invite.receiver.name;
