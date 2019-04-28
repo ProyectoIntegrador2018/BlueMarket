@@ -25,6 +25,15 @@ class Course extends Model {
 		return $this->belongsToMany('App\Course', 'client_supplier_course', 'supplier_id', 'client_id');
 	}
 
+	public function supplierTeachers() {
+		$suppliers = $this->suppliers()->get();
+		$test = $suppliers[0]->teachers()->get();
+		for ($i=1; $i < count($suppliers); $i++) {
+			$test = $test->merge($suppliers[$i]->teachers()->get());
+		}
+		return $test;
+	}
+
 	public function suppliers() {
 		return $this->belongsToMany('App\Course', 'client_supplier_course', 'client_id', 'supplier_id');
 	}

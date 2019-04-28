@@ -79,6 +79,14 @@ class Project extends Model {
 	public function isStakeholder($id) {
 		// Check if this is a teacher associated with the course
 		$is_teacher = $this->course()->first()->teachers()->where('user_id', $id)->exists();
-		return $this->isCollaborator($id) || $is_teacher;
+		$supplier_teachers = $this->course->supplierTeachers();
+		$is_supplier_teacher = false;
+		foreach ($supplier_teachers as $teacher) {
+			if($teacher->id == $id) {
+				$is_supplier_teacher = true;
+				break;
+			}
+		}
+		return $this->isCollaborator($id) || $is_teacher || $is_supplier_teacher;
 	}
 }
