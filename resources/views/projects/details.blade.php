@@ -195,7 +195,7 @@
 	</div>
 
 	<div class="ui bottom attached tab segment" data-tab="milestones">
-		<button type="button" class="ui button primary" onclick="showMilestoneModal('create')">New milestone</button>
+		<button type="button" class="ui button primary" onclick="showMilestoneModal('new')">New milestone</button>
 		@include('projects.milestones.index')
 		<div id="new-milestone-modal" class="ui tiny modal milestones new-milestone-modal">
 			@include('projects.milestones.create')
@@ -220,33 +220,11 @@
 	}
 
 	function showMilestoneModal(action) {
-		switch (action) {
-			case 'create':
-			$("#new-milestone-modal").modal("show");
-			break;
-			case 'edit':
-			$("#edit-milestone-modal").modal("show");
-			break;
-			case 'delete':
-			$("#delete-milestone-modal").modal("show");
-			break;
-			default:
-		}
+		$(`#${action}-milestone-modal`).modal('show');
 	}
 
 	function hideMilestoneModal(action) {
-		switch (action) {
-			case 'create':
-			$("#new-milestone-modal").modal("hide");
-			break;
-			case 'edit':
-			$("#edit-milestone-modal").modal("hide");
-			break;
-			case 'delete':
-			$("#delete-milestone-modal").modal("hide");
-			break;
-			default:
-		}
+		$(`#${action}-milestone-modal`).modal('hide');
 	}
 
 	$(document).ready(function() {
