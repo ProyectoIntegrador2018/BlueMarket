@@ -516,3 +516,13 @@ $color-white: #fff;
 		margin: 0;
 	}
 }
+
+.ui.grid .column.notification-column {
+	padding: 0 1rem;
+	display: inline-block;
+	vertical-align: middle;
+
+	&.user-avatar-column {
+		width: 40px;
+	}
+}
