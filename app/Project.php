@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Project extends Model
 {
+	const INVITES = 'enum.invite_status';
+
 	/**
 	 * The attributes that cannot be mass assigned.
 	 *
@@ -41,5 +43,20 @@ class Project extends Model
 	// Get the milestones of the project
 	public function milestones() {
 		return $this->hasMany('App\Milestone');
+	}
+
+	public function suppliers() {
+		return $this->belongsToMany('App\User', 'project_user', 'project_id', 'user_id')
+			->withPivot('accepted')
+			->withTimestamps()
+			->wherePivot('accepted', config(self::INVITES)['accepted']);
+	}
+
+	public function pending_suppliers() {
+		return $this->belongsToMany('App\User', 'project_user', 'project_id', 'user_id')
+			->withPivot('accepted')
+			->withTimestamps()
+			->wherePivot('accepted', config(self::INVITES)['pending'])
+			->orderBy('pivot_created_at', 'desc');
 	}
 }

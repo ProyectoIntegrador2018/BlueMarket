@@ -68,8 +68,15 @@ class User extends Authenticatable
 	}
 
 	public function teamInvites() {
-		// TODO: add invites to join project as supplier
 		return $this->belongsToMany('App\Team', 'team_user', 'user_id', 'team_id')
+		->withPivot('accepted')
+		->withTimestamps()
+		->wherePivot('accepted', config(self::INVITES)['pending'])
+		->orderBy('pivot_created_at', 'desc');
+	}
+
+	public function projectInvites() {
+		return $this->belongsToMany('App\Project', 'project_user', 'user_id', 'project_id')
 		->withPivot('accepted')
 		->withTimestamps()
 		->wherePivot('accepted', config(self::INVITES)['pending'])
