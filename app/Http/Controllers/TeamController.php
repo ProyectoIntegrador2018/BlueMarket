@@ -51,7 +51,7 @@ class TeamController extends Controller
 			abort(500);
 		}
 
-		$team->members()->attach($team->leader_id, ['has_accepted' => config('enum.invite_status')['accepted']]);
+		$team->members()->attach($team->leader_id, ['accepted' => config('enum.invite_status')['accepted']]);
 
 		// redirect to teams/{id} // NOSONAR
 		return redirect()->route('teams.show', [$team]);
