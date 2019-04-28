@@ -58,9 +58,9 @@ class User extends Authenticatable
 
 	public function teams() {
 		return $this->belongsToMany('App\Team', 'team_user', 'user_id', 'team_id')
-		->withPivot('has_accepted')
+		->withPivot('accepted')
 		->withTimestamps()
-		->wherePivot('has_accepted', config(self::INVITES)['accepted']);
+		->wherePivot('accepted', config(self::INVITES)['accepted']);
 	}
 
 	public function skillset() {
@@ -70,9 +70,9 @@ class User extends Authenticatable
 	public function teamInvites() {
 		// TODO: add invites to join project as supplier
 		return $this->belongsToMany('App\Team', 'team_user', 'user_id', 'team_id')
-		->withPivot('has_accepted')
+		->withPivot('accepted')
 		->withTimestamps()
-		->wherePivot('has_accepted', config(self::INVITES)['pending'])
+		->wherePivot('accepted', config(self::INVITES)['pending'])
 		->orderBy('pivot_created_at', 'desc');
 	}
 
