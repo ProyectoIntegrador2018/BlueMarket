@@ -103,9 +103,11 @@
 					<div class="bar">
 						<div class="progress">{{ $project->progress * 100 }}%</div>
 					</div>
-					<div class="label">Currently on: {{ $project->milestones->where('status', Config::get('enum.milestone_status')['current'])->first()->name }}</div>
+					@if(count($project->milestones) > 0)
+						<div class="label">Currently on: {{ $project->milestones->where('status', Config::get('enum.milestone_status')['current'])->first()->name }}</div>
+					@endif
 				</div>
-				@if(isset($project->milestones))
+				@if(count($project->milestones) > 0)
 					<div class="ui list milestone-section">
 					@foreach ($project->milestones as $milestone)
 
