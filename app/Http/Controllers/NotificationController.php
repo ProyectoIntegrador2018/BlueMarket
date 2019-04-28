@@ -9,6 +9,7 @@ use App\Project;
 class NotificationController extends Controller
 {
 	const INVITES = 'enum.invite_status';
+	const TYPE = 'enum.invite_type';
 
 	/**
 	 * Display a listing of the resource.
@@ -45,43 +46,57 @@ class NotificationController extends Controller
 		//
 	}
 
-	/**
-	 * Accept an invite to join a team.
+		/**
+	 * Accept an invite to join a team or a project.
 	 *
 	 * @param  int $inviteId
 	 * @return \Illuminate\Http\Response
 	 */
-	public function acceptInviteToJoinTeam(int $inviteId) {
-		DB::table('team_user')->where('id', $inviteId)->update(['accepted' => config(self::INVITES)['accepted']]);
+	public function acceptInvite(Request $request) {
+		$inviteId =  $request->id;
+		$inviteType = $request->invite_type;
+
+		switch ($inviteType) {
+			case config(self::TYPE)['team']:
+				Auth::user()->teamInvites()->updateExistingPivot($inviteId, ['accepted' => config(self::INVITES)['accepted']]);
+				break;
+
+			case config(self::TYPE)['project']:
+				Auth::user()->projectInvites()->updateExistingPivot($inviteId, ['accepted' => config(self::INVITES)['accepted']]);
+				break;
+
+			default:
+				abort(400);
+				break;
+		}
+
+		return Auth::id();
 	}
 
 	/**
-	 * Refuse an invite to join a team.
+	 * Decline an invite to join a team or a project.
 	 *
 	 * @param  int $inviteId
 	 * @return \Illuminate\Http\Response
 	 */
-	public function refuseInviteToJoinTeam(int $inviteId) {
-		DB::table('team_user')->where('id', $inviteId)->delete();
-	}
+	public function declineInvite(Request $request) {
+		$inviteId =  $request->id;
+		$inviteType = $request->invite_type;
 
-	/**
-	 * Accept an invite to join a project.
-	 *
-	 * @param  int $inviteId
-	 * @return \Illuminate\Http\Response
-	 */
-	public function acceptInviteToJoinProject(int $inviteId) {
-		DB::table('project_user')->where('id', $inviteId)->update(['accepted' => config(self::INVITES)['accepted']]);
-	}
+		switch ($inviteType) {
+			case config(self::TYPE)['team']:
+				Auth::user()->teamInvites()->detach($inviteId);
+				break;
 
-	/**
-	 * Refuse an invite to join a project.
-	 *
-	 * @param  int $inviteId
-	 * @return \Illuminate\Http\Response
-	 */
-	public function refuseInviteToJoinProject(int $inviteId) {
-		DB::table('project_user')->where('id', $inviteId)->delete();
+			case config(self::TYPE)['project']:
+				Auth::user()->projectInvites()->detach($inviteId);
+				break;
+
+			default:
+				abort(400);
+				break;
+		}
+
+		return Auth::id();
 	}
 }

@@ -22,4 +22,8 @@ return [
 		'pending' => 1,
 		'accepted' => 2,
 	],
+	'invite_type' => [
+		'team' => 1,
+		'project' => 2,
+	],
 ];
