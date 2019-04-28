@@ -63,16 +63,16 @@
 						<div class="ui detail-container">
 							<p><strong>Associated course</strong></p>
 							@if(isset($project->course))
-								<a href="{{ url('courses', $project->course->id) }}">
-									<p>{{ $project->course->name }}</p>
-									<p>
-										@foreach($project->course->teachers as $teacher)
-											{{ $loop->first ? '' : ', ' }}
-											{{ $teacher->name }}
-										@endforeach
-									</p>
-									<p>{{ $project->course->schedule }}</p>
-								</a>
+							<a href="{{ url('courses', $project->course->id) }}">
+								<p>{{ $project->course->name }}</p>
+								<p>
+									@foreach($project->course->teachers as $teacher)
+									{{ $loop->first ? '' : ', ' }}
+									{{ $teacher->name }}
+									@endforeach
+								</p>
+								<p>{{ $project->course->schedule }}</p>
+							</a>
 							@endif
 						</div>
 					</div>
@@ -83,62 +83,62 @@
 				<div class="ui detail-container">
 					<p><strong>Labels</strong></p>
 					@foreach($project->labels as $label)
-						<div class="ui label pill">{{ $label->name }}</div>
+					<div class="ui label pill">{{ $label->name }}</div>
 					@endforeach
 				</div>
 				<!-- Skillset -->
 				<div class="ui detail-container">
 					<p><strong>Required skillset</strong></p>
 					@foreach($project->skills as $skill)
-						<div class="ui label pill">{{ $skill->name }}</div>
+					<div class="ui label pill">{{ $skill->name }}</div>
 					@endforeach
 				</div>
 			</div>
 			<!-- Progress section -->
 			<div class="sixteen wide column">
 				<h3>Progress</h3>
-				<div class="ui blue progress">
+				<div id="progress" class="ui blue progress" data-percent="{{ $project->progress * 100 }}">
 					<div class="bar">
-						<div class="progress"></div>
+						<div class="progress">{{ $project->progress * 100 }}%</div>
 					</div>
-					<div class="label">Currently on: Design</div>
+					<div class="label">Currently on: {{ $project->milestones->where('status', Config::get('enum.milestone_status')['current'])->first()->name }}</div>
 				</div>
+				@if(isset($project->milestones))
 				<div class="ui list milestone-section">
+					@foreach ($project->milestones as $milestone)
+
+					@switch($milestone->status)
+					@case(Config::get('enum.milestone_status')['done'])
 					<div class="item done">
 						<i class="large circle green icon"></i>
 						<div class="content">
-							<p class="header">Ideation</p>
-							<div class="description">Done on 4/20</div>
+							<p class="header">{{ $milestone->name }}</p>
+							<div class="description">Done on {{ $milestone->done_date}}</div>
 						</div>
 					</div>
+					@break
+
+					@case(Config::get('enum.milestone_status')['current'])
 					<div class="item current">
 						<i class="large circle blue icon"></i>
 						<div class="content">
-							<p class="header">Design</p>
+							<p class="header">{{ $milestone->name }}</p>
 							<div class="description"></div>
 						</div>
 					</div>
+					@break
+
+					@default
 					<div class="item coming-up">
 						<i class="large circle grey icon"></i>
 						<div class="content">
-							<p class="header">Planning</p>
+							<p class="header">{{ $milestone->name }}</p>
 							<div class="description"></div>
 						</div>
 					</div>
-					<div class="item coming-up">
-						<i class="large circle grey icon"></i>
-						<div class="content">
-							<p class="header">Execution</p>
-							<div class="description"></div>
-						</div>
-					</div>
-					<div class="item coming-up">
-						<i class="large circle grey icon"></i>
-						<div class="content">
-							<p class="header">Test</p>
-							<div class="description"></div>
-						</div>
-					</div>
+					@endswitch
+					@endforeach
+					@endif
 				</div>
 			</div>
 		</div>
@@ -147,42 +147,42 @@
 	<div class="ui bottom attached tab segment" data-tab="collaborators">
 		<div class="ui stackable grid">
 			@if(isset($project->team->members) && count($project->team->members) > 0)
-				<div class="eight wide column">
-					<h2>Owners</h2>
-					<table class="ui striped table">
-						<tbody>
-							@foreach($project->team->members as $member)
-								<tr class="selectable">
-									<td>
-										<a href="{{ url('users', $member->id) }}">
-											<img class="ui mini circular image" src="{{ isset($member->picture_url) ? $member->picture_url : 'https://dummyimage.com/400x400/3498db/ffffff.png&text=B' }}" alt="{{ $member->name }}" style="display: inline; margin-right: 10px;"/>
-											{{ $member->name }}
-										</a>
-									</td>
-								</tr>
-							@endforeach
-						</tbody>
-					</table>
-				</div>
+			<div class="eight wide column">
+				<h2>Owners</h2>
+				<table class="ui striped table">
+					<tbody>
+						@foreach($project->team->members as $member)
+						<tr class="selectable">
+							<td>
+								<a href="{{ url('users', $member->id) }}">
+									<img class="ui mini circular image" src="{{ isset($member->picture_url) ? $member->picture_url : 'https://dummyimage.com/400x400/3498db/ffffff.png&text=B' }}" alt="{{ $member->name }}" style="display: inline; margin-right: 10px;"/>
+									{{ $member->name }}
+								</a>
+							</td>
+						</tr>
+						@endforeach
+					</tbody>
+				</table>
+			</div>
 			@endif
 			@if(isset($project->suppliers) && count($project->suppliers) > 0)
-				<div class="eight wide column">
-					<h2>Suppliers</h2>
-					<table class="ui striped table">
-						<tbody>
-							@foreach($project->suppliers as $supplier)
-								<tr class="selectable">
-									<td>
-										<a href="{{ url('users', $supplier->id) }}">
-											<img class="ui mini circular image" src="{{ isset($supplier->picture_url) ? $supplier->picture_url : 'https://dummyimage.com/400x400/3498db/ffffff.png&text=B' }}" alt="{{ $supplier->name }}" style="display: inline; margin-right: 10px;"/>
-											{{ $supplier->name }}
-										</a>
-									</td>
-								</tr>
-							@endforeach
-						</tbody>
-					</table>
-				</div>
+			<div class="eight wide column">
+				<h2>Suppliers</h2>
+				<table class="ui striped table">
+					<tbody>
+						@foreach($project->suppliers as $supplier)
+						<tr class="selectable">
+							<td>
+								<a href="{{ url('users', $supplier->id) }}">
+									<img class="ui mini circular image" src="{{ isset($supplier->picture_url) ? $supplier->picture_url : 'https://dummyimage.com/400x400/3498db/ffffff.png&text=B' }}" alt="{{ $supplier->name }}" style="display: inline; margin-right: 10px;"/>
+									{{ $supplier->name }}
+								</a>
+							</td>
+						</tr>
+						@endforeach
+					</tbody>
+				</table>
+			</div>
 			@endif
 		</div>
 	</div>
@@ -222,14 +222,14 @@
 	function showMilestoneModal(action) {
 		switch (action) {
 			case 'create':
-				$("#new-milestone-modal").modal("show");
-				break;
+			$("#new-milestone-modal").modal("show");
+			break;
 			case 'edit':
-				$("#edit-milestone-modal").modal("show");
-				break;
+			$("#edit-milestone-modal").modal("show");
+			break;
 			case 'delete':
-				$("#delete-milestone-modal").modal("show");
-				break;
+			$("#delete-milestone-modal").modal("show");
+			break;
 			default:
 		}
 	}
@@ -237,23 +237,21 @@
 	function hideMilestoneModal(action) {
 		switch (action) {
 			case 'create':
-				$("#new-milestone-modal").modal("hide");
-				break;
+			$("#new-milestone-modal").modal("hide");
+			break;
 			case 'edit':
-				$("#edit-milestone-modal").modal("hide");
-				break;
+			$("#edit-milestone-modal").modal("hide");
+			break;
 			case 'delete':
-				$("#delete-milestone-modal").modal("hide");
-				break;
+			$("#delete-milestone-modal").modal("hide");
+			break;
 			default:
 		}
 	}
 
 	$(document).ready(function() {
 		$(".ui.fluid.search.dropdown").dropdown();
-		$('.progress').progress({
-			percent: 20
-		});
+		$('#progress').progress();
 	})
 
 	/* Due date datetime picker */

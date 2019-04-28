@@ -1423,3 +1423,11 @@ insert into skill_user (id, user_id, tag_id) values (47, 8, 157);
 insert into skill_user (id, user_id, tag_id) values (48, 10, 180);
 insert into skill_user (id, user_id, tag_id) values (49, 12, 164);
 insert into skill_user (id, user_id, tag_id) values (50, 15, 114);
+
+
+-- milestones
+INSERT INTO milestones (id, name, status, project_id, previous_milestone_id, done_date) VALUES ('1', 'Ideation', '1', '1', NULL, "2019-01-01");
+INSERT INTO milestones (id, name, status, project_id, previous_milestone_id) VALUES ('2', 'Design', '2', '1', '1');
+INSERT INTO milestones (id, name, status, project_id, previous_milestone_id) VALUES ('3', 'Planning', NULL, '1', '2');
+INSERT INTO milestones (id, name, status, project_id, previous_milestone_id) VALUES ('4', 'Execution', NULL, '1', '3');
+INSERT INTO milestones (id, name, status, project_id, previous_milestone_id) VALUES ('5', 'Tests', NULL, '1', '4');

@@ -9,7 +9,7 @@
 		</tr>
 	</thead>
 	<tbody>
-	{{-- @foreach($milestones as $milestone)
+	@foreach($project->milestones as $milestone)
 		<tr>
 			<td>{{ $loop->iteration }}</td>
 			<td>{{ $milestone->name }}</td>
@@ -23,10 +23,6 @@
 				<span class="ui blue label">Current</span>
 				@break
 
-				@case(Config::get('enum.milestone_status')['coming-up'])
-				<span class="ui grey label">Coming up</span>
-				@break
-
 				@default
 				<span class="ui grey label">Coming up</span>
 				@endswitch
@@ -37,71 +33,7 @@
 				<button class="ui button red" onclick="showMilestoneModal('delete')">Delete</button>
 			</td>
 		</tr>
-		@endforeach --}}
-		<tr>
-			<td>1</td>
-			<td>Ideation</td>
-			<td>
-				<span class="ui green label">Done</span>
-			</td>
-			<td>4/19</td>
-			<td>
-				<button class="ui button primary" onclick="showMilestoneModal('edit')">Edit</button>
-				<button class="ui button red" onclick="showMilestoneModal('delete')">Delete</button>
-			</td>
-		</tr>
-
-		<tr>
-			<td>2</td>
-			<td>Design</td>
-			<td>
-				<span class="ui blue label">Current</span>
-			</td>
-			<td>-</td>
-			<td>
-				<button class="ui button primary" onclick="showMilestoneModal('edit')">Edit</button>
-				<button class="ui button red" onclick="showMilestoneModal('delete')">Delete</button>
-			</td>
-		</tr>
-
-		<tr>
-			<td>3</td>
-			<td>Planning</td>
-			<td>
-				<span class="ui grey label">Coming up</span>
-			</td>
-			<td>-</td>
-			<td>
-				<button class="ui button primary" onclick="showMilestoneModal('edit')">Edit</button>
-				<button class="ui button red" onclick="showMilestoneModal('delete')">Delete</button>
-			</td>
-		</tr>
-
-		<tr>
-			<td>4</td>
-			<td>Execution</td>
-			<td>
-				<span class="ui grey label">Coming up</span>
-			</td>
-			<td>-</td>
-			<td>
-				<button class="ui button primary" onclick="showMilestoneModal('edit')">Edit</button>
-				<button class="ui button red" onclick="showMilestoneModal('delete')">Delete</button>
-			</td>
-		</tr>
-
-		<tr>
-			<td>5</td>
-			<td>Test</td>
-			<td>
-				<span class="ui grey label">Coming up</span>
-			</td>
-			<td>-</td>
-			<td>
-				<button class="ui button primary" onclick="showMilestoneModal('edit')">Edit</button>
-				<button class="ui button red" onclick="showMilestoneModal('delete')">Delete</button>
-			</td>
-		</tr>
+		@endforeach
 	</tbody>
 </table>
 <div id="edit-milestone-modal" class="ui tiny modal milestones edit-milestone-modal">
