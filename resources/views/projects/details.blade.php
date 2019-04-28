@@ -184,6 +184,72 @@
 					</table>
 				</div>
 			@endif
+			@if($project->team->leader->id == Auth::id())
+				<div class="sixteen wide column">
+					<div class="ui fluid action input" style="margin:20px 0;">
+						<div id="new-supplier-dropdown" class="ui fluid search selection dropdown user-search">
+							<input class="user-search-input" type="hidden" name="newSupplier">
+							<div class="default text">Select new supplier</div>
+							<div class="menu">
+								<!-- TODO: populate select onChange and onFocus -->
+								@if(isset($students))
+									@foreach($students as $student)
+										<div class="item" data-value={{ $student->id }}>
+											<img class="ui mini circular image" src="{{ isset($student->picture_url) ? $student->picture_url : 'https://dummyimage.com/400x400/3498db/ffffff.png&text=B' }}" style="display: inline; margin-right: 10px;"/>
+											{{ $student->name }}
+										</div>
+									@endforeach
+								@endif
+							</div>
+						</div>
+						<button type="button" class="ui primary button" onclick="validateNewSupplier()">Add supplier</button>
+					</div>
+					@if(isset($project->pending_suppliers))
+						<div id="pendingInvites" class="{{ count($project->pending_suppliers) <= 0 ? 'hidden' : '' }}">
+							<h2>Pending invites</h2>
+							<table class="ui striped table">
+								<tbody>
+									@foreach($project->pending_suppliers as $pending_supplier)
+										<tr class="selectable">
+											<td>
+												<a href="{{ url('users', $pending_supplier->id) }}">
+													<img class="ui mini circular image" src="{{ isset($pending_supplier->picture_url) ? $pending_supplier->picture_url : 'https://dummyimage.com/400x400/3498db/ffffff.png&text=B' }}" style="display: inline; margin-right: 10px;"/>
+													{{ $pending_supplier->name }}
+												</a>
+											</td>
+											<td>
+												sent <p class="needs-datetimeago invite-sent-datetime" data-datetime="{{ $pending_supplier->pivot->created_at }}">{{ $pending_supplier->pivot->created_at }}</p>
+											</td>
+										</tr>
+									@endforeach
+								</tbody>
+							</table>
+						</div>
+					@endif
+				</div>
+				<div id="supplier-to-add-modal" class="ui modal">
+					<p class="header">Add supplier</p>
+					<div class="content">
+						<p>Invite</p>
+						<p><strong id="newSupplierName"></strong></p>
+						<p>to join <strong>{{ $project->name }}.</strong></p>
+					</div>
+					<div class="actions">
+						<button type="button" class="ui cancel button">Cancel</button>
+						<button type="button" class="ui ok primary button" onclick="inviteSupplier()">Confirm</button>
+					</div>
+				</div>
+				<div id="supplier-to-add-error-modal" class="ui modal">
+					<div class="header">Something went wrong</div>
+					<div class="content">
+						<i class="times huge red circle icon"></i>
+						<p>We were unable to send an invite to this user.</p>
+					</div>
+					<div class="actions">
+						<button type="button" class="ui ok primary button">Done</button type="button">
+					</div>
+				</div>
+			@endif
 		</div>
 	</div>
 
@@ -205,11 +271,14 @@
 
 @section('scripts')
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui-calendar/0.0.8/calendar.min.js"></script>
+<script src="{{ mix('js/utilities.js')}}"></script>
 <script>
 	/* Semantic UI setup */
 	$(".menu .item").tab();
 	$("#new-task-modal").modal({ transition: "fade up" });
 	$("#new-milestone-modal").modal({ transition: "fade up" });
+	$("#supplier-to-add-modal").modal({ transition: "fade up" });
+	$("#supplier-to-add-error-modal").modal({ transition: "fade up" });
 
 	function hideTaskModal() {
 		$("#new-task-modal").modal("hide");
@@ -328,6 +397,82 @@
 		}
 	}); */
 
+	@if(Auth::id() === $project->team->leader->id)
+		/* Semantic UI dropdown */
+		$("#new-supplier-dropdown").dropdown({
+			onChange: function() {
+				$("#new-supplier-dropdown").removeClass("error");
+			}
+		});
+
+		/* render sent datetime for all invites*/
+		renderDateTimeAgoOnce();
+
+		/* Validate invitation to join the team */
+		function validateNewSupplier() {
+			// get the info of the user that will receive the invitation
+			const defaultValue = $("#new-supplier-dropdown").dropdown("get default value");
+			const newSupplierName = $("#new-supplier-dropdown").dropdown("get text");
+			const newSupplierId = $("#new-supplier-dropdown").dropdown("get value");
+
+			if(newSupplierId === defaultValue) {
+				$("#new-supplier-dropdown").addClass("error");
+				return false;
+			}
+
+			$("#newSupplierName").text(newSupplierName);
+			$("#supplier-to-add-modal").modal("show");
+		}
+
+		/* Generate a table row with the info of the user to invite */
+		function generatePendingInviteRow(invite) {
+			const id = invite.id;
+			const name = invite.name;
+			const picture_url = invite.picture_url ? invite.picture_url : 'https://dummyimage.com/400x400/3498db/ffffff.png&text=B';
+			const sent_datetime = invite.pivot.created_at;
+
+			const row = `<tr class="selectable">
+							<td>
+								<a href="/users/${id}">
+									<img class="ui mini circular image" src="${picture_url}" style="display: inline; margin-right: 10px;"/>
+									${name}
+								</a>
+							</td>
+							<td>
+								sent <p class="needs-datetimeago invite-sent-datetime" data-datetime="${sent_datetime}">${sent_datetime}</p>
+							</td>
+						</tr>`;
+
+			return row;
+		}
+
+		/* Send invitation via ajax to join the project */
+		function inviteSupplier() {
+			const userToInvite = $("#new-supplier-dropdown").dropdown("get value");
+			$.ajax({
+				// TODO: update url if needed
+				url: '/projects/{!! $project->id !!}',
+				method: 'PATCH',
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				},
+				data: {
+					'id_new_supplier': userToInvite
+				},
+				dataType: 'json',
+				success: function(data) {
+					let rowToAdd = generatePendingInviteRow(data);
+					$("#pendingInvites tbody").prepend(rowToAdd);
+					$("#pendingInvites").show();
+					renderDateTimeAgoOnce(); // refresh sent datetimes
+				},
+				error: function() {
+					$("#supplier-to-add-error-modal").modal("show");
+				}
+			});
+			$("#new-supplier-dropdown").dropdown("restore defaults");
+		}
+	@endif
 </script>
 @endsection
 @endsection
