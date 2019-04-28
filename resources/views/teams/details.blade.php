@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section("meta")
+	<meta name="csrf-token" content="{{ csrf_token() }}">
+@endsection
+
 @section('title', $team->name)
 
 @section('content')
@@ -71,11 +75,11 @@
 							<div class="default text">Select new member</div>
 							<div class="menu">
 								<!-- TODO: populate select onChange and onFocus -->
-								@if(isset($users))
-									@foreach($users as $user)
-										<div class="item" data-value={{ $user->id }}>
-											<img class="ui mini circular image" src="{{ isset($user->picture_url) ? $user->picture_url : 'https://dummyimage.com/400x400/3498db/ffffff.png&text=B' }}" style="display: inline; margin-right: 10px;"/>
-											{{ $user->name }}
+								@if(isset($students))
+									@foreach($students as $student)
+										<div class="item" data-value={{ $student->id }}>
+											<img class="ui mini circular image" src="{{ isset($student->picture_url) ? $student->picture_url : 'https://dummyimage.com/400x400/3498db/ffffff.png&text=B' }}" style="display: inline; margin-right: 10px;"/>
+											{{ $student->name }}
 										</div>
 									@endforeach
 								@endif
@@ -96,6 +100,9 @@
 													{{ $pending_member->name }}
 												</a>
 											</td>
+											<td>
+												sent <p class="needs-datetimeago invite-sent-datetime" datetime="{{ $pending_member->pivot->created_at }}">{{ $pending_member->pivot->created_at }}</p>
+											</td>
 										</tr>
 									@endforeach
 								</tbody>
@@ -111,7 +118,7 @@
 						</div>
 						<div class="actions">
 							<button type="button" class="ui cancel button">Cancel</button>
-							<button type="button" class="ui ok primary button">Confirm</button>
+							<button type="button" class="ui ok primary button" onclick="inviteMember()">Confirm</button>
 						</div>
 					</div>
 				@endif
@@ -155,10 +162,10 @@
 
 		/* Generate a table row with the info of the user to invite */
 		function generatePendingInviteRow(invite) {
-			const id = invite.receiver.id;
-			const name = invite.receiver.name;
-			const picture_url = invite.receiver.picture_url ? invite.receiver.picture_url : 'https://dummyimage.com/400x400/3498db/ffffff.png&text=B';
-			const sent_datetime = invite.created_at;
+			const id = invite.id;
+			const name = invite.name;
+			const picture_url = invite.picture_url ? invite.picture_url : 'https://dummyimage.com/400x400/3498db/ffffff.png&text=B';
+			const sent_datetime = invite.pivot.created_at;
 
 			const row = `<tr class="selectable">
 							<td>
@@ -173,6 +180,34 @@
 						</tr>`;
 
 			return row;
+		}
+
+		/* Send invitation via ajax to join the team */
+		function inviteMember() {
+			const userToInvite = $("#new-member-dropdown").dropdown("get value");
+			$.ajax({
+				// TODO: update url if needed
+				url: '/teams/{!! $team->id !!}',
+				method: 'PATCH',
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				},
+				data: {
+					'id_new_member': userToInvite
+				},
+				dataType: 'json',
+				success: function(data) {
+					console.log(data);
+					let rowToAdd = generatePendingInviteRow(data);
+					$("#pendingInvites tbody").append(rowToAdd);
+					$("#pendingInvites").show();
+					renderDateTimeAgoOnce(); // refresh sent datetimes
+				},
+				error: function(data) {
+					// TODO: error handling (need possible errors)
+				}
+			});
+			$("#new-member-dropdown").dropdown("restore defaults");
 		}
 	@endif
 </script>
