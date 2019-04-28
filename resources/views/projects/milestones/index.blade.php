@@ -9,22 +9,22 @@
 		</tr>
 	</thead>
 	<tbody>
-	@foreach($project->milestones as $milestone)
+		@foreach($project->milestones as $milestone)
 		<tr>
 			<td>{{ $loop->iteration }}</td>
 			<td>{{ $milestone->name }}</td>
 			<td>
 				@switch($milestone->status)
-				@case(Config::get('enum.milestone_status')['done'])
-				<span class="ui green label">Done</span>
-				@break
+					@case(Config::get('enum.milestone_status')['done'])
+						<span class="ui green label">Done</span>
+						@break
 
-				@case(Config::get('enum.milestone_status')['current'])
-				<span class="ui blue label">Current</span>
-				@break
+					@case(Config::get('enum.milestone_status')['current'])
+						<span class="ui blue label">Current</span>
+						@break
 
-				@default
-				<span class="ui grey label">Coming up</span>
+					@default
+						<span class="ui grey label">Coming up</span>
 				@endswitch
 			</td>
 			<td>{{ isset($milestone->done_date) ?  $milestone->done_date : '-' }}</td>
