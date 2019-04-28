@@ -15,8 +15,8 @@ class NotificationController extends Controller
 	public function index()
 	{
 		$teamInvites = Auth::user()->teamInvites;
-		// projectInvites pending
-		return view('notifications.index', compact('teamInvites'));
+		$projectInvites = Auth::user()->projectInvites;
+		return view('notifications.index', compact('teamInvites', 'projectInvites'));
 	}
 
 	/**
