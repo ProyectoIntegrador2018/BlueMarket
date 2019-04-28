@@ -43,12 +43,12 @@
 
 <!-- Error message -->
 <div class="ui error message">
-	<p class="header">Whoops! Something went wrong.</p>
+	<h2 class="header">Whoops! Something went wrong.</h2>
 	@if($errors->any())
-	<ul>
+		<ul>
 		@foreach ($errors->all() as $error)
-		<li>{{ $error }}</li>
+			<li>{{ $error }}</li>
 		@endforeach
-	</ul>
+		</ul>
 	@endif
 </div>

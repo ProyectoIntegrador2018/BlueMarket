@@ -341,9 +341,9 @@
 		onSuccess: function() {
 			console.log($(".ui.form.milestones.create").serialize());
 			alert('success');
-			/* event.preventDefault();
+			event.preventDefault();
 			$.ajax({
-				type: "post",
+				type: "POST",
 				url: "/milestones",
 				data: {
 					name: $("milestoneName").val(),
@@ -351,7 +351,7 @@
 					status: $("status").val(),
 					done_date: $("doneDate").val(),
 					previous_milestone_id: $("prevMilestone").val()
-				}
+				},
 				dataType: 'json',
 				success: function (data) {
 					console.log(data);
@@ -362,10 +362,9 @@
 					alert('Uh oh! Something went wrong and we couldn\'t create your milestone.');
 				}
 			});
-			$("#new-milestone-modal").modal("hide"); */
+			$("#new-milestone-modal").modal("hide");
 		},
 		onFailure: function() {
-			alert('failure');
 			return false;
 		}
 	});

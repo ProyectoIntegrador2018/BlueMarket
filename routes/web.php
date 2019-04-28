@@ -58,3 +58,4 @@ Route::get('/projects/tasks/create', function () {
 Route::resource('notifications', 'NotificationController')->only(['index']);
 Route::post('/notifications/accept', 'NotificationController@acceptInvite');
 Route::post('/notifications/decline', 'NotificationController@declineInvite');
+Route::resource('milestones', 'MilestoneController')->only(['index', 'store', 'update', 'destroy']);
