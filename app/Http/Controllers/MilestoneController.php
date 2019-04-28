@@ -23,15 +23,6 @@ class MilestoneController extends Controller {
 	}
 
 	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return \Illuminate\Http\Response
-	 */
-	public function create() {
-		return view('projects.milestones.create');
-	}
-
-	/**
 	 * Store a newly created resource in storage.
 	 *
 	 * @param  \Illuminate\Http\Request  $request
@@ -50,36 +41,14 @@ class MilestoneController extends Controller {
 	}
 
 	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return \Illuminate\Http\Response
-	 */
-	public function show(int $id) {
-		$milestone = Milestone::findOrFail($id);
-		return view('projects.milestones.details', compact('milestone'));
-	}
-
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return \Illuminate\Http\Response
-	 */
-	public function edit(int $id) {
-		$milestone = Milestone::findOrFail($id);
-		return view('projects.milestones.edit', compact('milestone'));
-	}
-
-	/**
 	 * Update the specified resource in storage.
 	 *
 	 * @param  \Illuminate\Http\Request  $request
-	 * @param  int  $id
+	 * @param  int  $milestoneId
 	 * @return \Illuminate\Http\Response
 	 */
-	public function update(Request $request, int $id) {
-		$milestone = Milestone::findOrFail($id);
+	public function update(Request $request, int $milestoneId) {
+		$milestone = Milestone::findOrFail($milestoneId);
 		$milestone->update($request->all());
 
 		return $milestone;
@@ -88,11 +57,11 @@ class MilestoneController extends Controller {
 	/**
 	 * Remove the specified resource from storage.
 	 *
-	 * @param  int  $id
+	 * @param  int  $milestoneId
 	 * @return \Illuminate\Http\Response
 	 */
-	public function destroy(int $id) {
-		$milestone = Milestone::findOrFail($id);
+	public function destroy(int $milestoneId) {
+		$milestone = Milestone::findOrFail($milestoneId);
 		$milestone->destroy();
 	}
 
