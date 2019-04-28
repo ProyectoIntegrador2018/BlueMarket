@@ -17,7 +17,7 @@ return [
     'milestone_status' => [
         'done' => 1,
         'current' => 2
-    ]
+	],
 	'invite_status' => [
 		'pending' => 1,
 		'accepted' => 2,
