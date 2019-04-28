@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 
 class NotificationController extends Controller
 {
+	const INVITES = 'enum.invite_status';
+
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -49,7 +51,7 @@ class NotificationController extends Controller
 	 * @return \Illuminate\Http\Response
 	 */
 	public function acceptInviteToJoinTeam(int $inviteId) {
-		DB::table('team_user')->where('id', $inviteId)->update(['has_accepted' => config(self::INVITES)['accepted']]);
+		DB::table('team_user')->where('id', $inviteId)->update(['accepted' => config(self::INVITES)['accepted']]);
 	}
 
 	/**
@@ -69,7 +71,7 @@ class NotificationController extends Controller
 	 * @return \Illuminate\Http\Response
 	 */
 	public function acceptInviteToJoinProject(int $inviteId) {
-		DB::table('project_user')->where('id', $inviteId)->update(['has_accepted' => config(self::INVITES)['accepted']]);
+		DB::table('project_user')->where('id', $inviteId)->update(['accepted' => config(self::INVITES)['accepted']]);
 	}
 
 	/**
