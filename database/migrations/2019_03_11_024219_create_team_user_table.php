@@ -16,7 +16,6 @@ class CreateTeamUserTable extends Migration
 			$table->increments('id');
 			$table->integer('team_id')->unsigned();
 			$table->integer('user_id')->unsigned();
-			$table->boolean('accepted')->default(config('enum.invite_status')['pending']);
 
 			$table->foreign('team_id')->references('id')->on('teams');
 			$table->foreign('user_id')->references('id')->on('users');
