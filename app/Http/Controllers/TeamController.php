@@ -127,26 +127,6 @@ class TeamController extends Controller
 	}
 
 	/**
-	 * Accept an invite to join a team.
-	 *
-	 * @param  int $inviteId
-	 * @return \Illuminate\Http\Response
-	 */
-	public function acceptInvite(int $inviteId) {
-		DB::table('team_user')->where('id', $inviteId)->update(['has_accepted' => config(self::INVITES)['accepted']]);
-	}
-
-	/**
-	 * Refuse an invite to join a team.
-	 *
-	 * @param  int $inviteId
-	 * @return \Illuminate\Http\Response
-	 */
-	public function refuseInvite(int $inviteId) {
-		DB::table('team_user')->where('id', $inviteId)->delete();
-	}
-
-	/**
 	 * Create a team with the provided validated attributes
 	 *
 	 * @param array $attributes
