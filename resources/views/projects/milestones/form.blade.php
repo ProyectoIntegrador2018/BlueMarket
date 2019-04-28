@@ -1,12 +1,12 @@
 <!-- Milestone name -->
 <div class="field">
-	<label for="milestoneName">Name</label>
+	<label class="ui left" for="milestoneName">Name</label>
 	<input type="text" name="milestoneName" id="milestoneName">
 </div>
 
 <!-- Previous milestone -->
 <div class="field">
-	<label for="prevMilestone">Previous milestone</label>
+	<label class="ui left" for="prevMilestone">Previous milestone</label>
 	<select class="ui fluid search dropdown" name="prevMilestone" id="prevMilestone">
 		{{-- @foreach ($milestones as $prevMilestone)
 			<option value="{{ $prevMilestone->id }}"> {{ $prevMilestone->name }} </option>
@@ -16,7 +16,7 @@
 
 <!-- Estimated date -->
 <div class="field">
-	<label for="doneDate">Done date</label>
+	<label class="ui left" for="doneDate">Done date</label>
 	<div class="ui calendar">
 		<div class="ui input left icon">
 			<i class="calendar icon"></i>
@@ -27,7 +27,7 @@
 
 <!-- Status -->
 <div class="field">
-	<label for="status">Status</label>
+	<label class="ui left" for="status">Status</label>
 	<select class="ui fluid search dropdown" name="status" id="status">
 		<option value="done">Done</option>
 		<option value="current">Current</option>
