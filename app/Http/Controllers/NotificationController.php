@@ -46,14 +46,14 @@ class NotificationController extends Controller
 		//
 	}
 
-		/**
+	/**
 	 * Accept an invite to join a team or a project.
 	 *
 	 * @param  int $inviteId
 	 * @return \Illuminate\Http\Response
 	 */
 	public function acceptInvite(Request $request) {
-		$inviteId =  $request->id;
+		$inviteId = $request->id;
 		$inviteType = $request->invite_type;
 
 		switch ($inviteType) {
@@ -80,7 +80,7 @@ class NotificationController extends Controller
 	 * @return \Illuminate\Http\Response
 	 */
 	public function declineInvite(Request $request) {
-		$inviteId =  $request->id;
+		$inviteId = $request->id;
 		$inviteType = $request->invite_type;
 
 		switch ($inviteType) {
