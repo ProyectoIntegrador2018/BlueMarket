@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Project;
 use App\Tag;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -23,8 +24,22 @@ class ProjectController extends Controller {
 		return view('projects', compact('tags', 'projects'));
 	}
 
-	public function show($id) {
-		$project = Project::findOrFail($id);
+	public function show(Project $project) {
+		// Check supplier courses associated with project's client course, and filter users accordingly
+		$courses = $project->course->suppliers()->get()->pluck('id')->toArray();
+		$projectUsers = array_merge($project->suppliers()->get()->pluck('id')->toArray(), $project->pending_suppliers()->get()->pluck('id')->toArray(),
+			$project->team->members()->get()->pluck('id')->toArray(), $project->team->pending_members()->get()->pluck('id')->toArray());
+
+		if (empty($courses)) {
+			// get all students except project suppliers
+			$students = User::students()->whereNotIn('users.id', $projectUsers)->get();
+		} else {
+			// get all students in the associated courses except project suppliers
+			$students = User::students()->whereNotIn('users.id', $projectUsers)
+				->whereHas('enrolledIn', function ($q) use($courses) {
+					$q->whereIn('courses.id', $courses);
+				})->get();
+		}
 
 		// Calculate project progress.
 		$numOfMilestones = $project->milestones->count();
@@ -35,7 +50,7 @@ class ProjectController extends Controller {
 			$project->progress = 0;
 		}
 
-		return view('projects.details', ['project' => $project]);
+		return view('projects.details', compact('project', 'students'));
 	}
 
 	public function create() {
@@ -50,7 +65,6 @@ class ProjectController extends Controller {
 	}
 
 	public function store(Request $request) {
-
 		$attributes = request()->validate([
 			'projectName' => ['required', 'min:3'],
 			'videoPitch' => 'required',
@@ -114,6 +128,15 @@ class ProjectController extends Controller {
 		MilestoneController::createDefaultMilestones($project->id);
 
 		return redirect()->action('ProjectController@show', ['id' => $project->id]);
+	}
+
+	public function update(Request $request, Project $project) {
+		$newSupplier = $request['id_new_supplier'];
+		if (!empty($newSupplier)) {
+			$project->suppliers()->attach($newSupplier);
+			return $project->pending_suppliers()->where('user_id', '=', $newSupplier)->where('project_id', '=', $project->id)->get()[0];
+		}
+		abort(500);
 	}
 
 	private function validateTeam($team_id, $course_id) {

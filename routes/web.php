@@ -24,7 +24,7 @@ Route::view('/login/welcome', 'auth.success');
 
 /* projects */
 Route::resource('projects', 'ProjectController')->only([
-	'index', 'show', 'create', 'store'
+	'index', 'show', 'create', 'store', 'update'
 ]);
 
 /* users */
