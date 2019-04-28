@@ -197,7 +197,7 @@
 	<div class="ui bottom attached tab segment" data-tab="milestones">
 		<button type="button" class="ui button primary" onclick="showMilestoneModal('create')">New milestone</button>
 		@include('projects.milestones.index')
-		<div id="new-milestone-modal" class="ui tiny modal new-milestone-modal">
+		<div id="new-milestone-modal" class="ui tiny modal milestones new-milestone-modal">
 			@include('projects.milestones.create')
 		</div>
 	</div>

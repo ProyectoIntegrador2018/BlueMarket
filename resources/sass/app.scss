@@ -497,6 +497,9 @@ $color-white: #fff;
 	margin-top: 10px;
 }
 
-.ui.modal.new-milestone-modal {
+.ui.modal.milestones {
 	text-align: left;
+	.calendar.icon {
+		margin: 0;
+	}
 }
