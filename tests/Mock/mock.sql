@@ -1406,9 +1406,21 @@ insert into course_user (id, course_id, user_id) values (60, 5, 13);
 insert into course_user (id, course_id, user_id) values (61, 5, 14);
 insert into course_user (id, course_id, user_id) values (62, 5, 15);
 insert into course_user (id, course_id, user_id) values (63, 5, 16);
-
-
-
+insert into course_user (id, course_id, user_id) values (64, 6, 7);
+insert into course_user (id, course_id, user_id) values (65, 7, 7);
+insert into course_user (id, course_id, user_id) values (66, 8, 7);
+insert into course_user (id, course_id, user_id) values (67, 9, 7);
+insert into course_user (id, course_id, user_id) values (68, 10, 7);
+insert into course_user (id, course_id, user_id) values (69, 6, 8);
+insert into course_user (id, course_id, user_id) values (70, 7, 8);
+insert into course_user (id, course_id, user_id) values (71, 8, 8);
+insert into course_user (id, course_id, user_id) values (72, 9, 8);
+insert into course_user (id, course_id, user_id) values (73, 10, 8);
+insert into course_user (id, course_id, user_id) values (74, 6, 9);
+insert into course_user (id, course_id, user_id) values (75, 7, 9);
+insert into course_user (id, course_id, user_id) values (76, 8, 9);
+insert into course_user (id, course_id, user_id) values (77, 9, 9);
+insert into course_user (id, course_id, user_id) values (78, 10, 9);
 
 -- client/supplier courses relationships
 insert into client_supplier_course (id, client_id, supplier_id) values (1, 1, 6);
