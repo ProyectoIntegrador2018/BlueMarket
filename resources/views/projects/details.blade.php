@@ -1,6 +1,10 @@
 @extends('layouts.app')
 
-@section('title', $project->name)
+@section("meta")
+	<meta name="csrf-token" content="{{ csrf_token() }}">
+@endsection
+
+@section("title", $project->name)
 
 @section('content')
 
@@ -464,6 +468,7 @@
 					let rowToAdd = generatePendingInviteRow(data);
 					$("#pendingInvites tbody").prepend(rowToAdd);
 					$("#pendingInvites").show();
+					$("div[data-value='" + userToInvite + "']").remove();
 					renderDateTimeAgoOnce(); // refresh sent datetimes
 				},
 				error: function() {

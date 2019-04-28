@@ -211,6 +211,7 @@
 					let rowToAdd = generatePendingInviteRow(data);
 					$("#pendingInvites tbody").prepend(rowToAdd);
 					$("#pendingInvites").show();
+					$("div[data-value='" + userToInvite + "']").remove();
 					renderDateTimeAgoOnce(); // refresh sent datetimes
 				},
 				error: function() {
