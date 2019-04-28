@@ -63,16 +63,16 @@
 						<div class="ui detail-container">
 							<p><strong>Associated course</strong></p>
 							@if(isset($project->course))
-							<a href="{{ url('courses', $project->course->id) }}">
+								<a href="{{ url('courses', $project->course->id) }}">
 								<p>{{ $project->course->name }}</p>
 								<p>
 									@foreach($project->course->teachers as $teacher)
-									{{ $loop->first ? '' : ', ' }}
-									{{ $teacher->name }}
+										{{ $loop->first ? '' : ', ' }}
+										{{ $teacher->name }}
 									@endforeach
 								</p>
 								<p>{{ $project->course->schedule }}</p>
-							</a>
+								</a>
 							@endif
 						</div>
 					</div>
@@ -83,14 +83,14 @@
 				<div class="ui detail-container">
 					<p><strong>Labels</strong></p>
 					@foreach($project->labels as $label)
-					<div class="ui label pill">{{ $label->name }}</div>
+						<div class="ui label pill">{{ $label->name }}</div>
 					@endforeach
 				</div>
 				<!-- Skillset -->
 				<div class="ui detail-container">
 					<p><strong>Required skillset</strong></p>
 					@foreach($project->skills as $skill)
-					<div class="ui label pill">{{ $skill->name }}</div>
+						<div class="ui label pill">{{ $skill->name }}</div>
 					@endforeach
 				</div>
 			</div>
@@ -104,42 +104,42 @@
 					<div class="label">Currently on: {{ $project->milestones->where('status', Config::get('enum.milestone_status')['current'])->first()->name }}</div>
 				</div>
 				@if(isset($project->milestones))
-				<div class="ui list milestone-section">
+					<div class="ui list milestone-section">
 					@foreach ($project->milestones as $milestone)
 
-					@switch($milestone->status)
-					@case(Config::get('enum.milestone_status')['done'])
-					<div class="item done">
-						<i class="large circle green icon"></i>
-						<div class="content">
-							<p class="header">{{ $milestone->name }}</p>
-							<div class="description">Done on {{ $milestone->done_date}}</div>
+						@switch($milestone->status)
+						@case(Config::get('enum.milestone_status')['done'])
+						<div class="item done">
+							<i class="large circle green icon"></i>
+							<div class="content">
+								<p class="header">{{ $milestone->name }}</p>
+								<div class="description">Done on {{ $milestone->done_date}}</div>
+							</div>
 						</div>
-					</div>
-					@break
+						@break
 
-					@case(Config::get('enum.milestone_status')['current'])
-					<div class="item current">
-						<i class="large circle blue icon"></i>
-						<div class="content">
-							<p class="header">{{ $milestone->name }}</p>
-							<div class="description"></div>
+						@case(Config::get('enum.milestone_status')['current'])
+						<div class="item current">
+							<i class="large circle blue icon"></i>
+							<div class="content">
+								<p class="header">{{ $milestone->name }}</p>
+								<div class="description"></div>
+							</div>
 						</div>
-					</div>
-					@break
+						@break
 
-					@default
-					<div class="item coming-up">
-						<i class="large circle grey icon"></i>
-						<div class="content">
-							<p class="header">{{ $milestone->name }}</p>
-							<div class="description"></div>
+						@default
+						<div class="item coming-up">
+							<i class="large circle grey icon"></i>
+							<div class="content">
+								<p class="header">{{ $milestone->name }}</p>
+								<div class="description"></div>
+							</div>
 						</div>
-					</div>
-					@endswitch
+						@endswitch
 					@endforeach
-					@endif
-				</div>
+					</div>
+				@endif
 			</div>
 		</div>
 	</div>
@@ -147,42 +147,42 @@
 	<div class="ui bottom attached tab segment" data-tab="collaborators">
 		<div class="ui stackable grid">
 			@if(isset($project->team->members) && count($project->team->members) > 0)
-			<div class="eight wide column">
-				<h2>Owners</h2>
-				<table class="ui striped table">
-					<tbody>
-						@foreach($project->team->members as $member)
-						<tr class="selectable">
-							<td>
-								<a href="{{ url('users', $member->id) }}">
-									<img class="ui mini circular image" src="{{ isset($member->picture_url) ? $member->picture_url : 'https://dummyimage.com/400x400/3498db/ffffff.png&text=B' }}" alt="{{ $member->name }}" style="display: inline; margin-right: 10px;"/>
-									{{ $member->name }}
-								</a>
-							</td>
-						</tr>
-						@endforeach
-					</tbody>
-				</table>
-			</div>
+				<div class="eight wide column">
+					<h2>Owners</h2>
+					<table class="ui striped table">
+						<tbody>
+							@foreach($project->team->members as $member)
+								<tr class="selectable">
+									<td>
+										<a href="{{ url('users', $member->id) }}">
+											<img class="ui mini circular image" src="{{ isset($member->picture_url) ? $member->picture_url : 'https://dummyimage.com/400x400/3498db/ffffff.png&text=B' }}" alt="{{ $member->name }}" style="display: inline; margin-right: 10px;"/>
+											{{ $member->name }}
+										</a>
+									</td>
+								</tr>
+							@endforeach
+						</tbody>
+					</table>
+				</div>
 			@endif
 			@if(isset($project->suppliers) && count($project->suppliers) > 0)
-			<div class="eight wide column">
-				<h2>Suppliers</h2>
-				<table class="ui striped table">
-					<tbody>
-						@foreach($project->suppliers as $supplier)
-						<tr class="selectable">
-							<td>
-								<a href="{{ url('users', $supplier->id) }}">
-									<img class="ui mini circular image" src="{{ isset($supplier->picture_url) ? $supplier->picture_url : 'https://dummyimage.com/400x400/3498db/ffffff.png&text=B' }}" alt="{{ $supplier->name }}" style="display: inline; margin-right: 10px;"/>
-									{{ $supplier->name }}
-								</a>
-							</td>
-						</tr>
-						@endforeach
-					</tbody>
-				</table>
-			</div>
+				<div class="eight wide column">
+					<h2>Suppliers</h2>
+					<table class="ui striped table">
+						<tbody>
+							@foreach($project->suppliers as $supplier)
+								<tr class="selectable">
+									<td>
+										<a href="{{ url('users', $supplier->id) }}">
+											<img class="ui mini circular image" src="{{ isset($supplier->picture_url) ? $supplier->picture_url : 'https://dummyimage.com/400x400/3498db/ffffff.png&text=B' }}" alt="{{ $supplier->name }}" style="display: inline; margin-right: 10px;"/>
+											{{ $supplier->name }}
+										</a>
+									</td>
+								</tr>
+							@endforeach
+						</tbody>
+					</table>
+				</div>
 			@endif
 		</div>
 	</div>
@@ -290,11 +290,48 @@
 		onSuccess: function() {
 			console.log($(".ui.form.milestones.create").serialize());
 			alert('success');
+			/* event.preventDefault();
+			$.ajax({
+				type: "post",
+				url: "/milestones",
+				data: {
+					name: $("milestoneName").val(),
+					project_id: {{ $project->id }},
+					status: $("status").val(),
+					done_date: $("doneDate").val(),
+					previous_milestone_id: $("prevMilestone").val()
+				}
+				dataType: 'json',
+				success: function (data) {
+					console.log(data);
+					alert('Your milestone has been created!');
+				},
+				error: function (data) {
+					console.log(data);
+					alert('Uh oh! Something went wrong and we couldn\'t create your milestone.');
+				}
+			});
+			$("#new-milestone-modal").modal("hide"); */
+		},
+		onFailure: function() {
+			alert('failure');
+			return false;
+		}
+	});
+
+	/* Pending delete ajax call */
+	/* $(".ui.form.milestones.delete").form({
+		fields: {
+		},
+		onSuccess: function() {
+			alert('success');
 			event.preventDefault();
 			$.ajax({
 				type: "post",
 				url: "/milestones",
-				data: $(".ui.form.milestones.create").serialize(),
+				data: {
+					milestoneId: milestoneToDel
+				},
 				dataType: 'json',
 				success: function (data) {
 					console.log(data);
@@ -311,7 +348,8 @@
 			alert('failure');
 			return false;
 		}
-	});
+	}); */
+
 </script>
 @endsection
 @endsection
