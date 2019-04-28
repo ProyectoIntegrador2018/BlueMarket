@@ -101,7 +101,7 @@
 												</a>
 											</td>
 											<td>
-												sent <p class="needs-datetimeago invite-sent-datetime" datetime="{{ $pending_member->pivot->created_at }}">{{ $pending_member->pivot->created_at }}</p>
+												sent <p class="needs-datetimeago invite-sent-datetime" data-datetime="{{ $pending_member->pivot->created_at }}">{{ $pending_member->pivot->created_at }}</p>
 											</td>
 										</tr>
 									@endforeach
@@ -121,6 +121,16 @@
 							<button type="button" class="ui ok primary button" onclick="inviteMember()">Confirm</button>
 						</div>
 					</div>
+					<div id="member-to-add-error-modal" class="ui modal">
+						<div class="header">Something went wrong</div>
+						<div class="content">
+							<i class="times huge red circle icon"></i>
+							<p>We were unable to send an invite to this user.</p>
+						</div>
+						<div class="actions">
+							<button type="button" class="ui ok primary button">Done</button type="button">
+						</div>
+					</div>
 				@endif
 			</div>
 		</div>
@@ -132,6 +142,7 @@
 	/* Semantic UI tabs */
 	$(".menu .item").tab();
 	$("#member-to-add-modal").modal({ transition: "fade up" });
+	$("#member-to-error-add-modal").modal({ transition: "fade up" });
 
 	@if(Auth::id() === $team->leader->id)
 		/* Semantic UI dropdown */
@@ -175,7 +186,7 @@
 								</a>
 							</td>
 							<td>
-								sent <p class="needs-datetimeago invite-sent-datetime" datetime="${sent_datetime}">${sent_datetime}</p>
+								sent <p class="needs-datetimeago invite-sent-datetime" data-datetime="${sent_datetime}">${sent_datetime}</p>
 							</td>
 						</tr>`;
 
@@ -197,14 +208,13 @@
 				},
 				dataType: 'json',
 				success: function(data) {
-					console.log(data);
 					let rowToAdd = generatePendingInviteRow(data);
-					$("#pendingInvites tbody").append(rowToAdd);
+					$("#pendingInvites tbody").prepend(rowToAdd);
 					$("#pendingInvites").show();
 					renderDateTimeAgoOnce(); // refresh sent datetimes
 				},
-				error: function(data) {
-					// TODO: error handling (need possible errors)
+				error: function() {
+					$("#member-to-add-error-modal").modal("show");
 				}
 			});
 			$("#new-member-dropdown").dropdown("restore defaults");
