@@ -136,6 +136,7 @@ class ProjectController extends Controller {
 			$project->suppliers()->attach($newSupplier);
 			return $project->pending_suppliers()->where('user_id', '=', $newSupplier)->where('project_id', '=', $project->id)->get()[0];
 		}
+
 		abort(500);
 	}
 
