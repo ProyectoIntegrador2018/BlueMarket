@@ -11,9 +11,6 @@ use Illuminate\Http\Request;
 
 class TeamController extends Controller
 {
-	const ROLES = 'enum.user_roles';
-	const INVITES = 'enum.invite_status';
-
 	public function __construct() {
 		$this->middleware('auth');
 	}
