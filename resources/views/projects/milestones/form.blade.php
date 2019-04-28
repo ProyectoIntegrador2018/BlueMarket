@@ -10,9 +10,9 @@
 	<label class="ui left" for="prevMilestone">Previous milestone</label>
 	<!-- TO DO: add an if statement to check if prevMilestone is already set -->
 	<select class="ui fluid search dropdown" name="prevMilestone" id="prevMilestone">
-		{{-- @foreach ($milestones as $prevMilestone)
-			<option value="{{ $prevMilestone->id }}"> {{ $prevMilestone->name }} </option>
-			@endforeach --}}
+		@foreach ($project->milestones as $milestone)
+			<option value="{{ $milestone->id }}"> {{ $milestone->name }} </option>
+			@endforeach
 	</select>
 </div>
 
@@ -21,9 +21,9 @@
 	<label class="ui left" for="status">Status</label>
 	<!-- TO DO: add an if statement to check if status is already set -->
 	<select class="ui fluid search dropdown" name="status" id="status">
-		<option value="done">Done</option>
-		<option value="current">Current</option>
 		<option value="coming-up">Coming up</option>
+		<option value="current">Current</option>
+		<option value="done">Done</option>
 	</select>
 </div>
 

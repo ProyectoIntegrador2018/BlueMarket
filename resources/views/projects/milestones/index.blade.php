@@ -43,7 +43,7 @@
 <div id="delete-milestone-modal" class="ui tiny modal delete-milestone-modal">
 	<div class="header">Are you sure you want to delete this milestone?</div>
 	<div class="content">
-		<form class="ui form milestones create {{ $errors->any() ? 'error': '' }}">
+		<form class="ui form milestones delete {{ $errors->any() ? 'error': '' }}">
 			@csrf
 			<p>Confirming this modal will erase all info about this milestone.</p>
 		</form>
