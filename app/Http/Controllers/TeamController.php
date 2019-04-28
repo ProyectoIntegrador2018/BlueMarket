@@ -48,7 +48,7 @@ class TeamController extends Controller
 
 		$team = $this->createTeam($attributes, $request->file('teamImage'));
 		if (!$team->exists) {
-			abort(500);
+			abort(400);
 		}
 
 		$team->members()->attach($team->leader_id, ['accepted' => config('enum.invite_status')['accepted']]);
@@ -72,6 +72,9 @@ class TeamController extends Controller
 		// Check courses associated with teams' existing projects, and filter users accordingly
 		$courses = array_unique($team->projects()->with('course:id')->get()->pluck('course.id')->toArray());
 		$teamUsers = array_merge($team->members()->get()->pluck('id')->toArray(), $team->pending_members()->get()->pluck('id')->toArray());
+		foreach ($team->projects as $project) {
+			$teamUsers = array_merge($teamUsers, $project->suppliers()->get()->pluck('id')->toArray(), $project->pending_suppliers()->get()->pluck('id')->toArray());
+		}
 
 		if (empty($courses)) {
 			// get all students except team members
