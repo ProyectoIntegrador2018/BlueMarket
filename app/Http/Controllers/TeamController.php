@@ -84,7 +84,7 @@ class TeamController extends Controller
 				})->get();
 		}
 
-		return view('teams.details', compact('team', 'users'));
+		return view('teams.details', compact('team', 'students'));
 	}
 
 	/**
@@ -105,10 +105,12 @@ class TeamController extends Controller
 	 * @return \Illuminate\Http\Response
 	 */
 	public function update(Request $request, Team $team) {
-		if (!empty($request['newMember'])) {
-			$team->members()->attach($request['newMember']);
+		$newMember = $request['id_new_member'];
+		if (!empty($newMember)) {
+			$team->members()->attach($newMember);
+			return $team->pending_members()->where('user_id', '=', $newMember)->where('team_id', '=', $team->id)->get()[0];
 		}
-		return redirect()->route('teams.show', [$team]);
+		abort(500);
 	}
 
 	/**
