@@ -41,4 +41,24 @@ class NotificationController extends Controller
 	{
 		//
 	}
+
+	/**
+	 * Accept an invite to join a team.
+	 *
+	 * @param  int $inviteId
+	 * @return \Illuminate\Http\Response
+	 */
+	public function acceptInviteToJoinTeam(int $inviteId) {
+		DB::table('team_user')->where('id', $inviteId)->update(['has_accepted' => config(self::INVITES)['accepted']]);
+	}
+
+	/**
+	 * Refuse an invite to join a team.
+	 *
+	 * @param  int $inviteId
+	 * @return \Illuminate\Http\Response
+	 */
+	public function refuseInviteToJoinTeam(int $inviteId) {
+		DB::table('team_user')->where('id', $inviteId)->delete();
+	}
 }
