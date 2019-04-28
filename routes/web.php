@@ -29,7 +29,6 @@ Route::resource('projects', 'ProjectController')->only([
 
 /* users */
 Route::resource('users', 'UserController')->only(['index', 'update', 'show']);
-Route::get('/user/profile', 'UserController@show');
 Route::get('/user/profile/edit', 'UserController@edit');
 
 /* courses */
@@ -40,9 +39,6 @@ Route::post('/contact', 'ContactMessageController@post');
 
 /* teams */
 Route::resource('teams', 'TeamController');
-
-/* notification center */
-//Route::get('/notifications', 'NotificationController@index');
 
 
 /* Admin routes
@@ -60,3 +56,5 @@ Route::get('/projects/tasks/create', function () {
 });
 
 Route::resource('notifications', 'NotificationController')->only(['index']);
+Route::post('/notifications/accept', 'NotificationController@acceptInvite');
+Route::post('/notifications/decline', 'NotificationController@declineInvite');
