@@ -113,6 +113,7 @@ class TeamController extends Controller
 			$team->members()->attach($newMember);
 			return $team->pending_members()->where('user_id', '=', $newMember)->where('team_id', '=', $team->id)->get()[0];
 		}
+
 		abort(500);
 	}
 
