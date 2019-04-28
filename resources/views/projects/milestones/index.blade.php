@@ -104,9 +104,10 @@
 		</tr>
 	</tbody>
 </table>
-<div id="edit-milestone-modal" class="ui tiny modal edit-milestone-modal">
+<div id="edit-milestone-modal" class="ui tiny modal milestones edit-milestone-modal">
 	@include('projects.milestones.edit')
 </div>
+<!-- TO DO: missing error validation for edit and delete -->
 <div id="delete-milestone-modal" class="ui tiny modal delete-milestone-modal">
 	<div class="header">Are you sure you want to delete this milestone?</div>
 	<div class="content">

@@ -5,6 +5,7 @@
 		@include('projects.milestones.form')
 	</form>
 </div>
+<!-- TO DO: missing error validation -->
 <div class="ui error message">
 	<h2 class="header">Whoops! Something went wrong.</h2>
 	@if($errors->any())
