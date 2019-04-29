@@ -10,12 +10,12 @@
 			<th>Action</th>
 		</tr>
 	</thead>
-	<tbody>
+	<tbody id="milestoneList">
 		@foreach($project->milestones as $milestone)
-		<tr>
+		<tr data-index="{{ $loop->iteration }}">
 			<td>{{ $loop->iteration }}</td>
-			<td>{{ $milestone->name }}</td>
-			<td>
+			<td class="name">{{ $milestone->name }}</td>
+			<td class="status">
 				@switch($milestone->status)
 					@case(Config::get('enum.milestone_status')['done'])
 						<span class="ui green label">Done</span>
@@ -29,8 +29,8 @@
 						<span class="ui grey label">Coming up</span>
 				@endswitch
 			</td>
-			<td>{{ isset($milestone->done_date) ?  $milestone->done_date : '-' }}</td>
-			<td>
+			<td class="donedate">{{ isset($milestone->done_date) ?  $milestone->done_date : '-' }}</td>
+			<td class="buttons">
 				<button data-id="{{ $milestone->id }}" class="ui button primary milestoneEditBtn">Edit</button>
 				<button class="ui button red" onclick="showMilestoneModal('delete', this)">Delete</button>
 			</td>
@@ -38,6 +38,20 @@
 		@endforeach
 	</tbody>
 </table>
+
+<template id="milestoneTpl">
+	<tr>
+		<td class="index"></td>
+		<td class="name"></td>
+		<td class="status"> <span class="ui label"></span> </td>
+		<td class="donedate"></td>
+		<td class="buttons">
+			<button data-id="" class="ui button primary milestoneEditBtn">Edit</button>
+			<button class="ui button red" onclick="showMilestoneModal('delete', this)">Delete</button>
+		</td>
+	</tr>
+</template>
+
 
 <!-- Modals -->
 @include('projects.milestones.form', ['name' => 'new'])
@@ -62,17 +76,12 @@
 <script>
 
 	const milestoneData = {!! $project->milestones !!};
+	const milestoneTpl = $('#milestoneTpl')[0];
 
 	/* Milestones
 	--------------------------------------------------------------------------------------- */
 
 	$("#new-milestone-modal").modal({ transition: "fade up" });
-
-	// Info taken from config/enum.php
-	const statusMap = {
-		1: 'done',
-		2: 'current'
-	};
 
 	$('.milestoneEditBtn').click(function(e) {
 		const id = $(this).data('id');
@@ -80,10 +89,13 @@
 		$form.find('input[name=_milestoneID]').val(id);
 		const milestone = (milestoneData.filter(m => m.id == id))[0];
 		$form.find('.milestoneName').val(milestone.name);
-		$form.find('.status').dropdown('set selected', statusMap[milestone.status]);
+		let status = milestone.status === null ? 0 : milestone.status;
+		$form.find('.status').dropdown('set selected', status);
 		$form.find('.ui.calendar').calendar('set date', milestone.done_date);
 		$form.find('.prevMilestone').dropdown('set selected', milestone.previous_milestone_id);
 		$('#edit-milestone-modal').modal('show');
+		const rowIndex = $(this).parent().parent().data('index');
+		$('#edit-milestone-modal').find('.submitBtn').data('index', rowIndex);
 	});
 
 	function showMilestoneModal(action, btn) {
@@ -171,9 +183,12 @@
 				// TODO: insert the milestone into the list
 				if(isEdit) {
 					alert('Saved!');
+					const rowIndex = $(`#${modalName}-milestone-modal`).find('.submitBtn').data('index');
+					updateTableEntry(data, rowIndex);
 				}
 				else {
 					alert('Your milestone has been created!');
+					addMilestone(data);
 				}
 			},
 			error: function (xhr, status) {
@@ -181,13 +196,66 @@
 				console.error(status);
 				console.error(xhr);
 				// TODO: Let's be more specific about this
-				alert('Uh oh! Something went wrong and we couldn\'t create your milestone. Please try again later.');
+				alert(`Uh oh! Something went wrong and we couldn't ${isEdit ? "save": "create"} your milestone. Please try again later.`);
 			},
 			complete: function(xhr, status) {
 				$(`#${modalName}-milestone-modal`).modal("hide");
+				// Clean the modal
+				$(`#${modalName}-milestone-modal`).find('form').form('reset');
 			}
 		});
 	}
 
+	function updateTableEntry(milestone, index) {
+		milestoneData[index-1] = milestone;
+		const $row = $(`#milestoneList tr[data-index="${index}"]`);
+		$row.find('.name').html(milestone.name);
+		$label = $row.find('.status .ui.label');
+		$label.removeClass('green').removeClass('blue').removeClass('grey');
+		if(typeof(milestone.status) == 'string') {
+			milestone.status = parseInt(milestone.status, 10);
+		}
+		$label.addClass(classMap(milestone.status)).html(labelMap(milestone.status));
+		if(milestone.done_date) {
+			let ddate = milestone.done_date;
+			ddate = ddate.split(' ')[0];
+			$row.find('.donedate').html(ddate);
+		}
+	}
+
+
+	function classMap(status) {
+		if(status == null) return 'grey';
+		let map = {
+			1: 'green',
+			2: 'blue'
+		};
+		return map[status];
+	}
+	function labelMap(status) {
+		if(status == null) return 'Coming up';
+		let map = {
+			1: 'Done',
+			2: 'Current'
+		};
+		return map[status];
+	}
+
+	function addMilestone(milestone) {
+		const clone = document.importNode(milestoneTpl.content, true);
+		const $clone = $(clone);
+		$clone.find('.index').html(milestoneData.length+1);
+		$clone.find('tr').data('index', milestoneData.length+1);
+		$clone.find('.name').html(milestone.name);
+		$clone.find('.status .ui.label').addClass(classMap(milestone.status)).html(labelMap(milestone.status));
+		if(milestone.done_date) {
+			let ddate = milestone.done_date;
+			ddate = ddate.split(' ')[0];
+			$clone.find('.donedate').html(ddate);
+		}
+		$clone.find('.milestoneEditBtn').data('id', milestone.id);
+		$('#milestoneList').append($clone);
+		milestoneData.push(milestone);
+	}
 </script>
 @endpush
