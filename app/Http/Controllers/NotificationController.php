@@ -70,7 +70,7 @@ class NotificationController extends Controller
 				break;
 		}
 
-		return Auth::id();
+		return ['success' => 'success'];
 	}
 
 	/**
@@ -97,6 +97,6 @@ class NotificationController extends Controller
 				break;
 		}
 
-		return Auth::id();
+		return ['success' => 'success'];
 	}
 }
