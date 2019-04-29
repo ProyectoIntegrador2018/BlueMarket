@@ -5,14 +5,12 @@
 			<!-- Milestone name -->
 			<div class="field">
 				<label class="ui left" for="milestoneName">Name</label>
-				<!-- TO DO: add an if statement to check if name is already set -->
 				<input type="text" class="milestoneName" name="milestoneName">
 			</div>
 
 			<!-- Previous milestone -->
 			<div class="field">
 				<label class="ui left" for="prevMilestone">Previous milestone</label>
-				<!-- TO DO: add an if statement to check if prevMilestone is already set -->
 				<select class="ui fluid search dropdown prevMilestone" name="prevMilestone">
 					@foreach ($project->milestones as $milestone)
 						<option value="{{ $milestone->id }}"> {{ $milestone->name }} </option>
@@ -23,7 +21,6 @@
 			<!-- Status -->
 			<div class="field">
 				<label class="ui left" for="status">Status</label>
-				<!-- TO DO: add an if statement to check if status is already set -->
 				<select class="ui fluid search dropdown status" name="status">
 					<option value="0">Coming up</option>
 					<option value="2">Current</option>
@@ -38,7 +35,6 @@
 				<div class="ui calendar">
 					<div class="ui input left icon">
 						<i class="calendar icon"></i>
-						<!-- TO DO: add an if statement to check if done date is already set -->
 						<input name="doneDate" type="text" placeholder="e.g. 30/4/2019" value="" class="doneDate">
 					</div>
 				</div>
