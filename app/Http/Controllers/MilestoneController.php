@@ -29,11 +29,13 @@ class MilestoneController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function store(Request $request) {
-		dd('hello');
 		$validatedAttributes = request()->validate([
 			'name' => 'required|string',
 			'project_id' => 'required|int',
+			'prevMilestone' => 'required|int'
 		]);
+		$validatedAttributes['previous_milestone_id'] = $validatedAttributes['prevMilestone'];
+		unset($validatedAttributes['prevMilestone']);
 
 		$milestone = Milestone::create($validatedAttributes);
 		abort_if(!$milestone->exists, 500);
