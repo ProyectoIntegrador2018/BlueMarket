@@ -170,7 +170,12 @@
 			success: function (data) {
 				console.log(data);
 				// TODO: insert the milestone into the list
-				alert('Your milestone has been created!');
+				if(isEdit) {
+					alert('Saved!');
+				}
+				else {
+					alert('Your milestone has been created!');
+				}
 			},
 			error: function (xhr, status) {
 				console.log(values);
