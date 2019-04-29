@@ -1,3 +1,5 @@
+<button type="button" class="ui button primary" onclick="showMilestoneModal('new')">New milestone</button>
+
 <table class="ui celled table">
 	<thead>
 		<tr>
@@ -36,9 +38,11 @@
 		@endforeach
 	</tbody>
 </table>
-<div id="edit-milestone-modal" class="ui tiny modal milestones edit-milestone-modal">
-	@include('projects.milestones.edit')
-</div>
+
+<!-- Modals -->
+@include('projects.milestones.form', ['name' => 'new'])
+@include('projects.milestones.form', ['name' => 'edit'])
+
 <!-- TO DO: missing error validation for edit and delete -->
 <div id="delete-milestone-modal" class="ui tiny modal delete-milestone-modal">
 	<div class="header">Are you sure you want to delete this milestone?</div>
