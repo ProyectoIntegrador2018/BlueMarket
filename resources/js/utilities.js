@@ -1,4 +1,4 @@
-import { format, render, cancel } from 'timeago.js';
+import { format } from 'timeago.js';
 import _debounce from 'lodash.debounce';
 
 /* global functions */
