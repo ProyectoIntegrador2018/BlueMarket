@@ -137,7 +137,7 @@
 
 		let values = $(this).form('get values');
 		values['name'] = values['milestoneName'];
-		values['done_date'] = values['doneDate'];
+		values['done_date'] = new Date(values['doneDate']).toISOString();
 		values['project_id'] = {{ $project->id }};
 		delete values['milestoneName'];
 		delete values['_milestoneID'];

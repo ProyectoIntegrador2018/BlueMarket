@@ -290,21 +290,21 @@
 	$(document).ready(function() {
 		$(".ui.fluid.search.dropdown").dropdown();
 		$('#progress').progress();
+		/* Due date datetime picker */
+		$(".ui.calendar").calendar({
+			monthFirst: false,
+			formatter: {
+				date: function (date, settings) {
+					if (!date) return '';
+					var day = date.getDate();
+					var month = date.getMonth() + 1;
+					var year = date.getFullYear();
+					return day + '/' + month + '/' + year;
+				}
+			}
+		});
 	});
 
-	/* Due date datetime picker */
-	$(".ui.calendar").calendar({
-		monthFirst: false,
-		formatter: {
-			date: function (date, settings) {
-				if (!date) return '';
-				var day = date.getDate();
-				var month = date.getMonth() + 1;
-				var year = date.getFullYear();
-				return day + '/' + month + '/' + year;
-			}
-		}
-	});
 
 
 	/* Tasks
