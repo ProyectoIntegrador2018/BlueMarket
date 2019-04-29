@@ -103,9 +103,16 @@
 					<div class="bar">
 						<div class="progress">{{ $project->progress * 100 }}%</div>
 					</div>
-					<div class="label">Currently on: {{ $project->milestones->where('status', Config::get('enum.milestone_status')['current'])->first()->name }}</div>
+					@if(count($project->milestones) > 0)
+						@php
+							$currentMilestone = $project->milestones->where('status', Config::get('enum.milestone_status')['current'])->first();
+						@endphp
+						@if($currentMilestone != null)
+							<div class="label">Currently on: {{ $currentMilestone->name }}</div>
+						@endif
+					@endif
 				</div>
-				@if(isset($project->milestones))
+				@if(count($project->milestones) > 0)
 					<div class="ui list milestone-section">
 					@foreach ($project->milestones as $milestone)
 
@@ -262,14 +269,14 @@
 		</div>
 	</div>
 
-	<div class="ui bottom attached tab segment" data-tab="milestones">
-		<button type="button" class="ui button primary" onclick="showMilestoneModal('new')">New milestone</button>
+	<!-- Milestones -->
+	<div id="Milestones" class="ui bottom attached tab segment" data-tab="milestones">
 		@include('projects.milestones.index')
-		<div id="new-milestone-modal" class="ui tiny modal milestones new-milestone-modal">
-			@include('projects.milestones.create')
-		</div>
 	</div>
 </div>
+
+@endsection
+
 
 @section('scripts')
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui-calendar/0.0.8/calendar.min.js"></script>
@@ -278,10 +285,32 @@
 	/* Semantic UI setup */
 	$(".menu .item").tab();
 	$("#new-task-modal").modal({ transition: "fade up" });
-	$("#new-milestone-modal").modal({ transition: "fade up" });
 	$("#supplier-to-add-modal").modal({ transition: "fade up" });
 	$("#supplier-to-add-error-modal").modal({ transition: "fade up" });
 
+
+
+	$(document).ready(function() {
+		$(".ui.fluid.search.dropdown").dropdown();
+		$('#progress').progress();
+		/* Due date datetime picker */
+		$(".ui.calendar").calendar({
+			monthFirst: false,
+			formatter: {
+				date: function (date, settings) {
+					if (!date) return '';
+					var day = date.getDate();
+					var month = date.getMonth() + 1;
+					var year = date.getFullYear();
+					return month + '/' + day + '/' + year;
+				}
+			}
+		});
+	});
+
+
+	/* Tasks
+	--------------------------------------------------------------------------------------- */
 	function hideTaskModal() {
 		$("#new-task-modal").modal("hide");
 	}
@@ -289,34 +318,6 @@
 	function showTaskModal() {
 		$("#new-task-modal").modal("show");
 	}
-
-	function showMilestoneModal(action) {
-		$(`#${action}-milestone-modal`).modal('show');
-	}
-
-	function hideMilestoneModal(action) {
-		$(`#${action}-milestone-modal`).modal('hide');
-	}
-
-	$(document).ready(function() {
-		$(".ui.fluid.search.dropdown").dropdown();
-		$('#progress').progress();
-	})
-
-	/* Due date datetime picker */
-	$(".ui.calendar").calendar({
-		monthFirst: false,
-		formatter: {
-			date: function (date, settings) {
-				if (!date) return '';
-				var day = date.getDate();
-				var month = date.getMonth() + 1;
-				var year = date.getFullYear();
-				return day + '/' + month + '/' + year;
-			}
-		}
-	});
-
 	/* Semantic UI form validation */
 	$(".ui.form.tasks.create").form({
 		fields: {
@@ -329,76 +330,9 @@
 		}
 	});
 
-	$(".ui.form.milestones.create").form({
-		fields: {
-			milestoneName: ["empty", "maxLength[30]"],
-			prevMilestone: ["empty"],
-			estimatedDate: ["empty"],
-			status: ["empty"]
-		},
-		onSuccess: function() {
-			console.log($(".ui.form.milestones.create").serialize());
-			alert('success');
-			/* event.preventDefault();
-			$.ajax({
-				type: "post",
-				url: "/milestones",
-				data: {
-					name: $("milestoneName").val(),
-					project_id: {{ $project->id }},
-					status: $("status").val(),
-					done_date: $("doneDate").val(),
-					previous_milestone_id: $("prevMilestone").val()
-				}
-				dataType: 'json',
-				success: function (data) {
-					console.log(data);
-					alert('Your milestone has been created!');
-				},
-				error: function (data) {
-					console.log(data);
-					alert('Uh oh! Something went wrong and we couldn\'t create your milestone.');
-				}
-			});
-			$("#new-milestone-modal").modal("hide"); */
-		},
-		onFailure: function() {
-			alert('failure');
-			return false;
-		}
-	});
 
-	/* Pending delete ajax call */
-	/* $(".ui.form.milestones.delete").form({
-		fields: {
-		},
-		onSuccess: function() {
-			alert('success');
-			event.preventDefault();
-			$.ajax({
-				type: "post",
-				url: "/milestones",
-				data: {
-					milestoneId: milestoneToDel
-				},
-				dataType: 'json',
-				success: function (data) {
-					console.log(data);
-					alert('Your milestone has been created!');
-				},
-				error: function (data) {
-					console.log(data);
-					alert('Uh oh! Something went wrong and we couldn\'t create your milestone.');
-				}
-			});
-			$("#new-milestone-modal").modal("hide");
-		},
-		onFailure: function() {
-			alert('failure');
-			return false;
-		}
-	}); */
-
+	/* Supplier invitations
+	--------------------------------------------------------------------------------------- */
 	@if(Auth::id() === $project->team->leader->id)
 		/* Semantic UI dropdown */
 		$("#new-supplier-dropdown").dropdown({
@@ -477,5 +411,7 @@
 		}
 	@endif
 </script>
-@endsection
+
+@stack('js')
+
 @endsection
