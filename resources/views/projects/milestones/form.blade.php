@@ -25,9 +25,9 @@
 				<label class="ui left" for="status">Status</label>
 				<!-- TO DO: add an if statement to check if status is already set -->
 				<select class="ui fluid search dropdown status" name="status">
-					<option value="coming-up">Coming up</option>
-					<option value="current">Current</option>
-					<option value="done">Done</option>
+					<option value="0">Coming up</option>
+					<option value="2">Current</option>
+					<option value="1">Done</option>
 				</select>
 			</div>
 
