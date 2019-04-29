@@ -95,15 +95,10 @@
 	}
 
 	function submitForm(modalName) {
-		console.log('logged', modalName);
-		console.log($(`ui.form.milestones.${modalName}`));
 		$(`.ui.form.milestones.${modalName}`).trigger('submit');
 	}
 
 	// Form validation
-	// $('.ui.form.milestones.new').on('submit', () => {
-	// 	console.log('Submitted!');
-	// });
 	const milestoneFields = {
 		milestoneName: ["empty", "maxLength[30]"],
 		prevMilestone: ["empty"],
@@ -138,12 +133,15 @@
 	});
 
 	function sendMilestone(endpoint, isEdit) {
-		e.preventDefault();
 		let modalName = 'new';
 
 		let values = $(this).form('get values');
 		values['name'] = values['milestoneName'];
+		values['done_date'] = values['doneDate'];
 		values['project_id'] = {{ $project->id }};
+		delete values['milestoneName'];
+		delete values['_milestoneID'];
+		delete values['doneDate'];
 
 		if(isEdit) {
 			values['_method'] = 'PUT';
