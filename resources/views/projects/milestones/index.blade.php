@@ -137,7 +137,7 @@
 
 		let values = $(this).form('get values');
 		values['name'] = values['milestoneName'];
-		values['done_date'] = new Date(values['doneDate']).toISOString();
+		values['done_date'] = values['doneDate'] != '' && new Date(values['doneDate']).toISOString();
 		values['previous_milestone_id'] = values['prevMilestone'];
 		values['project_id'] = {{ $project->id }};
 
@@ -149,6 +149,9 @@
 		if(values['status'] == 0) {
 			// Changing status to null if 'coming up' was selected.
 			values['status'] = null;
+		}
+		if(!values['done_date']) {
+			values['done_date'] = null;
 		}
 
 		if(isEdit) {

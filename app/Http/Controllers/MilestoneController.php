@@ -35,9 +35,13 @@ class MilestoneController extends Controller {
 			'previous_milestone_id' => 'required|int'
 		]);
 
+
 		$date = $request->get('done_date');
-		$date = $this->parseReqDate($date);
-		$validatedAttributes['done_date'] = $date;
+		if($date != null) {
+			$date = $this->parseReqDate($date);
+			$validatedAttributes['done_date'] = $date;
+		}
+
 
 		$milestone = Milestone::create($validatedAttributes);
 		abort_if(!$milestone->exists, 500);
@@ -64,7 +68,9 @@ class MilestoneController extends Controller {
 		$attrs = $request->all();
 
 		$date = $attrs['done_date'];
-		$attrs['done_date'] = $this->parseReqDate($date);
+		if($date != null) {
+			$attrs['done_date'] = $this->parseReqDate($date);
+		}
 
 		$milestone->update($attrs);
 
