@@ -49,13 +49,10 @@ Route::namespace('Admin')->prefix('admin')->group(function() {
 	Route::get('/users/sia/{id}', 'UserController@signInAs')->name('signinas');
 });
 
-/* Temp routes */
-// TODO: remove all temp routes once the correct controller has been set up.
-Route::get('/projects/tasks/create', function () {
-	return view('projects.tasks.create');
-});
-
+/* Notifications */
 Route::resource('notifications', 'NotificationController')->only(['index']);
 Route::post('/notifications/accept', 'NotificationController@acceptInvite');
 Route::post('/notifications/decline', 'NotificationController@declineInvite');
+
+/* Milestones */
 Route::resource('milestones', 'MilestoneController')->only(['index', 'store', 'update', 'destroy']);

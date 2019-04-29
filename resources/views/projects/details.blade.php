@@ -15,12 +15,12 @@
 		<a class="item" data-tab="overview">Overview</a>
 		<a class="item" data-tab="collaborators">Collaborators</a>
 		<!-- TODO:check if($project->IsProjectCollaborator(Auth::id())) -->
-		<a class="item" data-tab="tasks">Tasks</a>
+		<a class="item active" data-tab="tasks">Tasks</a>
 		<!-- TODO:check if($project->IsProjectCollaborator(Auth::id())) -->
 		<a class="item" data-tab="milestones">Milestones</a>
 	</div>
 
-	<div class="ui bottom attached active tab segment" data-tab="overview">
+	<div class="ui bottom attached tab segment" data-tab="overview">
 		<div class="ui stackable two column grid">
 			<div class="four wide column">
 				<!-- Project Image -->
@@ -279,6 +279,14 @@
 				<button type="submit" class="ui primary button" onclick="createNewTask()">Save</button>
 			</div>
 		</div>
+		<div id="task-details-modal" class="ui fullscreen modal task-details-modal">
+			<div class="scrolling content">
+				@include('projects.tasks.details')
+			</div>
+			<div class="actions">
+				<button class="ui black deny button">Close</button>
+			</div>
+		</div>
 	</div>
 
 	<!-- Milestones -->
@@ -330,7 +338,7 @@
 	$(".modal").modal({ transition: "fade up" });
 
 	/* Task details modal */
-	$(".task-row").click(showTaskDetails);
+	$(".task-title").click(showTaskDetails);
 
 	function showTaskDetails() {
 		$("#task-details-modal").modal("show");
