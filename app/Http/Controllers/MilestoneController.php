@@ -51,6 +51,7 @@ class MilestoneController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function update(Request $request, int $milestoneId) {
+		// TODO: add validation here
 		$milestone = Milestone::findOrFail($milestoneId);
 		$milestone->update($request->all());
 

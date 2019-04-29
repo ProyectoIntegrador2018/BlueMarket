@@ -31,7 +31,7 @@
 			<div class="twelve wide column">
 				<!-- Pitch video -->
 				<div class="ui embed">
-					{{-- <iframe src="{{ $project->video }}" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> --}}
+					<iframe src="{{ $project->video }}" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 				</div>
 			</div>
 			<div class="eleven wide column">
@@ -280,7 +280,6 @@
 	/* Semantic UI setup */
 	$(".menu .item").tab();
 	$("#new-task-modal").modal({ transition: "fade up" });
-	$("#new-milestone-modal").modal({ transition: "fade up" });
 	$("#supplier-to-add-modal").modal({ transition: "fade up" });
 	$("#supplier-to-add-error-modal").modal({ transition: "fade up" });
 
@@ -289,7 +288,7 @@
 	$(document).ready(function() {
 		$(".ui.fluid.search.dropdown").dropdown();
 		$('#progress').progress();
-	})
+	});
 
 	/* Due date datetime picker */
 	$(".ui.calendar").calendar({
@@ -326,101 +325,6 @@
 			return false;
 		}
 	});
-
-	// TODO: Move each tab into its own file (including scripts)
-	/* Milestones
-	--------------------------------------------------------------------------------------- */
-
-	function showMilestoneModal(action) {
-		$(`#${action}-milestone-modal`).modal('show');
-	}
-
-	function hideMilestoneModal(action) {
-		$(`#${action}-milestone-modal`).modal('hide');
-	}
-
-	function submitForm(modalName) {
-		console.log('logged', modalName);
-		console.log($(`ui.form.milestones.${modalName}`));
-		$(`.ui.form.milestones.${modalName}`).trigger('submit');
-	}
-
-	// Form validation
-	// $('.ui.form.milestones.new').on('submit', () => {
-	// 	console.log('Submitted!');
-	// });
-	$(".ui.form.milestones.new").form({
-		fields: {
-			milestoneName: ["empty", "maxLength[30]"],
-			prevMilestone: ["empty"],
-			estimatedDate: ["empty"],
-			status: ["empty"]
-		},
-		onSuccess: function(e) {
-			e.preventDefault();
-			let values = $(this).form('get values');
-			values['name'] = values['milestoneName'];
-			values['project_id'] = {{ $project->id }};
-
-			$.ajax({
-				type: "POST",
-				url: "{{ action('MilestoneController@store') }}", // TODO: change this
-				headers: {
-					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-				},
-				data: values,
-				dataType: 'json',
-				success: function (data) {
-					console.log(data);
-					// TODO: insert the milestone into the list
-					alert('Your milestone has been created!');
-				},
-				error: function (xhr, status) {
-					console.error(status);
-					console.error(xhr);
-					alert('Uh oh! Something went wrong and we couldn\'t create your milestone. Please try again later.');
-				},
-				complete: function(xhr, status) {
-					$("#new-milestone-modal").modal("hide");
-				}
-			});
-		},
-		onFailure: function() {
-			console.error('Form failed validation');
-			return false;
-		}
-	});
-
-	/* Pending delete ajax call */
-	/* $(".ui.form.milestones.delete").form({
-		fields: {
-		},
-		onSuccess: function() {
-			alert('success');
-			event.preventDefault();
-			$.ajax({
-				type: "post",
-				url: "/milestones",
-				data: {
-					milestoneId: milestoneToDel
-				},
-				dataType: 'json',
-				success: function (data) {
-					console.log(data);
-					alert('Your milestone has been created!');
-				},
-				error: function (data) {
-					console.log(data);
-					alert('Uh oh! Something went wrong and we couldn\'t create your milestone.');
-				}
-			});
-			$("#new-milestone-modal").modal("hide");
-		},
-		onFailure: function() {
-			alert('failure');
-			return false;
-		}
-	}); */
 
 
 	/* Supplier invitations
@@ -503,4 +407,7 @@
 		}
 	@endif
 </script>
+
+@stack('js')
+
 @endsection
