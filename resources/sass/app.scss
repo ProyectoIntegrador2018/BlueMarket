@@ -343,7 +343,7 @@ $color-white: #fff;
 	}
 }
 
-.ui.stackable.grid:not(.notifications-grid) {
+.ui.stackable.grid {
 	margin: 0 auto;
 	margin-top: 10px;
 
@@ -517,12 +517,11 @@ $color-white: #fff;
 	}
 }
 
-.ui.grid .column.notification-column {
-	padding: 0 1rem;
-	display: inline-block;
-	vertical-align: middle;
+.column.wide.notifications-list:not(.active) {
+	display: none;
+}
 
-	&.user-avatar-column {
-		width: 40px;
-	}
+.ui.table .notification-column {
+	padding: 0 1rem;
+	vertical-align: middle;
 }
