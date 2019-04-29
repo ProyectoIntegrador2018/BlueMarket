@@ -60,7 +60,7 @@
 	</div>
 	<div class="actions">
 		<button type="button" class="ui cancel button" onclick="hideMilestoneModal('{{ $name }}')">Cancel</button>
-		<button type="submit" class="ui ok button primary" onclick="submitForm('{{ $name }}')">{{ $name == "new" ? "Create" : "Update"}}</button>
+		<button type="submit" class="ui ok button primary submitBtn" onclick="submitForm('{{ $name }}')">{{ $name == "new" ? "Create" : "Update"}}</button>
 	</div>
 </div>
 

@@ -106,7 +106,12 @@
 						<div class="progress">{{ $project->progress * 100 }}%</div>
 					</div>
 					@if(count($project->milestones) > 0)
-						<div class="label">Currently on: {{ $project->milestones->where('status', Config::get('enum.milestone_status')['current'])->first()->name }}</div>
+						@php
+							$currentMilestone = $project->milestones->where('status', Config::get('enum.milestone_status')['current'])->first();
+						@endphp
+						@if($currentMilestone != null)
+							<div class="label">Currently on: {{ $currentMilestone->name }}</div>
+						@endif
 					@endif
 				</div>
 				@if(count($project->milestones) > 0)
@@ -299,7 +304,7 @@
 					var day = date.getDate();
 					var month = date.getMonth() + 1;
 					var year = date.getFullYear();
-					return day + '/' + month + '/' + year;
+					return month + '/' + day + '/' + year;
 				}
 			}
 		});
