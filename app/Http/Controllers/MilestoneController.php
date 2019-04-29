@@ -32,10 +32,8 @@ class MilestoneController extends Controller {
 		$validatedAttributes = request()->validate([
 			'name' => 'required|string',
 			'project_id' => 'required|int',
-			'prevMilestone' => 'required|int'
+			'previous_milestone_id' => 'required|int'
 		]);
-		/* $validatedAttributes['previous_milestone_id'] = $validatedAttributes['prevMilestone'];
-		unset($validatedAttributes['prevMilestone']); */
 
 		$date = $request->get('done_date');
 		$date = $this->parseReqDate($date);
@@ -64,13 +62,9 @@ class MilestoneController extends Controller {
 		// TODO: add validation here
 		$milestone = Milestone::findOrFail($milestoneId);
 		$attrs = $request->all();
-		$attrs['previous_milestone_id'] = $attrs['prevMilestone'];
-		unset($attrs['prevMilestone']);
 
 		$date = $attrs['done_date'];
 		$attrs['done_date'] = $this->parseReqDate($date);
-
-		$attrs['status'] = config('enum.milestone_status')[$attrs['status']];
 
 		$milestone->update($attrs);
 
