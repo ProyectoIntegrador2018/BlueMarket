@@ -137,9 +137,10 @@
 
 		let values = $(this).form('get values');
 		values['name'] = values['milestoneName'];
-		values['done_date'] = values['doneDate'];
+		values['done_date'] = values['doneDate'] != '' && new Date(values['doneDate']).toISOString();
 		values['previous_milestone_id'] = values['prevMilestone'];
 		values['project_id'] = {{ $project->id }};
+
 		delete values['milestoneName'];
 		delete values['_milestoneID'];
 		delete values['doneDate'];
@@ -147,6 +148,9 @@
 		if(values['status'] == 0) {
 			// Changing status to null if 'coming up' was selected.
 			values['status'] = null;
+		}
+		if(!values['done_date']) {
+			values['done_date'] = null;
 		}
 
 		if(isEdit) {
@@ -165,7 +169,12 @@
 			success: function (data) {
 				console.log(data);
 				// TODO: insert the milestone into the list
-				alert('Your milestone has been created!');
+				if(isEdit) {
+					alert('Saved!');
+				}
+				else {
+					alert('Your milestone has been created!');
+				}
 			},
 			error: function (xhr, status) {
 				console.log(values);

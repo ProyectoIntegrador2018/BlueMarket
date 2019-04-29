@@ -32,10 +32,18 @@ class MilestoneController extends Controller {
 		$validatedAttributes = request()->validate([
 			'name' => 'required|string',
 			'project_id' => 'required|int',
-			'prevMilestone' => 'required|int'
+			'previous_milestone_id' => 'required|int'
 		]);
 		/* $validatedAttributes['previous_milestone_id'] = $validatedAttributes['prevMilestone'];
 		unset($validatedAttributes['prevMilestone']); */
+
+
+		$date = $request->get('done_date');
+		if($date != null) {
+			$date = $this->parseReqDate($date);
+			$validatedAttributes['done_date'] = $date;
+		}
+
 
 		$milestone = Milestone::create($validatedAttributes);
 		abort_if(!$milestone->exists, 500);
@@ -43,6 +51,12 @@ class MilestoneController extends Controller {
 		return $milestone;
 	}
 
+
+	private function parseReqDate($date) {
+		$isodate = strtotime($date);
+		$isodate = date("Y-m-d H:i:s", $isodate);
+		return $isodate;
+	}
 	/**
 	 * Update the specified resource in storage.
 	 *
@@ -53,7 +67,14 @@ class MilestoneController extends Controller {
 	public function update(Request $request, int $milestoneId) {
 		// TODO: add validation here
 		$milestone = Milestone::findOrFail($milestoneId);
-		$milestone->update($request->all());
+		$attrs = $request->all();
+
+		$date = $attrs['done_date'];
+		if($date != null) {
+			$attrs['done_date'] = $this->parseReqDate($date);
+		}
+
+		$milestone->update($attrs);
 
 		return $milestone;
 	}
