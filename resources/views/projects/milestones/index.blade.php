@@ -138,10 +138,18 @@
 		let values = $(this).form('get values');
 		values['name'] = values['milestoneName'];
 		values['done_date'] = new Date(values['doneDate']).toISOString();
+		values['previous_milestone_id'] = values['prevMilestone'];
 		values['project_id'] = {{ $project->id }};
+
 		delete values['milestoneName'];
 		delete values['_milestoneID'];
 		delete values['doneDate'];
+		delete values['prevMilestone'];
+
+		if(values['status'] == 0) {
+			// Changing status to null if 'coming up' was selected.
+			values['status'] = null;
+		}
 
 		if(isEdit) {
 			values['_method'] = 'PUT';
@@ -162,6 +170,7 @@
 				alert('Your milestone has been created!');
 			},
 			error: function (xhr, status) {
+				console.log(values);
 				console.error(status);
 				console.error(xhr);
 				// TODO: Let's be more specific about this
@@ -173,37 +182,5 @@
 		});
 	}
 
-	// Edit modal
-
-	/* Pending delete ajax call */
-	/* $(".ui.form.milestones.delete").form({
-		fields: {
-		},
-		onSuccess: function() {
-			alert('success');
-			event.preventDefault();
-			$.ajax({
-				type: "post",
-				url: "/milestones",
-				data: {
-					milestoneId: milestoneToDel
-				},
-				dataType: 'json',
-				success: function (data) {
-					console.log(data);
-					alert('Your milestone has been created!');
-				},
-				error: function (data) {
-					console.log(data);
-					alert('Uh oh! Something went wrong and we couldn\'t create your milestone.');
-				}
-			});
-			$("#new-milestone-modal").modal("hide");
-		},
-		onFailure: function() {
-			alert('failure');
-			return false;
-		}
-	}); */
 </script>
 @endpush

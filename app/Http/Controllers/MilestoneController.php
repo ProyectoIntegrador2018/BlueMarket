@@ -34,8 +34,8 @@ class MilestoneController extends Controller {
 			'project_id' => 'required|int',
 			'prevMilestone' => 'required|int'
 		]);
-		$validatedAttributes['previous_milestone_id'] = $validatedAttributes['prevMilestone'];
-		unset($validatedAttributes['prevMilestone']);
+		/* $validatedAttributes['previous_milestone_id'] = $validatedAttributes['prevMilestone'];
+		unset($validatedAttributes['prevMilestone']); */
 
 		$date = $request->get('done_date');
 		$date = $this->parseReqDate($date);
