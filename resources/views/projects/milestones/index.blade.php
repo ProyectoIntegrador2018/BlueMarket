@@ -223,7 +223,6 @@
 		}
 	}
 
-
 	function classMap(status) {
 		if(status == null) return 'grey';
 		let map = {

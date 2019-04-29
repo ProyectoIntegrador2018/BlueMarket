@@ -59,4 +59,3 @@
 		<button type="submit" class="ui ok button primary submitBtn" onclick="submitForm('{{ $name }}')">{{ $name == "new" ? "Create" : "Update"}}</button>
 	</div>
 </div>
-

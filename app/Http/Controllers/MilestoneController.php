@@ -34,8 +34,6 @@ class MilestoneController extends Controller {
 			'project_id' => 'required|int',
 			'previous_milestone_id' => 'required|int',
 		]);
-		/* $validatedAttributes['previous_milestone_id'] = $validatedAttributes['prevMilestone'];
-		unset($validatedAttributes['prevMilestone']); */
 
 		$validatedAttributes['status'] = $request->get('status');
 
