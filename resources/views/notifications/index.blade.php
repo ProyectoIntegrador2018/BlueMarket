@@ -131,7 +131,7 @@
 			</div>
 		</div>
 	</div>
-	<div id="success-modal" class="ui modal">
+	<div id="success-modal" class="ui mini modal">
 		<div class="header">Success</div>
 		<div class="content">
 			<i class="check huge green circle icon"></i>
@@ -141,7 +141,7 @@
 			<button type="button" class="ui ok primary button">Done</button>
 		</div>
 	</div>
-	<div id="success-modal-rejected-invite" class="ui modal">
+	<div id="success-modal-rejected-invite" class="ui mini modal">
 		<div class="header">Success</div>
 		<div class="content">
 			<i class="check huge green circle icon"></i>
@@ -151,7 +151,7 @@
 			<button type="button" class="ui ok primary button">Done</button>
 		</div>
 	</div>
-	<div id="error-modal" class="ui modal">
+	<div id="error-modal" class="ui mini modal">
 		<div class="header">Something went wrong</div>
 		<div class="content">
 			<i class="times huge red circle icon"></i>
