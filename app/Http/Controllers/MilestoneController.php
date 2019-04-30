@@ -101,32 +101,32 @@ class MilestoneController extends Controller {
 			'previous_milestone_id' => null]);
 		$milestoneIdeation->save();
 
-		$milestonertDesign = new Milestone(['name' => 'Design',
+		$milestoneDesign = new Milestone(['name' => 'Design',
 			'status' => null,
 			'done_date' => null,
 			'project_id' => $projectId,
-			'previous_milestone_id' => $milestonIdeation]);
-		$milestonertDesign->save();
+			'previous_milestone_id' => $milestoneIdeation->id]);
+		$milestoneDesign->save();
 
 		$milestonePlanning = new Milestone(['name' => 'Planning',
 			'status' => null,
 			'done_date' => null,
 			'project_id' => $projectId,
-			'previous_milestone_id' => $milestonDesign]);
+			'previous_milestone_id' => $milestoneDesign->id]);
 		$milestonePlanning->save();
 
-		$milestonExecution = new Milestone(['name' => 'Execution',
+		$milestoneExecution = new Milestone(['name' => 'Execution',
 			'status' => null,
 			'done_date' => null,
 			'project_id' => $projectId,
-			'previous_milestone_id' => $milestonPlanning]);
-		$milestonExecution->save();
+			'previous_milestone_id' => $milestonePlanning->id]);
+		$milestoneExecution->save();
 
-		$milestonesertTest = new Milestone(['name' => 'Test',
+		$milestoneTest = new Milestone(['name' => 'Test',
 			'status' => null,
 			'done_date' => null,
 			'project_id' => $projectId,
-			'previous_milestone_id' => $milestonExecution]);
-		$milestonesertTest->save();
+			'previous_milestone_id' => $milestoneExecution->id]);
+		$milestoneTest->save();
 	}
 }
