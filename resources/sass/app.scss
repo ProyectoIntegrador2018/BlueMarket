@@ -542,6 +542,10 @@ $color-white: #fff;
 	font-size: small;
 	color: grey;
 	text-transform: uppercase;
+
+	&.overdue {
+		color: #ea2027;
+	}
 }
 
 .task-title {
@@ -549,8 +553,6 @@ $color-white: #fff;
 	color: #4183c4;
 }
 
-@media only screen and (max-width: 767px) {
-	.ui.grid .wide.aligned.column.task-status {
-		text-align: left;
-	}
+.task {
+	margin: 20px 0;
 }
