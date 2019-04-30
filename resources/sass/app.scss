@@ -535,9 +535,10 @@ $color-white: #fff;
 
 .ui.modal.task-details-modal {
 	text-align: left;
+	font-size: initial;
 }
 
-.task-due {
+.task-due, .task-detail-subtitle {
 	font-size: small;
 	color: grey;
 	text-transform: uppercase;
