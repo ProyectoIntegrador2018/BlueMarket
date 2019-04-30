@@ -27,13 +27,17 @@ class Course extends Model {
 
 	public function supplierTeachers() {
 		$suppliers = $this->suppliers()->get();
-		$test = $suppliers[0]->teachers()->get();
+		$supplier_teachers = null;
 
-		for ($i = 1; $i < count($suppliers); $i++) {
-			$test = $test->merge($suppliers[$i]->teachers()->get());
+		if(count($suppliers) > 0) {
+			$supplier_teachers = $suppliers[0]->teachers()->get();
+
+			for($i = 1; $i < count($suppliers); $i++) {
+				$supplier_teachers = $supplier_teachers->merge($suppliers[$i]->teachers()->get());
+			}
 		}
 
-		return $test;
+		return $supplier_teachers;
 	}
 
 	public function suppliers() {
