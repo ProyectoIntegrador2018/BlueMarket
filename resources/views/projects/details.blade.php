@@ -12,15 +12,14 @@
 	<!-- Project name -->
 	<h1>{{ $project->name }}</h1>
 	<div class="ui top attached tabular menu">
-		<a class="item" data-tab="overview">Overview</a>
+		<a class="active item" data-tab="overview">Overview</a>
 		<a class="item" data-tab="collaborators">Collaborators</a>
-		<!-- TODO:check if($project->IsProjectCollaborator(Auth::id())) -->
-		<a class="item active" data-tab="tasks">Tasks</a>
-		<!-- TODO:check if($project->IsProjectCollaborator(Auth::id())) -->
-		<a class="item" data-tab="milestones">Milestones</a>
+		@if($project->isStakeholder(Auth::id()))
+			<a class="item" data-tab="tasks">Tasks</a>
+			<a class="item" data-tab="milestones">Milestones</a>
+		@endif
 	</div>
-
-	<div class="ui bottom attached tab segment" data-tab="overview">
+	<div class="ui bottom attached active tab segment" data-tab="overview">
 		<div class="ui stackable two column grid">
 			<div class="four wide column">
 				<!-- Project Image -->
@@ -152,7 +151,6 @@
 			</div>
 		</div>
 	</div>
-
 	<div class="ui bottom attached tab segment" data-tab="collaborators">
 		<div class="ui stackable grid">
 			@if(isset($project->team->members) && count($project->team->members) > 0)
@@ -261,38 +259,42 @@
 			@endif
 		</div>
 	</div>
-	<div class="ui bottom attached active tab segment" data-tab="tasks">
-		<div class="ui stackable grid">
-			<div class="right aligned sixteen wide column">
-				<button type="button" class="ui button primary" onclick="showTaskModal()">New task</button>
+	@if($project->isStakeholder(Auth::id()))
+		<div class="ui bottom attached tab segment" data-tab="tasks">
+			<div class="ui stackable grid">
+				@if($project->isCollaborator(Auth::id()))
+					<div class="right aligned sixteen wide column">
+						<button type="button" class="ui button primary" onclick="showNewTaskModal()">New task</button>
+					</div>
+				@endif
+				<div class="sixteen wide column">
+					@include('projects.tasks.index')
+				</div>
 			</div>
-			<div class="sixteen wide column">
-				@include('projects.tasks.index')
+			@if($project->isCollaborator(Auth::id()))
+				<div id="new-task-modal" class="ui tiny modal new-task-modal">
+					<div class="content">
+						@include('projects.tasks.create')
+					</div>
+					<div class="actions">
+						<button type="button" class="ui black deny button">Close</button>
+						<button type="submit" class="ui primary button" onclick="createNewTask()">Save</button>
+					</div>
+				</div>
+			@endif
+			<div id="task-details-modal" class="ui fullscreen modal task-details-modal">
+				<div class="scrolling content">
+					@include('projects.tasks.details')
+				</div>
+				<div class="actions">
+					<button class="ui black deny button">Close</button>
+				</div>
 			</div>
 		</div>
-		<div id="new-task-modal" class="ui tiny modal new-task-modal">
-			<div class="content">
-				@include('projects.tasks.create')
-			</div>
-			<div class="actions">
-				<button type="button" class="ui black deny button">Close</button>
-				<button type="submit" class="ui primary button" onclick="createNewTask()">Save</button>
-			</div>
+		<div id="Milestones" class="ui bottom attached tab segment" data-tab="milestones">
+			@include('projects.milestones.index')
 		</div>
-		<div id="task-details-modal" class="ui fullscreen modal task-details-modal">
-			<div class="scrolling content">
-				@include('projects.tasks.details')
-			</div>
-			<div class="actions">
-				<button class="ui black deny button">Close</button>
-			</div>
-		</div>
-	</div>
-
-	<!-- Milestones -->
-	<div id="Milestones" class="ui bottom attached tab segment" data-tab="milestones">
-		@include('projects.milestones.index')
-	</div>
+	@endif
 </div>
 
 @endsection
@@ -304,15 +306,20 @@
 <script>
 	/* Semantic UI setup */
 	$(".menu .item").tab();
-	$("#new-task-modal").modal({ transition: "fade up" });
-	$("#supplier-to-add-modal").modal({ transition: "fade up" });
-	$("#supplier-to-add-error-modal").modal({ transition: "fade up" });
+	$('#progress').progress();
 
+	@if($project->isStakeholder(Auth::id()))
+		$(".modal").modal({ transition: "fade up" });
 
+		/* Task details modal */
+		$(".task-title").click(showTaskDetails);
 
-	$(document).ready(function() {
-		$(".ui.fluid.search.dropdown").dropdown();
-		$('#progress').progress();
+		function showTaskDetails() {
+			$("#task-details-modal").modal("show");;
+		}
+	@endif
+
+	@if($project->isCollaborator(Auth::id()))
 		/* Due date datetime picker */
 		$(".ui.calendar").calendar({
 			monthFirst: false,
@@ -326,84 +333,55 @@
 				}
 			}
 		});
-	});
 
+		/* New task modal */
+		function showNewTaskModal() {
+			$("#new-task-modal").modal("show");
+		}
 
-	/* Tasks
-	--------------------------------------------------------------------------------------- */
-	function hideTaskModal() {
-		$("#new-task-modal").modal("hide");
-	}
+		function createNewTask() {
+			$("#new-task-form").submit();
+		}
 
-	$(".modal").modal({ transition: "fade up" });
-
-	/* Task details modal */
-	$(".task-title").click(showTaskDetails);
-
-	function showTaskDetails() {
-		$("#task-details-modal").modal("show");
-	}
-
-	/* New task modal */
-	function showTaskModal() {
-		$("#new-task-modal").modal("show");
-	}
-
-	function createNewTask() {
-		$("#new-task-form").submit();
-	}
-
-	/* Due date datetime picker */
-	$(".ui.calendar").calendar({
-		monthFirst: false,
-		formatter: {
-			date: function (date, settings) {
-				if (!date) return '';
-				var day = date.getDate();
-				var month = date.getMonth() + 1;
-				var year = date.getFullYear();
-				return day + '/' + month + '/' + year;
+		/* Semantic UI form validation */
+		$("#new-task-form").form({
+			fields: {
+				title: ["empty", "maxLength[30]"],
+				description: ["empty", "maxLength[2000]"],
+				dueDate: ["empty"]
+			},
+			onSuccess: function() {
+				console.log($("#new-task-form").serialize());
+				alert('success');
+				event.preventDefault();
+				$.ajax({
+					type: "post",
+					url: "/tasks",
+					data: $("#new-task-form").serialize(),
+					dataType: 'json',
+					success: function (data) {
+						console.log(data);
+						alert('success form');
+					},
+					error: function (data) {
+						console.log(data);
+						alert('failed form');
+					}
+				});
+				$("#new-task-modal").modal("hide");
+			},
+			onFailure: function() {
+				alert('failure');
+				return false;
 			}
-		}
-	});
+		});
+	@endif
 
-	/* Semantic UI form validation */
-	$("#new-task-form").form({
-		fields: {
-			title: ["empty", "maxLength[30]"],
-			description: ["empty", "maxLength[2000]"],
-			dueDate: ["empty"]
-		},
-		onSuccess: function() {
-			console.log($("#new-task-form").serialize());
-			alert('success');
-			event.preventDefault();
-			$.ajax({
-				type: "post",
-				url: "/tasks",
-				data: $("#new-task-form").serialize(),
-				dataType: 'json',
-				success: function (data) {
-					console.log(data);
-					alert('success form');
-				},
-				error: function (data) {
-					console.log(data);
-					alert('failed form');
-				}
-			});
-			$("#new-task-modal").modal("hide");
-		},
-		onFailure: function() {
-			alert('failure');
-			return false;
-		}
-	});
-
-
-	/* Supplier invitations
-	--------------------------------------------------------------------------------------- */
 	@if(Auth::id() === $project->team->leader->id)
+		$(".ui.fluid.search.dropdown").dropdown();
+		$("#supplier-to-add-modal").modal({ transition: "fade up" });
+		$("#supplier-to-add-error-modal").modal({ transition: "fade up" });
+
 		/* Semantic UI dropdown */
 		$("#new-supplier-dropdown").dropdown({
 			onChange: function() {
