@@ -360,16 +360,23 @@
 				description: ["empty", "maxLength[2000]"],
 				dueDate: ["empty"]
 			},
-			onSuccess: function() {
+			onSuccess: function(event) {
 				console.log($("#new-task-form").serialize());
 				event.preventDefault();
+				let dueDate = $("#new-task-form #dueDate").val();
+				let isoDueDate = new Date(dueDate).toISOString();
+
 				$.ajax({
-					type: "post",
+					type: "POST",
 					url: "/tasks",
-					data: $("#new-task-form").serialize(),
+					data: {
+						'title': $("#new-task-form #title").val(),
+						'dueDate': isoDueDate,
+						'description': $("#new-task-form #description").val(),
+						'project': $("#new-task-form #project").val()
+					},
 					dataType: 'json',
 					success: function (data) {
-						console.log(data);
 						$("#new-task-modal").modal("hide");
 					},
 					error: function (data) {
@@ -379,8 +386,6 @@
 				});
 			},
 			onFailure: function() {
-				$("#new-task-modal").modal("hide");
-				$("#task-form-error-modal").modal("show");
 				return false;
 			}
 		});
