@@ -74,13 +74,13 @@ class Project extends Model {
 	public function isCollaborator($id) {
 		// TODO: check if this actually returns suppliers as well
 		// TODO: check if supplier_project relationshi exists
-		return $this->collaborators()->where('user_id', $id)->exists();
+		return $this->collaborators()->where('id', $id)->first() != null;
 	}
 
 	// Check if a user is a project stakeholder (as defined in #gh-169)
 	public function isStakeholder($id) {
 		// Check if this is a teacher associated with the course
-		$is_teacher = $this->course()->first()->teachers()->where('user_id', $id)->exists();
+		$is_teacher = $this->course()->first()->teachers()->where('user_id', $id)->first() != null;
 		$supplier_teachers = $this->course->supplierTeachers();
 		$is_supplier_teacher = false;
 
