@@ -253,7 +253,7 @@
 						<p>We were unable to send an invite to this user.</p>
 					</div>
 					<div class="actions">
-						<button type="button" class="ui ok primary button">Done</button type="button">
+						<button type="button" class="ui black deny button">Done</button>
 					</div>
 				</div>
 			@endif
@@ -279,6 +279,16 @@
 					<div class="actions">
 						<button type="button" class="ui black deny button">Close</button>
 						<button type="submit" class="ui primary button" onclick="createNewTask()">Save</button>
+					</div>
+				</div>
+				<div id="task-form-error-modal" class="ui modal">
+					<div class="header">Something went wrong</div>
+					<div class="content">
+						<i class="times huge red circle icon"></i>
+						<p>We were unable to add or edit this task.</p>
+					</div>
+					<div class="actions">
+						<button type="button" class="ui black deny button">Done</button>
 					</div>
 				</div>
 			@endif
@@ -352,7 +362,6 @@
 			},
 			onSuccess: function() {
 				console.log($("#new-task-form").serialize());
-				alert('success');
 				event.preventDefault();
 				$.ajax({
 					type: "post",
@@ -361,17 +370,17 @@
 					dataType: 'json',
 					success: function (data) {
 						console.log(data);
-						alert('success form');
+						$("#new-task-modal").modal("hide");
 					},
 					error: function (data) {
-						console.log(data);
-						alert('failed form');
+						$("#new-task-modal").modal("hide");
+						$("#task-form-error-modal").modal("show");
 					}
 				});
-				$("#new-task-modal").modal("hide");
 			},
 			onFailure: function() {
-				alert('failure');
+				$("#new-task-modal").modal("hide");
+				$("#task-form-error-modal").modal("show");
 				return false;
 			}
 		});
