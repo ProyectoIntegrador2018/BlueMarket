@@ -32,14 +32,7 @@
 				@if(isset($team->projects))
 					<div class="ui three column stackable grid">
 						@foreach ($team->projects as $project)
-							@projectCard([
-								'id'=> $project->id,
-								'projectImage' => $project->photo,
-								'projectName' => $project->name,
-								'projectShortDescription' => $project->short_description,
-								'labels' => $project->labels,
-								'publicMilestone' => 'shipping'
-							])
+							@projectCard(['project' => $project])
 							@endprojectCard
 						@endforeach
 					</div>
