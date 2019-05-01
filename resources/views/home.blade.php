@@ -7,108 +7,11 @@
 @section('title', 'Welcome')
 
 @section('content')
-<style>
-	.detail-circle {
-		background-color: white;
-		border-radius: 25px;
-	}
-
-	.detail-icon {
-		display: block;
-		width: 150px;
-		height: 150px;
-		line-height: 150px;
-		color: white;
-		font-size: 50px;
-		position: relative;
-		margin: 0 auto;
-		border-radius: 100%;
-		border-width: 3px;
-		border-style: solid;
-		border-color: white;
-		background-color: white;
-	}
-
-	.detail-icon i {
-		color: #2980b9;
-		line-height: inherit;
-		position: relative;
-		margin: 0 auto;
-		width: 100%;
-	}
-
-	.detail-icon:hover {
-		background-color: rgba(0,0,0,0);
-	}
-
-	.detail-icon:hover i {
-		color: white;
-	}
-
-	.ui.stackable.grid.details-list {
-		margin: -1px auto;
-	}
-
-	.home-details-text {
-		color: white;
-		text-align: center;
-		text-transform: uppercase;
-	}
-
-	.home-contact-section {
-		position: relative;
-		width: 100%;
-	}
-
-	.home-contact-text {
-		text-transform: uppercase;
-		vertical-align: top;
-		text-align: right;
-	}
-
-	h2.home-contact-text {
-		font-size: 14vmin;
-	}
-
-	.home-contact-section .contact-us-container {
-		padding: 0 6.25%;
-	}
-
-	@media only screen and (max-height: 420px) {
-		.home-details-section .home-details-container {
-			top: auto;
-		}
-
-		.home-hero-section .hero-container .hero-text-container .bm-hero-text {
-			font-size: 20vmin;
-		}
-	}
-
-	@media only screen and (max-width: 800px) {
-		.home-hero-section .hero-container .hero-text-container {
-			margin-top: 5%;
-		}
-
-		.hero-img {
-			display: none;
-		}
-
-		.home-hero-section .hero-container {
-			background: url('../img/unsplash-stock01-min.jpg');
-			object-fit: cover;
-			object-position: center center;
-		}
-
-		/* .home-hero-section .hero-container .hero-text-container .bm-hero-text {
-			font-size: 10vmin;
-		} */
-	}
-</style>
 	<section class="home-hero-section">
 		<div class="hero-container">
-			<img class="hero-img" alt="Homepage hero image" src="../img/unsplash-stock01-min.jpg"/>
 			<div class="hero-text-container">
-				<h1 class="bm-hero-text">Blue Market</h1>
+				<h1 class="bm-hero-text header">Blue Market</h1>
+				<h2 class="bm-hero-text subheader">A place for collaboration.</h2>
 				<span style="display: none;" class="bm-word-list bm-hero-text">
 					<span class="bm-hero-text">
 						is
@@ -123,23 +26,25 @@
 		<div class="home-details-container">
 			<div class="home-details">
 				<div class="ui stackable three column grid details-list">
-					<div class="column">
-						<a href="{{ url('/projects') }}">
-							<span class="detail-icon"><i class="address book outline icon"></i></span>
-							<h2 class="home-details-text">Get started</h2>
-						</a>
-					</div>
-					<div class="column">
-						<a href="{{ url('/projects') }}">
-							<span class="detail-icon"><i class="address book outline icon"></i></span>
-							<h2 class="home-details-text">Find projects</h2>
-						</a>
-					</div>
-					<div class="column">
-						<a href="{{ url('/projects') }}">
-							<span class="detail-icon"><i class="address book outline icon"></i></span>
-							<h2 class="home-details-text">Find people</h2>
-						</a>
+					<div class="row">
+						<div class="column">
+							<a href="{{ action('LoginController@show') }}">
+								<span class="detail-icon"><i class="clipboard icon"></i></span>
+								<h2 class="home-details-text">Sign up</h2>
+							</a>
+						</div>
+						<div class="column">
+							<a href="{{ action('ProjectController@index') }}">
+								<span class="detail-icon"><i class="rocket icon"></i></span>
+								<h2 class="home-details-text">Find projects</h2>
+							</a>
+						</div>
+						<div class="column">
+							<a href="{{ action('UserController@index') }}">
+								<span class="detail-icon"><i class="user icon"></i></span>
+								<h2 class="home-details-text">Find people</h2>
+							</a>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -148,7 +53,7 @@
 	<section class="home-contact-section">
 		<div class="ui stackable grid contact-us-container">
 			<div class="five wide column">
-				<h2 class="home-contact-text">Let's talk</h2>
+				<h2 class="home-contact-text header">Let's talk</h2>
 				<p class="home-contact-text">Questions? Comments?</p>
 				<p class="home-contact-text">We're here for you!</p>
 			</div>
