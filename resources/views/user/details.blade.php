@@ -37,10 +37,10 @@
 					<a class="item" data-tab="courses">Courses</a>
 				</div>
 				<div class="ui bottom attached active tab segment" data-tab="projects">
-					@if(isset($projects) && count($projects) > 0)
+					@if(isset($user->projects) && count($projects) > 0)
 						<div class="ui two column stackable grid">
 							@foreach ($projects as $project)
-								@projectCard(['id'=> $project->id,'projectImage' => $project->photo, 'projectName' => $project->name, 'projectShortDescription' => $project->short_description, 'labels' => $project->labels, 'publicMilestone' => 'shipping'])
+								@projectCard(['project' => $project])
 								@endprojectCard
 							@endforeach
 						</div>
