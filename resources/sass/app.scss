@@ -5,16 +5,16 @@ $color-dark: #333;
 $color-white: #fff;
 
 .ui.menu.bluemarket-header {
-	//background: $color-dark;
+	background: $color-dark;
 	border: none;
 	margin: 0;
 	padding: 0 5px;
 
 	.item.item {
-		//color: $color-white;
+		color: $color-white;
 		height: 100%;
 		&.active {
-			//color: $color-white;
+			color: $color-white;
 			border-color: $color-primary;
 		}
 		&:hover:hover {
@@ -65,48 +65,45 @@ $color-white: #fff;
 	}
 }
 
+/* Home */
 .home-hero-section {
 	width: 100%;
-	height: 80vmin;
+	height: 100vh;
 	position: relative;
 	color: white;
 
 	.hero-container {
 		background-size: cover;
 		background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../img/unsplash-stock01-min.jpg');
+		background-position: right bottom;
+		width: 100%;
 		height: inherit;
 		display: flex;
 		display: -webkit-flex;
 
-		.hero-img {
-			display: none;
-			-webkit-transform: scaleX(-1); // mirror image
-			transform: scaleX(-1);
-			-webkit-clip-path: polygon(50% 0, 0 0, 0 100%, 50% 30%);
-			clip-path: polygon(50% 0, 0 0, 0 100%, 50% 30%);
-			background-color: $color-dark;
-			width: 100%;
-			height: inherit;
-			position: absolute;
-			z-index: 10;
-			object-fit: cover;
-			top: 0;
-			right: 0;
-		}
-
 		.hero-text-container {
-			width: 45%;
-			height: auto;
-			overflow: hidden;
-			position: absolute;
-			top: 0;
-			z-index: 4;
-			margin-left: 5%;
-			margin-top: 5vmin;
+			display: inline;
+			width: 100%;
 
 			.bm-hero-text {
-				font-size: 10vmin;
 				position: relative;
+				margin: 10vh auto;
+				word-wrap: break-word;
+				width: fit-content;
+				width: -webkit-fit-content;
+				text-align: center;
+
+				&.header {
+					font-size: 8em;
+					margin: 10vh auto 1vh auto;
+					font-weight: normal;
+				}
+
+				&.subheader {
+					font-size: 2em;
+					margin: 1vh auto;
+					font-weight: initial;
+				}
 			}
 		}
 	}
@@ -122,33 +119,85 @@ $color-white: #fff;
 		width: 100%;
 		position: relative;
 
-		&::before {
-			content: '';
-			height: 25vmin;
-			background: linear-gradient(90deg, #00d2ff 0%, #3a47d5 100%);
-			display: block;
-			width: 100%;
-			-webkit-clip-path: polygon(0 30%, 100% 0, 100% 100%, 0 100%);
-			clip-path: polygon(0 30%, 100% 0, 100% 100%, 0 100%);
-			margin-top: -30vmin;
-		}
-
 		.home-details {
 			display: block;
-			background: linear-gradient(90deg, #00d2ff 0%, #3a47d5 100%);
-			padding-bottom: 15vmin;
+			background: $color-primary;
+			padding-bottom: 25vh;
+			margin-bottom: 100px;
+			background: linear-gradient(90deg, #2980b9 0%, #174869 100%);
+
+			&::before {
+				content: '';
+				height: 25vh;
+				margin-top: -25vh;
+				position: absolute;
+				background: $color-primary;
+				display: block;
+				width: 100%;
+				-webkit-clip-path: polygon(0 30%, 100% 0, 100% 100%, 0% 100%);
+				clip-path: polygon(0 30%, 100% 0, 100% 100%, 0% 100%);
+				background: linear-gradient(90deg, #2980b9 0%, #174869 100%);
+			}
+		}
+	}
+
+	.detail-icon {
+		display: table;
+		width: 150px;
+		font-size: 50px;
+		position: relative;
+		margin: 10% auto;
+		height: 150px;
+		background-color: white;
+		border-radius: 100%;
+
+		&:hover {
+			-webkit-transform: scale(1.2);
+			transform: scale(1.2);
 		}
 
-		&::after {
-			content: '';
-			height: 25vmin;
-			background: linear-gradient(90deg, #00d2ff 0%, #3a47d5 100%);
-			display: block;
+		i {
+			background: -webkit-linear-gradient(#2980b9, #174869);
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
+			margin: 0 auto;
 			width: 100%;
-			z-index: 8;
-			margin-bottom: 15vmin;
-			-webkit-clip-path: polygon(0 0, 100% 0, 100% 30%, 0 100%);
-			clip-path: polygon(0 0, 100% 0, 100% 30%, 0 100%);
+			display: table-cell;
+			vertical-align: middle;
+
+			&:hover {
+				-webkit-transform: scale(1.2);
+				transform: scale(1.2);
+			}
+		}
+	}
+
+	.home-details-text {
+		color: white;
+		text-align: center;
+		font-weight: initial;
+		margin-bottom: 10%;
+	}
+}
+
+.home-contact-section {
+	position: relative;
+	width: 100%;
+
+	.contact-us-container {
+		padding: 0 6.25% 10% 6.25%;
+
+		.home-contact-text {
+			text-transform: uppercase;
+			text-align: right;
+
+			&.header {
+				font-size: 8em;
+			}
+
+			.contact-us-container {
+				padding: 0 6.25% 10% 6.25%;
+			}
 		}
 	}
 
