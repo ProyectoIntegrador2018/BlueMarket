@@ -75,7 +75,7 @@ $color-white: #fff;
 /* Home */
 .home-hero-section {
 	width: 100%;
-	height: 100vh;
+	height: 65vh;
 	position: relative;
 	color: white;
 
@@ -99,8 +99,8 @@ $color-white: #fff;
 				width: fit-content;
 				width: -webkit-fit-content;
 				text-align: center;
-				font-size: 8em;
-				margin: 10vh auto 1vh;
+				font-size: 7em;
+				margin: 1vh auto 1vh;
 				font-weight: normal;
 			}
 
@@ -132,14 +132,14 @@ $color-white: #fff;
 		.home-details {
 			display: block;
 			background: $color-primary;
-			padding-bottom: 25vh;
+			padding-bottom: 20vh;
 			margin-bottom: 100px;
 			background: linear-gradient(90deg, #2980b9 0%, #174869 100%);
 
 			&::before {
 				content: '';
-				height: 25vh;
-				margin-top: -25vh;
+				height: 21vh;
+				margin-top: -20vh;
 				position: absolute;
 				background: $color-primary;
 				display: block;
@@ -198,11 +198,11 @@ $color-white: #fff;
 		padding: 0 6.25% 10%;
 
 		.home-contact-text {
-			text-transform: uppercase;
 			text-align: right;
 
 			&.header {
-				font-size: 8em;
+				font-size: 6em;
+				text-transform: uppercase;
 			}
 		}
 	}
