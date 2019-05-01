@@ -37,9 +37,12 @@
 					<a class="item" data-tab="courses">Courses</a>
 				</div>
 				<div class="ui bottom attached active tab segment" data-tab="projects">
-					@if(isset($user->projects) && count($projects) > 0)
-						<div class="ui two column stackable grid">
-							@foreach ($projects as $project)
+					@php
+						$user_projects = $user->projects();
+					@endphp
+					@if($user_projects !== null && count($user_projects) > 0)
+						<div class="ui three column stackable grid">
+							@foreach ($user_projects as $project)
 								@projectCard(['project' => $project])
 								@endprojectCard
 							@endforeach
