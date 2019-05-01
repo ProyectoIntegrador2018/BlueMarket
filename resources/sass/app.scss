@@ -13,6 +13,11 @@ $color-white: #fff;
 	.item.item {
 		color: $color-white;
 		height: 100%;
+
+		i {
+			margin: 0 auto;
+		}
+
 		&.active {
 			color: $color-white;
 			border-color: $color-primary;
@@ -33,10 +38,12 @@ $color-white: #fff;
 	.user-dropdown-menu.item {
 		color: $color-white;
 		background: $color-dark;
+
 		&.active {
 			color: $color-white;
 			border-color: $color-primary;
 		}
+
 		&:hover:hover {
 			color: $color-primary;
 		}

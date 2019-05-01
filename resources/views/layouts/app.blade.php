@@ -5,7 +5,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	@yield('meta')
 
-	<title>Bluemarket - @yield('title')</title>
+	<title>Blue Market - @yield('title')</title>
 
 	<!-- Semantic UI -->
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
@@ -17,7 +17,7 @@
 <body>
 	<div class="ui secondary pointing menu bluemarket-header" id="bluemarket-header">
 		<div class="menu">
-			<a class="item {{ Request::is('/') ? 'active' : '' }}" href="/">Home</a>
+			<a class="item {{ Request::is('/') ? 'active' : '' }}" href="/"><i class="home icon"></i></a>
 			<a class="item {{ Request::is('projects') ? 'active' : '' }}" href="{{ action('ProjectController@index') }}">
 				Projects
 			</a>
@@ -39,12 +39,12 @@
 						</a>
 					</div>
 					<div id="add-menu" class="ui vertical popup transition hidden">
-						<a class="item user-dropdown-menu" href="{{ url('projects/create') }}">New project</a>
-						<a class="item user-dropdown-menu" href="{{ url('teams/create') }}">New team</a>
+						<a class="item user-dropdown-menu" href="{{ action('ProjectController@create') }}">New project</a>
+						<a class="item user-dropdown-menu" href="{{ action('TeamController@create') }}">New team</a>
 					</div>
 					<div id="user-menu" class="ui vertical popup transition hidden">
-						<a class="item user-dropdown-menu" href="{{ url('users', Auth::id()) }}">My profile</a>
-						<a class="item user-dropdown-menu" href="{{ route('logout') }}">Logout</a>
+						<a class="item user-dropdown-menu" href="{{ action('UserController@show', ['id' => Auth::id()]) }}">My profile</a>
+						<a class="item user-dropdown-menu" href="{{ action('LoginController@logout') }}">Logout</a>
 					</div>
 				@elseif(Auth::user()->role ==Config::get('enum.user_roles')['teacher'])
 					<div class="ui menu bluemarket-header">
@@ -58,15 +58,15 @@
 						</a>
 					</div>
 					<div id="add-menu" class="ui vertical popup transition hidden">
-						<a class="item user-dropdown-menu" href="{{ url('courses/create') }}">New course</a>
+						<a class="item user-dropdown-menu" href="{{ action('CourseController@create') }}">New course</a>
 					</div>
 					<div id="user-menu" class="ui vertical popup transition hidden">
-						<a class="item user-dropdown-menu" href="{{ url('courses') }}">My courses</a>
-						<a class="item user-dropdown-menu" href="{{ route('logout') }}">Logout</a>
+						<a class="item user-dropdown-menu" href="{{ action('CourseController@index') }}">My courses</a>
+						<a class="item user-dropdown-menu" href="{{ action('LoginController@logout') }}">Logout</a>
 					</div>
 				@endif
 			@else
-				<a class="item {{ Request::is('login') ? 'active' : '' }}" id="loginBtn" href="{{ route('login') }}">
+				<a class="item {{ Request::is('login') ? 'active' : '' }}" id="loginBtn" href="{{ action('LoginController@show') }}">
 					Login
 				</a>
 			@endif
