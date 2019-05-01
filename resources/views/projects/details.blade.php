@@ -322,11 +322,9 @@
 		$(".modal").modal({ transition: "fade up" });
 
 		/* Task details modal */
-		$(".task-title").click(showTaskDetails);
-
-		function showTaskDetails() {
-			$("#task-details-modal").modal("show");;
-		}
+		$(".task-title").click(() => {
+			$("#task-details-modal").modal("show");
+		});
 	@endif
 
 	@if($project->isCollaborator(Auth::id()))
@@ -361,7 +359,6 @@
 				dueDate: ["empty"]
 			},
 			onSuccess: function(event) {
-				console.log($("#new-task-form").serialize());
 				event.preventDefault();
 				let dueDate = $("#new-task-form #dueDate").val();
 				let isoDueDate = new Date(dueDate).toISOString();
@@ -369,6 +366,9 @@
 				$.ajax({
 					type: "POST",
 					url: "/tasks",
+					headers: {
+						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+					},
 					data: {
 						'title': $("#new-task-form #title").val(),
 						'dueDate': isoDueDate,
