@@ -17,7 +17,7 @@
 <body>
 	<div class="ui secondary pointing menu bluemarket-header" id="bluemarket-header">
 		<div class="menu">
-			<a class="item {{ Request::is('/') ? 'active' : '' }}" href="/"><i class="home icon"></i></a>
+			<a class="item {{ Request::is('/') ? 'active' : '' }}" href="/"><img src="{{ asset('img/icon.svg') }}" alt="Blue Market home"></a>
 			<a class="item {{ Request::is('projects') ? 'active' : '' }}" href="{{ action('ProjectController@index') }}">
 				Projects
 			</a>

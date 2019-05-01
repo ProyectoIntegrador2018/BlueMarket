@@ -18,17 +18,11 @@
 <body>
 	<div class="my-container">
 		<aside class="sidebar">
-			<a href="#" class="logo">
-				<img src="img/logo.svg" alt="Bluemarket Admin Dashboard">
+			<a href="{{ url('admin/users') }}" class="logo">
+				<img src="{{ asset('img/logo.svg') }}" alt="Blue Market admin dashboard">
 			</a>
 			<hr>
-			<a href="#">Dashboard</a>
-			<hr>
-			<ul>
-				<li><a href="#">Dashboard</a></li>
-				<li><a href="#">Components</a></li>
-				<li><a href="#">Utilities</a></li>
-			</ul>
+			<a href="{{ url('admin/users') }}">Dashboard</a>
 			<hr>
 		</aside>
 		<main class="content-pane">
