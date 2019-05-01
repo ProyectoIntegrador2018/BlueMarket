@@ -83,6 +83,19 @@ class User extends Authenticatable
 		->orderBy('pivot_created_at', 'desc');
 	}
 
+	public function projects() {
+		$teamProjects = $this->teams()->with('projects')
+			->get()
+			->pluck('projects')
+			->flatten();
+		$supplierProjects = $this->belongsToMany('App\Project', 'project_user', 'user_id', 'project_id')
+			->withPivot('accepted')
+			->withTimestamps()
+			->wherePivot('accepted', config(self::INVITES)['accepted'])
+			->get();
+		return $teamProjects->merge($supplierProjects);
+	}
+
 	public function isAdmin() {
 		return $this->role === config('enum.user_roles')['admin']; // Admin
 	}
