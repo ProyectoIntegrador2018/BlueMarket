@@ -25,7 +25,6 @@
 			</div>
 			<input id="projectImage" name="projectImage" type="file" style="display:none" accept="image/x-png,image/jpeg,image/png" onchange="updateImage(this)">
 		</div>
-		<button class="ui button primary" onclick="fillDummy()" type="button">Fill with dummy data </button>
 		<!-- Project name -->
 		<div class="field {{ $errors->has('projectName') ? 'error': '' }}">
 			<label for="projectName">Project name</label>
