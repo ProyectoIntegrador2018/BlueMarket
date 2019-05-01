@@ -50,7 +50,8 @@ class Project extends Model {
 		return $this->belongsToMany('App\User', 'project_user', 'project_id', 'user_id')
 			->withPivot('accepted')
 			->withTimestamps()
-			->wherePivot('accepted', config(self::INVITES)['accepted']);
+			->wherePivot('accepted', config(self::INVITES)['accepted'])
+			->where('role', config('enum.user_roles')['student']);
 	}
 
 	public function pending_suppliers() {
@@ -58,6 +59,7 @@ class Project extends Model {
 			->withPivot('accepted')
 			->withTimestamps()
 			->wherePivot('accepted', config(self::INVITES)['pending'])
+			->where('role', config('enum.user_roles')['student'])
 			->orderBy('pivot_created_at', 'desc');
 	}
 
