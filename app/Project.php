@@ -80,7 +80,7 @@ class Project extends Model {
 	// Check if a user is a project stakeholder (as defined in #gh-169)
 	public function isStakeholder($id) {
 		// Check if this is a teacher associated with the course
-		$is_teacher = $this->course()->first()->teachers()->where('user_id', $id)->first() != null;
+		$is_teacher = $this->course()->first()->teachers()->where('user_id', $id)->exists();
 		$supplier_teachers = $this->course->supplierTeachers();
 		$is_supplier_teacher = false;
 
