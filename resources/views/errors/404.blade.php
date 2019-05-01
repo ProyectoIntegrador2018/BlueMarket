@@ -12,33 +12,44 @@
 
 	/* based off: codepen.io/chiaren/pen/ALwnI */
 	section {
-		background: #fff;
 		width: 100%;
 	}
 
-	.circles:after {
-		background: #1c587f;
-		position: absolute;
-		width: 100%;
-		height: 600px;
-		z-index: 1;
-		top: -90px;
-		content: '';
-		display: block;
-		opacity: 0.4;
-		transform: skewY(-10deg);
-		-webkit-transform: skewY(-10deg);
+	.four {
+		margin: 0 5px;
+	}
+
+	.page-not-found {
+		font-size: 3rem;
+		margin: 0 5px;
+	}
+
+	.go-home {
+		text-transform: uppercase;
+		font-size: 1.8rem;
+		margin: 0 5%;
+		color: #fff;
+		background-color: #000;
+		width: fit-content;
+		border-style: solid;
+		border-radius: 15px;
+		border-color: #000;
+		padding: 10px;
+	}
+
+	.go-home:hover {
+		color: #fff;
+		padding: 12px;
+		font-size: 2.16rem;
 	}
 
 	.circles {
-		background: #fff;
 		text-align: center;
 		position: relative;
 	}
 
 	.circles div {
 		font-size: 6rem;
-		color: #fff;
 		padding-top: 160px;
 		position: relative;
 		z-index: 9;
@@ -51,24 +62,20 @@
 		vertical-align: center;
 	}
 
-	.circles .go-home{
-		padding-top: 0;
-	}
-
 	.circles .circle {
-		background: #2980b9;
+		background: linear-gradient(90deg, #1CB5E0 0%, #000851 100%);
 		position: absolute;
 		z-index: 1;
 	}
 
 	.circles .circle.small {
-		width: 140px;
-		height: 140px;
+		width: 150px;
+		height: 150px;
 		border-radius: 50%;
 		animation: 7s small-animation infinite;
 		-webkit-animation: 7s small-animation infinite;
-		animation-delay: 1.2s;
-		-webkit-animation-delay: 1.2s;
+		animation-delay: 0s;
+		-webkit-animation-delay: 0s;
 	}
 
 	.circles .circle.med {
@@ -77,79 +84,74 @@
 		border-radius: 50%;
 		animation: 7s medium-animation infinite;
 		-webkit-animation: 7s medium-animation infinite;
-		animation-delay: 0.4s;
-		-webkit-animation-delay: 0.4s;
+		animation-delay: 0s;
+		-webkit-animation-delay: 0s;
 	}
 
 	.circles .circle.big {
-		width: 320px;
-		height: 320px;
+		width: 250px;
+		height: 250px;
 		border-radius: 50%;
 		animation: 8s big-animation infinite;
 		-webkit-animation: 8s big-animation infinite;
-		animation-delay: 3s;
-		-webkit-animation-delay: 3s;
+		animation-delay: 0s;
+		-webkit-animation-delay: 0s;
 	}
 
-	@-webkit-keyframes small-animation {
-		0% { top: 10px; left: 45%; opacity: 1; }
-		25% { top: 300px; left: 40%; opacity:0.7; }
-		50% { top: 240px; left: 55%; opacity:0.4; }
-		75% { top: 100px; left: 40%;  opacity:0.6; }
-		100% { top: 10px; left: 45%; opacity: 1; }
+	@-webkit-keyframes big-animation {
+		0% { top: 0px; right: 20%; opacity: 0.5; }
+		25% { top: 240px; right: 80%; opacity:0.8; }
+		50% { top: 300px; right: 45%; opacity:0.6; }
+		75% { top: 100px; right: 55%;  opacity:0.7; }
+		100% { top: 0px; right: 20%; opacity: 0.5; }
 	}
 
-	@keyframes small-animation {
-		0% { top: 10px; left: 45%; opacity: 1; }
-		25% { top: 300px; left: 40%; opacity:0.7; }
-		50% { top: 240px; left: 55%; opacity:0.4; }
-		75% { top: 100px; left: 40%;  opacity:0.6; }
-		100% { top: 10px; left: 45%; opacity: 1; }
+	@keyframes big-animation {
+		0% { top: 0px; right: 20%; opacity: 0.5; }
+		25% { top: 240px; right: 80%; opacity:0.8; }
+		50% { top: 300px; right: 45%; opacity:0.6; }
+		75% { top: 100px; right: 55%;  opacity:0.7; }
+		100% { top: 0px; right: 20%; opacity: 0.5; }
 	}
 
 	@-webkit-keyframes medium-animation {
 		0% { top: 0px; left: 20%; opacity: 1; }
 		25% { top: 300px; left: 80%; opacity:0.7; }
-		50% { top: 240px; left: 55%; opacity:0.4; }
-		75% { top: 100px; left: 40%;  opacity:0.6; }
+		50% { top: 100px; left: 40%;  opacity:0.6; }
+		75% { top: 240px; left: 55%; opacity:0.8; }
 		100% { top: 0px; left: 20%; opacity: 1; }
 	}
 
 	@keyframes medium-animation {
 		0% { top: 0px; left: 20%; opacity: 1; }
 		25% { top: 300px; left: 80%; opacity:0.7; }
-		50% { top: 240px; left: 55%; opacity:0.4; }
-		75% { top: 100px; left: 40%;  opacity:0.6; }
+		50% { top: 100px; left: 40%;  opacity:0.6; }
+		75% { top: 240px; left: 55%; opacity:0.8; }
 		100% { top: 0px; left: 20%; opacity: 1; }
 	}
 
-	@-webkit-keyframes big-animation {
-		0% { top: 0px; right: 35%; opacity: 0.5; }
-		25% { top: 300px; right: 45%; opacity:0.4; }
-		50% { top: 240px; right: 55%; opacity:0.8; }
-		75% { top: 100px; right: 35%;  opacity:0.6; }
-		100% { top: 0px; right: 35%; opacity: 0.5; }
+	@-webkit-keyframes small-animation {
+		0% { top: 10px; left: 45%; opacity: 1; }
+		25% { top: 300px; left: 40%; opacity:0.7; }
+		50% { top: 240px; left: 55%; opacity:0.6; }
+		75% { top: 100px; left: 40%;  opacity:0.8; }
+		100% { top: 10px; left: 45%; opacity: 1; }
 	}
 
-	@keyframes big-animation {
-		0% { top: 0px; right: 35%; opacity: 0.5; }
-		25% { top: 300px; right: 45%; opacity:0.4; }
-		50% { top: 240px; right: 55%; opacity:0.8; }
-		75% { top: 100px; right: 35%;  opacity:0.6; }
-		100% { top: 0px; right: 35%; opacity: 0.5; }
+	@keyframes small-animation {
+		0% { top: 10px; left: 45%; opacity: 1; }
+		25% { top: 300px; left: 40%; opacity:0.7; }
+		50% { top: 240px; left: 55%; opacity:0.6; }
+		75% { top: 100px; left: 40%;  opacity:0.8; }
+		100% { top: 10px; left: 45%; opacity: 1; }
 	}
 </style>
 <section id="not-found">
 	<div class="circles">
 		<div>
-			404
-			<br>
-			<small>Are you lost?</small>
-			<div class="go-home">
-				<a class="ui primary submit button" href="{{ url('/') }}">
-					Let's go home!
-				</a>
-			</div>
+			<p class="four">404</p>
+			<p class="page-not-found">We couldn't find this page. Are you lost?</p>
+			<a class="go-home" href={{ url("/") }}>Let's go <i class="home icon" title="Home"></i></a>
 		</div>
 		<span class="circle big"></span>
 		<span class="circle med"></span>
