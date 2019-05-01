@@ -83,7 +83,9 @@
 				<p>This course is not currently associated to other courses in Bluemarket</p>
 			</div>
 		@endif
-		<a href="{{ url('courses') }}" title="Go to my courses" class="ui button primary">Go back to my courses</a>
+		@if(Auth::user()->role ==Config::get('enum.user_roles')['teacher'])
+			<a href="{{ action('CourseController@index') }}" title="Go to my courses" class="ui button primary" style="margin-top: 20px;">Go back to my courses</a>
+		@endif
 	</div>
 </div>
 @endsection
