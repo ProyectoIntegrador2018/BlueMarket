@@ -39,8 +39,9 @@
 
 	.go-home:hover {
 		color: #fff;
-		padding: 12px;
-		font-size: 2.16rem;
+		padding: 11px;
+		font-size: 1.9rem;
+		box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 	}
 
 	.circles {
