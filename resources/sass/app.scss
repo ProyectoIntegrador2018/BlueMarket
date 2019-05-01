@@ -81,7 +81,7 @@ $color-white: #fff;
 
 	.hero-container {
 		background-size: cover;
-		background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../img/unsplash-stock01-min.jpg');
+		background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../img/unsplash-stock01-min.jpg');
 		background-position: right bottom;
 		width: 100%;
 		height: inherit;
@@ -92,25 +92,28 @@ $color-white: #fff;
 			display: inline;
 			width: 100%;
 
-			.bm-hero-text {
+			.bm-hero-text.header {
 				position: relative;
 				margin: 10vh auto;
 				word-wrap: break-word;
 				width: fit-content;
 				width: -webkit-fit-content;
 				text-align: center;
+				font-size: 8em;
+				margin: 10vh auto 1vh;
+				font-weight: normal;
+			}
 
-				&.header {
-					font-size: 8em;
-					margin: 10vh auto 1vh auto;
-					font-weight: normal;
-				}
-
-				&.subheader {
-					font-size: 2em;
-					margin: 1vh auto;
-					font-weight: initial;
-				}
+			.bm-hero-text.subheader {
+				position: relative;
+				margin: 10vh auto;
+				word-wrap: break-word;
+				width: fit-content;
+				width: -webkit-fit-content;
+				text-align: center;
+				font-size: 2em;
+				margin: 1vh auto;
+				font-weight: initial;
 			}
 		}
 	}
@@ -192,7 +195,7 @@ $color-white: #fff;
 	width: 100%;
 
 	.contact-us-container {
-		padding: 0 6.25% 10% 6.25%;
+		padding: 0 6.25% 10%;
 
 		.home-contact-text {
 			text-transform: uppercase;
@@ -200,10 +203,6 @@ $color-white: #fff;
 
 			&.header {
 				font-size: 8em;
-			}
-
-			.contact-us-container {
-				padding: 0 6.25% 10% 6.25%;
 			}
 		}
 	}
