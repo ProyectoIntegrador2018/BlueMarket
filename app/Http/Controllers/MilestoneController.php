@@ -101,6 +101,8 @@ class MilestoneController extends Controller {
 			'previous_milestone_id' => null]);
 		$milestoneIdeation->save();
 
+		Project::findOrFail($projectId)->currentMilestone()->associate($milestoneIdeation);
+
 		$milestoneDesign = new Milestone(['name' => 'Design',
 			'status' => null,
 			'done_date' => null,

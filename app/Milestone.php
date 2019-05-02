@@ -15,4 +15,12 @@ class Milestone extends Model {
 	public function project() {
 		return $this->belongsTo('App\Project');
 	}
+
+	public function nextMilestone() {
+		return $this->hasOne('App\Milestone', 'previous_milestone_id');
+	}
+
+	public function previousMilestone() {
+		return $this->belongsTo('App\Milestone', 'previous_milestone_id');
+	}
 }

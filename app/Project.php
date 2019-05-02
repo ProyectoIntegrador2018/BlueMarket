@@ -46,6 +46,10 @@ class Project extends Model {
 		return $this->hasMany('App\Milestone');
 	}
 
+	public function currentMilestone() {
+		return $this->belongsTo('App\Milestone', 'current_milestone_id');
+	}
+
 	public function suppliers() {
 		return $this->belongsToMany('App\User', 'project_user', 'project_id', 'user_id')
 			->withPivot('accepted')
@@ -92,5 +96,28 @@ class Project extends Model {
 		}
 
 		return $this->isCollaborator($id) || $is_teacher || $is_supplier_teacher;
+	}
+
+	// Return first milestone AKA head of milestone linked list
+	public function headMilestone() {
+		return $this->milestones()->where('previous_milestone_id', null)->first();
+	}
+
+	// Return the project's current progress percentage as an int
+	public function progressPercentage() {
+		$count = 0;
+		$milestone = $this->currentMilestone;
+		if (!$milestone)
+			return 100;
+		while ($milestone->previousMilestone != null) {
+			$count++;
+			$milestone = $milestone->previousMilestone;
+		}
+		return $count / $this->milestones->count() * 100;
+	}
+
+	// Checks if the project is done
+	public function isDone() {
+		return !(bool) $this->currentMilestone;
 	}
 }
