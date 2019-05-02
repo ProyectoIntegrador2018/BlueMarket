@@ -56,7 +56,7 @@ class ProjectController extends Controller {
 	public function create() {
 		return view(
 			'projects.create', [
-				'courses' => Auth::user()->enrolledIn,
+				'courses' => Auth::user()->enrolledIn->where('course_type', config('enum.course_types')['client']),
 				'teams' => Auth::user()->teamsLed()->get(),
 				'labels' => Tag::where('type', 2)->get(),
 				'skillsets' => Tag::where('type', 1)->get()
