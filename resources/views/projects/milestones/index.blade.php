@@ -32,7 +32,6 @@
 			<td class="donedate">{{ isset($milestone->done_date) ?  $milestone->done_date : '-' }}</td>
 			<td class="buttons">
 				<button data-id="{{ $milestone->id }}" class="ui button primary milestoneEditBtn">Edit</button>
-				<button class="ui button red" onclick="showMilestoneModal('delete', this)">Delete</button>
 			</td>
 		</tr>
 		@endforeach
@@ -47,7 +46,6 @@
 		<td class="donedate"></td>
 		<td class="buttons">
 			<button data-id="" class="ui button primary milestoneEditBtn">Edit</button>
-			<button class="ui button red" onclick="showMilestoneModal('delete', this)">Delete</button>
 		</td>
 	</tr>
 </template>
