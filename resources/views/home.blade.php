@@ -28,7 +28,11 @@
 				<div class="ui stackable three column grid details-list">
 					<div class="row">
 						<div class="column">
+						@if(Auth::user())
+							<a href="#">
+						@else
 							<a href="{{ action('LoginController@show') }}">
+						@endif
 								<span class="detail-icon"><i class="clipboard icon"></i></span>
 								<h2 class="home-details-text">Sign up</h2>
 							</a>
