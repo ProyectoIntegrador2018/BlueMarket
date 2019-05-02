@@ -23,9 +23,7 @@
 		<div class="ui stackable two column grid">
 			<div class="four wide column">
 				<!-- Project Image -->
-				@if(isset($project->photo))
-					<img src="{{ isset($project->photo) ? $project->photo : 'https://dummyimage.com/400x400/3498db/ffffff.png&text=B' }}" alt="Project Image" class="ui medium image squared-image"/>
-				@endif
+				<img src="{{ isset($project->photo) ? $project->photo : 'https://dummyimage.com/400x400/3498db/ffffff.png&text=B' }}" alt="Project Image" class="ui medium image squared-image"/>
 			</div>
 			<div class="twelve wide column">
 				<!-- Pitch video -->

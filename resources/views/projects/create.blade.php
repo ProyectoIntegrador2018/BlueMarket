@@ -87,11 +87,6 @@
 				@endif
 			</select>
 		</div>
-		<!-- Milestone -->
-		<div class="field {{ $errors->has('milestone') ? 'error': '' }}">
-			<label for="milestone">Public milestone</label>
-			<input type="text" name="milestone" id="milestone" value="{{ old('milestone') }}" placeholder="e.g. Design">
-		</div>
 		<!-- Short description -->
 		<div class="field {{ $errors->has('shortDescription') ? 'error': '' }}">
 			<label for="shortDescription">Brief description</label>
@@ -141,7 +136,6 @@
 		$('#labels').dropdown('set selected', labels);
 		let skillsets = $('#skillsets option').slice(1,5).toArray().map(t => t.value);
 		$('#skillsets').dropdown('set selected', skillsets);
-		$('input[name=milestone]').val('Some milestone');
 		$('textarea[name=shortDescription]').val('This is the short description');
 		$('textarea[name=longDescription]').val('This is the long description');
 		$('input[name=videoPitch]').val('https://www.youtube.com/watch?v=QsaNaZy3SSA');
@@ -228,12 +222,6 @@
 				identifier: 'skillsets[]',
 				rules: [{
 					type: 'minCount[1]',
-				}]
-			},
-			milestone: {
-				identifier: 'milestone',
-				rules: [{
-					type: 'empty',
 				}]
 			},
 			shortDescription: {
