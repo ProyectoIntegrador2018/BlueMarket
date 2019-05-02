@@ -319,16 +319,20 @@
 	$('#progress').progress();
 
 	@if($project->isStakeholder(Auth::id()))
+		/* Semantic UI
+		--------------------------------------------*/
 		$(".modal").modal({ transition: "fade up" });
 
-		/* Task details modal */
+		/* Tasks
+		--------------------------------------------*/
 		$(".task-title").click(() => {
 			$("#task-details-modal").modal("show");
 		});
 	@endif
 
 	@if($project->isCollaborator(Auth::id()))
-		/* Due date datetime picker */
+		/* Tasks
+		--------------------------------------------*/
 		$(".ui.calendar").calendar({
 			monthFirst: false,
 			formatter: {
@@ -392,6 +396,8 @@
 	@endif
 
 	@if(Auth::id() === $project->team->leader->id)
+		/* Collaborators
+		--------------------------------------------*/
 		$(".ui.fluid.search.dropdown").dropdown();
 		$("#supplier-to-add-modal").modal({ transition: "fade up" });
 		$("#supplier-to-add-error-modal").modal({ transition: "fade up" });
