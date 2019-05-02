@@ -18,7 +18,7 @@
 				<a class="fluid ui primary button buttonSpace" href="mailto:{{ $user->email }}" style="margin-bottom: 10px;"><i class="icon envelope"></i>Contact</a>
 				<!-- Edit button -->
 				@if ($user->id == Auth::id())
-					<a class="fluid ui grey button buttonSpace" href="#" style="margin-bottom: 10px;">Edit</a> <!--TODO: Falta cambiar el href-->
+					<a class="fluid ui grey button buttonSpace" href="{{ action('UserController@edit') }}" style="margin-bottom: 10px;">Edit</a> <!--TODO: Falta cambiar el href-->
 				@endif
 				<!-- Skillset pills -->
 				@if (count($user->skillset) > 0)

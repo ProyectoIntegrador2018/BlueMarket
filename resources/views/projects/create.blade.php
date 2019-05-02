@@ -127,7 +127,7 @@
 	/* Upload new image */
 	$(".imgUploader").click(function(event) {
 		event.preventDefault();
-		$("#projectImage").click();
+		$("#projectImage").trigger('click');
 	});
 
 	/* Hide empty image */

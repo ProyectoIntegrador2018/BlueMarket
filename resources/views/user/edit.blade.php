@@ -75,7 +75,7 @@
 	// click on image uploader
 	$(".image-uploader").click(function (event) {
 		event.preventDefault();
-		$("#avatar").click();
+		$("#avatar").trigger('click');
 	});
 
 	function updateImagePreview(imageInput) {
