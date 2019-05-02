@@ -103,7 +103,7 @@ class ProjectController extends Controller {
 			$team->leader_id = Auth::id();
 			// TODO: should we add the team image here?
 			abort_if(!$team->save(), 500);
-			$team->members()->attach(Auth::id());
+			$team->members()->attach(Auth::id(), ['accepted' => config('enum.invite_status')['accepted']]);
 			$attributes['team_id'] = $team->id;
 		}
 		else {
