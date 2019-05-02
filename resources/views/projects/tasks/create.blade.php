@@ -36,13 +36,6 @@
 					<!-- Error message -->
 					<div class="ui error message">
 						<h2 class="header">Whoops! Something went wrong.</h2>
-						@if($errors->any())
-							<ul>
-								@foreach ($errors->all() as $error)
-									<li>{{ $error }}</li>
-								@endforeach
-							</ul>
-						@endif
 					</div>
 				</div>
 			</div>
