@@ -1491,8 +1491,8 @@ insert into skill_user (id, user_id, tag_id) values (50, 15, 114);
 
 
 -- milestones
-INSERT INTO milestones (id, name, status, project_id, previous_milestone_id, done_date) VALUES ('1', 'Ideation', '1', '1', NULL, "2019-01-01");
-INSERT INTO milestones (id, name, status, project_id, previous_milestone_id) VALUES ('2', 'Design', '2', '1', '1');
-INSERT INTO milestones (id, name, status, project_id, previous_milestone_id) VALUES ('3', 'Planning', NULL, '1', '2');
-INSERT INTO milestones (id, name, status, project_id, previous_milestone_id) VALUES ('4', 'Execution', NULL, '1', '3');
-INSERT INTO milestones (id, name, status, project_id, previous_milestone_id) VALUES ('5', 'Tests', NULL, '1', '4');
+INSERT INTO milestones (id, name, project_id, previous_milestone_id, done_date) VALUES ('1', 'Ideation', '1', NULL, "2019-01-01");
+INSERT INTO milestones (id, name, project_id, previous_milestone_id) VALUES ('2', 'Design', '1', '1');
+INSERT INTO milestones (id, name, project_id, previous_milestone_id) VALUES ('3', 'Planning', '1', '2');
+INSERT INTO milestones (id, name, project_id, previous_milestone_id) VALUES ('4', 'Execution', '1', '3');
+INSERT INTO milestones (id, name, project_id, previous_milestone_id) VALUES ('5', 'Tests', '1', '4');
