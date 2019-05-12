@@ -27,7 +27,8 @@ return [
 		'project' => 2,
 	],
 	'task_status' => [
-        'open' => 1,
-        'closed' => 2,
+		'todo' => 1,
+		'in-progress' => 2,
+		'closed' => 3,
 	]
 ];

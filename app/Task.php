@@ -33,9 +33,19 @@ class Task extends Model {
 		return !$this->isClosed() && $this->is_date_overdue();
 	}
 
-	// Check if task is open
+	// Check if task is open (has a todo or in-progress status)
 	public function isOpen() {
-		return !$this->isClosed() && !$this->is_date_overdue();
+		return !$this->isClosed();
+	}
+
+	// Check if task has to-do status
+	public function isToDo() {
+		return $this->task_status === config('enum.task_status')['todo'];
+	}
+
+	// Check if task has in-progress status
+	public function isInProgress() {
+		return $this->task_status === config('enum.task_status')['in-progress'];
 	}
 
 	// Check if task is closed
