@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use DateTime;
 use App\Project;
 use App\Task;
 use App\User;
@@ -109,7 +110,7 @@ class TaskController extends Controller
 
 		// Update the deadline of the task
 		if (isset($request->dueDate)) {
-			$task->deadline = "2019-04-25 00:13:26";
+			$task->deadline = $this->formatDate($attributes['dueDate']);
 		}
 
 		// Update the status of the task
@@ -165,7 +166,7 @@ class TaskController extends Controller
 		$task = Task::create([
 			'title' => $attributes['title'],
 			'description' => $attributes['description'],
-			'deadline' => "2019-04-25 00:13:26",
+			'deadline' => $this->formatDate($attributes['dueDate']),
 			'task_status' => config(self::TASK_STATUS)['todo'],
 			'project_id' => $attributes['project'],
 			'created_by' => Auth::user()->id
@@ -177,4 +178,10 @@ class TaskController extends Controller
 
 		return $task;
 	}
+
+	private function formatDate(string $isostr) {
+		// parse date to be in mysql datetime format
+		return (new DateTime($isostr))->format("Y-m-d H:i:s");
+	}
+
 }
