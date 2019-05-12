@@ -40,16 +40,15 @@ Check out the current version here: https://sheltered-hamlet-63420.herokuapp.com
 
 ### Da team
 
-| Name           | Email             | Role        |
-| -------------- | ----------------- | ----------- |
-| Katie Arriaga | A01192508 at tec | Development - Frontend |
-| Ana Karen Beltr&aacute;n | A01192508 at tec | Development - Backend |
-| Marcela Garza | A00815888 at tec | Development - Frontend |
-| H&eacute;ctor Rinc&oacute;n | A01088760 at tec | Development - Backend |
-| Katie Arriaga | katiearriaga at live.com | Development - Frontend, Product Owner |
-| Oscar Gonz&aacute;lez | oscardan.gonzalez at gmail.com | Development - Backend, Scrum Master |
-| Melissa Trevi&ntilde;o | mely.trevic at gmail.com | Development - Frontend, Configuration Manager |
-| Rub&eacute;n de la Pe&ntilde;a | ruben.dlpena at gmail.com | Development - Backend, Project Manager |
+| Name           | Email             | Role        | Course      |
+| -------------- | ----------------- | ----------- | ----------- |
+| Katie Arriaga | A01280132 at tec | Development - Frontend, Product Owner | Proyecto integrador, Lab de web |
+| Oscar Gonz&aacute;lez | oscardan.gonzalez at gmail.com | Development - Backend, Scrum Master | Proyecto integrador |
+| Melissa Trevi&ntilde;o | mely.trevic at gmail.com | Development - Frontend, Configuration Manager | Proyecto integrador |
+| Rub&eacute;n de la Pe&ntilde;a | ruben.dlpena at gmail.com | Development - Backend, Project Manager | Proyecto integrador |
+| Ana Karen Beltr&aacute;n | A01192508 at tec | Development - Backend | Lab de web |
+| Marcela Garza | A00815888 at tec | Development - Frontend | Lab de web |
+| H&eacute;ctor Rinc&oacute;n | A01088760 at tec | Development - Backend | Lab de web |
 
 ### Management tools
 
@@ -62,6 +61,12 @@ You should ask for access to this tools if you don't have it already:
 
 ## Development
 
+### Stack
+![Blue Market MVC architecture](https://drive.google.com/uc?id=130oQWy34lep6bpXUVCV_jwA5QemyD3Up "Blue Market MVC architecture")
+
+The Blue Market application follows the model-view-controller architecture. [Laravel](https://laravel.com/) is a full-stack framework that works with this architecture. 
+* The front-end was developed in pure HTML-JavaScript, CSS (SaSS) in combination with [Semantic UI](https://semantic-ui.com/).
+* The back-end is built on PHP, and the database is managed using [Eloquent ORM](https://laravel.com/docs/5.8/eloquent) and [MySQL](https://www.mysql.com/).
 
 ### Setup your dev environment
 
