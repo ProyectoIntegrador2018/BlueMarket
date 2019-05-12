@@ -106,8 +106,8 @@ class Project extends Model {
 	// Get all the open tasks of a project (has a todo or in-progress status)
 	public function openTasks() {
 		$tasks = $this->tasks->filter(function($task) {
-		    return ($task->task_status == config('enum.task_status')['in-progress']) ||
-		           ($task->task_status == config('enum.task_status')['todo']);
+			return ($task->task_status == config('enum.task_status')['in-progress']) ||
+				($task->task_status == config('enum.task_status')['todo']);
 		});
 		return $tasks->sortBy('deadline');
 	}
@@ -116,21 +116,21 @@ class Project extends Model {
 	public function closedTasks() {
 		return $this->tasks
 			->where('task_status', config('enum.task_status')['closed'])
-			->sortBy('deadline');;
+			->sortBy('deadline');
 	}
 
 	// Get all the to-do tasks of a project
 	public function todoTasks() {
 		return $this->tasks
 			->where('task_status', config('enum.task_status')['todo'])
-			->sortBy('deadline');;
+			->sortBy('deadline');
 	}
 
 	// Get all the in-progress tasks of a project
 	public function inProgressTasks() {
 		return $this->tasks
 			->where('task_status', config('enum.task_status')['in-progress'])
-			->sortBy('deadline');;
+			->sortBy('deadline');
 	}
 
 	// Get all the closed tasks of a project

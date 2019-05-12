@@ -28,7 +28,7 @@ Route::resource('projects', 'ProjectController')->only([
 ]);
 
 /* tasks */
-Route::resource('tasks', 'TaskController')->only(['create', 'store', 'show', 'edit', 'update']);
+Route::resource('tasks', 'TaskController')->only(['store', 'show', 'update']);
 
 /* users */
 Route::resource('users', 'UserController')->only(['index', 'update', 'show']);

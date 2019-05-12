@@ -30,8 +30,7 @@ class TaskController extends Controller
 	 * @return \Illuminate\Http\Response
 	 */
 	public function create() {
-		// TODO: send the project team members to view?
-		return view('projects.tasks.create');
+		//
 	}
 
 	/**
@@ -77,7 +76,7 @@ class TaskController extends Controller
 	 * @return \Illuminate\Http\Response
 	 */
 	public function edit(int $id) {
-		return ['task' => Task::findOrFail($id)];
+		//
 	}
 
 	/**
@@ -93,7 +92,7 @@ class TaskController extends Controller
 			'title' => 'present',
 			'description' => 'present',
 			'dueDate' => 'present', // TODO: check for datetime format
-			'task_status' => 'present|integer|min:1|max:2',
+			'task_status' => 'present|integer|min:1|max:3',
 		]);
 
 		$task = Task::findOrFail($id);
@@ -151,6 +150,7 @@ class TaskController extends Controller
 		if(!$project->exists()) {
 			return false;
 		}
+
 		// Check that user creating the task collaborates in the project where task is created
 		return $project->isCollaborator(Auth::user()->id);
 	}
