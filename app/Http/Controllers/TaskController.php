@@ -146,14 +146,13 @@ class TaskController extends Controller
 	}
 
 	private function validateProject($project_id) {
-		Project::find($project_id) == null;
-		// Check that all members in the team belong to the course that you're trying to create this project in
 		$project = \App\Project::find($project_id);
+		// Check that the project exists
 		if(!$project->exists()) {
 			return false;
 		}
-
-		return true;
+		// Check that user creating the task collaborates in the project where task is created
+		return $project->isCollaborator(Auth::user()->id);
 	}
 
 	/**
