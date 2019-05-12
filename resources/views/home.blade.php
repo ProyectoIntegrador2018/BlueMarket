@@ -101,16 +101,6 @@
 
 @section('scripts')
 	<script>
-		let hero_words_colors = [ ["innovation","#8e44ad"], ["collaboration", "#f1c40f"], ["teamwork","#16a085"], ["productivity", "#e67e22"]];
-		let current = 0;
-
-		function changeWordInList() {
-			$('#hero-words').text(hero_words_colors[current][0]).css('color', hero_words_colors[current][1]);
-			current = (current + 1) % hero_words_colors.length;
-		}
-
-		let animateWordsTimer = setInterval(changeWordInList, 1000);
-
 		function sendEmail() {
 			$( ".ui.form" ).removeClass( "error" );
 			$( ".field.input" ).removeClass( "error" );
