@@ -56,7 +56,7 @@ class TaskController extends Controller
 
 		$task = $this->createTask($attributes);
 
-		return redirect()->back()->with(compact('task'));
+		return $task;
 	}
 
 	/**
@@ -116,11 +116,11 @@ class TaskController extends Controller
 		if (isset($request->task_status)) {
 			$new_status = $attributes['task_status'];
 
-			if ($new_status == 2) { // Closed
+			if ($new_status == 3) { // Closed
 				// Update the date and responsible for closure
 				$task->completed_date = Carbon::now();
 				$task->closed_by = Auth::user();
-			} else { // Open
+			} else { // Open (todo or in-progress)
 				// Reset the date and responsible for closure
 				$task->completed_date = null;
 				$task->closed_by = null;
@@ -166,7 +166,7 @@ class TaskController extends Controller
 			'title' => $attributes['title'],
 			'description' => $attributes['description'],
 			'deadline' => "2019-04-25 00:13:26",
-			'task_status' => config(self::TASK_STATUS)['open'],
+			'task_status' => config(self::TASK_STATUS)['todo'],
 			'project_id' => $attributes['project'],
 			'created_by' => Auth::user()->id
 		]);

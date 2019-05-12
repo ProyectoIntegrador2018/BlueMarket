@@ -103,22 +103,40 @@ class Project extends Model {
 		return $this->hasMany('App\Task');
 	}
 
-	// Get all the open tasks of a project
+	// Get all the open tasks of a project (has a todo or in-progress status)
 	public function openTasks() {
-		return $this->tasks
-			->where('task_status', config('enum.task_status')['open'])
-			->where('deadline', '>=', Carbon::now()->toDateTimeString());
+		$tasks = $this->tasks->filter(function($task) {
+		    return ($task->task_status == config('enum.task_status')['in-progress']) ||
+		           ($task->task_status == config('enum.task_status')['todo']);
+		});
+		return $tasks->sortBy('deadline');
 	}
 
 	// Get all the closed tasks of a project
 	public function closedTasks() {
-		return $this->tasks->where('task_status', config('enum.task_status')['closed']);
+		return $this->tasks
+			->where('task_status', config('enum.task_status')['closed'])
+			->sortBy('deadline');;
+	}
+
+	// Get all the to-do tasks of a project
+	public function todoTasks() {
+		return $this->tasks
+			->where('task_status', config('enum.task_status')['todo'])
+			->sortBy('deadline');;
+	}
+
+	// Get all the in-progress tasks of a project
+	public function inProgressTasks() {
+		return $this->tasks
+			->where('task_status', config('enum.task_status')['in-progress'])
+			->sortBy('deadline');;
 	}
 
 	// Get all the closed tasks of a project
 	public function overdueTasks() {
-		return $this->tasks
-			->where('task_status', config('enum.task_status')['open'])
-			->where('deadline', '<', Carbon::now()->toDateTimeString());
+		return $this->openTasks()
+			->where('deadline', '<', Carbon::now()->toDateTimeString())
+			->sortBy('deadline');
 	}
 }
