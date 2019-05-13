@@ -12,6 +12,9 @@
 			<div class="field {{ $errors->has('prevMilestone') ? 'error': '' }}">
 				<label class="ui left" for="prevMilestone">Previous milestone</label>
 				<select class="ui fluid search dropdown prevMilestone" name="prevMilestone">
+					@if($name == "edit")
+						<option value=""></option>
+					@endif
 					@foreach ($project->milestones as $milestone)
 						<option value="{{ $milestone->id }}"> {{ $milestone->name }} </option>
 					@endforeach
