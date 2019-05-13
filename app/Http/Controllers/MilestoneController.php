@@ -50,7 +50,7 @@ class MilestoneController extends Controller {
 
 		if($new_next_milestone)
 		{
-			$new_next_milestone->update(array('previous_milestone_id' => $milestone->id));
+			$new_next_milestone->update(['previous_milestone_id' => $milestone->id]);
 		}
 
 		return $milestone;
@@ -88,18 +88,18 @@ class MilestoneController extends Controller {
 
 			if($milestone_after_new_prev)
 			{
-				$milestone_after_new_prev->update(array('previous_milestone_id' => $milestone->id));
+				$milestone_after_new_prev->update(['previous_milestone_id' => $milestone->id]);
 			}
 
 			if($old_next_milestone)
 			{
 				if($old_prev_milestone)
 				{
-					$old_next_milestone->update(array('previous_milestone_id' => $old_prev_milestone->id));
+					$old_next_milestone->update(['previous_milestone_id' => $old_prev_milestone->id]);
 				}
 				else
 				{
-					$old_next_milestone->update(array('previous_milestone_id' => null));
+					$old_next_milestone->update(['previous_milestone_id' => null]);
 				}
 			}
 		}
