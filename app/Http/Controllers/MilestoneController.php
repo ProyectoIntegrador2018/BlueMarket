@@ -32,7 +32,7 @@ class MilestoneController extends Controller {
 		$validatedAttributes = request()->validate([
 			'name' => 'required|string',
 			'project_id' => 'required|int',
-			'previous_milestone_id' => 'required|int',
+			'previous_milestone_id' => 'int',
 		]);
 
 		$validatedAttributes['status'] = $request->get('status');
@@ -43,10 +43,15 @@ class MilestoneController extends Controller {
 			$validatedAttributes['done_date'] = $date;
 		}
 
+		$new_next_milestone = Project::find($validatedAttributes['project_id'])->next_milestone($validatedAttributes['previous_milestone_id']);
+
 		$milestone = Milestone::create($validatedAttributes);
 		abort_if(!$milestone->exists, 500);
 
-		Project::findOrFail($validatedAttributes['project_id'])->next_milestone($validatedAttributes['previous_milestone_id'])->update(array('previous_milestone_id' => $milestone->id));
+		if($new_next_milestone)
+		{
+			$new_next_milestone->update(array('previous_milestone_id' => $milestone->id));
+		}
 
 		return $milestone;
 	}

@@ -126,7 +126,6 @@
 	// Form validation
 	const milestoneFields = {
 		milestoneName: ["empty", "maxLength[30]"],
-		prevMilestone: ["empty"],
 		estimatedDate: ["empty"],
 		status: ["empty"]
 	};
@@ -179,11 +178,15 @@
 		if(!values['done_date']) {
 			values['done_date'] = null;
 		}
+		if(!values['previous_milestone_id']){
+			values['previous_milestone_id'] = null;
+		}
 
 		if(isEdit) {
 			values['_method'] = 'PUT';
 			modalName = 'edit';
 		}
+		console.log(values);
 
 		$.ajax({
 			type: "POST",
