@@ -59,8 +59,6 @@
 <!-- Modals -->
 @include('projects.milestones.form', ['name' => 'new'])
 @include('projects.milestones.form', ['name' => 'edit'])
-
-<!-- TO DO: missing error validation for edit and delete -->
 <div id="delete-milestone-modal" class="ui tiny modal delete-milestone-modal">
 	<div class="header">Are you sure you want to delete this milestone?</div>
 	<div class="content">
@@ -120,6 +118,7 @@
 		estimatedDate: ["empty"],
 		status: ["empty"]
 	};
+
 	$(".ui.form.milestones.new").form({
 		fields: milestoneFields,
 		onSuccess: function(e) {
@@ -132,6 +131,7 @@
 			return false;
 		}
 	});
+
 	$(".ui.form.milestones.edit").form({
 		fields: milestoneFields,
 		onSuccess: function(e) {
@@ -183,15 +183,16 @@
 			dataType: 'json',
 			success: function (data) {
 				console.log(data);
-				// TODO: insert the milestone into the list
 				if(isEdit) {
 					alert('Saved!');
 					const rowIndex = $(`#${modalName}-milestone-modal`).find('.submitBtn').data('index');
 					updateTableEntry(data, rowIndex);
+					//updateProgress(data, rowIndex);
 				}
 				else {
 					alert('Your milestone has been created!');
 					addMilestone(data);
+					addToProgress(data);
 				}
 			},
 			error: function (data) {
@@ -256,6 +257,25 @@
 		$clone.find('.milestoneEditBtn').data('id', milestone.id);
 		$('#milestoneList').append($clone);
 		milestoneData.push(milestone);
+	}
+
+	function addToProgress(milestone) {
+		// Get the last milestone in ui list
+		var lastMilestone = $('.ui.list .item').last();
+		console.log(lastMilestone);
+
+		// Clone node
+		var newMilestone = lastMilestone.clone(true);
+		newMilestone.find('.header').html(milestone.name);
+		var icon = newMilestone.find('.icon');
+		icon.removeClass('green').removeClass('blue').removeClass('grey');
+		// Supposing it always adds a new milestone in coming up status
+		icon.addClass('grey');
+
+		// Append to list
+		$(".ui.list").append(newMilestone);
+
+		// Update progress
 	}
 </script>
 @endpush
