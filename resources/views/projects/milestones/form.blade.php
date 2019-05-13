@@ -22,7 +22,7 @@
 			<!-- Status -->
 			<div class="field status {{ $errors->has('status') ? 'error': '' }}">
 				<label class="ui left" for="status">Status</label>
-				<select class="ui fluid search dropdown status" name="status" onchange="updateDoneDate()">
+				<select class="ui fluid search dropdown status" name="status">
 					<option value="0">Coming up</option>
 					<option value="2">Current</option>
 					<option value="1">Done</option>
