@@ -76,10 +76,15 @@ class MilestoneController extends Controller {
 			$old_prev_milestone = Milestone::find($milestone->previous_milestone_id);
 
 			// get the updated milestone's new previous milestone
-			$prev_milestone = Milestone::findOrFail($request['previous_milestone_id']);
+			$new_prev_milestone = Milestone::findOrFail($request['previous_milestone_id']);
 
-			// update the milestone that currently has $prev_milestone as its next milestone // 3
-			Project::findOrFail($request['project_id'])->next_milestone($prev_milestone->id)->update(array('previous_milestone_id' => $milestone->id));
+			// update the milestone that comes after the new prev milestone
+			$milestone_after_new_prev = Project::find($request['project_id'])->next_milestone($new_prev_milestone->id);
+
+			if($milestone_after_new_prev)
+			{
+				$milestone_after_new_prev->update(array('previous_milestone_id' => $milestone->id));
+			}
 
 			if($old_next_milestone)
 			{
