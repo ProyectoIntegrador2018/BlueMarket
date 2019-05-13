@@ -111,8 +111,10 @@
 				</div>
 				@if(count($project->milestones) > 0)
 					<div class="ui list milestone-section">
-					@foreach ($project->milestones as $milestone)
-
+					@for($i = 1; $i <= count($project->milestones); $i++)
+						@php
+							$milestone = $i > 1 ?  $project->next_milestone($milestone->id) : $project->first_milestone();
+						@endphp
 						@switch($milestone->status)
 						@case(Config::get('enum.milestone_status')['done'])
 						<div class="item done">
@@ -143,7 +145,7 @@
 							</div>
 						</div>
 						@endswitch
-					@endforeach
+					@endfor
 					</div>
 				@endif
 			</div>

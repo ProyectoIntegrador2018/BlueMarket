@@ -11,9 +11,13 @@
 		</tr>
 	</thead>
 	<tbody id="milestoneList">
-		@foreach($project->milestones as $milestone)
-		<tr data-index="{{ $loop->iteration }}">
-			<td>{{ $loop->iteration }}</td>
+		@for($i = 1; $i <= count($project->milestones); $i++)
+		<tr data-index="{{ $i }}">
+			<td>{{ $i }}</td>
+			@php
+				$milestone = $i > 1 ?  $project->next_milestone($milestone->id) : $project->first_milestone();
+			@endphp
+			@if(isset($milestone))
 			<td class="name">{{ $milestone->name }}</td>
 			<td class="status">
 				@switch($milestone->status)
@@ -33,8 +37,9 @@
 			<td class="buttons">
 				<button data-id="{{ $milestone->id }}" class="ui button primary milestoneEditBtn">Edit</button>
 			</td>
+			@endif
 		</tr>
-		@endforeach
+		@endfor
 	</tbody>
 </table>
 
@@ -203,10 +208,8 @@
 				}
 				location.reload();
 			},
-			error: function (xhr, status) {
-				console.log(values);
-				console.error(status);
-				console.error(xhr);
+			error: function (data) {
+				console.log(data);
 				// TODO: Let's be more specific about this
 				alert(`Uh oh! Something went wrong and we couldn't ${isEdit ? "save": "create"} your milestone. Please try again later.`);
 			},

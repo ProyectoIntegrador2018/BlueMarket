@@ -46,6 +46,8 @@ class MilestoneController extends Controller {
 		$milestone = Milestone::create($validatedAttributes);
 		abort_if(!$milestone->exists, 500);
 
+		Project::findOrFail($validatedAttributes['project_id'])->next_milestone($validatedAttributes['previous_milestone_id'])->update(array('previous_milestone_id' => $milestone->id));
+
 		return $milestone;
 	}
 
@@ -66,6 +68,36 @@ class MilestoneController extends Controller {
 		// TODO: add validation here
 		$milestone = Milestone::findOrFail($milestoneId);
 		$attrs = $request->all();
+
+		if($request['previous_milestone_id'] != $milestone->previous_milestone_id)
+		{
+			$old_next_milestone = Project::findOrFail($request['project_id'])->next_milestone($milestone->id);
+
+			$old_prev_milestone = Milestone::find($milestone->previous_milestone_id);
+
+			// get the updated milestone's new previous milestone
+			$new_prev_milestone = Milestone::findOrFail($request['previous_milestone_id']);
+
+			// update the milestone that comes after the new prev milestone
+			$milestone_after_new_prev = Project::find($request['project_id'])->next_milestone($new_prev_milestone->id);
+
+			if($milestone_after_new_prev)
+			{
+				$milestone_after_new_prev->update(array('previous_milestone_id' => $milestone->id));
+			}
+
+			if($old_next_milestone)
+			{
+				if($old_prev_milestone)
+				{
+					$old_next_milestone->update(array('previous_milestone_id' => $old_prev_milestone->id));
+				}
+				else
+				{
+					$old_next_milestone->update(array('previous_milestone_id' => null));
+				}
+			}
+		}
 
 		$date = $attrs['done_date'];
 		if($date != null) {
