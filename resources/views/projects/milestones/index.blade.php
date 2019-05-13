@@ -82,7 +82,19 @@
 	/* Milestones
 	--------------------------------------------------------------------------------------- */
 
-	$("#new-milestone-modal").modal({ transition: "fade up" });
+	$("#new-milestone-modal").modal({
+		transition: "fade up",
+		onApprove: function() {
+			return false;
+		},
+	});
+
+	$("#edit-milestone-modal").modal({
+		transition: "fade up",
+		onApprove: function() {
+			return false;
+		},
+	});
 
 	$('.milestoneEditBtn').click(function(e) {
 		const id = $(this).data('id');
@@ -109,16 +121,6 @@
 
 	function submitForm(modalName) {
 		$(`.ui.form.milestones.${modalName}`).trigger('submit');
-	}
-
-	function updateDoneDate() {
-		console.log('Changed status');
-
-		if($(".status option:selected").val() != 1){
-			$(".doneDate").css("display", "none");
-			return false;
-		}
-		$(".doneDate").css("display", "block");
 	}
 
 	// Form validation
