@@ -25,19 +25,19 @@
 				@endforeach
 			</div>
 		@endif
-		@if(count($project->milestones) > 0)
-			@php
-				$currentMilestone = $project->milestones->where('status', Config::get('enum.milestone_status')['current'])->first();
-			@endphp
-			@if($currentMilestone != null)
-				<div class="extra content milestone">
+		<div class="extra content milestone">
+			@if(count($project->milestones) > 0)
+				@php
+					$currentMilestone = $project->milestones->where('status', Config::get('enum.milestone_status')['current'])->first();
+				@endphp
+				@if($currentMilestone != null)
 					<p>{{ $currentMilestone->name }}</p>
-				</div>
+				@else
+					<p>On hold</p>
+				@endif
+			@else
+				<p>N/A</p>
 			@endif
-		@else
-			<div class="extra content milestone">
-				<p>On hold</p>
-			</div>
-		@endif
+		</div>
 	</div>
 </a>
