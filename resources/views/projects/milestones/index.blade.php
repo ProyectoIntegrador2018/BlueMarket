@@ -104,6 +104,7 @@
 		$form.find('.milestoneName').val(milestone.name);
 		let status = milestone.status === null ? 0 : milestone.status;
 		$form.find('.status').dropdown('set selected', status);
+		$form.find('.prevMilestone').dropdown('clear');
 		$form.find('.ui.calendar').calendar('set date', milestone.done_date);
 		$form.find('.prevMilestone').dropdown('set selected', milestone.previous_milestone_id);
 		$('#edit-milestone-modal').modal('show');
