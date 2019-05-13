@@ -111,6 +111,16 @@
 		$(`.ui.form.milestones.${modalName}`).trigger('submit');
 	}
 
+	function updateDoneDate() {
+		console.log('Changed status');
+
+		if($(".status option:selected").val() != 1){
+			$(".doneDate").css("display", "none");
+			return false;
+		}
+		$(".doneDate").css("display", "block");
+	}
+
 	// Form validation
 	const milestoneFields = {
 		milestoneName: ["empty", "maxLength[30]"],
@@ -194,6 +204,7 @@
 					addMilestone(data);
 					addToProgress(data);
 				}
+				location.reload();
 			},
 			error: function (data) {
 				console.log(data);
