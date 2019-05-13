@@ -3,15 +3,16 @@
 	<div class="content">
 		<form class="ui form milestones {{ $name }} {{ $errors->any() ? 'error': '' }}">
 			<!-- Milestone name -->
-			<div class="field">
+			<div class="field {{ $errors->has('milestoneName') ? 'error': '' }}">
 				<label class="ui left" for="milestoneName">Name</label>
 				<input type="text" class="milestoneName" name="milestoneName">
 			</div>
 
 			<!-- Previous milestone -->
-			<div class="field">
+			<div class="field {{ $errors->has('prevMilestone') ? 'error': '' }}">
 				<label class="ui left" for="prevMilestone">Previous milestone</label>
 				<select class="ui fluid search dropdown prevMilestone" name="prevMilestone">
+					<option value=""></option>
 					@foreach ($project->milestones as $milestone)
 						<option value="{{ $milestone->id }}"> {{ $milestone->name }} </option>
 					@endforeach
@@ -19,18 +20,17 @@
 			</div>
 
 			<!-- Status -->
-			<div class="field">
+			<div class="field status {{ $errors->has('status') ? 'error': '' }}">
 				<label class="ui left" for="status">Status</label>
-				<select class="ui fluid search dropdown status" name="status">
+				<select class="ui fluid search dropdown status" name="status" onchange="updateDoneDate()">
 					<option value="0">Coming up</option>
 					<option value="2">Current</option>
 					<option value="1">Done</option>
 				</select>
 			</div>
 
-			<!-- TO DO: add an if statement so that done date is shown only if the status is done -->
 			<!-- Done date -->
-			<div class="field">
+			<div class="field doneDate {{ $errors->has('doneDate') ? 'error': '' }}">
 				<label class="ui left" for="doneDate">Done date</label>
 				<div class="ui calendar">
 					<div class="ui input left icon">
@@ -43,13 +43,6 @@
 			<!-- Error message -->
 			<div class="ui error message">
 				<h2 class="header">Whoops! Something went wrong.</h2>
-				@if($errors->any())
-					<ul>
-						@foreach ($errors->all() as $error)
-							<li>{{ $error }}</li>
-						@endforeach
-					</ul>
-				@endif
 			</div>
 			<input type="hidden" name="_milestoneID">
 		</form>
