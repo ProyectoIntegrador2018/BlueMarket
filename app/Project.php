@@ -47,6 +47,16 @@ class Project extends Model {
 		return $this->hasMany('App\Milestone');
 	}
 
+	public function first_milestone() {
+		return $this->milestones()
+			->where('previous_milestone_id', null)->first();
+	}
+
+	public function next_milestone(int $milestone_id) {
+		return $this->milestones()
+			->where('previous_milestone_id', $milestone_id)->first();
+	}
+
 	public function suppliers() {
 		return $this->belongsToMany('App\User', 'project_user', 'project_id', 'user_id')
 			->withPivot('accepted')
