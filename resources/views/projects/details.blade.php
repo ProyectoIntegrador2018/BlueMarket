@@ -306,9 +306,7 @@
 		</div>
 	@endif
 </div>
-
 @endsection
-
 
 @section('scripts')
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui-calendar/0.0.8/calendar.min.js"></script>
@@ -328,6 +326,10 @@
 		$(".task-title").click(() => {
 			$("#task-details-modal").modal("show");
 		});
+
+		/* format datetimes */
+		renderDateTimeAgoOnce();
+		utcToLocal();
 	@endif
 
 	@if($project->isCollaborator(Auth::id()))
@@ -358,7 +360,7 @@
 		/* Semantic UI form validation */
 		$("#new-task-form").form({
 			fields: {
-				title: ["empty", "maxLength[30]"],
+				title: ["empty", "maxLength[255]"],
 				description: ["empty", "maxLength[2000]"],
 				dueDate: ["empty"]
 			},
@@ -381,9 +383,14 @@
 					},
 					dataType: 'json',
 					success: function (data) {
+						console.log('success');
+						console.log(data);
+						// TODO: clean modal
 						$("#new-task-modal").modal("hide");
 					},
 					error: function (data) {
+						console.log('error');
+						console.log(data);
 						$("#new-task-modal").modal("hide");
 						$("#task-form-error-modal").modal("show");
 					}
@@ -408,9 +415,6 @@
 				$("#new-supplier-dropdown").removeClass("error");
 			}
 		});
-
-		/* render sent datetime for all invites*/
-		renderDateTimeAgoOnce();
 
 		/* Validate invitation to join the team */
 		function validateNewSupplier() {
