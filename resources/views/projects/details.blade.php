@@ -357,6 +357,23 @@
 			$("#new-task-form").submit();
 		}
 
+		function getTaskComponent(task) {
+			console.log(task);
+			const id = task.id;
+			const title = task.title;
+			const created_at = task.created_at;
+			const creator_id = task.created_by;
+			const creator_name = task.creator.name;
+			const deadline = task.deadline;
+
+			console.log(id);
+			console.log(title);
+			console.log(created_at);
+			console.log(creator_id);
+			console.log(creator_name);
+			console.log(deadline);
+		}
+
 		/* Semantic UI form validation */
 		$("#new-task-form").form({
 			fields: {
@@ -382,10 +399,11 @@
 						'project': $("#new-task-form #project").val()
 					},
 					dataType: 'json',
-					success: function (data) {
-						console.log('success');
-						console.log(data);
-						// TODO: clean modal
+					success: function (task) {
+						getTaskComponent(task);
+						/* format datetimes */
+						renderDateTimeAgoOnce();
+						utcToLocal();
 						$("#new-task-modal").modal("hide");
 					},
 					error: function (data) {

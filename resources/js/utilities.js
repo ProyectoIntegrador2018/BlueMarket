@@ -12,7 +12,6 @@ function renderDateTimeAgoOnce() {
 
 function utcToLocal() {
 	$(".needs-localdatetime").each(function () {
-		console.log('converting utc to local');
 		let currentDatetimeUTC = $(this).data("datetimeutc") + "Z";
 		let currentDatetime = new Date(currentDatetimeUTC);
 
