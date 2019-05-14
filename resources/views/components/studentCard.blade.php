@@ -6,7 +6,6 @@
 				<img class="ui centered small circular image user-avatar-in-card" src="{{ isset($user->picture_url) ? $user->picture_url : 'https://dummyimage.com/400x400/3498db/ffffff.png&text=B' }}">
 			</div>
 			<!--User name-->
-			<!-- TODO: need to make name centered-->
 			<div class="ui header student-card-name">{{ $user->name }}</div>
 		</div>
 		<!--User skillset-->
