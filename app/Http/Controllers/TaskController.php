@@ -56,7 +56,7 @@ class TaskController extends Controller
 
 		$task = $this->createTask($attributes);
 
-		return Task::with('creator')->where('id', $task->id)->first();
+		return $task;
 	}
 
 	/**
@@ -131,7 +131,7 @@ class TaskController extends Controller
 
 		$task->save();
 
-		return Task::with('creator')->where('id', $id)->first();
+		return $task;
 	}
 
 	/**

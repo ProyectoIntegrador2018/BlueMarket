@@ -16,16 +16,15 @@ function utcToLocal() {
 		let currentDatetime = new Date(currentDatetimeUTC);
 
 		// format the string
-		let month = ("0" + (currentDatetime.getMonth() + 1)).slice(-2);
-		let day = ("0" + currentDatetime.getDate()).slice(-2);
+		let month = (currentDatetime.getMonth() + 1).toString().padStart(2, '0');
+		let day = currentDatetime.getDate().toString().padStart(2, '0');
 		let year = currentDatetime.getFullYear();
 		let hours = currentDatetime.getHours();
-		let minutes = currentDatetime.getMinutes();
+		let minutes = currentDatetime.getMinutes().toString().padStart(2, '0');
 		let ampm = hours >= 12 ? 'PM' : 'AM';
 
 		hours = hours % 12;
 		hours = hours ? hours : 12; // the hour '0' should be '12'
-		minutes = minutes < 10 ? '0' + minutes : minutes;
 
 		let dateString = `${month}/${day}/${year} ${hours}:${minutes} ${ampm}`;
 		$(this).html(dateString);
