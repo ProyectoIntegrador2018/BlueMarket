@@ -118,7 +118,7 @@ class TaskController extends Controller
 
 			if ($new_status == 3) { // Closed
 				// Update the date and responsible for closure
-				$task->completed_date = Carbon::now()->toDateTimeString();
+				$task->completed_date = Carbon::now();
 				$task->closed_by = Auth::user();
 			} else { // Open (todo or in-progress)
 				// Reset the date and responsible for closure
