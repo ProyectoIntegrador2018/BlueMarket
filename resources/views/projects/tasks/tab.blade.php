@@ -192,7 +192,6 @@
 			};
 
 			if(action === "edit") {
-				taskFields.status = ["minCount[1]"];
 				ajax.method = 'PUT';
 				let taskId = $form.find("input[name=task-id]").val();
 				ajax.url = `/tasks/${taskId}`;
