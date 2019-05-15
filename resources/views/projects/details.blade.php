@@ -202,7 +202,7 @@
 								@if(isset($students))
 									@foreach($students as $student)
 										<div class="item" data-value={{ $student->id }}>
-											<img class="ui mini circular image" src="{{ isset($student->picture_url) ? $student->picture_url : 'https://dummyimage.com/400x400/3498db/ffffff.png&text=B' }}" style="display: inline; margin-right: 10px;"/>
+											<img class="ui image squared-image tiny" src="{{ isset($student->picture_url) ? $student->picture_url : 'https://dummyimage.com/400x400/3498db/ffffff.png&text=B' }}" style="display: inline; margin-right: 10px;"/>
 											{{ $student->name }}
 										</div>
 									@endforeach
