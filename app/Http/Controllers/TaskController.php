@@ -56,7 +56,7 @@ class TaskController extends Controller
 
 		$task = $this->createTask($attributes);
 
-		return $task;
+		return Task::with('creator')->where('id', $task->id)->first();
 	}
 
 	/**
@@ -65,7 +65,9 @@ class TaskController extends Controller
 	 * @param  \App\Task  $task
 	 * @return \Illuminate\Http\Response
 	 */
-	public function show(Task $task) {
+	public function show(int $id) {
+		$task = Task::findOrFail($id);
+
 		return ['task' => $task];
 	}
 
