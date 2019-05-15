@@ -45,7 +45,7 @@ class TaskController extends Controller
 			'description' => 'required',
 			'dueDate' => 'required', // TODO: check for datetime format
 			'project' => 'required|integer',
-			'assignee_id'=> 'present|integer'
+			'assignee_id' => 'present|integer'
 		]);
 
 		// Validate the existance of the Project
@@ -101,6 +101,7 @@ class TaskController extends Controller
 			'description' => 'present',
 			'dueDate' => 'present', // TODO: check for datetime format
 			'task_status' => 'present|integer|min:1|max:3',
+			'assignee_id' => 'present|integer',
 		]);
 
 		$task = Task::findOrFail($id);
@@ -135,6 +136,18 @@ class TaskController extends Controller
 			}
 
 			$task->task_status = $new_status;
+		}
+
+		// Update the assignee of the task
+		if (isset($request->assignee_id)) {
+			// Validate the existance of the Assignee
+			if(!$this->validateAssignee($attributes['assignee_id'], $attributes['project'])) {
+				return redirect()->back()->withErrors([
+					'assignee_id' => 'Invalid Assignee.'
+				])->withInput();
+			}
+
+			$task->assignee_id = $attributes['assignee_id'];
 		}
 
 		$task->save();
