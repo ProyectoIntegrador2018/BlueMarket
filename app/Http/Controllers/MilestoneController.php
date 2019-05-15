@@ -70,7 +70,15 @@ class MilestoneController extends Controller {
 	 * @return \Illuminate\Http\Response
 	 */
 	public function update(Request $request, int $milestoneId) {
-		// TODO: add validation here
+		$validatedAttributes = request()->validate([
+			'name' => 'required|string',
+			'project_id' => 'required|int',
+			'previous_milestone_id' => 'present',
+			'status' => 'present'
+		]);
+
+		abort_if($request['previous_milestone_id'] == $milestoneId, 400);
+
 		$milestone = Milestone::findOrFail($milestoneId);
 		$attrs = $request->all();
 
