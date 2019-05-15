@@ -272,9 +272,9 @@
 				</div>
 			</div>
 			@if($project->isCollaborator(Auth::id()))
-				<div id="new-task-modal" class="ui tiny modal new-task-modal">
+				<div id="task-form-modal" class="ui tiny modal task-form-modal">
 					<div class="content">
-						@include('projects.tasks.create')
+						@include('projects.tasks.form')
 					</div>
 					<div class="actions">
 						<button type="button" class="ui black deny button">Close</button>
@@ -350,7 +350,7 @@
 
 		/* New task modal */
 		function showNewTaskModal() {
-			$("#new-task-modal").modal("show");
+			$("#task-form-modal").modal("show");
 		}
 
 		function createNewTask() {
@@ -429,10 +429,10 @@
 						renderDateTimeAgoOnce();
 						utcToLocal();
 
-						$("#new-task-modal").modal("hide");
+						$("#task-form-modal").modal("hide");
 					},
 					error: function (data) {
-						$("#new-task-modal").modal("hide");
+						$("#task-form-modal").modal("hide");
 						$("#task-form-error-modal").modal("show");
 					}
 				});
