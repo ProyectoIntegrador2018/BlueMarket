@@ -2,7 +2,7 @@
 	<div class="header">{{ $name == "new" ? "New" : "Edit" }} task</div>
 	<div class="content">
 		<div class="ui stackable grid">
-			<form id="new-task-form" class="ui form {{ $errors->any() ? 'error': '' }}" style="width: 100%;">
+			<form id="{{ $name }}-task-form" class="ui form {{ $errors->any() ? 'error': '' }}" style="width: 100%;">
 				<div class="ui stackable grid">
 					<div class="sixteen wide column">
 						<!-- Project id -->
