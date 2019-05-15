@@ -12,14 +12,7 @@
 	@include('projects.tasks.form', ['name' => 'new'])
 	@include('projects.tasks.form', ['name' => 'edit'])
 @endif
-<div id="task-details-modal" class="ui modal task-details-modal">
-	<div class="scrolling content">
-		@include('projects.tasks.details')
-	</div>
-	<div class="actions">
-		<button class="ui black deny button">Close</button>
-	</div>
-</div>
+@include('projects.tasks.details')
 
 @push('js')
 <script>
@@ -27,6 +20,7 @@
 		function fillTaskDetailsModal(task) {
 			// title
 			$("#task-details #task-title").text(task.title);
+			$("#task-details #task-edit-btn").data('id', task.id);
 
 			// status
 			switch(task.task_status) {
@@ -199,6 +193,21 @@
 			onFailure: function() {
 				return false;
 			}
+		});
+
+		/* Populate edit form with task data */
+		$("#task-edit-btn").click((e) => {
+			const $btn = $(e.target);
+			const id = $btn.data('id');
+			const title = $("#task-details #task-title").text();
+			const description = $("#task-details #task-description").text();
+			const dueDate = $("#task-details #task-due-date").text();
+			const $form = $("#edit-task-form");
+			$form.find("input[name=title]").val(title);
+			$form.find("input[name=dueDate]").val(dueDate);
+			$form.find("textarea[name=description]").val(description);
+
+			showTaskModal('edit');
 		});
 	@endif
 </script>
