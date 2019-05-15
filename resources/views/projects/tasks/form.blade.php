@@ -22,6 +22,17 @@
 								</div>
 							</div>
 						</div>
+						@if($name == "edit")
+							<input type="hidden" id="task-id" name="task-id" value="">
+							<div class="field {{ $errors->has('course') ? 'error': '' }}">
+								<label for="status">Status</label>
+								<select name="status" class="ui search dropdown">
+									<option value="{{ Config::get('enum.task_status')['todo'] }}">To-do</option>
+									<option value="{{ Config::get('enum.task_status')['in-progress'] }}">In progress</option>
+									<option value="{{ Config::get('enum.task_status')['closed'] }}">Closed</option>
+								</select>
+							</div>
+						@endif
 						<!-- Description -->
 						<div class="field {{ $errors->has('description') ? 'error': '' }}">
 							<label for="description">Description</label>

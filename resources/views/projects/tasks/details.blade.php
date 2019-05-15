@@ -10,7 +10,7 @@
 			<div class="six wide column">
 				<div class = "ui stackable grid">
 					<div id="task-status" class="eight wide column" style="padding: 0;">
-						<i class="small circle green icon"></i><p style="display:inline;">Open</p>
+						<i></i><p style="display:inline;"></p>
 					</div>
 				</div>
 			</div>
@@ -42,6 +42,6 @@
 	</div>
 	<div class="actions">
 		<button class="ui black deny button">Close</button>
-		<button id="task-edit-btn" data-id="" type="submit" class="ui primary button">Edit</button>
+		<button id="task-edit-btn" type="submit" class="ui primary button">Edit</button>
 	</div>
 </div>

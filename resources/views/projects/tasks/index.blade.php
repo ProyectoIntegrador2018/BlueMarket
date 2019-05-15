@@ -5,7 +5,7 @@
 			<div class="task" data-taskid="{{ $task->id }}">
 				<div class="ui grid">
 					<div class="column">
-						<span title="Open task"><i class="small circle green icon"></i></span>
+						<span title="To-do task"><i class="small circle green icon"></i></span>
 					</div>
 					<div class="fourteen wide column">
 						<p class="task-title">{{ $task->title }}</p>
@@ -16,7 +16,7 @@
 			</div>
 		@endforeach
 	</div>
-	<div class="column task-list">
+	<div id="in-progress-tasks" class="column task-list">
 		<h2>In progress</h2>
 		@foreach($project->inProgressTasks() as $task)
 			<div class="task" data-taskid="{{ $task->id }}">
@@ -33,7 +33,7 @@
 			</div>
 		@endforeach
 	</div>
-	<div class="column task-list">
+	<div id="closed-tasks" class="column task-list">
 		<h2>Closed</h2>
 		@foreach($project->closedTasks() as $task)
 			<div class="task" data-taskid="{{ $task->id }}">
