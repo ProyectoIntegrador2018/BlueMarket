@@ -112,6 +112,10 @@
 				dueDate: ["empty"]
 			};
 
+			if(action === "edit") {
+				taskFields.status = ["minCount[1]"];
+			}
+
 			$(`#${action}-task-form`).form({
 				fields: taskFields,
 				onSuccess: function(event) {
