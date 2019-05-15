@@ -23,6 +23,11 @@ class Task extends Model {
 		return $this->belongsTo('App\User', 'created_by');
 	}
 
+	// Get the user who is assigned for the task
+	public function assignee() {
+		return $this->belongsTo('App\User', 'assignee_id');
+	}
+
 	// Get the user who completed (closed) the task
 	public function closed_by() {
 		return $this->belongsTo('App\User', 'closed_by');
