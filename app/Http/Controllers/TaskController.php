@@ -74,7 +74,7 @@ class TaskController extends Controller
 	 * @return \Illuminate\Http\Response
 	 */
 	public function show(Task $task) {
-		return Task::with(['creator', 'closed_by'])->where('id', $task->id)->first();
+		return Task::with(['creator', 'assignee', 'closed_by'])->where('id', $task->id)->first();
 	}
 
 	/**
@@ -128,7 +128,7 @@ class TaskController extends Controller
 			if ($new_status == 3) { // Closed
 				// Update the date and responsible for closure
 				$task->completed_date = Carbon::now();
-				$task->closed_by = Auth::user();
+				$task->closed_by = Auth::user()->id;
 			} else { // Open (todo or in-progress)
 				// Reset the date and responsible for closure
 				$task->completed_date = null;
@@ -141,7 +141,7 @@ class TaskController extends Controller
 		// Update the assignee of the task
 		if (isset($request->assignee_id)) {
 			// Validate the existance of the Assignee
-			if(!$this->validateAssignee($attributes['assignee_id'], $attributes['project'])) {
+			if(!$this->validateAssignee($attributes['assignee_id'], $task->project->id)) {
 				return redirect()->back()->withErrors([
 					'assignee_id' => 'Invalid Assignee.'
 				])->withInput();
