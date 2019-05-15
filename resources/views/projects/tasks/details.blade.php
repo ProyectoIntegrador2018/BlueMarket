@@ -26,15 +26,15 @@
 				<div class="ui stackable grid">
 					<div class="sixteen wide column">
 						<p class="task-detail-subtitle">Due</p>
-						<p id="task-due-date" class="task-due needs-localdatetime"></p>
+						<p id="task-due-date" class="task-due task-datetime"></p>
 					</div>
 					<div class="sixteen wide column">
 						<p class="task-detail-subtitle">Opened</p>
-						<p><span id="task-opened-date" class="needs-localdatetime"></span> by <span id="task-opened-by"></span></p>
+						<p><span id="task-opened-date" class="task-datetime"></span> by <span id="task-opened-by"></span></p>
 					</div>
 					<div id="task-closed-details" class="sixteen wide column">
 						<p class="task-detail-subtitle">Closed</p>
-						<p><span id="task-closed-date" class="needs-localdatetime"></span> by <span id="task-closed-by"></span></p>
+						<p><span id="task-closed-date" class="task-datetime"></span> by <span id="task-closed-by"></span></p>
 					</div>
 				</div>
 			</div>

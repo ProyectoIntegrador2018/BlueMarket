@@ -17,8 +17,8 @@
 		</div>
 		<div class="fourteen wide column">
 			<p class="task-title">{{ $task->title }}</p>
-			<p>Opened <span class="needs-datetimeago" data-datetime="{{ $task->created_at }}">{{ $task->created_at }}</span> by <a href="{{ action('UserController@show', ['id' => $task->creator->id]) }}">{{ $task->creator->name }}</a></p>
-			<p class="task-due {{ $task->isOverdue() ? 'overdue' : '' }}">Due <span class="needs-localdatetime" data-datetimeutc="{{ $task->deadline }}">{{ $task->deadline }}</span></p>
+			<p>Opened <span class="needs-datetimeago">{{ $task->created_at }}</span> by <a href="{{ action('UserController@show', ['id' => $task->creator->id]) }}">{{ $task->creator->name }}</a></p>
+			<p class="task-due {{ $task->isOverdue() ? 'overdue' : '' }}">Due <span class="needs-localdatetime">{{ $task->deadline }}</span></p>
 		</div>
 	</div>
 </div>
