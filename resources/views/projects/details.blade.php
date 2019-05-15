@@ -162,7 +162,7 @@
 								<tr class="selectable">
 									<td>
 										<a href="{{ url('users', $member->id) }}">
-											<img class="ui mini circular image" src="{{ isset($member->picture_url) ? $member->picture_url : 'https://dummyimage.com/400x400/3498db/ffffff.png&text=B' }}" alt="{{ $member->name }}" style="display: inline; margin-right: 10px;"/>
+											<img class="ui image squared-image tiny" src="{{ isset($member->picture_url) ? $member->picture_url : 'https://dummyimage.com/400x400/3498db/ffffff.png&text=B' }}" alt="{{ $member->name }}" style="display: inline; margin-right: 10px;"/>
 											{{ $member->name }}
 										</a>
 									</td>
@@ -181,7 +181,7 @@
 								<tr class="selectable">
 									<td>
 										<a href="{{ url('users', $supplier->id) }}">
-											<img class="ui mini circular image" src="{{ isset($supplier->picture_url) ? $supplier->picture_url : 'https://dummyimage.com/400x400/3498db/ffffff.png&text=B' }}" alt="{{ $supplier->name }}" style="display: inline; margin-right: 10px;"/>
+											<img class="ui image squared-image tiny" src="{{ isset($supplier->picture_url) ? $supplier->picture_url : 'https://dummyimage.com/400x400/3498db/ffffff.png&text=B' }}" alt="{{ $supplier->name }}" style="display: inline; margin-right: 10px;"/>
 											{{ $supplier->name }}
 										</a>
 									</td>
