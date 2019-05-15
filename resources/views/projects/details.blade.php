@@ -220,7 +220,7 @@
 										<tr class="selectable">
 											<td>
 												<a href="{{ url('users', $pending_supplier->id) }}">
-													<img class="ui mini circular image" src="{{ isset($pending_supplier->picture_url) ? $pending_supplier->picture_url : 'https://dummyimage.com/400x400/3498db/ffffff.png&text=B' }}" style="display: inline; margin-right: 10px;"/>
+													<img class="ui image squared-image tiny" src="{{ isset($pending_supplier->picture_url) ? $pending_supplier->picture_url : 'https://dummyimage.com/400x400/3498db/ffffff.png&text=B' }}" style="display: inline; margin-right: 10px;"/>
 													{{ $pending_supplier->name }}
 												</a>
 											</td>
@@ -342,7 +342,7 @@
 			const row = `<tr class="selectable">
 							<td>
 								<a href="/users/${id}">
-									<img class="ui mini circular image" src="${picture_url}" style="display: inline; margin-right: 10px;"/>
+									<img class="ui image squared-image tiny" src="${picture_url}" style="display: inline; margin-right: 10px;"/>
 									${name}
 								</a>
 							</td>
