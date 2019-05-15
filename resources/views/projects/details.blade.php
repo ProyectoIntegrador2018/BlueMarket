@@ -303,7 +303,6 @@
 		});
 	@endif
 
-
 	@if(Auth::id() === $project->team->leader->id)
 		/* Collaborators
 		--------------------------------------------*/
