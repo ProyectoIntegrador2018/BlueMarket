@@ -15,10 +15,10 @@ function utcToLocal() {
 		let currentDatetimeUTC = $(this).data("datetimeutc") + "Z";
 		let currentDatetime = new Date(currentDatetimeUTC);
 
-		// format the string to DD/MM/YYYY hh:mm:ss
+		// format the string to MM/dd/yyyy hh:mm:ss
 		let dateString =
-			("0" + currentDatetime.getDate()).slice(-2) + "/" +
 			("0" + (currentDatetime.getMonth() + 1)).slice(-2) + "/" +
+			("0" + currentDatetime.getDate()).slice(-2) + "/" +
 			currentDatetime.getFullYear() + " " +
 			("0" + currentDatetime.getHours()).slice(-2) + ":" +
 			("0" + currentDatetime.getMinutes()).slice(-2) + ":" +
