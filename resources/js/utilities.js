@@ -12,7 +12,7 @@ function renderDateTimeAgoOnce() {
 
 function utcToLocal() {
 	$(".needs-localdatetime").each(function () {
-		let currentDatetimeUTC = $(this).data("datetimeutc") + "Z";
+		let currentDatetimeUTC = $(this).text() + "Z";
 		let currentDatetime = new Date(currentDatetimeUTC);
 
 		// format the string
@@ -28,6 +28,7 @@ function utcToLocal() {
 
 		let dateString = `${month}/${day}/${year} ${hours}:${minutes} ${ampm}`;
 		$(this).html(dateString);
+		$(this).removeClass("needs-localdatetime");
 	});
 };
 
