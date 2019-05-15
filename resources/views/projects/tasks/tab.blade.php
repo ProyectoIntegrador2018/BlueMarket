@@ -3,15 +3,13 @@
 		<div class="right aligned sixteen wide column">
 			<button type="button" class="ui button primary" onclick="showTaskModal('new')">New task</button>
 		</div>
+		@include('projects.tasks.form', ['name' => 'new'])
+		@include('projects.tasks.form', ['name' => 'edit'])
 	@endif
 	<div class="sixteen wide column">
 		@include('projects.tasks.index')
 	</div>
 </div>
-@if($project->isCollaborator(Auth::id()))
-	@include('projects.tasks.form', ['name' => 'new'])
-	@include('projects.tasks.form', ['name' => 'edit'])
-@endif
 @include('projects.tasks.details')
 
 @push('js')
@@ -23,7 +21,7 @@
 
 			// status
 			switch(task.task_status) {
-				case 1: //todo
+				case 1: // todo
 					$("#task-details #task-status p").text("To-do");
 					$("#task-details #task-status i").removeClass().addClass("small circle green icon");
 					break;
@@ -104,6 +102,109 @@
 		}
 
 		function submitTaskForm(action) {
+			const $form = $(`#${action}-task-form`);
+			let taskFields;
+			let method;
+			let url;
+			let data;
+
+			if(action == "new") {
+				taskFields = {
+					title: ["empty", "maxLength[255]"],
+					description: ["empty"],
+					dueDate: ["empty"]
+				};
+			}
+			else { //edit
+				taskFields = {
+					title: ["empty", "maxLength[255]"],
+					description: ["empty"],
+					dueDate: ["empty"],
+					status: ["minCount[1]"]
+				};
+			}
+
+			$(`#${action}-task-form`).form({
+				fields: taskFields,
+				onSuccess: function(event) {
+					event.preventDefault();
+
+					// shared values
+					let title = $form.find("input[name=title]").val();
+					let dueDate = $form.find("input[name=dueDate]").val();
+					let isoDueDate = new Date(dueDate).toISOString();
+					let description = $form.find("textarea[name=description]").val();
+
+					if(action == "new") {
+						method = "POST";
+						url = "/tasks";
+						data = {
+							'title': title,
+							'dueDate': isoDueDate,
+							'description': description,
+							'project': $form.find("input[name=project]").val()
+						};
+					}
+					else { //edit
+						method = "PATCH";
+						let taskId = $form.find("input[name=task-id]").val();
+						url = `/tasks/${taskId}`;
+						data = {
+							'title': title,
+							'dueDate': isoDueDate,
+							'description': description,
+							'task_status' : $form.find("select[name=status]").val()
+						};
+					}
+
+					$.ajax({
+						type: method,
+						url: url,
+						headers: {
+							'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+						},
+						data: data,
+						dataType: 'json',
+						success: function (task) {
+							taskToAdd = getTaskComponent(task);
+
+							if(action == "edit") {
+								$(".task").filter(`[data-taskid="${task.id}"]`).remove();
+							}
+
+							let taskList = "";
+
+							switch(task.task_status) {
+								case 1: //todo
+									taskList = "to-do";
+									break;
+								case 2: // in-progress
+									taskList = "in-progress";
+									break;
+								case 3: // closed
+									taskList = "closed";
+									break;
+							}
+
+							$(`#${taskList}-tasks > .task`).first().before(taskToAdd);
+
+							// format datetimes
+							renderDateTimeAgoOnce();
+							utcToLocal();
+
+							$(".task-form-modal").modal("hide");
+						},
+						error: function () {
+							$(".task-form-modal").modal("hide");
+							$(`#${action}-task-form-error-modal`).modal("show");
+						}
+					});
+				},
+				onFailure: function() {
+					return false;
+				}
+			});
+
 			$(`#${action}-task-form`).submit();
 		}
 
@@ -161,129 +262,6 @@
 			$(".task-form-modal [name='dueDate']").val("");
 			$(".task-form-modal [name='description']").val("");
 		}
-
-		/* Semantic UI form validation */
-		$("#new-task-form").form({
-			fields: {
-				title: ["empty", "maxLength[255]"],
-				description: ["empty"],
-				dueDate: ["empty"]
-			},
-			onSuccess: function(event) {
-				event.preventDefault();
-
-				const $form = $("#new-task-form");
-				let dueDate = $form.find("input[name=dueDate]").val();
-				let isoDueDate = new Date(dueDate).toISOString();
-
-				$.ajax({
-					type: "POST",
-					url: "/tasks",
-					headers: {
-						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-					},
-					data: {
-						'title': $form.find("input[name=title]").val(),
-						'dueDate': isoDueDate,
-						'description': $form.find("textarea[name=description]").val(),
-						'task_status': $form.find("select[name=status]").val(),
-						'project': $form.find("input[name=project]").val()
-					},
-					dataType: 'json',
-					success: function (task) {
-						taskToAdd = getTaskComponent(task);
-
-						// add task to list
-						$("#to-do-tasks > .task").first().before(taskToAdd);
-
-						clearTaskForm(); // empty input in form
-
-						// format datetimes
-						renderDateTimeAgoOnce();
-						utcToLocal();
-
-						$(".task-form-modal").modal("hide");
-					},
-					error: function () {
-						$(".task-form-modal").modal("hide");
-						$("#new-task-form-error-modal").modal("show");
-					}
-				});
-			},
-			onFailure: function() {
-				return false;
-			}
-		});
-
-		/* Semantic UI form validation */
-		$("#edit-task-form").form({
-			fields: {
-				title: ["empty", "maxLength[255]"],
-				description: ["empty"],
-				dueDate: ["empty"],
-				status: ["minCount[1]"]
-			},
-			onSuccess: function(event) {
-				event.preventDefault();
-
-				const $form = $("#edit-task-form");
-				let dueDate = $form.find("input[name=dueDate]").val();
-				let isoDueDate = new Date(dueDate).toISOString();
-				console.log(isoDueDate);
-
-				let taskId = $form.find("input[name=task-id]").val();
-
-				$.ajax({
-					type: "PATCH",
-					url: `/tasks/${taskId}`,
-					headers: {
-						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-					},
-					data: {
-						'title': $form.find("input[name=title]").val(),
-						'dueDate': isoDueDate,
-						'description': $form.find("textarea[name=description]").val(),
-						'task_status' : $form.find("select[name=status]").val()
-					},
-					dataType: 'json',
-					success: function (task) {
-						taskToAdd = getTaskComponent(task);
-
-						$(".task").filter(`[data-taskid="${task.id}"]`).remove();
-
-						let taskList = "";
-
-						switch(task.task_status) {
-							case 1: //todo
-								taskList = "to-do";
-								break;
-							case 2: // in-progress
-								taskList = "in-progress";
-								break;
-							case 3: // closed
-								taskList = "closed";
-								break;
-						}
-
-						$(`#${taskList}-tasks > .task`).first().before(taskToAdd);
-
-						// format datetimes
-						renderDateTimeAgoOnce();
-						utcToLocal();
-
-						$(".task-form-modal").modal("hide");
-					},
-					error: function () {
-						$(".task-form-modal").modal("hide");
-						$("#edit-task-form-error-modal").modal("show");
-					}
-				});
-			},
-			onFailure: function() {
-				return false;
-			}
-		});
-
 
 		/* Populate edit form with task data */
 		$("#task-edit-btn").click((e) => {
