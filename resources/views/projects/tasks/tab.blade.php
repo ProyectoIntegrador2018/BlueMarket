@@ -126,6 +126,9 @@
 			const deadlineDateUTC = new Date(deadline + "Z");
 			const isOverdue = deadlineDateUTC < currentDatetimeUTC;
 
+			let endpoint = "{{ action('UserController@show', ['id' => 1]) }}";
+			endpoint = endpoint.substring(0, endpoint.length-1) + creatorId;
+
 			const taskComponent = 	`<div class="task new-task" data-taskid="${id}">
 										<div class="ui grid">
 											<div class="column">
@@ -133,7 +136,7 @@
 											</div>
 											<div class="fourteen wide column">
 												<p class="task-title">${title}</p>
-												<p>Opened <span class="needs-datetimeago" data-datetime="${createdAt}">${createdAt}</span> by <a href="/users/${creatorId}">${creatorName}</a></p>
+												<p>Opened <span class="needs-datetimeago" data-datetime="${createdAt}">${createdAt}</span> by <a href="${endpoint}">${creatorName}</a></p>
 												<p class="task-due ${ isOverdue ? 'overdue' : '' }">Due <span class="needs-localdatetime" data-datetimeutc="${deadline}">${deadline}</span></p>
 											</div>
 										</div>
