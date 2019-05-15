@@ -107,4 +107,8 @@ class User extends Authenticatable
 	public function tasksClosed() {
 		return $this->hasMany('App\Task', 'closed_by');
 	}
+
+	public function tasksAssigned() {
+		return $this->hasMany('App\Task', 'assignee_id');
+	}
 }

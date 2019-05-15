@@ -44,13 +44,21 @@ class TaskController extends Controller
 			'title' => 'required',
 			'description' => 'required',
 			'dueDate' => 'required', // TODO: check for datetime format
-			'project' => 'required|integer'
+			'project' => 'required|integer',
+			'assignee_id'=> 'present|integer'
 		]);
 
 		// Validate the existance of the Project
 		if(!$this->validateProject($attributes['project'])) {
 			return redirect()->back()->withErrors([
 				'project' => 'Invalid Project.'
+			])->withInput();
+		}
+
+		// Validate the existance of the Assignee
+		if(!$this->validateAssignee($attributes['assignee_id'], $attributes['project'])) {
+			return redirect()->back()->withErrors([
+				'assignee_id' => 'Invalid Assignee.'
 			])->withInput();
 		}
 
@@ -155,6 +163,18 @@ class TaskController extends Controller
 		return $project->isCollaborator(Auth::user()->id);
 	}
 
+	private function validateAssignee($assignee_id, $project_id) {
+		$assignee = \App\User::find($assignee_id);
+		// Check that the assignee exists
+		if(!$assignee->exists()) {
+			return false;
+		}
+
+		// Check that user assigned to the task collaborates in the project where task is created
+		$project = \App\Project::find($project_id);
+		return $project->isCollaborator($assignee->id);
+	}
+
 	/**
 	 * Create a task with the provided validated attributes
 	 *
@@ -168,7 +188,8 @@ class TaskController extends Controller
 			'deadline' => $this->formatDate($attributes['dueDate']),
 			'task_status' => config(self::TASK_STATUS)['todo'],
 			'project_id' => $attributes['project'],
-			'created_by' => Auth::user()->id
+			'created_by' => Auth::user()->id,
+			'assignee_id' => $attributes['assignee_id']
 		]);
 
 		if (!$task->exists) {
