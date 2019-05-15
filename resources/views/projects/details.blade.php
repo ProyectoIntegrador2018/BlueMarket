@@ -358,20 +358,38 @@
 		}
 
 		function getTaskComponent(task) {
-			console.log(task);
 			const id = task.id;
 			const title = task.title;
-			const created_at = task.created_at;
-			const creator_id = task.created_by;
-			const creator_name = task.creator.name;
+			const createdAt = task.created_at;
+			const creatorId = task.created_by;
+			const creatorName = task.creator.name;
 			const deadline = task.deadline;
 
-			console.log(id);
-			console.log(title);
-			console.log(created_at);
-			console.log(creator_id);
-			console.log(creator_name);
-			console.log(deadline);
+			// determine if the task is overdue
+			const currentDatetimeUTC = Date.now();
+			const deadlineDateUTC = new Date(deadline + "Z");
+			const isOverdue = deadlineDateUTC < currentDatetimeUTC;
+
+			const taskComponent = 	`<div class="task" data-taskid="${id}">
+										<div class="ui grid">
+											<div class="column">
+												<span title="Open task"><i class="small circle green icon"></i></span>
+											</div>
+											<div class="fourteen wide column">
+												<p class="task-title">${title}</p>
+												<p>Opened <span class="needs-datetimeago" data-datetime="${createdAt}">${createdAt}</span> by <a href="/users/${creatorId}">${creatorName}</a></p>
+												<p class="task-due ${ isOverdue ? 'overdue' : '' }">Due <span class="needs-localdatetime" data-datetimeutc="${deadline}">${deadline}</span></p>
+											</div>
+										</div>
+									</div>`;
+
+			return taskComponent;
+		}
+
+		function clearTaskForm() {
+			$("#new-task-form [name='title']").val("");
+			$("#new-task-form [name='dueDate']").val("");
+			$("#new-task-form [name='description']").val("");
 		}
 
 		/* Semantic UI form validation */
@@ -400,10 +418,17 @@
 					},
 					dataType: 'json',
 					success: function (task) {
-						getTaskComponent(task);
-						/* format datetimes */
+						taskToAdd = getTaskComponent(task);
+
+						// add task to list
+						$("#to-do-tasks > .task").first().before(taskToAdd);
+
+						clearTaskForm(); // empty input in form
+
+						// format datetimes
 						renderDateTimeAgoOnce();
 						utcToLocal();
+
 						$("#new-task-modal").modal("hide");
 					},
 					error: function (data) {
