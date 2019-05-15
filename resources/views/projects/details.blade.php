@@ -343,7 +343,7 @@
 					var day = date.getDate();
 					var month = date.getMonth() + 1;
 					var year = date.getFullYear();
-					return month + '/' + day + '/' + year;
+					return day + '/' + month + '/' + year;
 				}
 			}
 		});
@@ -432,8 +432,6 @@
 						$("#new-task-modal").modal("hide");
 					},
 					error: function (data) {
-						console.log('error');
-						console.log(data);
 						$("#new-task-modal").modal("hide");
 						$("#task-form-error-modal").modal("show");
 					}
