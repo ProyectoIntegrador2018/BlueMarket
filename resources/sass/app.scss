@@ -417,7 +417,7 @@ $color-white: #fff;
 	.preview-container {
 		margin-bottom: 1vh;
 
-		.ui.small.image.preview {
+		.ui.medium.image.preview {
 			width: 10vmax;
 			height: 10vmax;
 			object-fit: cover;
@@ -439,11 +439,19 @@ $color-white: #fff;
 	&.medium {
 		width: 150px;
 		border-radius: 20px;
+
+		&.not-round {
+			border-radius: 5px;
+		}
 	}
 
 	&.small {
 		width: 100px;
 		border-radius: 15px;
+
+		&.not-round {
+			border-radius: 5px;
+		}
 	}
 
 	&.tiny {

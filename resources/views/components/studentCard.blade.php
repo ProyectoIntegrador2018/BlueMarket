@@ -3,7 +3,7 @@
 		<div class="content">
 			<!--User avatar-->
 			<div>
-				<img class="ui centered image squared-image small user-avatar-in-card" src="{{ isset($user->picture_url) ? $user->picture_url : 'https://dummyimage.com/400x400/3498db/ffffff.png&text=B' }}">
+				<img class="ui centered image squared-image small not-round user-avatar-in-card" src="{{ isset($user->picture_url) ? $user->picture_url : 'https://dummyimage.com/400x400/3498db/ffffff.png&text=B' }}">
 			</div>
 			<!--User name-->
 			<div class="ui header student-card-name">{{ $user->name }}</div>

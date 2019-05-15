@@ -11,7 +11,7 @@
 		<div class="ui stackable grid">
 			<div class="four wide column user-basic-info">
 				<!-- User avatar -->
-				<img class="ui small circular image user-avatar" src="{{ isset($user->picture_url) ? $user->picture_url : 'https://dummyimage.com/400x400/3498db/ffffff.png&text=B' }}"/>
+				<img class="ui image squared-image medium not-round user-avatar" src="{{ isset($user->picture_url) ? $user->picture_url : 'https://dummyimage.com/400x400/3498db/ffffff.png&text=B' }}"/>
 				<!-- User name -->
 				<h2 class="center" style="text-align: center;">{{ $user->name }}</h2>
 				<!-- Contact button -->
@@ -76,7 +76,7 @@
 												<?php $members = $team->members ?>
 												@for($i = 0; $i < $loop_boundary; $i++)
 													<span class="team-member-avatar-container">
-														<img class="ui mini circular image user-avatar" src="{{ isset($members[$i]->picture_url) ? $members[$i]->picture_url : 'https://dummyimage.com/400x400/3498db/ffffff.png&text=B' }}" title="{{ $members[$i]->name }}"/>
+														<img class="ui image squared-image tiny user-avatar" src="{{ isset($members[$i]->picture_url) ? $members[$i]->picture_url : 'https://dummyimage.com/400x400/3498db/ffffff.png&text=B' }}" title="{{ $members[$i]->name }}"/>
 													</span>
 												@endfor
 											</a>
