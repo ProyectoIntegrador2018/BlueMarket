@@ -58,7 +58,7 @@
 			$("#task-details #task-opened-by").text(task.creator.name);
 
 			// task closed details
-			if(task.task_status == 3) { // task is closed
+			if(task.task_status == {{ Config::get('enum.task_status')['closed'] }}) { // task is closed
 				$("#task-details #task-closed-date").text(task.completed_date);
 				$("#task-details #task-closed-by").text(task.closed_by.name);
 				$("#task-details #task-closed-details").show();
@@ -98,99 +98,111 @@
 		utcToLocal();
 	@endif
 	@if($project->isCollaborator(Auth::id()))
+		/* Form binding */
+		let taskFields = { // shared fields
+			title: ["empty", "maxLength[255]"],
+			description: ["empty"],
+			dueDate: ["empty"]
+		};
+
+		$("#new-task-form").form({
+			fields: taskFields,
+			onSuccess: function(event) {
+				event.preventDefault();
+				handleSuccessfulTaskFormSubmitted("new");
+			},
+			onFailure: function() {
+				return false;
+			}
+		});
+
+		taskFields.status = ["minCount[1]"];
+
+		$("#edit-task-form").form({
+			fields: taskFields,
+			onSuccess: function(event) {
+				event.preventDefault();
+				handleSuccessfulTaskFormSubmitted("edit");
+			},
+			onFailure: function() {
+				return false;
+			}
+		});
+
 		function showTaskModal(action) {
 			$(`#${action}-task-form-modal`).modal("show");
 		}
 
-		function submitTaskForm(action) {
+		function handleSuccessfulTaskFormSubmitted(action) {
 			const $form = $(`#${action}-task-form`);
 
-			// shared fields
-			let taskFields = {
-				title: ["empty", "maxLength[255]"],
-				description: ["empty"],
-				dueDate: ["empty"]
+			// shared values
+			let dueDate = $form.find("input[name=dueDate]").val();
+			let isoDueDate = new Date(dueDate).toISOString();
+			let data = {
+				'title': $form.find("input[name=title]").val(),
+				'dueDate': isoDueDate,
+				'description': $form.find("textarea[name=description]").val(),
+				'project': $form.find("input[name=project]").val()
+			};
+
+			// ajax set up
+			let ajax = {
+				method: 'POST',
+				url: '/tasks',
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				},
+				data: data,
+				dataType: 'json',
+				success: function (task) {
+					taskToAdd = getTaskComponent(task, action);
+
+					if(action == "edit") {
+						$(".task").filter(`[data-taskid="${task.id}"]`).remove();
+					}
+
+					let taskList = "";
+
+					switch(task.task_status) {
+						case {{ Config::get('enum.task_status')['todo'] }}:
+							taskList = "to-do";
+							break;
+						case {{ Config::get('enum.task_status')['in-progress'] }}:
+							taskList = "in-progress";
+							break;
+						case {{ Config::get('enum.task_status')['closed'] }}:
+							taskList = "closed";
+							break;
+					}
+
+					$(`#${taskList}-tasks > h2`).after(taskToAdd);
+
+					// format datetimes
+					renderDateTimeAgoOnce();
+					utcToLocal();
+
+					clearTaskForm();
+					$(".task-form-modal").modal("hide");
+				},
+				error: function () {
+					$(".task-form-modal").modal("hide");
+					$(`#${action}-task-form-error-modal`).modal("show");
+				}
 			};
 
 			if(action === "edit") {
 				taskFields.status = ["minCount[1]"];
+				ajax.method = 'PUT';
+				let taskId = $form.find("input[name=task-id]").val();
+				ajax.url = `/tasks/${taskId}`;
+				ajax.data.task_status = $form.find("select[name=status]").val();
 			}
 
-			$(`#${action}-task-form`).form({
-				fields: taskFields,
-				onSuccess: function(event) {
-					event.preventDefault();
+			$.ajax(ajax);
+		}
 
-					// shared values
-					let dueDate = $form.find("input[name=dueDate]").val();
-					let isoDueDate = new Date(dueDate).toISOString();
-					let data = {
-						'title': $form.find("input[name=title]").val(),
-						'dueDate': isoDueDate,
-						'description': $form.find("textarea[name=description]").val(),
-						'project': $form.find("input[name=project]").val()
-					};
-
-					// ajax set up
-					let ajax = {
-						method: 'POST',
-						url: '/tasks',
-						headers: {
-							'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-						},
-						data: data,
-						dataType: 'json',
-						success: function (task) {
-							taskToAdd = getTaskComponent(task, action);
-
-							if(action == "edit") {
-								$(".task").filter(`[data-taskid="${task.id}"]`).remove();
-							}
-
-							let taskList = "";
-
-							switch(task.task_status) {
-								case {{ Config::get('enum.task_status')['todo'] }}:
-									taskList = "to-do";
-									break;
-								case {{ Config::get('enum.task_status')['in-progress'] }}:
-									taskList = "in-progress";
-									break;
-								case {{ Config::get('enum.task_status')['closed'] }}:
-									taskList = "closed";
-									break;
-							}
-
-							$(`#${taskList}-tasks > h2`).after(taskToAdd);
-
-							// format datetimes
-							renderDateTimeAgoOnce();
-							utcToLocal();
-
-							clearTaskForm();
-							$(".task-form-modal").modal("hide");
-						},
-						error: function () {
-							$(".task-form-modal").modal("hide");
-							$(`#${action}-task-form-error-modal`).modal("show");
-						}
-					};
-
-					if(action === "edit") {
-						taskFields.status = ["minCount[1]"];
-						ajax.method = 'PUT';
-						let taskId = $form.find("input[name=task-id]").val();
-						ajax.url = `/tasks/${taskId}`;
-						ajax.data.task_status = $form.find("select[name=status]").val();
-					}
-
-					$.ajax(ajax);
-				},
-				onFailure: function() {
-					return false;
-				}
-			});
-
+		function submitTaskForm(action) {
 			$(`#${action}-task-form`).submit();
 		}
 
