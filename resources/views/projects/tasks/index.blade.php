@@ -1,5 +1,5 @@
 <div class="ui equal width stackable grid">
-	<div class="column task-list">
+	<div id="to-do-tasks" class="column task-list">
 		<h2>To-do</h2>
 		@foreach($project->todoTasks() as $task)
 			<div class="task" data-taskid="{{ $task->id }}">
