@@ -285,7 +285,6 @@
 
 		/* format datetimes */
 		renderDateTimeAgoOnce();
-		utcToLocal();
 	@endif
 
 	@if($project->isCollaborator(Auth::id()))

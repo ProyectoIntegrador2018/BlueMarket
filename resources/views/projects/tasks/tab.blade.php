@@ -44,7 +44,7 @@
 			const currentDatetimeUTC = Date.now();
 			const deadlineDateUTC = new Date(deadline + "Z");
 			const isOverdue = deadlineDateUTC < currentDatetimeUTC;
-			$("#task-details #task-due-date").text(task.deadline).data("datetimeutc", task.deadline);
+			$("#task-details #task-due-date").text(task.deadline);
 			// style due date
 			if(isOverdue) {
 				$("#task-details #task-due-date").addClass("overdue");
@@ -54,12 +54,12 @@
 			}
 
 			// task opened details
-			$("#task-details #task-opened-date").text(task.created_at).data("datetimeutc", task.created_at);
+			$("#task-details #task-opened-date").text(task.created_at);
 			$("#task-details #task-opened-by").text(task.creator.name);
 
 			// task closed details
 			if(task.task_status == 3) { // task is closed
-				$("#task-details #task-closed-date").text(task.completed_date).data("datetimeutc", task.completed_date);
+				$("#task-details #task-closed-date").text(task.completed_date);
 				$("#task-details #task-closed-by").text(task.closed_by.name);
 				$("#task-details #task-closed-details").show();
 			}
@@ -68,6 +68,7 @@
 			}
 
 			// format all datetimes to local
+			$(".task-datetime").addClass("needs-localdatetime");
 			utcToLocal();
 		}
 
@@ -156,12 +157,13 @@
 									break;
 							}
 
-							$(`#${taskList}-tasks > .task`).first().before(taskToAdd);
+							$(`#${taskList}-tasks > h2`).after(taskToAdd);
 
 							// format datetimes
 							renderDateTimeAgoOnce();
 							utcToLocal();
 
+							clearTaskForm();
 							$(".task-form-modal").modal("hide");
 						},
 						error: function () {
@@ -238,7 +240,7 @@
 											<div class="fourteen wide column">
 												<p class="task-title">${title}</p>
 												<p>Opened <span class="needs-datetimeago" data-datetime="${createdAt}">${createdAt}</span> by <a href="${endpoint}">${creatorName}</a></p>
-												<p class="task-due ${ isOverdue ? 'overdue' : '' }">Due <span class="needs-localdatetime" data-datetimeutc="${deadline}">${deadline}</span></p>
+												<p class="task-due ${ isOverdue ? 'overdue' : '' }">Due <span class="needs-localdatetime">${deadline}</span></p>
 											</div>
 										</div>
 									</div>`;
