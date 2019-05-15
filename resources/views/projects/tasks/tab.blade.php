@@ -18,9 +18,8 @@
 <script>
 	@if($project->isStakeholder(Auth::id()))
 		function fillTaskDetailsModal(task) {
-			// title
+			$("#task-edit-btn").data("taskid", task.id);
 			$("#task-details #task-title").text(task.title);
-			$("#task-details #task-edit-btn").data('id', task.id);
 
 			// status
 			switch(task.task_status) {
@@ -37,6 +36,7 @@
 					$("#task-details #task-status i").removeClass().addClass("small circle blue icon");
 					break;
 			}
+			$("#task-details #task-status p").data("taskstatus", task.task_status);
 
 			// description
 			$("#task-details #task-description").text(task.description);
@@ -123,10 +123,27 @@
 			let endpoint = "{{ action('UserController@show', ['id' => 1]) }}";
 			endpoint = endpoint.substring(0, endpoint.length-1) + creatorId;
 
+			let taskStatusColor = "";
+			let taskStatusDetail = "";
+			switch(task.task_status) {
+				case 1: //todo
+					taskStatusColor = "green";
+					taskStatusDetail = "To-do";
+					break;
+				case 2: // in-progress
+					taskStatusColor = "yellow";
+					taskStatusDetail = "In progress";
+					break;
+				case 3: // closed
+					taskStatusColor = "blue";
+					taskStatusDetail = "Closed";
+					break;
+			}
+
 			const taskComponent = 	`<div class="task new-task" data-taskid="${id}">
 										<div class="ui grid">
 											<div class="column">
-												<span title="Open task"><i class="small circle green icon"></i></span>
+												<span title="${taskStatusDetail} task"><i class="small circle ${taskStatusColor} icon"></i></span>
 											</div>
 											<div class="fourteen wide column">
 												<p class="task-title">${title}</p>
@@ -154,7 +171,9 @@
 			},
 			onSuccess: function(event) {
 				event.preventDefault();
-				let dueDate = $("#new-task-form #dueDate").val();
+
+				const $form = $("#new-task-form");
+				let dueDate = $form.find("input[name=dueDate]").val();
 				let isoDueDate = new Date(dueDate).toISOString();
 
 				$.ajax({
@@ -164,10 +183,11 @@
 						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 					},
 					data: {
-						'title': $("#new-task-form #title").val(),
+						'title': $form.find("input[name=title]").val(),
 						'dueDate': isoDueDate,
-						'description': $("#new-task-form #description").val(),
-						'project': $("#new-task-form #project").val()
+						'description': $form.find("textarea[name=description]").val(),
+						'task_status': $form.find("select[name=status]").val(),
+						'project': $form.find("input[name=project]").val()
 					},
 					dataType: 'json',
 					success: function (task) {
@@ -195,16 +215,89 @@
 			}
 		});
 
+		/* Semantic UI form validation */
+		$("#edit-task-form").form({
+			fields: {
+				title: ["empty", "maxLength[255]"],
+				description: ["empty"],
+				dueDate: ["empty"],
+				status: ["minCount[1]"]
+			},
+			onSuccess: function(event) {
+				event.preventDefault();
+
+				const $form = $("#edit-task-form");
+				let dueDate = $form.find("input[name=dueDate]").val();
+				let isoDueDate = new Date(dueDate).toISOString();
+				console.log(isoDueDate);
+
+				let taskId = $form.find("input[name=task-id]").val();
+
+				$.ajax({
+					type: "PATCH",
+					url: `/tasks/${taskId}`,
+					headers: {
+						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+					},
+					data: {
+						'title': $form.find("input[name=title]").val(),
+						'dueDate': isoDueDate,
+						'description': $form.find("textarea[name=description]").val(),
+						'task_status' : $form.find("select[name=status]").val()
+					},
+					dataType: 'json',
+					success: function (task) {
+						taskToAdd = getTaskComponent(task);
+
+						$(".task").filter(`[data-taskid="${task.id}"]`).remove();
+
+						let taskList = "";
+
+						switch(task.task_status) {
+							case 1: //todo
+								taskList = "to-do";
+								break;
+							case 2: // in-progress
+								taskList = "in-progress";
+								break;
+							case 3: // closed
+								taskList = "closed";
+								break;
+						}
+
+						$(`#${taskList}-tasks > .task`).first().before(taskToAdd);
+
+						// format datetimes
+						renderDateTimeAgoOnce();
+						utcToLocal();
+
+						$(".task-form-modal").modal("hide");
+					},
+					error: function () {
+						$(".task-form-modal").modal("hide");
+						$("#edit-task-form-error-modal").modal("show");
+					}
+				});
+			},
+			onFailure: function() {
+				return false;
+			}
+		});
+
+
 		/* Populate edit form with task data */
 		$("#task-edit-btn").click((e) => {
 			const $btn = $(e.target);
-			const id = $btn.data('id');
+			const id = $btn.data("taskid");
 			const title = $("#task-details #task-title").text();
-			const description = $("#task-details #task-description").text();
 			const dueDate = $("#task-details #task-due-date").text();
+			const status = $("#task-details #task-status p").data("taskstatus");
+			const description = $("#task-details #task-description").text();
 			const $form = $("#edit-task-form");
+			$form.find("input[name=task-id]").val(id);
 			$form.find("input[name=title]").val(title);
 			$form.find("input[name=dueDate]").val(dueDate);
+			$form.find("select[name=status]").dropdown('set selected', status);
 			$form.find("textarea[name=description]").val(description);
 
 			showTaskModal('edit');
