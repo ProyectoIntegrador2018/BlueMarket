@@ -283,83 +283,26 @@
 		--------------------------------------------*/
 		$(".modal").modal({ transition: "fade up" });
 
-		/* Tasks
-		--------------------------------------------*/
-		function fillTaskDetailsModal(task) {
-			// title
-			$("#task-details #task-title").text(task.title);
-
-			// status
-			switch(task.task_status) {
-				case 1: //todo
-					$("#task-details #task-status p").text("To-do");
-					$("#task-details #task-status i").removeClass().addClass("small circle green icon");
-					break;
-				case 2: // in-progress
-					$("#task-details #task-status p").text("In progress");
-					$("#task-details #task-status i").removeClass().addClass("small circle yellow icon");
-					break;
-				case 3: // closed
-					$("#task-details #task-status p").text("Closed");
-					$("#task-details #task-status i").removeClass().addClass("small circle blue icon");
-					break;
-			}
-
-			// description
-			$("#task-details #task-description").text(task.description);
-
-			// due date
-			const deadline = task.deadline;
-			const currentDatetimeUTC = Date.now();
-			const deadlineDateUTC = new Date(deadline + "Z");
-			const isOverdue = deadlineDateUTC < currentDatetimeUTC;
-			$("#task-details #task-due-date").text(task.deadline).data("datetimeutc", task.deadline);
-			// style due date
-			if(isOverdue) {
-				$("#task-details #task-due-date").addClass("overdue");
-			}
-			else {
-				$("#task-details #task-due-date").addClass("overdue");
-			}
-
-			// task opened details
-			$("#task-details #task-opened-date").text(task.created_at).data("datetimeutc", task.created_at);
-			$("#task-details #task-opened-by").text(task.creator.name);
-
-			// task closed details
-			if(task.task_status == 3) { // task is closed
-				$("#task-details #task-closed-date").text(task.completed_date).data("datetimeutc", task.completed_date);
-				$("#task-details #task-closed-by").text(task.closed_by.name);
-				$("#task-details #task-closed-details").show();
-			}
-			else {
-				$("#task-details #task-closed-details").hide();
-			}
-
-			// format all datetimes to local
-			utcToLocal();
-		}
-
-		$(".task-title").click((e) => {
-			const taskId = $(e.target).closest(".task").data("taskid");
-			$.ajax({
-				type: "GET",
-				url: `/tasks/${taskId}`,
-				headers: {
-					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-				},
-				dataType: 'json',
-				success: function (task) {
-					fillTaskDetailsModal(task);
-					$("#task-details-modal").modal("show");
-				}
-			});
-		});
-
 		/* format datetimes */
 		renderDateTimeAgoOnce();
 		utcToLocal();
 	@endif
+
+	@if($project->isCollaborator(Auth::id()))
+		$(".ui.calendar").calendar({
+			monthFirst: false,
+			formatter: {
+				date: function (date, settings) {
+					if (!date) return '';
+					var day = date.getDate();
+					var month = date.getMonth() + 1;
+					var year = date.getFullYear();
+					return month + '/' + day + '/' + year;
+				}
+			}
+		});
+	@endif
+
 
 	@if(Auth::id() === $project->team->leader->id)
 		/* Collaborators

@@ -1,7 +1,7 @@
 <div class="ui stackable grid">
 	@if($project->isCollaborator(Auth::id()))
 		<div class="right aligned sixteen wide column">
-			<button type="button" class="ui button primary" onclick="showNewTaskModal()">New task</button>
+			<button type="button" class="ui button primary" onclick="showTaskModal('new')">New task</button>
 		</div>
 	@endif
 	<div class="sixteen wide column">
@@ -9,25 +9,8 @@
 	</div>
 </div>
 @if($project->isCollaborator(Auth::id()))
-	<div id="task-form-modal" class="ui tiny modal task-form-modal">
-		<div class="content">
-			@include('projects.tasks.form')
-		</div>
-		<div class="actions">
-			<button type="button" class="ui black deny button">Close</button>
-			<button type="submit" class="ui primary button" onclick="createNewTask()">Save</button>
-		</div>
-	</div>
-	<div id="task-form-error-modal" class="ui modal">
-		<div class="header">Something went wrong</div>
-		<div class="content">
-			<i class="times huge red circle icon"></i>
-			<p>We were unable to add or edit this task.</p>
-		</div>
-		<div class="actions">
-			<button type="button" class="ui black deny button">Done</button>
-		</div>
-	</div>
+	@include('projects.tasks.form', ['name' => 'new'])
+	@include('projects.tasks.form', ['name' => 'edit'])
 @endif
 <div id="task-details-modal" class="ui modal task-details-modal">
 	<div class="scrolling content">
@@ -37,6 +20,8 @@
 		<button class="ui black deny button">Close</button>
 	</div>
 </div>
+
+@push('js')
 <script>
 	@if($project->isStakeholder(Auth::id()))
 		function fillTaskDetailsModal(task) {
@@ -94,8 +79,7 @@
 			utcToLocal();
 		}
 
-		$(".task-title").click((e) => {
-			const taskId = $(e.target).closest(".task").data("taskid");
+		function showTaskDetailsModal(taskId) {
 			$.ajax({
 				type: "GET",
 				url: `/tasks/${taskId}`,
@@ -108,34 +92,25 @@
 					$("#task-details-modal").modal("show");
 				}
 			});
+		}
+
+		$(".task-list").click((e) => {
+			if(!$(e.target).hasClass("task-title")) return;
+			const taskId = $(e.target).closest(".task").data("taskid");
+			showTaskDetailsModal(taskId);
 		});
 
 		/* format datetimes */
 		renderDateTimeAgoOnce();
 		utcToLocal();
 	@endif
-
 	@if($project->isCollaborator(Auth::id()))
-		$(".ui.calendar").calendar({
-			monthFirst: false,
-			formatter: {
-				date: function (date, settings) {
-					if (!date) return '';
-					var day = date.getDate();
-					var month = date.getMonth() + 1;
-					var year = date.getFullYear();
-					return day + '/' + month + '/' + year;
-				}
-			}
-		});
-
-		/* New task modal */
-		function showNewTaskModal() {
-			$("#task-form-modal").modal("show");
+		function showTaskModal(action) {
+			$(`#${action}-task-form-modal`).modal("show");
 		}
 
-		function createNewTask() {
-			$("#new-task-form").submit();
+		function submitTaskForm(action) {
+			$(`#${action}-task-form`).submit();
 		}
 
 		function getTaskComponent(task) {
@@ -151,7 +126,7 @@
 			const deadlineDateUTC = new Date(deadline + "Z");
 			const isOverdue = deadlineDateUTC < currentDatetimeUTC;
 
-			const taskComponent = 	`<div class="task" data-taskid="${id}">
+			const taskComponent = 	`<div class="task new-task" data-taskid="${id}">
 										<div class="ui grid">
 											<div class="column">
 												<span title="Open task"><i class="small circle green icon"></i></span>
@@ -168,16 +143,16 @@
 		}
 
 		function clearTaskForm() {
-			$("#new-task-form [name='title']").val("");
-			$("#new-task-form [name='dueDate']").val("");
-			$("#new-task-form [name='description']").val("");
+			$(".task-form-modal [name='title']").val("");
+			$(".task-form-modal [name='dueDate']").val("");
+			$(".task-form-modal [name='description']").val("");
 		}
 
 		/* Semantic UI form validation */
 		$("#new-task-form").form({
 			fields: {
 				title: ["empty", "maxLength[255]"],
-				description: ["empty", "maxLength[2000]"],
+				description: ["empty"],
 				dueDate: ["empty"]
 			},
 			onSuccess: function(event) {
@@ -210,11 +185,11 @@
 						renderDateTimeAgoOnce();
 						utcToLocal();
 
-						$("#task-form-modal").modal("hide");
+						$(".task-form-modal").modal("hide");
 					},
 					error: function () {
-						$("#task-form-modal").modal("hide");
-						$("#task-form-error-modal").modal("show");
+						$(".task-form-modal").modal("hide");
+						$("#new-task-form-error-modal").modal("show");
 					}
 				});
 			},
@@ -224,3 +199,4 @@
 		});
 	@endif
 </script>
+@endpush
