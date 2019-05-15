@@ -56,7 +56,7 @@ class TaskController extends Controller
 
 		$task = $this->createTask($attributes);
 
-		return $task;
+		return $task->refresh();
 	}
 
 	/**
@@ -131,7 +131,7 @@ class TaskController extends Controller
 
 		$task->save();
 
-		return $task;
+		return $task->refresh();
 	}
 
 	/**
