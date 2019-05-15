@@ -21,15 +21,15 @@
 
 			// status
 			switch(task.task_status) {
-				case 1: // todo
+				case {{ Config::get('enum.task_status')['todo'] }}:
 					$("#task-details #task-status p").text("To-do");
 					$("#task-details #task-status i").removeClass().addClass("small circle green icon");
 					break;
-				case 2: // in-progress
+				case {{ Config::get('enum.task_status')['in-progress'] }}:
 					$("#task-details #task-status p").text("In progress");
 					$("#task-details #task-status i").removeClass().addClass("small circle yellow icon");
 					break;
-				case 3: // closed
+				case {{ Config::get('enum.task_status')['closed'] }}:
 					$("#task-details #task-status p").text("Closed");
 					$("#task-details #task-status i").removeClass().addClass("small circle blue icon");
 					break;
@@ -50,7 +50,7 @@
 				$("#task-details #task-due-date").addClass("overdue");
 			}
 			else {
-				$("#task-details #task-due-date").addClass("overdue");
+				$("#task-details #task-due-date").removeClass("overdue");
 			}
 
 			// task opened details
@@ -103,26 +103,13 @@
 
 		function submitTaskForm(action) {
 			const $form = $(`#${action}-task-form`);
-			let taskFields;
-			let method;
-			let url;
-			let data;
 
-			if(action == "new") {
-				taskFields = {
-					title: ["empty", "maxLength[255]"],
-					description: ["empty"],
-					dueDate: ["empty"]
-				};
-			}
-			else { //edit
-				taskFields = {
-					title: ["empty", "maxLength[255]"],
-					description: ["empty"],
-					dueDate: ["empty"],
-					status: ["minCount[1]"]
-				};
-			}
+			// shared fields
+			let taskFields = {
+				title: ["empty", "maxLength[255]"],
+				description: ["empty"],
+				dueDate: ["empty"]
+			};
 
 			$(`#${action}-task-form`).form({
 				fields: taskFields,
@@ -130,43 +117,26 @@
 					event.preventDefault();
 
 					// shared values
-					let title = $form.find("input[name=title]").val();
 					let dueDate = $form.find("input[name=dueDate]").val();
 					let isoDueDate = new Date(dueDate).toISOString();
-					let description = $form.find("textarea[name=description]").val();
+					let data = {
+						'title': $form.find("input[name=title]").val(),
+						'dueDate': isoDueDate,
+						'description': $form.find("textarea[name=description]").val(),
+						'project': $form.find("input[name=project]").val()
+					};
 
-					if(action == "new") {
-						method = "POST";
-						url = "/tasks";
-						data = {
-							'title': title,
-							'dueDate': isoDueDate,
-							'description': description,
-							'project': $form.find("input[name=project]").val()
-						};
-					}
-					else { //edit
-						method = "PATCH";
-						let taskId = $form.find("input[name=task-id]").val();
-						url = `/tasks/${taskId}`;
-						data = {
-							'title': title,
-							'dueDate': isoDueDate,
-							'description': description,
-							'task_status' : $form.find("select[name=status]").val()
-						};
-					}
-
-					$.ajax({
-						type: method,
-						url: url,
+					// ajax set up
+					let ajax = {
+						method: 'POST',
+						url: '/tasks',
 						headers: {
 							'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 						},
 						data: data,
 						dataType: 'json',
 						success: function (task) {
-							taskToAdd = getTaskComponent(task);
+							taskToAdd = getTaskComponent(task, action);
 
 							if(action == "edit") {
 								$(".task").filter(`[data-taskid="${task.id}"]`).remove();
@@ -175,13 +145,13 @@
 							let taskList = "";
 
 							switch(task.task_status) {
-								case 1: //todo
+								case {{ Config::get('enum.task_status')['todo'] }}:
 									taskList = "to-do";
 									break;
-								case 2: // in-progress
+								case {{ Config::get('enum.task_status')['in-progress'] }}:
 									taskList = "in-progress";
 									break;
-								case 3: // closed
+								case {{ Config::get('enum.task_status')['closed'] }}:
 									taskList = "closed";
 									break;
 							}
@@ -198,7 +168,17 @@
 							$(".task-form-modal").modal("hide");
 							$(`#${action}-task-form-error-modal`).modal("show");
 						}
-					});
+					};
+
+					if(action === "edit") {
+						taskFields.status = ["minCount[1]"];
+						ajax.method = 'PUT';
+						let taskId = $form.find("input[name=task-id]").val();
+						ajax.url = `/tasks/${taskId}`;
+						ajax.data.task_status = $form.find("select[name=status]").val();
+					}
+
+					$.ajax(ajax);
 				},
 				onFailure: function() {
 					return false;
@@ -208,12 +188,21 @@
 			$(`#${action}-task-form`).submit();
 		}
 
-		function getTaskComponent(task) {
+		function getTaskComponent(task, action) {
+			console.log(task);
 			const id = task.id;
 			const title = task.title;
 			const createdAt = task.created_at;
-			const creatorId = task.created_by;
-			const creatorName = task.creator.name;
+			// get creatorId and creatorName from Auth
+			let creatorId = {!! Auth::id() !!};
+			let creatorName = "{!! Auth::user()->name !!}";
+			if(action === "edit") {
+				// get creatorId and creatorName from old component
+				const $oldTask = $(`.task[data-taskid=${id}]`);
+				const creatorUrl = $oldTask.find("a").attr("href");
+				creatorId = creatorUrl.substring(creatorUrl.lastIndexOf("/") + 1);
+				creatorName = $oldTask.find("a").text();
+			}
 			const deadline = task.deadline;
 
 			// determine if the task is overdue
@@ -227,15 +216,15 @@
 			let taskStatusColor = "";
 			let taskStatusDetail = "";
 			switch(task.task_status) {
-				case 1: //todo
+				case {{ Config::get('enum.task_status')['todo'] }}:
 					taskStatusColor = "green";
 					taskStatusDetail = "To-do";
 					break;
-				case 2: // in-progress
+				case {{ Config::get('enum.task_status')['in-progress'] }}:
 					taskStatusColor = "yellow";
 					taskStatusDetail = "In progress";
 					break;
-				case 3: // closed
+				case {{ Config::get('enum.task_status')['closed'] }}:
 					taskStatusColor = "blue";
 					taskStatusDetail = "Closed";
 					break;
