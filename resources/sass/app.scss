@@ -538,10 +538,13 @@ $color-white: #fff;
 	font-size: initial;
 }
 
-.task-due, .task-detail-subtitle {
+.task-due, .task-details {
 	font-size: small;
-	color: grey;
-	text-transform: uppercase;
+
+	.task-detail-subtitle {
+		color: grey;
+		text-transform: uppercase;
+	}
 
 	&.overdue {
 		color: #ea2027;
