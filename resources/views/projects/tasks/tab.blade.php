@@ -15,11 +15,27 @@
 @push('js')
 <script>
 	@if($project->isStakeholder(Auth::id()))
+		function getUserShowHref(id){
+			const endpoint = "{{ action('UserController@show', ['id' => 1]) }}";
+			return endpoint.substring(0, endpoint.length-1) + id;
+		}
+
 		function fillTaskDetailsModal(task) {
+			const userEndpoint = "{{ action('UserController@show', ['id' => 1]) }}";
 			let $taskDetails = $("#task-details");
 			$("#task-edit-btn").data("taskid", task.id);
 			$taskDetails.find("#task-title").text(task.title);
-			$taskDetails.find("#assignee").text(task.assignee.name);
+			if(task.assignee) {
+				$taskDetails.find("#task-assignee").text(task.assignee.name);
+				let assigneeHref = getUserShowHref(task.assignee.id);
+				$taskDetails.find("#task-assignee").attr("href", assigneeHref);
+				$taskDetails.find("#task-assignee").show();
+				$taskDetails.find("#assignee-no-one").hide();
+			}
+			else {
+				$taskDetails.find("#task-assignee").hide();
+				$taskDetails.find("#assignee-no-one").show();
+			}
 
 			// status
 			switch(task.task_status) {
@@ -58,11 +74,15 @@
 			// task opened details
 			$taskDetails.find("#task-opened-date").text(task.created_at);
 			$taskDetails.find("#task-opened-by").text(task.creator.name);
+			let openedByHref = getUserShowHref(task.creator.id);
+			$taskDetails.find("#task-opened-by").attr("href", openedByHref);
 
 			// task closed details
 			if(task.task_status == {{ Config::get('enum.task_status')['closed'] }}) { // task is closed
 				$taskDetails.find("#task-closed-date").text(task.completed_date);
 				$taskDetails.find("#task-closed-by").text(task.closed_by.name);
+				let closedByHref = getUserShowHref(task.closed_by.id);
+				$taskDetails.find("#task-closed-by").attr("href", closedByHref);
 				$taskDetails.find("#task-closed-details").show();
 			}
 			else {
@@ -215,7 +235,6 @@
 		}
 
 		function getTaskComponent(task, action) {
-			console.log(task);
 			const id = task.id;
 			const title = task.title;
 			const createdAt = task.created_at;
@@ -281,18 +300,24 @@
 		/* Populate edit form with task data */
 		$("#task-edit-btn").click((e) => {
 			const $btn = $(e.target);
+			const $taskDetails = $("#task-details");
 			const id = $btn.data("taskid");
-			const title = $("#task-details #task-title").text();
-			const dueDate = $("#task-details #task-due-date").text();
-			const status = $("#task-details #task-status p").data("taskstatus");
-			const description = $("#task-details #task-description").text();
+			const title = $taskDetails.find("#task-title").text();
+			const dueDate = $taskDetails.find("#task-due-date").text();
+			const status = $taskDetails.find("#task-status p").data("taskstatus");
+			const description = $taskDetails.find("#task-description").text();
 			const $form = $("#edit-task-form");
+			$form.find("#edit-task-assignee").dropdown('restore defaults');
+			if($taskDetails.find("#task-assignee").css("display") != "none") {
+				let assigneeHref = $taskDetails.find("#task-assignee").attr("href");
+				assigneeId = assigneeHref.substring(assigneeHref.lastIndexOf("/") + 1);
+				$form.find("#edit-task-assignee").dropdown('set selected', assigneeId);
+			}
 			$form.find("input[name=task-id]").val(id);
 			$form.find("input[name=title]").val(title);
 			$form.find("input[name=dueDate]").val(dueDate);
 			$form.find("select[name=status]").dropdown('set selected', status);
 			$form.find("textarea[name=description]").val(description);
-
 			showTaskModal('edit');
 		});
 	@endif
