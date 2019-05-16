@@ -15,9 +15,7 @@
 				</div>
 			</div>
 			<div class="sixteen wide column">
-					<div class="sixteen wide column">
-						<p>Assigned to: <span id="assignee"></span></p>
-					</div>
+				<p id="assigned-to">Assigned to: <a id="task-assignee" href=""></a><span id="assignee-no-one">no one</span></p>
 			</div>
 			<div class="ten wide column">
 				<div class="row">
@@ -35,11 +33,11 @@
 					</div>
 					<div class="sixteen wide column">
 						<p class="task-detail-subtitle">Opened</p>
-						<p><span id="task-opened-date" class="task-datetime"></span> by <span id="task-opened-by"></span></p>
+						<p><span id="task-opened-date" class="task-datetime"></span> by <a id="task-opened-by" href=""></a></p>
 					</div>
 					<div id="task-closed-details" class="sixteen wide column">
 						<p class="task-detail-subtitle">Closed</p>
-						<p><span id="task-closed-date" class="task-datetime"></span> by <span id="task-closed-by"></span></p>
+						<p><span id="task-closed-date" class="task-datetime"></span> by <a id="task-closed-by" href=""></a></p>
 					</div>
 				</div>
 			</div>
