@@ -34,7 +34,7 @@
 							<i class="dropdown icon"></i>
 						</a>
 						<a id="user-menu-item" class="browse item">
-							<img class="ui mini circular image user-avatar" src="{{ isset(Auth::user()->picture_url) ? Auth::user()->picture_url : 'https://dummyimage.com/400x400/3498db/ffffff.png&text=B' }}"/>
+							<img class="ui image squared-image tiny user-avatar" src="{{ isset(Auth::user()->picture_url) ? Auth::user()->picture_url : 'https://dummyimage.com/400x400/3498db/ffffff.png&text=B' }}"/>
 							<i class="dropdown icon"></i>
 						</a>
 					</div>
@@ -53,7 +53,7 @@
 							<i class="dropdown icon"></i>
 						</a>
 						<a id="user-menu-item" class="browse item">
-							<img class="ui mini circular image user-avatar" src="{{ isset(Auth::user()->picture_url) ? Auth::user()->picture_url : 'https://dummyimage.com/400x400/3498db/ffffff.png&text=B' }}"/>
+							<img class="ui image squared-image tiny user-avatar" src="{{ isset(Auth::user()->picture_url) ? Auth::user()->picture_url : 'https://dummyimage.com/400x400/3498db/ffffff.png&text=B' }}"/>
 							<i class="dropdown icon"></i>
 						</a>
 					</div>

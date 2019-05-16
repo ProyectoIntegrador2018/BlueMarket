@@ -54,7 +54,7 @@ $color-white: #fff;
 	width: 25px;
 }
 
-.ui.small.circular.user-avatar-in-card {
+.ui.image.squared-image.user-avatar-in-card {
 	display: block;
 }
 
@@ -417,7 +417,16 @@ $color-white: #fff;
 	.preview-container {
 		margin-bottom: 1vh;
 
-		.ui.small.image.preview {
+
+		&.ui.small.image.preview {
+			width: 10vmax;
+			height: 10vmax;
+			object-fit: cover;
+			object-position: center center;
+			border-radius: 15px;
+		}
+
+		&.ui.medium.image.preview {
 			width: 10vmax;
 			height: 10vmax;
 			object-fit: cover;

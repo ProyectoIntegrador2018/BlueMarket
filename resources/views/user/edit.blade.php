@@ -17,7 +17,7 @@
 					@php
 						$img = isset($user->picture_url) ? $user->picture_url : 'img/avatar.jpg';
 					@endphp
-					<img id="preview" src="{{ asset($img) }}" alt="User avatar" class="ui small circular image preview"/>
+					<img id="preview" src="{{ asset($img) }}" alt="User avatar" class="ui image squared-image medium image preview"/>
 				</div>
 				<button type="button" class="ui button primary image-uploader">Upload image</button>
 			</div>
