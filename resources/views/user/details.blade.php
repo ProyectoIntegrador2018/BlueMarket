@@ -11,7 +11,7 @@
 		<div class="ui stackable grid">
 			<div class="four wide column user-basic-info">
 				<!-- User avatar -->
-				<img class="ui image squared-image medium not-round user-avatar" src="{{ isset($user->picture_url) ? $user->picture_url : 'https://dummyimage.com/400x400/3498db/ffffff.png&text=B' }}"/>
+				<img class="ui image squared-image medium user-avatar" src="{{ isset($user->picture_url) ? $user->picture_url : 'https://dummyimage.com/400x400/3498db/ffffff.png&text=B' }}"/>
 				<!-- User name -->
 				<h2 class="center" style="text-align: center;">{{ $user->name }}</h2>
 				<!-- Contact button -->
