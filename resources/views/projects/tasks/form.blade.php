@@ -33,6 +33,23 @@
 								</select>
 							</div>
 						@endif
+						<!-- Assignee -->
+						<div class="field {{ $errors->has('assignee_id') ? 'error': '' }}">
+							<label for="assignee_id">Assignee</label>
+							<div id="{{ $name }}-task-assignee" class="ui fluid search selection dropdown user-search">
+								<input class="user-search-input" type="hidden" name="assignee_id">
+								<div class="default text">Select new supplier</div>
+								<div class="menu ">
+									<div class="item" data-value=0></div>
+									@foreach($project->collaborators() as $collaborator)
+									<div class="item" data-value={{ $collaborator->id }}>
+										<img class="ui image squared-image tiny" src="{{ isset($collaborator->picture_url) ? $collaborator->picture_url : 'https://dummyimage.com/400x400/3498db/ffffff.png&text=B' }}" style="display: inline; margin-right: 10px;"/>
+										{{ $collaborator->name }}
+									</div>
+									@endforeach
+								</div>
+							</div>
+						</div>
 						<!-- Description -->
 						<div class="field {{ $errors->has('description') ? 'error': '' }}">
 							<label for="description">Description</label>
