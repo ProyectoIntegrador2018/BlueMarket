@@ -16,55 +16,57 @@
 <script>
 	@if($project->isStakeholder(Auth::id()))
 		function fillTaskDetailsModal(task) {
+			let $taskDetails = $("#task-details");
 			$("#task-edit-btn").data("taskid", task.id);
-			$("#task-details #task-title").text(task.title);
+			$taskDetails.find("#task-title").text(task.title);
+			$taskDetails.find("#assignee").text(task.assignee.name);
 
 			// status
 			switch(task.task_status) {
 				case {{ Config::get('enum.task_status')['todo'] }}:
-					$("#task-details #task-status p").text("To-do");
-					$("#task-details #task-status i").removeClass().addClass("small circle green icon");
+					$taskDetails.find("#task-status p").text("To-do");
+					$taskDetails.find("#task-status i").removeClass().addClass("small circle green icon");
 					break;
 				case {{ Config::get('enum.task_status')['in-progress'] }}:
-					$("#task-details #task-status p").text("In progress");
-					$("#task-details #task-status i").removeClass().addClass("small circle yellow icon");
+					$taskDetails.find("#task-status p").text("In progress");
+					$taskDetails.find("#task-status i").removeClass().addClass("small circle yellow icon");
 					break;
 				case {{ Config::get('enum.task_status')['closed'] }}:
-					$("#task-details #task-status p").text("Closed");
-					$("#task-details #task-status i").removeClass().addClass("small circle blue icon");
+					$taskDetails.find("#task-status p").text("Closed");
+					$taskDetails.find("#task-status i").removeClass().addClass("small circle blue icon");
 					break;
 			}
-			$("#task-details #task-status p").data("taskstatus", task.task_status);
+			$taskDetails.find("#task-status p").data("taskstatus", task.task_status);
 
 			// description
-			$("#task-details #task-description").text(task.description);
+			$taskDetails.find("#task-description").text(task.description);
 
 			// due date
 			const deadline = task.deadline;
 			const currentDatetimeUTC = Date.now();
 			const deadlineDateUTC = new Date(deadline + "Z");
 			const isOverdue = deadlineDateUTC < currentDatetimeUTC;
-			$("#task-details #task-due-date").text(task.deadline);
+			$taskDetails.find("#task-due-date").text(task.deadline);
 			// style due date
 			if(isOverdue) {
-				$("#task-details #task-due-date").addClass("overdue");
+				$taskDetails.find("#task-due-date").addClass("overdue");
 			}
 			else {
-				$("#task-details #task-due-date").removeClass("overdue");
+				$taskDetails.find("#task-due-date").removeClass("overdue");
 			}
 
 			// task opened details
-			$("#task-details #task-opened-date").text(task.created_at);
-			$("#task-details #task-opened-by").text(task.creator.name);
+			$taskDetails.find("#task-opened-date").text(task.created_at);
+			$taskDetails.find("#task-opened-by").text(task.creator.name);
 
 			// task closed details
 			if(task.task_status == {{ Config::get('enum.task_status')['closed'] }}) { // task is closed
-				$("#task-details #task-closed-date").text(task.completed_date);
-				$("#task-details #task-closed-by").text(task.closed_by.name);
-				$("#task-details #task-closed-details").show();
+				$taskDetails.find("#task-closed-date").text(task.completed_date);
+				$taskDetails.find("#task-closed-by").text(task.closed_by.name);
+				$taskDetails.find("#task-closed-details").show();
 			}
 			else {
-				$("#task-details #task-closed-details").hide();
+				$taskDetails.find("#task-closed-details").hide();
 			}
 
 			// format all datetimes to local
@@ -105,6 +107,10 @@
 			dueDate: ["empty"]
 		};
 
+		/* Task assignee dropdown */
+		$("#new-task-assignee").dropdown();
+		$("#edit-task-assignee").dropdown();
+
 		$("#new-task-form").form({
 			fields: taskFields,
 			onSuccess: function(event) {
@@ -139,11 +145,14 @@
 			// shared values
 			let dueDate = $form.find("input[name=dueDate]").val();
 			let isoDueDate = new Date(dueDate).toISOString();
+			let assignee = $(`#${action}-task-assignee`).dropdown("get value");
+
 			let data = {
 				'title': $form.find("input[name=title]").val(),
 				'dueDate': isoDueDate,
 				'description': $form.find("textarea[name=description]").val(),
-				'project': $form.find("input[name=project]").val()
+				'project': $form.find("input[name=project]").val(),
+				'assignee_id': assignee > 0 ? assignee : null // send null if no one is assigned
 			};
 
 			// ajax set up

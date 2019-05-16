@@ -14,6 +14,11 @@
 					</div>
 				</div>
 			</div>
+			<div class="sixteen wide column">
+					<div class="sixteen wide column">
+						<p>Assigned to: <span id="assignee"></span></p>
+					</div>
+			</div>
 			<div class="ten wide column">
 				<div class="row">
 					<div class="sixteen wide column">
